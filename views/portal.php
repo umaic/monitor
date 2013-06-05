@@ -1,0 +1,260 @@
+<?php define(BASE_PORTAL, '/monitor/'); ?>
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.min.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.min.css" />
+
+<?php 
+$meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+?>
+
+<body>
+        <div id="tec" class="tecdn hide">
+            <a href="http://www.colombiassh.org/emergenciacompleja/" target="_blank">
+                <img src="<?php echo BASE_PORTAL ?>media/img/logo_ec.png" />
+            </a>
+            <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
+            <div class="cat it">
+                <div class="inline">Categorias</div>
+                <div class="inline arrow-down"></div>
+            </div>
+            <div id="fcat_ec" class="filtro fcat">
+                <div class="left">
+                     <h2>Categorias Conflicto Armado</h2>
+                     <br />
+                    <div class="inline linko">
+                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                    </div>
+                    <div class="inline">
+                    <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
+                    </div>
+                </div>
+                <div class="right">
+                    <a class="close" href="#"><img src="<?php echo BASE_PORTAL ?>media/img/close.png" alt="Cerrar" /></a>
+                </div>
+                <div class="right">
+                    <div id="btn_fcat_ec" class="ec btn btn_fcat">Filtrar mapa</div>
+                </div>
+                <div class="fcat_list">
+                    <?php 
+                    foreach($cats_f['ec'] as $_cp => $_cts) { ?>
+                        <div>
+                            <ul>
+                                <li class="p">
+                                    <?php echo $_cp ?>
+                                </li>
+                                <?php
+                                //$_h = count($_ch);
+                                foreach($_cts as $_idh => $_ch) { 
+                                    $_id = "cat_$_idh";
+                                    $chk = 'checked';
+                                    if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['ec'])) {
+                                            $chk = '';
+                                        
+                                    }
+                                    ?>
+                                    <li class="h">
+                                        <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> />
+                                        <label for="<?php echo $_id ?>"><?php echo $_ch ?></label>
+                                    </li>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+
+                    <?php
+                    } 
+                    ?>
+                </div>
+            </div>
+        </div>
+        <div id="tdn" class="tecdn hide">
+            <a href="http://inundaciones.colombiassh.org" target="_blank">
+                <img src="<?php echo BASE_PORTAL ?>media/img/logo_dn.png" />
+            </a>
+            <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
+            <div class="it cat">
+                <div class="inline">Categorias</div>
+                <div class="inline arrow-down"></div>
+            </div>
+            <div id="fcat_dn" class="filtro fcat">
+                <div class="left">
+                     <h2>Categorias Desastres Naturales</h2>
+                     <br />
+                    <div class="inline linko">
+                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                    </div>
+                    <div class="inline">
+                    <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
+                    </div>
+                </div>
+                <div class="right">
+                    <a class="close" href="#"><img src="<?php echo BASE_PORTAL ?>media/img/close.png" alt="Cerrar" /></a>
+                </div>
+                <div class="right">
+                    <div id="btn_fcat_ec" class="dn btn btn_fcat">Filtrar mapa</div>
+                </div>
+                <div class="fcat_list">
+                    <?php 
+                    foreach($cats_f['dn'] as $_cp => $_cts) { ?>
+                        <div>
+                            <ul>
+                                <li class="p"><?php echo $_cp ?></li>
+                                <?php
+                                //$_h = count($_ch);
+                                foreach($_cts as $_idh => $_ch) { 
+                                    $_id = "cat_$_idh";
+                                    $chk = 'checked';
+                                    if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['dn'])) {
+                                            $chk = '';
+                                        
+                                    }
+                                    ?>
+                                    <li class="h">
+                                        <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> />
+                                        <label for="<?php echo $_id ?>"><?php echo $_ch ?></label>
+                                    </li>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                        </div>
+
+                    <?php
+                    } 
+                    ?>
+                </div>
+            </div>
+        </div>
+    <div id="loading" class="alpha60">
+        <img src="<?php echo BASE_PORTAL ?>media/img/ajax-loader.png" />
+    </div>
+    <div id="content" class="clear">
+        <div class="left">
+            <div id="menu">
+                <div id="aaaa">
+                    <input type="hidden" id="currentCatE" value="0">
+                    <input type="hidden" id="currentCatD" value="0">
+                    <input type="hidden" id="startDate" value="">
+                    <input type="hidden" id="endDate" value="">
+                    <input type="hidden" id="yyyy_ini" value="">
+                    <input type="hidden" id="yyyy_fin" value="">
+                        <div class="r left ">
+                            Desde:&nbsp;<input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
+                            <div class="filtro_fecha" id="ini_div">
+                                <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
+                                <div class="right close"></div>
+                                <div class="clear"></div>
+                                <div class="inline yyyy l">
+                                    <p><b>A&ntilde;o</b></p>
+                                    <ul>
+                                        <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
+                                    </ul>
+                                </div>
+                                <div class="inline mes l">
+                                    <p><b>Mes</b></p>
+                                    <ul>
+                                        <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='ini' y='mes'>$mes</li>"; } ?>
+                                    </ul>
+                                </div>
+                                <div class="inline dia l">
+                                    <p><b>D&iacute;a</b></p>
+                                    <ul>
+                                        <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='ini' y='dia'>$i</li>"; } ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="r left">
+                            Hasta:&nbsp;&nbsp;<input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
+                            <div class="filtro_fecha" id="fin_div">
+                                <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
+                                <div class="right close"></div>
+                                <div class="clear"></div>
+                                <div class="inline yyyy l">
+                                    <p><b>A&ntilde;o</b></p>
+                                    <ul>
+                                        <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
+                                    </ul>
+                                </div>
+                                <div class="inline mes l">
+                                    <p><b>Mes</b></p>
+                                    <ul>
+                                        <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='fin' y='mes'>$mes</li>"; } ?>
+                                    </ul>
+                                </div>
+                                <div class="inline dia l">
+                                    <p><b>D&iacute;a</b></p>
+                                    <ul>
+                                        <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='fin' y='dia'>$i</li>"; } ?>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    <div id="filter_states" class="r left btn">Filtrar mapa</div>
+                </div>
+                <div class="clear"></div>
+            </div>
+            <div id="map"></div>
+        </div>
+        <div id="incidentes" class="right">
+            <div id="tabs" class="left">
+                <div id="tab_ec" class="active tab" show="incidentes_ec">
+                    <div>Violencia Armada</div>
+                </div>
+                <div id="tab_dn" class="tab" show="incidentes_dn">
+                    <div>Des. Natural</div>
+                </div>
+            </div>
+            <div id="data" class="clear">
+                <div id="ini_fin" class="inline">
+                    <div class="left">
+                    <!--<div class="inline"><img src="<?php echo BASE_PORTAL ?>media/img/calendar.png" width="18" height="18" /><a href="#" id="lff">Aplicar filtro de fechas</a></div>
+                    <div id="time" class="inline">
+                        <label class="inline">o consultar:</label>
+                        <select id="stime">
+                            <option value=0>----</option>
+                            <option value="a">Todo el a&ntilde;o</option>
+                            <option value="m" selected="selected">Ultimo mes</option>
+                            <option value="s">Ultima semana</option>
+                            <option value="ay">Ayer y hoy</option>
+                            <option value="h">Hoy</option>
+                        </select>
+                    </div>
+                    -->
+                </div>
+            </div>
+            
+            <div id="incidentes_ec" class="tab_data"></div>
+            <div id="incidentes_dn" class="hide tab_data"></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui-1.8.21.custom.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/LoadingPanel.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.tablesorter.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
+    <script type="text/javascript">
+        var portal = 1;
+        $(function() {
+            $('.tab').click(function() {
+                $('.tab_data').hide();
+                $('.tab').removeClass('active');
+                $('#' + $(this).attr('show')).show();
+                $(this).addClass('active');
+            });
+        });
+    </script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
+    <!--  Para simular la tabla de deptos y que funcione getStateChecked() en fe.js-->
+    <div id="table_totalxd" class="hide">
+        <input type="hidden" id="state" centroid="<?php echo $centroid ?>" />
+        <input type="checkbox" value="0" /> <!-- Se deja el primero vacio simulando el Cheeck all/ -->
+        <input type="checkbox" value="<?php echo $state_id ?>" checked />
+    </div>
+    
+</body>
+</html>
+

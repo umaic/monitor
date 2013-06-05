@@ -1,0 +1,10 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans);  
+#brand {
+    line-height: 24px;
+    background-color: #ea8a03;
+    color: #ffffff;
+    font-family: 'Open Sans';
+    font-size: 18px;
+    padding: 3px 15px;
+    text-align: left;
+}
