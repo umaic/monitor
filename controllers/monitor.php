@@ -408,9 +408,11 @@ class MonitorController {
     public function getIncidentesPortal($ini, $fin, $cats, $states, $limiti) {
         
         $_db = $this->db_dn.'.';
-        $conf = array();
-        $desas = array();
+        $evs = array();
+        //$desas = array();
         $limit = 20;
+        $total = 0;
+        $sys = array('violencia','desastres');
         
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
         
@@ -420,6 +422,7 @@ class MonitorController {
                  INNER JOIN %sincident AS i ON l.id = i.location_id
                  INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id
                  WHERE $cond_csv
+                 ORDER BY date DESC
                  LIMIT $limiti, $limit
                  ";
         
@@ -511,20 +514,32 @@ class MonitorController {
                 'ref' => $ref,
                 'ln' => $_r->ln,
                 'ld' => $state_id,
-                'ldn' => $state
+                'ldn' => $state,
+                'sys' => $sys[$_d]
                 );
 
                 $conf[] = $_conf;
             }
 
+            $evs = array_merge($evs, $conf);
+
             $_sqlt = sprintf($_sql_total,$_db,$_db,$_db, $conds[$_d]);
             $_rst = $this->db->open($_sqlt);
             $_rt = $this->db->FO($_rst);
-                
-            $evs[] = array('e' => $conf, 't' => $_rt->n);
-        }
 
-        return $evs;
+
+            //$evs = $conf;  
+            $total += $_rt->n;
+
+            //$evs[] = array('e' => $conf, 't' => $_rt->n);
+        }
+        
+        // Ordena por fecha desc los eventos para mezclarlos
+        usort($evs, function($a, $b){
+            return strtotime($b['d']) - strtotime($a['d']);
+        });
+        
+        return array('e' => $evs, 't' => $total);
 
     }
 

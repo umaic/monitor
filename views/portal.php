@@ -1,5 +1,5 @@
-<?php define(BASE_PORTAL, '/monitor/'); ?>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.min.css">
+<?php define('BASE_PORTAL', '/monitor/'); ?>
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.min.css" />
 
 <?php 
@@ -138,94 +138,20 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <input type="hidden" id="endDate" value="">
                     <input type="hidden" id="yyyy_ini" value="">
                     <input type="hidden" id="yyyy_fin" value="">
-                        <div class="r left ">
-                            Desde:&nbsp;<input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
-                            <div class="filtro_fecha" id="ini_div">
-                                <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
-                                <div class="right close"></div>
-                                <div class="clear"></div>
-                                <div class="inline yyyy l">
-                                    <p><b>A&ntilde;o</b></p>
-                                    <ul>
-                                        <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
-                                    </ul>
-                                </div>
-                                <div class="inline mes l">
-                                    <p><b>Mes</b></p>
-                                    <ul>
-                                        <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='ini' y='mes'>$mes</li>"; } ?>
-                                    </ul>
-                                </div>
-                                <div class="inline dia l">
-                                    <p><b>D&iacute;a</b></p>
-                                    <ul>
-                                        <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='ini' y='dia'>$i</li>"; } ?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="r left">
-                            Hasta:&nbsp;&nbsp;<input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
-                            <div class="filtro_fecha" id="fin_div">
-                                <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
-                                <div class="right close"></div>
-                                <div class="clear"></div>
-                                <div class="inline yyyy l">
-                                    <p><b>A&ntilde;o</b></p>
-                                    <ul>
-                                        <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
-                                    </ul>
-                                </div>
-                                <div class="inline mes l">
-                                    <p><b>Mes</b></p>
-                                    <ul>
-                                        <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='fin' y='mes'>$mes</li>"; } ?>
-                                    </ul>
-                                </div>
-                                <div class="inline dia l">
-                                    <p><b>D&iacute;a</b></p>
-                                    <ul>
-                                        <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='fin' y='dia'>$i</li>"; } ?>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                    <div id="filter_states" class="r left btn">Filtrar mapa</div>
+                    <div id="time" class="inline">
+                        <label class="inline">Consultar:</label>
+                        <select id="stime">
+                            <option value="a">Todo el a&ntilde;o</option>
+                            <option value="m" selected="selected">Ultimo mes</option>
+                            <option value="s">Ultima semana</option>
+                        </select>
+                    </div>
                 </div>
                 <div class="clear"></div>
             </div>
             <div id="map"></div>
         </div>
         <div id="incidentes" class="right">
-            <div id="tabs" class="left">
-                <div id="tab_ec" class="active tab" show="incidentes_ec">
-                    <div>Violencia Armada</div>
-                </div>
-                <div id="tab_dn" class="tab" show="incidentes_dn">
-                    <div>Des. Natural</div>
-                </div>
-            </div>
-            <div id="data" class="clear">
-                <div id="ini_fin" class="inline">
-                    <div class="left">
-                    <!--<div class="inline"><img src="<?php echo BASE_PORTAL ?>media/img/calendar.png" width="18" height="18" /><a href="#" id="lff">Aplicar filtro de fechas</a></div>
-                    <div id="time" class="inline">
-                        <label class="inline">o consultar:</label>
-                        <select id="stime">
-                            <option value=0>----</option>
-                            <option value="a">Todo el a&ntilde;o</option>
-                            <option value="m" selected="selected">Ultimo mes</option>
-                            <option value="s">Ultima semana</option>
-                            <option value="ay">Ayer y hoy</option>
-                            <option value="h">Hoy</option>
-                        </select>
-                    </div>
-                    -->
-                </div>
-            </div>
-            
-            <div id="incidentes_ec" class="tab_data"></div>
-            <div id="incidentes_dn" class="hide tab_data"></div>
         </div>
         <div class="clear"></div>
     </div>

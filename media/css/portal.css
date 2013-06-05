@@ -205,6 +205,7 @@ div.tecdn .fcat ul li.h {
     margin: 0 3px;
     border: solid #cccccc;
     border-width: 1px 1px 0px 1px;
+    font-size: 12px;
     padding: 5px;
     cursor: pointer;
     color: #cccccc;
@@ -541,6 +542,13 @@ div.report_list_map div.detail {
 div#mase {
     text-align: center;
     margin: 10px;
+}
+
+.violencia {
+    border-left: 5px solid #d40000;
+}
+.desastres {
+    border-left: 5px solid #2ca02c;
 }
 
 /* Generales */

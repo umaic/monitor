@@ -1,14 +1,8 @@
 var _mes =
 ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
-// Dominio desarrollo
 var base = '';
 var base_ol = '';
-if (document.domain == '190.66.6.168' || document.domain == '192.168.1.23') {
-    base = '/monitor';
-    base_ol = '/monitor';
-} 
-
 var is_portal = false;
 var num_carga = 20;
 
@@ -16,9 +10,9 @@ $(function(){
 
     if (typeof portal !== "undefined") {
         is_portal = true;
-        base = 'http://monitor.colombiassh.org';
+        //base = 'http://monitor.colombiassh.org';
         base_ol = '/monitor';
-        //base = '/monitor';
+        base = '/monitor';
     }
 
     $("#loading")
@@ -373,21 +367,21 @@ totalesxDepto = function(more) {
             success: function(json){
                 $('#loading').hide();
 
-                for(jj in json) {
-                    num_total = json[jj]['t'];
-                    num = json[jj]['e'].length;
+                //for(jj in json) {
+                    num_total = json['t'];
+                    num = json['e'].length;
                     _html = '';
                     if (num > 0) {
                         if (limiti == 0) {
                             _html += '<div class="right">Eventos en el periodo: ' + num_total + ' &nbsp;</div>';
                         }
                         for(var i=0, j=num; i < j; i+=1) {
-                            _js = json[jj]['e'][i];
+                            _js = json['e'][i];
                             _dt = _js.d.split(/\W+/);
                             _date = [_dt[2],_mes[_dt[1]*1],_dt[0]].join(' ');
-                            _html += '<div class="clear report_list_map"> ' +
+                            _html += '<div class="clear report_list_map ' + _js.sys + '"> ' +
                                 //'<div class="date detail">'+ _date +'</div> ' +
-                                '<div class="t clear">'+ _js.t +'</div> ' +
+                                '<div class="t clear">' + _js.t +'</div> ' +
                                 '<div class="hide">' +
                                     '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
                                     '<a href="http://sidih.colombiassh.org/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
@@ -462,7 +456,7 @@ totalesxDepto = function(more) {
                         _html += '<div class="no">No hay eventos registrados</div>';
                     }
                     
-                    $div = $('#incidentes_' + term[jj]);
+                    $div = $('#incidentes');
                     if (limiti == 0) {
                         $div.html(_html);
                     }
@@ -470,10 +464,10 @@ totalesxDepto = function(more) {
                         $div.find('.cargar_mas').remove();
                         $div.append(_html);
                     }
-                }
+                //}
                 
                 // Row events
-                $('.tab_data').find('.t').click(function() {
+                $('#incidentes').find('.t').click(function() {
                     $(this).parent('div').find('.hide').slideToggle();
                 });
 
