@@ -346,19 +346,20 @@ totalesxDepto = function(more) {
     
     _states = getStatesChecked();
     
-    // Monitor
+    // Portal EHP
     if (is_portal) {
         
         if (typeof more === 'undefined') {
             $('.tab_data').html('');
         } 
 
-        var limiti = $('.report_list_map').length;
+        var limiti = $('.report_list_map:not(.from_map)').length;
         var term = ['ec', 'dn'];
         
         if (limiti == 0) {
             $('.tab_data').html('<div>&nbsp;&nbsp;<img src="' + base + '/media/img/ajax-loader-mini.gif" />&nbsp;Cargando datos...</div>');
         }
+        
         
         $.ajax({
             url: base + '/getIncidentesPortal/' + _ini + '/' + _fin + '/' + _cats + '/' + limiti + '/' + _states ,
@@ -370,7 +371,7 @@ totalesxDepto = function(more) {
                 //for(jj in json) {
                     num_total = json['t'];
                     num = json['e'].length;
-                    _html = '';
+                    var _html = '';
                     if (num > 0) {
                         if (limiti == 0) {
                             _html += '<div class="right">Eventos en el periodo: ' + num_total + ' &nbsp;</div>';
@@ -449,7 +450,7 @@ totalesxDepto = function(more) {
                             
                         // Cargar mas
                         if ((limiti + num_carga) < num_total) {
-                            _html += '<div class="btn cargar_mas">Cargar mas eventos</div>';
+                            _html += '<div id="cargar_mas"><div class="btn cargar_mas">Cargar mas eventos</div></div>';
                         } 
                     }
                     else {
@@ -466,10 +467,6 @@ totalesxDepto = function(more) {
                     }
                 //}
                 
-                // Row events
-                $('#incidentes').find('.t').click(function() {
-                    $(this).parent('div').find('.hide').slideToggle();
-                });
 
                 // Cargar mas evento
                 $('.cargar_mas').click(function() {
@@ -477,7 +474,7 @@ totalesxDepto = function(more) {
                     return false;
                 });
 
-                listReportsEvents();
+                //listReportsEvents();
                 
                 // Zoom state
                 if (_states != 0){

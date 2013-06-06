@@ -481,13 +481,15 @@ div.filtro_fecha ul li.selected {
 /* Lista de reportes click Feature */
 div.report_list_map {
     background-color: #f9f9f9;
-    padding: 5px;
+    padding: 10px;
     box-shadow: 0 1px 2px #cccccc;
 }
 div.report_list_map:hover {
     background-color: #ffffea;
     box-shadow: 0 1px 3px #cccccc;
-
+}
+div.report_list_map:hover div.t {
+    text-decoration: underline;
 }
 div.report_list_map:not(:first-child) {
     border-top: 1px solid #cccccc;
@@ -534,6 +536,15 @@ div.report_list_map div.detail {
     color: #908B88;
 }
 
+div#cargar_mas {
+    width: 100px;
+    margin: 10px auto;
+}
+div.no {
+    font-size: 14px !important;
+    margin: 0 0 0 20px;
+}
+
 /* Link en modal window */
 .ui-dialog a {
     text-decoration: none;
@@ -545,10 +556,10 @@ div#mase {
 }
 
 .violencia {
-    border-left: 5px solid #d40000;
+    border-left: 2px solid #d40000;
 }
 .desastres {
-    border-left: 5px solid #2ca02c;
+    border-left: 2px solid #2ca02c;
 }
 
 /* Generales */

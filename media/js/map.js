@@ -274,7 +274,7 @@ function onFeatureSelect(attrs) {
 
             for(var i=0, j=json.length; i < j; i+=1) {
                 _js = json[i];
-                _html += '<div class="report_list_map"> ' +
+                _html += '<div class="report_list_map from_map"> ' +
                     '<div class="t">'+ _js.t +'</div> ' +
                     '<div>' +
                         '<div class="date detail">'+ _js.d +'</div> ' +
@@ -346,15 +346,21 @@ function onFeatureSelect(attrs) {
                 _html += '<div id="mase"><div class="btn"><a href="'+attrs.link+'" target="_blank">Ir al listado completo de eventos</a></div></div>';
             }
 
-            // Modal window, in fe.js
-            numr = (attrs.count > max_e) ? max_e : attrs.count;
-            m({
-                t: 'Monitor - ColombiaSSH :: Listado de eventos [ ' + numr + ' registros ]',
-                html: _html,
-                w: 800,
-                h: 500,
-                funOpen: listReportsEvents,
-            });
+            // Portal EHP
+            if (is_portal) {
+                $('#incidentes').html(_html);
+            }
+            else {
+                // Modal window, in fe.js
+                numr = (attrs.count > max_e) ? max_e : attrs.count;
+                m({
+                    t: 'Monitor - ColombiaSSH :: Listado de eventos [ ' + numr + ' registros ]',
+                    html: _html,
+                    w: 800,
+                    h: 500,
+                    funOpen: listReportsEvents,
+                });
+            }
         },
     });
     

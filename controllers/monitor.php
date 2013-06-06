@@ -417,7 +417,7 @@ class MonitorController {
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
         
         $cats_parent_id = array();
-        $_sql_csv = "SELECT i.id AS id, i.incident_title AS t, i.incident_date AS date, l.location_name AS ln, state_id
+        $_sql_csv = "SELECT DISTINCT i.id AS id, i.incident_title AS t, i.incident_date AS date, l.location_name AS ln, state_id
             FROM %slocation AS l
                  INNER JOIN %sincident AS i ON l.id = i.location_id
                  INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id

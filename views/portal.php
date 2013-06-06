@@ -1,5 +1,5 @@
 <?php define('BASE_PORTAL', '/monitor/'); ?>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.min.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.min.css" />
 
 <?php 
@@ -164,16 +164,23 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript">
         var portal = 1;
         $(function() {
+            /*
             $('.tab').click(function() {
                 $('.tab_data').hide();
                 $('.tab').removeClass('active');
                 $('#' + $(this).attr('show')).show();
                 $(this).addClass('active');
             });
+            */
+            
+            // Row events
+            $('#incidentes').on("click",".t",function() {
+                $(this).parent('div').find('.hide').toggle();
+            });
         });
     </script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
     <!--  Para simular la tabla de deptos y que funcione getStateChecked() en fe.js-->
     <div id="table_totalxd" class="hide">
         <input type="hidden" id="state" centroid="<?php echo $centroid ?>" />
