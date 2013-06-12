@@ -78,7 +78,7 @@ function map() {
     OpenLayers.ImgPath = base_ol + "/media/js/openlayers/img/";
     
     var maxE = new OpenLayers.Bounds(
-			-9099122, -471155, -7441396, 1505171  // Colombia con San Andrés
+			-8599122, -471155, -7441396, 1505171  // Colombia con San Andrés
     );
     
     map = new OpenLayers.Map({
@@ -349,6 +349,7 @@ function onFeatureSelect(attrs) {
             // Portal EHP
             if (is_portal) {
                 $('#incidentes').html(_html);
+                $('#volver').show();
             }
             else {
                 // Modal window, in fe.js

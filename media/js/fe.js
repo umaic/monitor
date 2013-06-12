@@ -6,13 +6,15 @@ var base_ol = '';
 var is_portal = false;
 var num_carga = 20;
 
+var resetLimit = false;
+
 $(function(){
 
     if (typeof portal !== "undefined") {
         is_portal = true;
-        //base = 'http://monitor.colombiassh.org';
+        base = 'http://monitor.colombiassh.org';
         base_ol = '/monitor';
-        base = '/monitor';
+        //base = '/monitor';
     }
 
     $("#loading")
@@ -176,6 +178,8 @@ $(function(){
 
             totalesxDepto();
             addFeaturesFirstTime();
+
+            resetLimit = true;
         }
     });
 
@@ -353,7 +357,14 @@ totalesxDepto = function(more) {
             $('.tab_data').html('');
         } 
 
-        var limiti = $('.report_list_map:not(.from_map)').length;
+        var limiti;
+        if (resetLimit) {
+            limiti = 0;
+        }
+        else {
+            limiti = $('.report_list_map:not(.from_map)').length;
+        }
+
         var term = ['ec', 'dn'];
         
         if (limiti == 0) {
@@ -366,7 +377,6 @@ totalesxDepto = function(more) {
             dataType: 'jsonp',
             beforeSend: function(){ $('#loading').show() },
             success: function(json){
-                $('#loading').hide();
 
                 //for(jj in json) {
                     num_total = json['t'];
@@ -374,7 +384,10 @@ totalesxDepto = function(more) {
                     var _html = '';
                     if (num > 0) {
                         if (limiti == 0) {
-                            _html += '<div class="right">Eventos en el periodo: ' + num_total + ' &nbsp;</div>';
+                            _html += '<div class="report_list_map total"> ' +
+                                    ' Total: ' + num_total + ' &nbsp;' +
+                                    ' Violencia: ' + num_d + '</div>' +
+                                    ' Desastres: ' + num_d + '</div>' +
                         }
                         for(var i=0, j=num; i < j; i+=1) {
                             _js = json['e'][i];
@@ -384,6 +397,7 @@ totalesxDepto = function(more) {
                                 //'<div class="date detail">'+ _date +'</div> ' +
                                 '<div class="t clear">' + _js.t +'</div> ' +
                                 '<div class="hide">' +
+                                    '<div class="date detail">'+ _js.d +'</div> ' +
                                     '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
                                     '<a href="http://sidih.colombiassh.org/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
                                     'Perfil '+ _js.ldn +'</a></span></div> ' +
@@ -454,7 +468,7 @@ totalesxDepto = function(more) {
                         } 
                     }
                     else {
-                        _html += '<div class="no">No hay eventos registrados</div>';
+                        _html = '<div class="no">No hay eventos registrados</div>';
                     }
                     
                     $div = $('#incidentes');
@@ -480,6 +494,8 @@ totalesxDepto = function(more) {
                 if (_states != 0){
                     selDepto($('#state').attr('centroid'));   // in map.js
                 }
+                
+                $('#loading').hide();
             }
         });
     
