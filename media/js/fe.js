@@ -47,6 +47,31 @@ $(function(){
         $(this).closest('.filtro').slideUp();
     });
 
+    // Oculta eventos
+    $('.btn_show_e').click(function() {
+
+        var cs = $(this).attr('class').split(' ');
+        
+        if (cs[0] == 'ec') {
+            var ly = map.getLayersByName('Emergencia Compleja')[0];
+        }
+        else {
+            var ly = map.getLayersByName('Desastres Naturales')[0];
+        }
+        
+        if (ly.getVisibility()) {
+            $(this).html('Mostrar eventos'); 
+            ly.setVisibility(false);
+        }
+        else {
+            $(this).html('Ocultar eventos'); 
+            ly.setVisibility(true);
+        }
+        
+        $(this).closest('.filtro').slideUp();
+        
+    });
+
     // Click outside menu
     $(document).click(function(e) {
         if (!$(e.target).closest('.cat, .filtro').length) {
@@ -103,7 +128,7 @@ $(function(){
 
     // Date events
     var _ms = 2;  // Meses hacia atras
-    var _ds = 30; // Dias iniciales hacia atras
+    var _ds = 8; // Dias iniciales hacia atras
 
     var _today = new Date();
     var _year = _today.getFullYear();
@@ -380,20 +405,25 @@ totalesxDepto = function(more) {
 
                 //for(jj in json) {
                     num_total = json['t'];
+                    num_e = json['t_e'];
+                    num_d = json['t_d'];
                     num = json['e'].length;
                     var _html = '';
                     if (num > 0) {
                         if (limiti == 0) {
                             _html += '<div class="report_list_map total"> ' +
-                                    ' Total: ' + num_total + ' &nbsp;' +
-                                    ' Violencia: ' + num_d + '</div>' +
-                                    ' Desastres: ' + num_d + '</div>' +
+                                    ' <div id="num_total" class="inline">Total: ' + num_total + '</div>' +
+                                    ' <div class="inline violencia">Violencia: ' + num_e + '</div>' +
+                                    ' <div class="inline desastres">Desastres: ' + num_d + '</div></div>';
                         }
+
                         for(var i=0, j=num; i < j; i+=1) {
                             _js = json['e'][i];
                             _dt = _js.d.split(/\W+/);
                             _date = [_dt[2],_mes[_dt[1]*1],_dt[0]].join(' ');
-                            _html += '<div class="clear report_list_map ' + _js.sys + '"> ' +
+                            _html += ''+
+                                '<div class="clear report_list_map report_list_map_' + _js.sys + '"> ' +
+                                '<div class="l ' + _js.sys + '"> ' + _js.sys.substring(0,1).toUpperCase() + '</div> ' +
                                 //'<div class="date detail">'+ _date +'</div> ' +
                                 '<div class="t clear">' + _js.t +'</div> ' +
                                 '<div class="hide">' +
@@ -592,6 +622,14 @@ getYear = function(c) {
 
 setYear = function(c,y) { 
     $('#yyyy_' + c).val(y);
+    
+    var se = getStartEnd();
+
+    var ini_t = new Date(getStartEnd('ini')*1000);
+    var fin_t = new Date(getStartEnd('fin')*1000);
+
+    $('#periodo_texto').html(ini_t.getDate() + '-' + _mes[ini_t.getMonth()] + ' ' +ini_t.getFullYear() + ' al ' + fin_t.getDate() + '-' + _mes[fin_t.getMonth()] + ' ' +fin_t.getFullYear());
+
 }
 
 markIniFin = function(id,im,iy,fd,fm,fy) { 

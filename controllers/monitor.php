@@ -412,6 +412,8 @@ class MonitorController {
         //$desas = array();
         $limit = 20;
         $total = 0;
+        $total_ec = 0;
+        $total_dn = 0;
         $sys = array('violencia','desastres');
         
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
@@ -521,6 +523,14 @@ class MonitorController {
                 $conf[] = $_conf;
             }
 
+            // Totales
+            if (empty($_db)) {
+                $total_ec = count($conf);
+            }
+            else {
+                $total_dn = count($conf);
+            }
+            
             $evs = array_merge($evs, $conf);
 
             $_sqlt = sprintf($_sql_total,$_db,$_db,$_db, $conds[$_d]);
@@ -535,11 +545,13 @@ class MonitorController {
         }
         
         // Ordena por fecha desc los eventos para mezclarlos
+        /*
         usort($evs, function($a, $b){
             return strtotime($b['d']) - strtotime($a['d']);
         });
+         */
         
-        return array('e' => $evs, 't' => $total);
+        return array('e' => $evs, 't' => $total, 't_e' => $total_ec, 't_d' => $total_dn);
 
     }
 

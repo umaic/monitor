@@ -83,6 +83,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
                 </div>
                 <div class="right">
+                    <div id="" class="ec btn btn_show_e">Ocultar eventos</div>
                     <div id="btn_fcat_ec" class="ec btn btn_fcat">Filtrar mapa</div>
                 </div>
                 <div class="fcat_list">
@@ -143,7 +144,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
                 </div>
                 <div class="right">
-                    <div id="btn_fcat_ec" class="dn btn btn_fcat">Filtrar mapa</div>
+                    <div id="" class="dn btn btn_show_e">Ocultar eventos</div>
+                    <div id="btn_fcat_dn" class="dn btn btn_fcat">Filtrar mapa</div>
                 </div>
                 <div class="fcat_list">
                     <?php 

@@ -481,12 +481,18 @@ div.filtro_fecha ul li.selected {
 /* Lista de reportes click Feature */
 div.report_list_map {
     background-color: #f9f9f9;
-    padding: 10px;
+    padding: 10px 20px 10px 10px;
     border-top: 1px solid #fff;
+    position: relative;
+    min-height: 30px;
 }
-div.report_list_map:hover {
-    background-color: #ffffea;
+div.report_list_map_violencia:hover {
+    background-color: #FFE9EA;
 }
+div.report_list_map_desastres:hover {
+    background-color: #D0FFD0;
+}
+
 div.report_list_map:hover div.t {
     text-decoration: underline;
 }
@@ -538,8 +544,12 @@ div.report_list_map div.detail {
 div.report_list_map.total {
     background-color: #eeeeee !important;
     font-weight: bold;
+    font-size: 14px;
 }
 
+div.report_list_map.total #num_total {
+    background-color: #333333;
+}
 div#cargar_mas {
     width: 100px;
     margin: 10px auto;
@@ -559,11 +569,22 @@ div#mase {
     margin: 10px;
 }
 
+.violencia,
+.desastres,
+#num_total {
+    padding: 3px;
+    color: #fff;
+}
 .violencia {
-    border-left: 2px solid #d40000;
+    background-color: #d40000;
 }
 .desastres {
-    border-left: 2px solid #2ca02c;
+    background-color: #2ca02c;
+}
+.report_list_map .l {
+    position: absolute; 
+    right:3px;
+    top: 1px;
 }
 
 /* Generales */

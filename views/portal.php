@@ -141,10 +141,12 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <div id="time" class="inline">
                         <label class="inline">Consultar:</label>
                         <select id="stime">
+                            <option value="s" selected>Ultima semana</option>
+                            <option value="m">Ultimo mes</option>
                             <option value="a">Todo el a&ntilde;o</option>
-                            <option value="m" selected="selected">Ultimo mes</option>
-                            <option value="s">Ultima semana</option>
                         </select>
+                        &nbsp;
+                        <div class="inline" id="periodo_texto"></div>
                     </div>
                 </div>
                 <div class="clear"></div>
