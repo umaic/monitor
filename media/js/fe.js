@@ -316,7 +316,7 @@ $(function(){
     
     });
 
-    totalesxDepto();
+    //totalesxDepto();
 
     map();
 });
@@ -532,7 +532,6 @@ totalesxDepto = function(more) {
                 
                 $('#loading').hide();
                 
-                //$('#incidentes').perfectScrollbar();
             }
         });
     

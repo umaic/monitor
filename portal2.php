@@ -3,9 +3,10 @@
 <style type="text/css">
     body {
         font-family: Arial;
+        margin: 0;
     }
     #monitor {
-        width: 800px;
+        width: 900px;
         height: 400px;
     }
     #map, #aaaa {
@@ -15,15 +16,15 @@
     #tabs div.tab {
         font-size: 11px;
     }
-    /* Alto de la lista de eventos */
-    #incidentes, #totles {
+    #incidentes, #totales {
         width: 400px;
     }
+    /* Alto de la lista de eventos */
     #incidentes {
         position: relative; /* Para que funcione perfectScrollbar */
         height: 400px;
         font-size: 11px;
-        overflow: auto;
+        overflow: hidden;
     }
 </style>
 </head>
