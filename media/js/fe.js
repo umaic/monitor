@@ -5,6 +5,7 @@ var base = '';
 var base_ol = '';
 var is_portal = false;
 var num_carga = 20;
+var cargar_mas = 0;  // Cuenta las veces que se hace click en cargar mas
 
 var resetLimit = false;
 
@@ -14,7 +15,9 @@ $(function(){
         is_portal = true;
         //base = 'http://monitor.colombiassh.org';
         base_ol = '/monitor';
-        base = '/monitor';
+        //base = '/monitor';
+
+        base = (window.location.hostname == 'localhost') ? '/monitor' : 'http://monitor.colombiassh.org';
     }
 
     $("#loading")
@@ -206,6 +209,7 @@ $(function(){
             addFeaturesFirstTime();
 
             resetLimit = true;
+            cargar_mas = 0;
         }
     });
 
@@ -388,7 +392,8 @@ totalesxDepto = function(more) {
             limiti = 0;
         }
         else {
-            limiti = $('.report_list_map:not(.from_map)').length;
+            //limiti = $('.report_list_map:not(.from_map)').length;
+            limiti = cargar_mas * num_carga;
         }
 
         var term = ['ec', 'dn'];
@@ -513,6 +518,7 @@ totalesxDepto = function(more) {
 
                 // Cargar mas evento
                 $('.cargar_mas').click(function() {
+                    cargar_mas += 1;
                     totalesxDepto(true);
                     return false;
                 });
@@ -526,7 +532,7 @@ totalesxDepto = function(more) {
                 
                 $('#loading').hide();
                 
-                $('#incidentes').perfectScrollbar();
+                //$('#incidentes').perfectScrollbar();
             }
         });
     

@@ -434,18 +434,16 @@ class MonitorController {
         $_selet_csv = "SELECT DISTINCT i.id AS id, i.incident_title AS t, i.incident_date AS date, l.location_name AS ln, state_id ";
         $_sql_csv = "$_selet_csv $_from $_order $_limit";
         
-        $_sql_total = "SELECT COUNT(i.id) AS n $_from LIMIT 1";
+        $_sql_total = "SELECT COUNT(DISTINCT i.id) AS n $_from LIMIT 1";
         
         // Total ec
         $_sql = sprintf($_sql_total,'','','',$conds[0]);
-        echo $_sql;
         $_rs = $this->db->open($_sql);
         $_rt = $this->db->FO($_rs);
         $total_ec = (!empty($_rt)) ? $_rt->n : 0;
         
         // Total dn
         $_sql = sprintf($_sql_total,$_db_dn,$_db_dn,$_db_dn, $conds[1]);
-        echo $_sql;
         $_rs = $this->db->open($_sql);
         $_rt = $this->db->FO($_rs);
         $total_dn = (!empty($_rt)) ? $_rt->n : 0;
