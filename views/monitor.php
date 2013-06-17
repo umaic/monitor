@@ -287,11 +287,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         <label class="inline">o consultar:</label>
                         <select id="stime">
                             <option value=0>----</option>
-                            <option value="a">Todo el a&ntilde;o</option>
-                            <option value="m" selected="selected">Ultimo mes</option>
-                            <option value="s">Ultima semana</option>
-                            <option value="ay">Ayer y hoy</option>
                             <option value="h">Hoy</option>
+                            <option value="ay">Ayer y hoy</option>
+                            <option value="s" selected="selected">Ultima semana</option>
+                            <option value="m">Ultimo mes</option>
+                            <option value="a">Todo el a&ntilde;o</option>
                         </select>
                     </div>
                 </div>
@@ -321,7 +321,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
     <div id="footer">
     </div>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui-1.8.21.custom.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>

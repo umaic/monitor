@@ -8,19 +8,22 @@
         width: 800px;
         height: 400px;
     }
-    #mapa, #menu {
+    #map, #aaaa {
         width: 400px;
+        margin: 0 !important;
     }
     #tabs div.tab {
         font-size: 11px;
     }
     /* Alto de la lista de eventos */
-    #incidentes {
+    #incidentes, #totles {
         width: 400px;
+    }
+    #incidentes {
+        position: relative; /* Para que funcione perfectScrollbar */
         height: 400px;
         font-size: 11px;
         overflow: auto;
-        margin: 30px 0 0 0;
     }
 </style>
 </head>

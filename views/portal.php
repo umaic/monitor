@@ -1,6 +1,7 @@
 <?php define('BASE_PORTAL', '/monitor/'); ?>
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.min.css" />
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/perfect-scrollbar.min.css" />
 
 <?php 
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
@@ -129,9 +130,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         <img src="<?php echo BASE_PORTAL ?>media/img/ajax-loader.png" />
     </div>
     <div id="content" class="clear">
-        <div class="left">
             <div id="menu">
-                <div id="aaaa">
+                <div id="aaaa" class="left">
                     <input type="hidden" id="currentCatE" value="0">
                     <input type="hidden" id="currentCatD" value="0">
                     <input type="hidden" id="startDate" value="">
@@ -149,20 +149,32 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         <div class="inline" id="periodo_texto"></div>
                     </div>
                 </div>
-                <div class="clear"></div>
+                <div id="totales" class="right">
+                    <div class="total">
+                        <div id="num_total" class="inline">Total: <span id="num_total_span"></span></div>
+                        <div id="num_total_ec" class="inline violencia">Violencia: <span id="num_total_ec_span"></span></div>
+                        <div id="num_total_dn" class="inline desastres">Desastres: <span id="num_total_dn_span"></span></div>
+                    </div>
+                </div>
             </div>
+            <div class="clear"></div>
+        <div class="left">
             <div id="map"></div>
         </div>
-        <div id="incidentes" class="right">
+        <div id="incidentes" class="">
         </div>
         <div class="clear"></div>
     </div>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-1.7.2.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui-1.8.21.custom.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/LoadingPanel.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.mousewheel.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/perfect-scrollbar.min.js"></script>
     <script type="text/javascript">
         var portal = 1;
         $(function() {
@@ -179,10 +191,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             $('#incidentes').on("click",".t",function() {
                 $(this).parent('div').find('.hide').toggle();
             });
+            
         });
     </script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
     <!--  Para simular la tabla de deptos y que funcione getStateChecked() en fe.js-->
     <div id="table_totalxd" class="hide">
         <input type="hidden" id="state" centroid="<?php echo $centroid ?>" />

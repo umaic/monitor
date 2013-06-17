@@ -407,7 +407,7 @@ class MonitorController {
      */ 
     public function getIncidentesPortal($ini, $fin, $cats, $states, $limiti) {
         
-        $_db = $this->db_dn.'.';
+        $_db_dn = $this->db_dn.'.';
         $evs = array();
         //$desas = array();
         $limit = 20;
@@ -419,29 +419,47 @@ class MonitorController {
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
         
         $cats_parent_id = array();
-        $_sql_csv = "SELECT DISTINCT i.id AS id, i.incident_title AS t, i.incident_date AS date, l.location_name AS ln, state_id
-            FROM %slocation AS l
-                 INNER JOIN %sincident AS i ON l.id = i.location_id
-                 INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id
-                 WHERE $cond_csv
-                 ORDER BY date DESC
-                 LIMIT $limiti, $limit
-                 ";
-        
-        $_sql_total = "SELECT COUNT(i.id) AS n
-            FROM %slocation AS l
-                 INNER JOIN %sincident AS i ON l.id = i.location_id
-                 INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id
-                 WHERE $cond_csv
-                 LIMIT 1
-                 ";
         
         $conds = array($cond_cats_ec, $cond_cats_dn);
+        
+        $_from = "FROM %slocation AS l
+                 INNER JOIN %sincident AS i ON l.id = i.location_id
+                 INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id
+                 WHERE $cond_csv";
+
+        $_order = " ORDER BY date DESC";
+
+        $_limit = "LIMIT $limiti, $limit";
+
+        $_selet_csv = "SELECT DISTINCT i.id AS id, i.incident_title AS t, i.incident_date AS date, l.location_name AS ln, state_id ";
+        $_sql_csv = "$_selet_csv $_from $_order $_limit";
+        
+        $_sql_total = "SELECT COUNT(i.id) AS n $_from LIMIT 1";
+        
+        // Total ec
+        $_sql = sprintf($_sql_total,'','','',$conds[0]);
+        echo $_sql;
+        $_rs = $this->db->open($_sql);
+        $_rt = $this->db->FO($_rs);
+        $total_ec = (!empty($_rt)) ? $_rt->n : 0;
+        
+        // Total dn
+        $_sql = sprintf($_sql_total,$_db_dn,$_db_dn,$_db_dn, $conds[1]);
+        echo $_sql;
+        $_rs = $this->db->open($_sql);
+        $_rt = $this->db->FO($_rs);
+        $total_dn = (!empty($_rt)) ? $_rt->n : 0;
+
+        $total = $total_ec + $total_dn;
+        
 
         foreach($this->dbs as $_d => $_db) {
+            
             $conf =array();
+
             $_sql = sprintf($_sql_csv,$_db,$_db,$_db, $conds[$_d]);
             $_rs = $this->db->open($_sql);
+
             while($_r = $this->db->FO($_rs)) {
                 
                 $iid = $_r->id;
@@ -523,23 +541,9 @@ class MonitorController {
                 $conf[] = $_conf;
             }
 
-            // Totales
-            if (empty($_db)) {
-                $total_ec = count($conf);
-            }
-            else {
-                $total_dn = count($conf);
-            }
-            
             $evs = array_merge($evs, $conf);
 
-            $_sqlt = sprintf($_sql_total,$_db,$_db,$_db, $conds[$_d]);
-            $_rst = $this->db->open($_sqlt);
-            $_rt = $this->db->FO($_rst);
-
-
             //$evs = $conf;  
-            $total += $_rt->n;
 
             //$evs[] = array('e' => $conf, 't' => $_rt->n);
         }

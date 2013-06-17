@@ -12,9 +12,9 @@ $(function(){
 
     if (typeof portal !== "undefined") {
         is_portal = true;
-        base = 'http://monitor.colombiassh.org';
+        //base = 'http://monitor.colombiassh.org';
         base_ol = '/monitor';
-        //base = '/monitor';
+        base = '/monitor';
     }
 
     $("#loading")
@@ -128,7 +128,7 @@ $(function(){
 
     // Date events
     var _ms = 2;  // Meses hacia atras
-    var _ds = 8; // Dias iniciales hacia atras
+    var _ds = 7; // Dias iniciales hacia atras
 
     var _today = new Date();
     var _year = _today.getFullYear();
@@ -136,6 +136,7 @@ $(function(){
     var _day = _today.getDate();
     var _ii = new Date(_year,_month,_day,0,0).getTime();
     var _iniObj = new Date(_ii - daysToMiliseconds(_ds));
+    console.log(_iniObj);
     var _iniD = _iniObj.getDate();
     var _iniM = _iniObj.getMonth();
     var _iniY = _iniObj.getFullYear();
@@ -408,15 +409,13 @@ totalesxDepto = function(more) {
                     num_e = json['t_e'];
                     num_d = json['t_d'];
                     num = json['e'].length;
+
+                    $('#num_total_span').html(num_total);
+                    $('#num_total_ec_span').html(num_e);
+                    $('#num_total_dn_span').html(num_d);
+
                     var _html = '';
                     if (num > 0) {
-                        if (limiti == 0) {
-                            _html += '<div class="report_list_map total"> ' +
-                                    ' <div id="num_total" class="inline">Total: ' + num_total + '</div>' +
-                                    ' <div class="inline violencia">Violencia: ' + num_e + '</div>' +
-                                    ' <div class="inline desastres">Desastres: ' + num_d + '</div></div>';
-                        }
-
                         for(var i=0, j=num; i < j; i+=1) {
                             _js = json['e'][i];
                             _dt = _js.d.split(/\W+/);
@@ -526,6 +525,8 @@ totalesxDepto = function(more) {
                 }
                 
                 $('#loading').hide();
+                
+                $('#incidentes').perfectScrollbar();
             }
         });
     
@@ -628,7 +629,7 @@ setYear = function(c,y) {
     var ini_t = new Date(getStartEnd('ini')*1000);
     var fin_t = new Date(getStartEnd('fin')*1000);
 
-    $('#periodo_texto').html(ini_t.getDate() + '-' + _mes[ini_t.getMonth()] + ' ' +ini_t.getFullYear() + ' al ' + fin_t.getDate() + '-' + _mes[fin_t.getMonth()] + ' ' +fin_t.getFullYear());
+    $('#periodo_texto').html(ini_t.getDate() + '-' + _mes[1 + ini_t.getMonth()] + ' ' +ini_t.getFullYear() + ' al ' + fin_t.getDate() + '-' + _mes[1 + fin_t.getMonth()] + ' ' +fin_t.getFullYear());
 
 }
 

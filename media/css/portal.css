@@ -192,10 +192,6 @@ div.tecdn .fcat ul li.h {
    height: 100%;
    margin: 0;
 }
-#map {
-    height: 100%;
-   margin: 0;
-}
 #tabs {
     width: 100%;
     margin-bottom: -1px;
@@ -541,13 +537,17 @@ div.report_list_map div.detail {
     color: #908B88;
 }
 
-div.report_list_map.total {
+#totales .total {
     background-color: #eeeeee !important;
     font-weight: bold;
     font-size: 14px;
 }
+#totales .total div {
+    width: 124px;
+    text-align: center;
+}
 
-div.report_list_map.total #num_total {
+#totales .total #num_total {
     background-color: #333333;
 }
 div#cargar_mas {
