@@ -547,11 +547,9 @@ class MonitorController {
         }
         
         // Ordena por fecha desc los eventos para mezclarlos
-        /*
         usort($evs, function($a, $b){
             return strtotime($b['d']) - strtotime($a['d']);
         });
-         */
         
         return array('e' => $evs, 't' => $total, 't_e' => $total_ec, 't_d' => $total_dn);
 
