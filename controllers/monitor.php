@@ -547,12 +547,19 @@ class MonitorController {
         }
         
         // Ordena por fecha desc los eventos para mezclarlos
-        usort($evs, function($a, $b){
-            return strtotime($b['d']) - strtotime($a['d']);
-        });
+        usort($evs, array('MonitorController', 'orderArrayByDate'));
         
         return array('e' => $evs, 't' => $total, 't_e' => $total_ec, 't_d' => $total_dn);
 
+    }
+
+    /*
+     * Función para usar con usor y ordenar por la llave 'd' (fecha) de un arreglo
+     * @param array $a
+     * @param array $b
+     */
+    private static function orderArrayByDate($a, $b) {
+        return strtotime($b['d']) - strtotime($a['d']);
     }
 
     /**
