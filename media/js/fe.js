@@ -11,13 +11,17 @@ var resetLimit = false;
 
 $(function(){
 
+    if (window.location.hostname == 'localhost') {
+        base = '/monitor';
+        base_ol = '/monitor';
+    }
+    else {
+        base = 'http://monitor.colombiassh.org';
+        base_ol = '';
+    }
+
     if (typeof portal !== "undefined") {
         is_portal = true;
-        //base = 'http://monitor.colombiassh.org';
-        base_ol = '/monitor';
-        //base = '/monitor';
-
-        base = (window.location.hostname == 'localhost') ? '/monitor' : 'http://monitor.colombiassh.org';
     }
 
     $("#loading")
@@ -139,7 +143,6 @@ $(function(){
     var _day = _today.getDate();
     var _ii = new Date(_year,_month,_day,0,0).getTime();
     var _iniObj = new Date(_ii - daysToMiliseconds(_ds));
-    console.log(_iniObj);
     var _iniD = _iniObj.getDate();
     var _iniM = _iniObj.getMonth();
     var _iniY = _iniObj.getFullYear();
@@ -316,7 +319,7 @@ $(function(){
     
     });
 
-    //totalesxDepto();
+    totalesxDepto();
 
     map();
 });
@@ -663,7 +666,8 @@ getStatesChecked = function(){
 
     var _sts = [];
     
-    $('#table_totalxd').find(':checkbox:not(:first):checked').each(function() {
+    $('#table_totalxd').find(':checked').each(function() {
+        
         if ($(this).val() != 0) {
             _sts.push($(this).val());
         }

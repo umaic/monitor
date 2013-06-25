@@ -309,7 +309,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                                     <div id="download_incidents" class="xls">Descargar eventos</div>
                                 </td>
                             </tr>
-                            <tr><th><input type="checkbox" id="totalxd_all_chk" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
+                            <tr><th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
                         </thead>
                         <tbody>
                         </tbody>
