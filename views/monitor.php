@@ -322,7 +322,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="footer">
     </div>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui-1.8.21.custom.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
