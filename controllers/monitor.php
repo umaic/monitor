@@ -523,8 +523,17 @@ class MonitorController {
                  
                 $state = (empty($_row_s->state)) ? '' : $_row_s->state;
                 
+                // Ocultamos actores en titulo
+                $_ti = explode('.', $_r->t);
+                if (count($_ti) == 4) {
+                    $_titulo = $_ti[0].'.'.$_ti[2].'.'.$_ti[3];
+                }
+                else {
+                    $_titulo = $_r->t;
+                }
+
                 $_conf = array(
-                't' => $_r->t,
+                't' => $_titulo,
                 'd' => $_r->date,
                 'c' => $cats_tree,
                 'f' => $source,
