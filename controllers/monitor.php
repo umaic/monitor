@@ -210,16 +210,19 @@ class MonitorController {
 
             }
 
-            if (!empty($_nec) || !empty($_ndn)) {
+            //if (!empty($_nec) || !empty($_ndn)) {
+            
+            $hide = (empty($_nec) && empty($_ndn)) ? 'hide' : '';
              
                 $r[] = array('d' => $_row->state,
                              'ec' => $_nec,
                              'dn' => $_ndn,
                              'c' => $_row->centroid,
                              'state_id' => $_row->id,
-                             'css' => $class
+                             'css' => $class,
+                             'hide' => $hide
                             );
-            }
+            //}
         }
 
         
@@ -310,11 +313,10 @@ class MonitorController {
         
         $limi = '~';
         $nl = "\r\n";
-        $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Fuente"'.$limi.'"Descripcion"'.$limi.'"Referecia"'.$limi.'"Departamento"'.$limi.'"Municipio"'.$nl;
+        $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Evento"'.$limi.'"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.'"Referecia"'.$limi.'"Departamento"'.$limi.'"Municipio"'.$nl;
 
-        
-
-        $_sql_csv = "SELECT DISTINCT(i.id) AS id, i.incident_date AS date, l.location_name AS ln, city_id, state_id
+        $_sql_csv = "SELECT DISTINCT(i.id) AS id, i.incident_date AS date, i.incident_title AS title,
+            l.location_name AS ln, city_id, state_id
             FROM %slocation AS l
                  INNER JOIN %sincident AS i ON l.id = i.location_id
                  INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id
@@ -348,7 +350,7 @@ class MonitorController {
             $_row_s = $this->db->FO($_rss_s);
              
             $state = (empty($_row_s->state)) ? '' : $_row_s->state;
-            $csv .= '"Violencia armada"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi;
+            $csv .= '"Violencia armada"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->title.'"'.$limi.'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi;
             $csv .= '"'.$ref.'"'.$limi.'"'.$state.'"'.$limi.'"'.$city.'"'.$nl;
 
         }
@@ -383,7 +385,7 @@ class MonitorController {
             $_row_s = $this->db->FO($_rss_s);
              
             $state = (empty($_row_s->state)) ? '' : $_row_s->state;
-            $csv .= '"Desastre"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi;
+            $csv .= '"Desastre"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->title.'"'.$limi.'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi;
             $csv .= '"'.$ref.'"'.$limi.'"'.$state.'"'.$limi.'"'.$city.'"'.$nl;
 
         }

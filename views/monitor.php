@@ -60,7 +60,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
     -->
         <div id="tec" class="tecdn">
-            <a href="http://www.colombiassh.org/emergenciacompleja/" target="_blank">
+            <a href="http://www.colombiassh.org/emergenciacompleja/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_ec.png" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
@@ -121,7 +121,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div id="tdn" class="tecdn">
-            <a href="http://inundaciones.colombiassh.org" target="_blank">
+            <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_dn.png" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>

@@ -124,7 +124,7 @@ $(function(){
                 url: 'download_incidents',
                 success: function() {
                     $('#loading').hide();
-                    location.href = base + 'export/xls/incidentes/Monitor-Incidentes';            
+                    location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            
                 }
             });
     });
@@ -322,6 +322,24 @@ $(function(){
     totalesxDepto();
 
     map();
+    
+    // Click en el departamento en la lista derecha
+    //
+    var $table = $('#table_totalxd');
+
+    $table.find(':checkbox').live('click', function() {
+        if ($(this).is(':checked')) {
+            $(this).closest('tr').removeClass('unselected');
+        }
+        else {
+            $(this).closest('tr').addClass('unselected');
+        }
+    });
+                
+    // Row events
+    $table.find('tr:not(:first) td.n, tr:not(:last) td.n').live('click', function() {
+        selDepto($(this).closest('tr').find('td.centroid').html());   // in map.js
+    });
 });
 
 m = function(o){	
@@ -555,27 +573,21 @@ totalesxDepto = function(more) {
                 var _t = data.t;
                 var checked;
 
-                $('#table_totalxd tbody').append('<tr class="totalxd"><td></td><td class="left">Total</td><td class="ec">' + _t.ec + '</td><td class="dn">' + _t.dn + '</td></tr>');
+                var $table = $('#table_totalxd tbody');
+
+                $table.append('<tr class="totalxd"><td></td><td class="left">Total</td><td class="ec">' + _t.ec + '</td><td class="dn">' + _t.dn + '</td></tr>');
 
                 for (var d in data.r) {
                     _i = data.r[d];
                     checked = (_i.css == '') ? 'checked' : '';
-                    $('#table_totalxd tbody').append('<tr class="f '+_i.css+'"><td><input type="checkbox" name="deptos[]" value="'+_i.state_id+'" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>');
+                    $table.append('<tr class="f ' + _i.css + ' ' + _i.hide + '"><td><input type="checkbox" name="deptos[]" value="'+_i.state_id+'" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>');
                 }
                 
-                // Row events
-                $('#table_totalxd').find('tr:not(:first) td.n, tr:not(:last) td.n').live('click', function() {
-                    selDepto($(this).closest('tr').find('td.centroid').html());   // in map.js
-                });
                 
-                $('#table_totalxd').find(':checkbox').live('click', function() {
-                    if ($(this).is(':checked')) {
-                        $(this).closest('tr').removeClass('unselected');
-                    }
-                    else {
-                        $(this).closest('tr').addClass('unselected');
-                    }
-                });
+                // Aviso de no eventos
+                if ($table.find('.f:not(.hide)').length == 0) {
+                    $table.append('<tr><td colspan="4"><br />No existen eventos</td></tr>');
+                }
 
                 // Ordena tabla
                 //forceSortTable();
