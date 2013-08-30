@@ -250,9 +250,19 @@ div.tecdn .fcat ul li.h {
 #filtros div.selected {
     background-color: #000000;
 }
+#featured {
+    position: absolute;
+    top: 140px;
+    left: 100px;
+    padding: 20px 10px 20px 70px;
+    border: 1px solid #999999;
+    font-size: 18px;
+    border-radius: 3px;
+    background: #E5CB0C url(../img/paro_icon.png) no-repeat 10px 0;
+}
 #totalxd {
     position: absolute;
-    top: 170px;
+    top: 140px;
     right: 10px;
     width: 300px;
     max-height: 750px;

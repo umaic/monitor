@@ -5,7 +5,7 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
 <link rel="stylesheet" type="text/css" href="http://monitor.colombiassh.org/media/css/brand.css">
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.min.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
 </head>
 
@@ -211,6 +211,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="content">
         <!--<div id="ys"></div>-->
         <div id="map"></div>
+        <div id="featured">
+        Movilizaci&oacute;n social / paro
+        </div>
         <div id="totalxd" class="shadow">
             <div>
                 <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">

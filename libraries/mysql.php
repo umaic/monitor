@@ -12,7 +12,7 @@ class Mysql {
 
         $this->user = "monitor";
         $this->pass = "!7ujmmju7!";
-        $this->db = "ecompleja";
+        $this->db = "violencia_armada";
 
         //$this->conn = mysqli_connect($this->host,$this->user,$this->pass,$this->db);
 

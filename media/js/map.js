@@ -14,7 +14,7 @@ var nump_list = 15;
 var id_depto = '00';
 var rm_id_depto = false;
 var id_tema = id_org = 0;
-var url_xd = '/json/cluster/?m=0';
+var url_xd = '/json/cluster/?m=0&v=0';
 
 var subdomain_ec = 'emergenciacompleja';
 var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
@@ -24,6 +24,9 @@ var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
 var subdomain_dn = 'inundaciones';
 var url_dn = 'http://'+subdomain_dn+'.colombiassh.org' + url_xd;
 //var url_dn = 'http://190.66.6.168/' + subdomain_dn + url_xd;
+
+// Verificados se usan como destacados
+var url_ft = 'http://'+subdomain_dn + '.colombiassh.org/json/index/?m=0&v=1';
 
 var markerOpacity = 0.8;
 var selectCtrl;
@@ -224,8 +227,32 @@ function addFeatures(inst) {
         
         ajaxFeatures(_udn, l_dn);
     }
+    
+    // Destacados, ft=fetured
+    if (inst == 'ecdn' || inst == 'ft') {
+        
+        var uparams_ft = uparams.concat([['v', 1]]);
 
-    selectCtrl = new OpenLayers.Control.SelectFeature([l_ec, l_dn],
+        if (map.getLayersByName('Destacados').length > 0) {
+            l_ft = map.getLayersByName('Destacados')[0];
+            l_ft.removeFeatures(l_ft.features);
+        }
+        else {
+            l_ft = new OpenLayers.Layer.Vector('Destacados', 
+                { styleMap: Styles });
+
+            map.addLayer(l_ft);
+        }
+        
+        var _uft = addURLParameter(url_ft, uparams_ft);
+        
+        // States filter
+        //_uft = addURLParameter(_uft, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+        
+        ajaxFeatures(_uft, l_ft);
+    }
+
+    selectCtrl = new OpenLayers.Control.SelectFeature([l_ec, l_dn, l_ft],
         { 
             clickout: true,
             onSelect: function(feature) { onFeatureSelect(feature.attributes)  }
@@ -307,8 +334,8 @@ function onFeatureSelect(attrs) {
                 
                 _html += '<div class="clear"></div> ';
                 
-                if (show['desc']) {
-                    _html += '<div class="desc hide"><b>Descripci&oacute;n</b>: '+ _js.desc +'</div> ';
+                if (show['desc'] || _js.f.length == 0) {
+                    _html += '<div class="desc"><b>Descripci&oacute;n</b>: '+ _js.desc +'</div> ';
                 } 
 
                 if (show['fuente']) {

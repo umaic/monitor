@@ -17,7 +17,7 @@ class MonitorController {
         
         require $this->root.'libraries/factory.php';
         $this->db = Factory::create('mysql');
-        $this->db_dn = 'inundacionesv2_1';    
+        $this->db_dn = 'inundaciones';    
         $this->dbs = array('', $this->db_dn.'.');
     }
 
