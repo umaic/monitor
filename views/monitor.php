@@ -61,7 +61,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     -->
         <div id="tec" class="tecdn">
             <a href="http://www.colombiassh.org/emergenciacompleja/reports/submit" target="_blank">
-                <img src="<?php echo BASE ?>media/img/logo_ec.png" />
+                <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
             <div class="cat it">
@@ -122,7 +122,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         </div>
         <div id="tdn" class="tecdn">
             <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">
-                <img src="<?php echo BASE ?>media/img/logo_dn.png" />
+                <img src="<?php echo BASE ?>media/img/logo_dn.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
             <div class="it cat">
@@ -187,6 +187,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <input type="hidden" id="endDate" value="">
             <input type="hidden" id="yyyy_ini" value="">
             <input type="hidden" id="yyyy_fin" value="">
+<<<<<<< .mine
+=======
             <?php 
             foreach($totalxy as $_a => $_t) { ?>
                 <div class="v">
@@ -232,9 +234,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <!--<div id="dslider"></div>
                 <div class="note">Seleccione el periodo usando la barra o la lista</div>-->
                 <div class="r">Seleccione un periodo de tiempo mas exacto</div>
+>>>>>>> .r19
                 <div id="ini_fin" class="inline">
-                    <div class="r">
-                        Desde:&nbsp;<input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
+                    <div class="r left">
+                        <label>Desde</label><input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
                         <div class="filtro_fecha" id="ini_div">
                             <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
                             <div class="right close"></div>
@@ -259,8 +262,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                             </div>
                         </div>
                     </div>
-                    <div class="r">
-                        Hasta:&nbsp;&nbsp;<input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
+                    <div class="r left">
+                        <label>Hasta</label><input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
                         <div class="filtro_fecha" id="fin_div">
                             <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
                             <div class="right close"></div>
@@ -297,7 +300,55 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                             <option value="a">Todo el a&ntilde;o</option>
                         </select>
                     </div>
+                    <div id="filter_states" class="filter left">Filtrar mapa</div>
+                    <div id="download_incidents" class="xls left">Descargar eventos</div>
                 </div>
+                <?php
+                   /* 
+            foreach($totalxy as $_a => $_t) { ?>
+                <div class="v">
+                    <div class="a">
+                        <?php echo $_a ?>
+                    </div>
+                    <!--
+                    <div>
+                        <div class="circle ec"></div><div class="n"><?php echo $_t['ec'] ?></div>
+                        <div class="circle dn clear"></div><div class="n"><?php echo $_t['dn'] ?></div>
+                    </div>
+                    -->
+                </div>
+            <?php
+            } 
+                    */
+            ?>
+        </div>
+    </div>
+        <div id="loading" class="alpha60">
+            <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
+        </div>
+    <div id="content">
+        <!--<div id="ys"></div>-->
+        <div id="map"></div>
+        <div id="totalxd" class="shadow">
+            <div id="mapas_tipos">
+                <h1>TIPO DE MAPA</h1>
+                <div class="mapa_tipo activo inline" data-tipo="afectacion"><img src="<?php echo BASE ?>media/img/people_affected_population_64px_icon.png" /><h1>Afectados</h1></div>
+                <div class="mapa_tipo inline" data-tipo="eventos"><img src="<?php echo BASE ?>media/img/activity_scale_operation_64px_icon.png" /><h1>Eventos</h1></div>
+            </div>
+            <div>
+                <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">
+                    <div id="new_event">
+                        Reportar un evento de desastre natural
+                    </div>
+                </a>
+            </div>
+            <div id="data">
+                <h1 class="inline">Eventos por</h1>
+                <select class="select">
+                    <option value="d">Departamento</option>
+                    <!--<option value="r">Regi&oacute;n</option>-->
+                </select>
+                
                 <!--
                 <div class="inline" id="totalxd_y">
                     <?php //echo date('Y') ?>
@@ -306,12 +357,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <div id="div_table_totalxd">
                     <table id="table_totalxd">
                         <thead>
-                            <tr>
-                                <td id="totalxd_menu" colspan="4">
-                                    <div id="filter_states" class="filter">Filtrar mapa</div>
-                                    <div id="download_incidents" class="xls">Descargar eventos</div>
-                                </td>
-                            </tr>
                             <tr><th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
                         </thead>
                         <tbody>

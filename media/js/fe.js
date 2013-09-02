@@ -6,12 +6,13 @@ var base_ol = '';
 var is_portal = false;
 var num_carga = 20;
 var cargar_mas = 0;  // Cuenta las veces que se hace click en cargar mas
+var _afectacion = 1;
 
 var resetLimit = false;
 
 $(function(){
 
-    if (window.location.hostname == 'localhost') {
+    if (window.location.hostname == 'localhost' || window.location.hostname == '190.66.6.168') {
         base = '/monitor';
         base_ol = '/monitor';
     }
@@ -23,8 +24,9 @@ $(function(){
     if (typeof portal !== "undefined") {
         is_portal = true;
     }
-
-    $("#loading")
+    
+    // Ajax loader
+    $(document)
     .ajaxStart(function(){ $('#loading').show(); })
     .ajaxStop(function(){ $('#loading').hide(); });
     
@@ -119,18 +121,33 @@ $(function(){
 
     // Descargar inicidentes
     $('#download_incidents').click(function() {
-        $('#loading').show();
+        //$('#loading').show();
         $.ajax({
-                url: 'download_incidents',
-                success: function() {
-                    $('#loading').hide();
-                    location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            
-                }
-            });
+            url: 'download_incidents',
+            success: function() {
+                //$('#loading').hide();
+                location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            
+            }
+        });
     });
 
     $('.close').click(function() { 
         $(this).closest('.filtro').slideUp();
+    });
+
+    // Tipo de mapa
+    $('.mapa_tipo:not(.active)').click(function() {
+        var that = this;
+
+        $.ajax({
+            url: 'mapa_tipo/' + $(that).data('tipo'),
+            success: function() {
+                $('.mapa_tipo').removeClass('activo');
+                $(that).addClass('activo');
+                addFeaturesFirstTime();
+                totalesxDepto();
+            }
+        });
     });
 
     // Date events
@@ -427,7 +444,7 @@ totalesxDepto = function(more) {
         $.ajax({
             url: base + '/getIncidentesPortal/' + _ini + '/' + _fin + '/' + _cats + '/' + limiti + '/' + _states ,
             dataType: 'jsonp',
-            beforeSend: function(){ $('#loading').show() },
+            //beforeSend: function(){ $('#loading').show() },
             success: function(json){
 
                 //for(jj in json) {
@@ -551,7 +568,7 @@ totalesxDepto = function(more) {
                     selDepto($('#state').attr('centroid'));   // in map.js
                 }
                 
-                $('#loading').hide();
+                //$('#loading').hide();
                 
             }
         });
@@ -686,4 +703,10 @@ getStatesChecked = function(){
     });
 
     return _sts.join(',');
+}
+
+getMapaAfectacion = function(){ 
+    
+    return ($('.mapa_tipo.activo').data('tipo') == 'eventos') ? 0 : 1;
+
 }

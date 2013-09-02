@@ -71,6 +71,10 @@ if (!empty($_GET) && isset($_GET['m'])) {
         case 'download_incidents':
             $mc->downloadIncidents();
         break;
+
+        case 'mapa_tipo':
+            $mc->setMapaTipo($_GET['tipo']);
+        break;
     }
 }
 else {

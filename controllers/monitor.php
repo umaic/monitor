@@ -107,7 +107,6 @@ class MonitorController {
         $ini = date('Y-m-d H:i:s', intval($ini));  // Se usa intval para que quede igual que ushahidi/application/helper/reports/ :740
         $fin = date('Y-m-d H:i:s', intval($fin));
 
-
         $_t = explode('|', $cats);
         $cond_cats_ec = '';
         if (!empty($_t[0])) {
@@ -611,5 +610,16 @@ class MonitorController {
         $_r = $this->db->FO($_rs);
         
         return array($_r->id, $_r->centroid);
+    }
+    
+    /*
+     * Coloca el tipo de mapa en session
+     * @param int $tipo
+     */
+    public function setMapaTipo($tipo) {
+        
+        $_SESSION['tipo_mapa'] = $tipo;
+
+        echo '1';
     }
 }

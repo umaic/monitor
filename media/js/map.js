@@ -16,10 +16,10 @@ var rm_id_depto = false;
 var id_tema = id_org = 0;
 var url_xd = '/json/cluster/?m=0&v=0';
 
-var subdomain_ec = 'emergenciacompleja';
-var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
-//var subdomain_ec = 'ecompleja'; 
-//var url_ec = 'http://190.66.6.168/' +subdomain_ec + url_xd;
+//var subdomain_ec = 'emergenciacompleja';
+//var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
+var subdomain_ec = 'violencia_armada'; 
+var url_ec = 'http://190.66.6.168/' +subdomain_ec + url_xd;
 
 var subdomain_dn = 'inundaciones';
 var url_dn = 'http://'+subdomain_dn+'.colombiassh.org' + url_xd;
@@ -203,6 +203,9 @@ function addFeatures(inst) {
         
         // States filter
         _uec = addURLParameter(_uec, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+
+        // Tipo mapa
+        _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getStatesChcked in fe.js
 
         ajaxFeatures(_uec, l_ec);
     }

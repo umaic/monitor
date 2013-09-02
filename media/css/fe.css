@@ -86,7 +86,6 @@ div.tecdn {
     top: 0;
     box-shadow: -1px 0 1px #e1e1e1;
     padding: 5px;
-    z-index: 1000; 
 }
 div.tecdn div.it {
     margin: 0 0 5px 0;
@@ -98,7 +97,7 @@ div.tecdn div.cat {
     border-top: 1px solid #cccccc;
     border-left: 1px solid #cccccc;
     background-color: #fff;
-    padding: 1px 0;
+    padding: 4px 0;
     font-size: 12px;
     width: 130px;
     margin: 0 auto;
@@ -125,6 +124,7 @@ div.tecdn .fcat {
     text-align: left;
     padding: 20px 30px;
     height: 400px;
+    z-index: 900;
 }
 div.tecdn .fcat_list {
     height: 300px;
@@ -182,7 +182,7 @@ div.tecdn .fcat ul li.h {
     z-index: 900;
 }
 #menu {
-    height: 34px;
+    height: 50px;
     background-color: #2b1100;
     padding: 5px 0;
 }
@@ -218,6 +218,11 @@ div.tecdn .fcat ul li.h {
     border-radius: 5px;
 }
 #menu #aaaa {
+}
+#menu label {
+    display: block;
+    font-size: 16px;
+    color: #fff;
 }
 #content {
    height: 100%;
@@ -273,6 +278,22 @@ div.tecdn .fcat ul li.h {
 }
 #totalxd #data {
     padding: 10px;
+}
+#totalxd #mapas_tipos {
+    padding: 5px 20px;
+}
+#totalxd .mapa_tipo {
+    padding: 10px 20px;
+    background-color: #f3f3f3;
+    border: 1px solid #ffffff;
+    text-align: center;
+    width: 80px;
+    cursor: pointer;
+}
+#totalxd .activo,
+#totalxd .mapa_tipo:hover {
+    background-color: #FEFD60;
+    border: 1px solid #DBC319;
 }
 #div_table_totalxd {
     max-height: 550px;
@@ -339,7 +360,7 @@ div.tecdn .fcat ul li.h {
     background: #ffd870 url(../img/asc.gif) no-repeat center right;
 }
 #totalxd h1 {
-    margin: 0 0 10px 0;
+    margin: 0;
     text-align: center;
     font-size: 20px;
 }
@@ -368,8 +389,10 @@ div.tecdn .fcat ul li.h {
     margin: 0 auto 10px auto;
 }
 #time select {
-    font-size: 11px;
+    /*font-size: 11px;*/
     border: 1px solid #cccccc;
+    padding: 5px;
+    border-radius: 3px;
 }
 #totalxd .note {
     margin: 0 0 10px 0 !important;
@@ -384,7 +407,6 @@ div.tecdn .fcat ul li.h {
 div#ini_fin input.fecha {
     width:140px;
     background: url(../img/gray_arrow.png) no-repeat right center, #efefef !important; 
-    font-size: 11px;
     border-radius: 4px;
     padding: 5px 25px 6px 5px !important;
     cursor: pointer;
@@ -408,6 +430,7 @@ div.filtro_fecha {
     margin: 0 0 0 10px;
     shadow-box: 0 0 1px #333333;
     position: absolute;
+    z-index: 900;
 }
 div.filtro_fecha .close {
     background: url(../img/close.png) no-repeat;
