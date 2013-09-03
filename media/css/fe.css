@@ -80,8 +80,6 @@ button {
 }
 div.tecdn {
     width: 170px;
-    /*height: 100px;*/
-    height: 114px;
     position: absolute;
     top: 0;
     box-shadow: -1px 0 1px #e1e1e1;
@@ -319,18 +317,16 @@ div.tecdn .fcat ul li.h {
     font-size: 12px;
 }
 #new_event {
-    padding: 0 0 0 28px;
+    padding: 0 0 0 22px;
+    margin: 5px 0 0 0;
     line-height: 30px;
-    background: url(../img/plus.png) 5px 5px no-repeat, -moz-linear-gradient(top,#e6e6e6 0,#dcdcdc 100%);
-    background: url(../img/plus.png) 5px 5px no-repeat, -ms-linear-gradient(top,#e6e6e6 0,#dcdcdc 100%);
-    background: url(../img/plus.png) 5px 5px no-repeat, -o-linear-gradient(top,#e6e6e6 0,#dcdcdc 100%);
-    background: url(../img/plus.png) 5px 5px no-repeat, -webkit-gradient(linear,left top,left bottom,color-stop(0,#e6e6e6),color-stop(100%,#dcdcdc));
-    background: url(../img/plus.png) 5px 5px no-repeat, linear-gradient(to bottom,#e6e6e6 0,#dcdcdc 100%);
-    background-size: 18px;
-    border: solid #cccccc;
+    background: url(../img/plus.png) 20px 5px no-repeat;
     border-width: 0 0 1px 0;
     font-size: 12px;
-    color: #333333;
+    background-color: #cccccc;
+}
+#new_event a {
+    display: block;
 }
 #totalxd table {
     width: 95%;
@@ -365,8 +361,8 @@ div.tecdn .fcat ul li.h {
     font-size: 20px;
 }
 #totalxd h2 {
-    margin: 0 0 0 70px;
-    text-align: left;
+    margin: 0;
+    text-align: center;
 }
 #totalxd td {
     padding: 3px 5px;
@@ -477,6 +473,13 @@ div.filtro_fecha ul li.selected {
 }
 #totalxd_y {
     font-size: 28px;
+}
+
+#resumen .ec {
+    background-color: #FFDFDF;
+}
+#resumen .dn {
+    background-color: #C6E9AF;
 }
 .olControlLoadingPanel, #loading {
 

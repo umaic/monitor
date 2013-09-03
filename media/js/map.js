@@ -16,10 +16,11 @@ var rm_id_depto = false;
 var id_tema = id_org = 0;
 var url_xd = '/json/cluster/?m=0&v=0';
 
-//var subdomain_ec = 'emergenciacompleja';
-//var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
+var show_featured = false;
+
 var subdomain_ec = 'violencia_armada'; 
-var url_ec = 'http://190.66.6.168/' +subdomain_ec + url_xd;
+//var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
+var url_ec = 'http://localhost/' +subdomain_ec + url_xd;
 
 var subdomain_dn = 'inundaciones';
 var url_dn = 'http://'+subdomain_dn+'.colombiassh.org' + url_xd;
@@ -232,7 +233,7 @@ function addFeatures(inst) {
     }
     
     // Destacados, ft=fetured
-    if (inst == 'ecdn' || inst == 'ft') {
+    if ((inst == 'ecdn' || inst == 'ft')) {
         
         var uparams_ft = uparams.concat([['v', 1]]);
 
@@ -252,7 +253,9 @@ function addFeatures(inst) {
         // States filter
         //_uft = addURLParameter(_uft, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
         
-        ajaxFeatures(_uft, l_ft);
+        if (show_featured) {
+            ajaxFeatures(_uft, l_ft);
+        }
     }
 
     selectCtrl = new OpenLayers.Control.SelectFeature([l_ec, l_dn, l_ft],

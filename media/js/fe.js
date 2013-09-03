@@ -150,6 +150,9 @@ $(function(){
         });
     });
 
+    //Tabs
+    $('#tabs').tabs();
+
     // Date events
     var _ms = 2;  // Meses hacia atras
     var _ds = 7; // Dias iniciales hacia atras
@@ -576,10 +579,10 @@ totalesxDepto = function(more) {
     }
     else {
         
-        $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
+        $('#table_resumen tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
 
         $.ajax({
-            url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states,
+            url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states + '/' + _afectacion,
             dataType: 'json',
             success: function(data) {
                 

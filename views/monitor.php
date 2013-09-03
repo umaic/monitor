@@ -6,7 +6,7 @@
 <title>Monitor Humanitario :: Colombia</title>
 <link rel="stylesheet" type="text/css" href="http://monitor.colombiassh.org/media/css/brand.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
+<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
 </head>
 
 <?php 
@@ -119,6 +119,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     ?>
                 </div>
             </div>
+            <div id="new_event">
+                <a href="http://colombiassh.org/violencia_armada/reports/submit" target="_blank">
+                    Reportar un evento
+                </a>
+            </div>
         </div>
         <div id="tdn" class="tecdn">
             <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">
@@ -178,6 +183,13 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     ?>
                 </div>
             </div>
+            <div>
+                <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">
+                    <div id="new_event">
+                        Reportar un evento
+                    </div>
+                </a>
+            </div>
         </div>
     <div id="menu">
         <div id="aaaa">
@@ -187,9 +199,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <input type="hidden" id="endDate" value="">
             <input type="hidden" id="yyyy_ini" value="">
             <input type="hidden" id="yyyy_fin" value="">
-<<<<<<< .mine
-=======
             <?php 
+            /*        
             foreach($totalxy as $_a => $_t) { ?>
                 <div class="v">
                     <div class="a">
@@ -204,6 +215,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </div>
             <?php
             } 
+             */
             ?>
         </div>
     </div>
@@ -217,13 +229,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         Movilizaci&oacute;n social / paro
         </div>
         <div id="totalxd" class="shadow">
-            <div>
-                <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">
-                    <div id="new_event">
-                        Reportar un evento de desastre natural
-                    </div>
-                </a>
-            </div>
             <div id="data">
                 <h1 class="inline">Eventos por</h1>
                 <select class="select">
@@ -231,10 +236,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <!--<option value="r">Regi&oacute;n</option>-->
                 </select>
                 
-                <!--<div id="dslider"></div>
-                <div class="note">Seleccione el periodo usando la barra o la lista</div>-->
                 <div class="r">Seleccione un periodo de tiempo mas exacto</div>
->>>>>>> .r19
                 <div id="ini_fin" class="inline">
                     <div class="r left">
                         <label>Desde</label><input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
@@ -335,33 +337,46 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <div class="mapa_tipo activo inline" data-tipo="afectacion"><img src="<?php echo BASE ?>media/img/people_affected_population_64px_icon.png" /><h1>Afectados</h1></div>
                 <div class="mapa_tipo inline" data-tipo="eventos"><img src="<?php echo BASE ?>media/img/activity_scale_operation_64px_icon.png" /><h1>Eventos</h1></div>
             </div>
-            <div>
-                <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">
-                    <div id="new_event">
-                        Reportar un evento de desastre natural
-                    </div>
-                </a>
-            </div>
             <div id="data">
+                <!--
                 <h1 class="inline">Eventos por</h1>
                 <select class="select">
                     <option value="d">Departamento</option>
-                    <!--<option value="r">Regi&oacute;n</option>-->
+                    <option value="r">Regi&oacute;n</option>
                 </select>
+                -->
                 
                 <!--
                 <div class="inline" id="totalxd_y">
                     <?php //echo date('Y') ?>
                 </div>
                 -->
-                <div id="div_table_totalxd">
-                    <table id="table_totalxd">
-                        <thead>
-                            <tr><th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                <div id="tabs">
+                  <ul>
+                    <li><a href="#resumen">Resumen</a></li>
+                    <li><a href="#departamentos">Departamentos</a></li>
+                  </ul>
+                  <div id="resumen">
+                    <h2>Personas afectadas</h2>
+                        <table id="table_resumen">
+                            <tbody>
+                                <tr class="ec"><td>Desplazamiento masivo Intradepartamental</td><td>5,000,000</td></tr>
+                                <tr class="ec"><td>Masacre</td><td>400,000</td></tr>
+                                <tr class="dn"><td>Inundacion</td><td>40,000</td></tr>
+                            </tbody>
+                        </table>
+                  </div>
+                  <div id="departamentos">
+                    <div id="div_table_totalxd">
+                        <table id="table_totalxd">
+                            <thead>
+                                <tr><th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
+                            </thead>
+                            <tbody>
+                            </tbody>
+                        </table>
+                    </div>
+                  </div>
                 </div>
             </div>
         </div>

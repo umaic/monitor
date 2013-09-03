@@ -140,9 +140,10 @@ class MonitorController {
      * @param int $ini Fecha inicio milisegundos
      * @param int $fin Fecha inicio milisegundos
      * @param string $cats Categorias separadas por ',' filtradas para ec y dn formato ec1,ec2|dn1,dn2
+     * @param int $afectacion, 1 o 0
      * @param string $states States separados por ','
      */ 
-    public function totalxd($ini, $fin, $cats, $states) {
+    public function totalxd($ini, $fin, $cats, $afectacion, $states) {
         
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
