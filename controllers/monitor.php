@@ -143,7 +143,7 @@ class MonitorController {
      * @param int $afectacion, 1 o 0
      * @param string $states States separados por ','
      */ 
-    public function totalxd($ini, $fin, $cats, $afectacion, $states) {
+    public function totalxd($ini, $fin, $cats, $afectacion, $states='') {
         
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
@@ -225,8 +225,42 @@ class MonitorController {
             //}
         }
 
+        // Resumen
+        $_sql = "SELECT COUNT() AS n FROM %slocation AS l
+                 JOIN %sincident AS i ON l.id = i.location_id
+                 JOIN %sincident_category AS ic ON i.id = ic.incident_id
+                 WHERE $cond_tmp";
         
-        return compact('r', 't');
+        if ($afectacion == 1) {
+            $_sql = "SELECT SUM(victim_cant) AS sum, category_title AS cat
+                FROM victim v
+                JOIN incident_category ic USING(incident_id)
+                JOIN category c ON ic.category_id = c.id
+                JOIN incident i ON ic.incident_id = i.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        else {
+            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
+                FROM incident i
+                JOIN incident_category ic ON i.id = ic.incident_id
+                JOIN category c ON ic.category_id = c.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        
+        $_sqliec = sprintf($_sql,$cond_cats_ec);
+        
+        $rsms = array();
+        $_rs = $this->db->open($_sqliec);
+        while($_row = $this->db->FO($_rs)) {
+            $rsms[] = array('t' => $_row->cat, 'n' => $_row->sum);
+        }
+
+        
+        return compact('r', 't','rsms');
     }
     
     /**

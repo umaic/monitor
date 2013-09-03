@@ -582,7 +582,7 @@ totalesxDepto = function(more) {
         $('#table_resumen tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
 
         $.ajax({
-            url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states + '/' + _afectacion,
+            url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _afectacion + _states + '/',
             dataType: 'json',
             success: function(data) {
                 
@@ -603,7 +603,6 @@ totalesxDepto = function(more) {
                     $table.append('<tr class="f ' + _i.css + ' ' + _i.hide + '"><td><input type="checkbox" name="deptos[]" value="'+_i.state_id+'" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>');
                 }
                 
-                
                 // Aviso de no eventos
                 if ($table.find('.f:not(.hide)').length == 0) {
                     $table.append('<tr><td colspan="4"><br />No existen eventos</td></tr>');
@@ -611,6 +610,12 @@ totalesxDepto = function(more) {
 
                 // Ordena tabla
                 //forceSortTable();
+                
+                // Afectacion
+                for (var d in data.rsms) {
+                    
+                }
+
             }
         });
 

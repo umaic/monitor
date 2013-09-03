@@ -358,13 +358,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                   </ul>
                   <div id="resumen">
                     <h2>Personas afectadas</h2>
-                        <table id="table_resumen">
-                            <tbody>
-                                <tr class="ec"><td>Desplazamiento masivo Intradepartamental</td><td>5,000,000</td></tr>
-                                <tr class="ec"><td>Masacre</td><td>400,000</td></tr>
-                                <tr class="dn"><td>Inundacion</td><td>40,000</td></tr>
-                            </tbody>
-                        </table>
+                    <div id="r_total_ec" class="left ec"></div>
+                    <div id="r_total_dn" class="left dn"></div>
+                    <div class=""></div>
                   </div>
                   <div id="departamentos">
                     <div id="div_table_totalxd">
