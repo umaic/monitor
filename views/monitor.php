@@ -360,7 +360,19 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <h2>Personas afectadas</h2>
                     <div id="r_total_ec" class="left ec"></div>
                     <div id="r_total_dn" class="left dn"></div>
-                    <div class=""></div>
+                    <div id="resumen_ec" class="left">
+                        <div class="hide resumen_row">
+                            <div class="num"></div>
+                            <div class="cat"></div>
+                        </div>
+                    </div>
+                    <div id="resumen_dn" class="left">
+                        <div class="hide resumen_row">
+                            <div class="num"></div>
+                            <div class="cat"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
                   </div>
                   <div id="departamentos">
                     <div id="div_table_totalxd">

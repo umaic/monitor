@@ -267,7 +267,7 @@ div.tecdn .fcat ul li.h {
     position: absolute;
     top: 140px;
     right: 10px;
-    width: 300px;
+    width: 350px;
     max-height: 750px;
     padding: 0;
     background-color: #ffffff;
@@ -475,11 +475,34 @@ div.filtro_fecha ul li.selected {
     font-size: 28px;
 }
 
+#resumen_ec ,
+#resumen_dn {
+    width: 48%;
+    word-wrap: break-word
+}
 #resumen .ec {
     background-color: #FFDFDF;
 }
+#resumen .ect {
+    color: #D40000;
+}
 #resumen .dn {
     background-color: #C6E9AF;
+}
+#resumen .dnt {
+    color: #2CA02C;
+}
+#resumen .resumen_row {
+    padding: 10px 0;
+    margin: 0px 10px 0 0;
+    border-top: 1px solid #cccccc;
+}
+#resumen .resumen_row .num {
+    font-size: 32px;
+    font-weight: bold;
+}
+#resumen .resumen_row .cat {
+    font-size: 14px;
 }
 .olControlLoadingPanel, #loading {
 

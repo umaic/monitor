@@ -253,14 +253,14 @@ class MonitorController {
         
         $_sqliec = sprintf($_sql,$cond_cats_ec);
         
-        $rsms = array();
+        $rsms_ec = array();
         $_rs = $this->db->open($_sqliec);
         while($_row = $this->db->FO($_rs)) {
-            $rsms[] = array('t' => $_row->cat, 'n' => $_row->sum);
+            $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum);
         }
 
         
-        return compact('r', 't','rsms');
+        return compact('r', 't','rsms_ec');
     }
     
     /**

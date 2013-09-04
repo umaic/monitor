@@ -344,7 +344,6 @@ $(function(){
     map();
     
     // Click en el departamento en la lista derecha
-    //
     var $table = $('#table_totalxd');
 
     $table.find(':checkbox').live('click', function() {
@@ -612,8 +611,33 @@ totalesxDepto = function(more) {
                 //forceSortTable();
                 
                 // Afectacion
-                for (var d in data.rsms) {
+
+                var total_ec = 0;
+                for (var d in data.rsms_ec) {
+                    $div = $('.resumen_row:first').clone();
+                    $div.removeClass('hide');
+                    $div.addClass('ect');
                     
+                    rsm = data.rsms_ec[d];
+                    
+                    $div.find('.num').html(rsm.n);
+                    $div.find('.cat').html(rsm.t);
+
+                    $('#resumen_ec').append($div);
+                }
+                
+                var total_ec = 0;
+                for (var d in data.rsms_ec) {
+                    $div = $('.resumen_row:first').clone();
+                    $div.removeClass('hide');
+                    $div.addClass('dnt');
+                    
+                    rsm = data.rsms_ec[d];
+                    
+                    $div.find('.num').html(rsm.n);
+                    $div.find('.cat').html(rsm.t);
+
+                    $('#resumen_dn').append($div);
                 }
 
             }
