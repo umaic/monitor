@@ -358,8 +358,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                   </ul>
                   <div id="resumen">
                     <h2>Personas afectadas</h2>
-                    <div id="r_total_ec" class="left ec"></div>
-                    <div id="r_total_dn" class="left dn"></div>
+                    <div id="resumen_total_ec" class="left ec resumen_total"></div>
+                    <div id="resumen_total_dn" class="left dn resumen_total"></div>
+                    <div class="clear"></div>
                     <div id="resumen_ec" class="left">
                         <div class="hide resumen_row">
                             <div class="num"></div>

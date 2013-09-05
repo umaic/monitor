@@ -612,6 +612,7 @@ totalesxDepto = function(more) {
                 
                 // Afectacion
 
+                var titulo = (_afectacion == 1) ? 'Personas afectadas' : 'Número de eventos';
                 var total_ec = 0;
                 for (var d in data.rsms_ec) {
                     $div = $('.resumen_row:first').clone();
@@ -623,8 +624,12 @@ totalesxDepto = function(more) {
                     $div.find('.num').html(rsm.n);
                     $div.find('.cat').html(rsm.t);
 
+                    total_ec += rsm.n*1;
+
                     $('#resumen_ec').append($div);
                 }
+                    
+                $('#resumen_total_ec').html(total_ec);
                 
                 var total_ec = 0;
                 for (var d in data.rsms_ec) {
@@ -639,6 +644,10 @@ totalesxDepto = function(more) {
 
                     $('#resumen_dn').append($div);
                 }
+                
+                $('#resumen_total_dn').html(total_ec);
+
+                $('#resumen').find('h2').html(titulo);
 
             }
         });
