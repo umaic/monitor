@@ -231,6 +231,7 @@ class MonitorController {
                  JOIN %sincident_category AS ic ON i.id = ic.incident_id
                  WHERE $cond_tmp";
         
+        // Resumen violencia
         if ($afectacion == 1) {
             $_sql = "SELECT SUM(victim_cant) AS sum, category_title AS cat
                 FROM victim v
@@ -258,9 +259,41 @@ class MonitorController {
         while($_row = $this->db->FO($_rs)) {
             $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum);
         }
+        
+        // Resumen desastres
+        if ($afectacion == 1) {
+
+            // Form id = 4, # personas
+            $_sql = "SELECT SUM(form_response) AS sum, category_title AS cat
+                FROM form_response f
+                JOIN incident_category ic USING(incident_id)
+                JOIN category c ON ic.category_id = c.id
+                JOIN incident i ON ic.incident_id = i.id
+                WHERE $cond_tmp AND form_field_id = 4
+                GROUP BY category_id
+                ORDER BY sum DESC";
+
+        }
+        else {
+            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
+                FROM incident i
+                JOIN incident_category ic ON i.id = ic.incident_id
+                JOIN category c ON ic.category_id = c.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        
+        $_sqlidn = sprintf($_sql,$cond_cats_dn);
+        
+        $rsms_dn = array();
+        $_rs = $this->db->open($_sqlidn);
+        while($_row = $this->db->FO($_rs)) {
+            $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum);
+        }
 
         
-        return compact('r', 't','rsms_ec');
+        return compact('r', 't','rsms_ec', 'rsms_dn');
     }
     
     /**

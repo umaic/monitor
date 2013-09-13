@@ -3,6 +3,7 @@ html, body {
     padding: 0;
     font-family: Arial;
     font-size: 12px;
+    height: 100%;
 }
 
 @font-face {
@@ -181,8 +182,10 @@ div.tecdn .fcat ul li.h {
 }
 #menu {
     height: 50px;
-    background-color: #2b1100;
+    background-color: #666666;
     padding: 5px 0;
+    border: solid #bbbbbb;
+    border-width: 1px 0 1px 0;
 }
 
 #menu div.v:not(:first-child) {
@@ -192,7 +195,7 @@ div.tecdn .fcat ul li.h {
     float: left;
     padding: 0 15px;
     cursor: pointer;
-    color: #ffffff;
+    color: #2b1100;
 }
 
 #menu div.v:hover {
@@ -219,18 +222,29 @@ div.tecdn .fcat ul li.h {
 }
 #menu label {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
     color: #fff;
 }
+#menu input,select {
+    font-size: 12px;
+}
+#menu .r {
+    margin: 0 0 0 10px;
+}
+#menu .btn {
+    margin: 12px 0 0 10px;
+}
 #content {
-   height: 100%;
+   min-height: 100%;
    margin: 0;
 }
 #map {
     width: 100%;
-    height: 100%;
-   margin: 0;
+    height: auto;
+    margin: 0;
     position: absolute;
+    top: 150px;
+    bottom: 0;
 }
 #filtros {
     background-color: #0f6bb6;
@@ -263,6 +277,30 @@ div.tecdn .fcat ul li.h {
     border-radius: 3px;
     background: #E5CB0C url(../img/paro_icon.png) no-repeat 10px 0;
 }
+#mapas_tipos {
+    padding: 5px 20px;
+    text-align: center;
+    position: absolute;
+    top: 140px;
+    right: 350px;
+    z-index: 1001;
+}
+#mapas_tipos .mapa_tipo {
+    padding: 10px;
+    background-color: #f3f3f3;
+    border: 1px solid #e1e1e1;
+    text-align: center;
+    width: 80px;
+    cursor: pointer;
+}
+#mapas_tipos .mapa_tipo h1 {
+    margin: 0;
+}
+#mapas_tipos .activo,
+#mapas_tipos .mapa_tipo:hover {
+    background-color: #FEFD60;
+    border: 1px solid #DBC319;
+}
 #totalxd {
     position: absolute;
     top: 140px;
@@ -275,30 +313,22 @@ div.tecdn .fcat ul li.h {
     font-size: 11px;
 }
 #totalxd #data {
-    padding: 10px;
+    padding: 0 10px;
 }
-#totalxd #mapas_tipos {
-    padding: 5px 20px;
+#totalxd #data_title {
+    padding: 5px;
+    margin: 10px 10px 0 10px;
+    background-color: #666666;
+    color: #ffffff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 3px 3px 0 0;
 }
-#totalxd .mapa_tipo {
-    padding: 10px 20px;
-    background-color: #f3f3f3;
-    border: 1px solid #ffffff;
-    text-align: center;
-    width: 80px;
-    cursor: pointer;
-}
-#totalxd .activo,
-#totalxd .mapa_tipo:hover {
-    background-color: #FEFD60;
-    border: 1px solid #DBC319;
-}
-#div_table_totalxd {
+.div_table_totalxd {
     max-height: 550px;
     overflow: hidden;
     margin: 5px 0 0 0;
 }
-#div_table_totalxd:hover {
+.div_table_totalxd:hover {
     overflow: auto;
 }
 #totalxd tr.unselected td {
@@ -323,7 +353,6 @@ div.tecdn .fcat ul li.h {
     background: url(../img/plus.png) 20px 5px no-repeat;
     border-width: 0 0 1px 0;
     font-size: 12px;
-    background-color: #cccccc;
 }
 #new_event a {
     display: block;
@@ -356,7 +385,7 @@ div.tecdn .fcat ul li.h {
     background: #ffd870 url(../img/asc.gif) no-repeat center right;
 }
 #totalxd h1 {
-    margin: 0;
+    margin: 0 0 10px 0;
     text-align: center;
     font-size: 20px;
 }
@@ -506,12 +535,17 @@ div.filtro_fecha ul li.selected {
     font-size: 32px;
     font-weight: bold;
 }
+#resumen .resumen_total .num {
+    font-size: 24px;
+    font-weight: bold;
+}
+#resumen .resumen_total .cat,
 #resumen .resumen_row .cat {
-    font-size: 14px;
+    font-size: 12px;
 }
 #resumen .resumen_total {
     width: 100px;
-    padding: 10px;
+    padding: 5px 10px;
     font-size: 24px;
     margin: 0 20px 0 0;
 }
@@ -635,7 +669,7 @@ div#mase {
     cursor: pointer;
     font-weight: bold;
     outline: 0 none;
-    padding: 10px 10px;
+    padding: 5px 10px;
     vertical-align: middle;
     white-space: nowrap;
     word-wrap: normal;

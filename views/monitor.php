@@ -14,6 +14,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
 ?>
 
 <body>
+    <div id="content">
     <!--<div id="brand">Colombia<b>SSH</b></div>-->
     <div id="header">
         <div id="logo"></div>
@@ -191,6 +192,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </a>
             </div>
         </div>
+        <div id="loading" class="alpha60">
+            <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
+        </div>
     <div id="menu">
         <div id="aaaa">
             <input type="hidden" id="currentCatE" value="0">
@@ -217,94 +221,83 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             } 
              */
             ?>
-        </div>
-    </div>
-        <div id="loading" class="alpha60">
-            <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
-        </div>
-    <div id="content">
         <!--<div id="ys"></div>-->
-        <div id="map"></div>
-        <div id="featured">
-        Movilizaci&oacute;n social / paro
-        </div>
-        <div id="totalxd" class="shadow">
-            <div id="data">
-                <h1 class="inline">Eventos por</h1>
-                <select class="select">
-                    <option value="d">Departamento</option>
-                    <!--<option value="r">Regi&oacute;n</option>-->
-                </select>
-                
-                <div class="r">Seleccione un periodo de tiempo mas exacto</div>
-                <div id="ini_fin" class="inline">
-                    <div class="r left">
-                        <label>Desde</label><input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
-                        <div class="filtro_fecha" id="ini_div">
-                            <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
-                            <div class="right close"></div>
-                            <div class="clear"></div>
-                            <div class="inline yyyy l">
-                                <p><b>A&ntilde;o</b></p>
-                                <ul>
-                                    <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
-                                </ul>
-                            </div>
-                            <div class="inline mes l">
-                                <p><b>Mes</b></p>
-                                <ul>
-                                    <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='ini' y='mes'>$mes</li>"; } ?>
-                                </ul>
-                            </div>
-                            <div class="inline dia l">
-                                <p><b>D&iacute;a</b></p>
-                                <ul>
-                                    <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='ini' y='dia'>$i</li>"; } ?>
-                                </ul>
-                            </div>
-                        </div>
+        <!--
+        <h1 class="inline">Eventos por</h1>
+        <select class="select">
+            <option value="d">Departamento</option>
+            <option value="r">Regi&oacute;n</option>
+        </select>-->
+        <div id="ini_fin" class="inline">
+            <div class="r left">
+                <label>Desde</label><input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
+                <div class="filtro_fecha" id="ini_div">
+                    <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
+                    <div class="right close"></div>
+                    <div class="clear"></div>
+                    <div class="inline yyyy l">
+                        <p><b>A&ntilde;o</b></p>
+                        <ul>
+                            <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
+                        </ul>
                     </div>
-                    <div class="r left">
-                        <label>Hasta</label><input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
-                        <div class="filtro_fecha" id="fin_div">
-                            <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
-                            <div class="right close"></div>
-                            <div class="clear"></div>
-                            <div class="inline yyyy l">
-                                <p><b>A&ntilde;o</b></p>
-                                <ul>
-                                    <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
-                                </ul>
-                            </div>
-                            <div class="inline mes l">
-                                <p><b>Mes</b></p>
-                                <ul>
-                                    <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='fin' y='mes'>$mes</li>"; } ?>
-                                </ul>
-                            </div>
-                            <div class="inline dia l">
-                                <p><b>D&iacute;a</b></p>
-                                <ul>
-                                    <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='fin' y='dia'>$i</li>"; } ?>
-                                </ul>
-                            </div>
-                        </div>
+                    <div class="inline mes l">
+                        <p><b>Mes</b></p>
+                        <ul>
+                            <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='ini' y='mes'>$mes</li>"; } ?>
+                        </ul>
                     </div>
-                    <!--<div class="inline"><img src="<?php echo BASE ?>media/img/calendar.png" width="18" height="18" /><a href="#" id="lff">Aplicar filtro de fechas</a></div>-->
-                    <div id="time" class="inline">
-                        <label class="inline">o consultar:</label>
-                        <select id="stime">
-                            <option value=0>----</option>
-                            <option value="h">Hoy</option>
-                            <option value="ay">Ayer y hoy</option>
-                            <option value="s" selected="selected">Ultima semana</option>
-                            <option value="m">Ultimo mes</option>
-                            <option value="a">Todo el a&ntilde;o</option>
-                        </select>
+                    <div class="inline dia l">
+                        <p><b>D&iacute;a</b></p>
+                        <ul>
+                            <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='ini' y='dia'>$i</li>"; } ?>
+                        </ul>
                     </div>
-                    <div id="filter_states" class="filter left">Filtrar mapa</div>
-                    <div id="download_incidents" class="xls left">Descargar eventos</div>
                 </div>
+            </div>
+            <div class="r left">
+                <label>Hasta</label><input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
+                <div class="filtro_fecha" id="fin_div">
+                    <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
+                    <div class="right close"></div>
+                    <div class="clear"></div>
+                    <div class="inline yyyy l">
+                        <p><b>A&ntilde;o</b></p>
+                        <ul>
+                            <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
+                        </ul>
+                    </div>
+                    <div class="inline mes l">
+                        <p><b>Mes</b></p>
+                        <ul>
+                            <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='fin' y='mes'>$mes</li>"; } ?>
+                        </ul>
+                    </div>
+                    <div class="inline dia l">
+                        <p><b>D&iacute;a</b></p>
+                        <ul>
+                            <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='fin' y='dia'>$i</li>"; } ?>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!--<div class="inline"><img src="<?php echo BASE ?>media/img/calendar.png" width="18" height="18" /><a href="#" id="lff">Aplicar filtro de fechas</a></div>-->
+            <div id="time" class="r left">
+                <label class="inline">o consultar:</label>
+                <select id="stime">
+                    <option value=0>----</option>
+                    <option value="h">Hoy</option>
+                    <option value="ay">Ayer y hoy</option>
+                    <option value="s" selected="selected">Ultima semana</option>
+                    <option value="m">Ultimo mes</option>
+                    <option value="a">Todo el a&ntilde;o</option>
+                </select>
+            </div>
+            <div id="filter_states" class="r btn left"><img src="media/img/filter.png" />&nbsp;&nbsp;Filtrar mapa</div>
+            <div id="download_incidents" class="r btn left"><img src="media/img/xls.png" />&nbsp;&nbsp;Descargar eventos</div>
+        </div>
+        </div>
+        </div>
                 <?php
                    /* 
             foreach($totalxy as $_a => $_t) { ?>
@@ -323,60 +316,49 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             } 
                     */
             ?>
-        </div>
+    <div id="mapas_tipos">
+        <div class="mapa_tipo activo inline" data-tipo="afectacion"><img src="<?php echo BASE ?>media/img/people_affected_population_64px_icon.png" /><h1>Afectados</h1></div>
+        <div class="mapa_tipo inline" data-tipo="eventos"><img src="<?php echo BASE ?>media/img/activity_scale_operation_64px_icon.png" /><h1>Eventos</h1></div>
     </div>
-        <div id="loading" class="alpha60">
-            <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
-        </div>
-    <div id="content">
         <!--<div id="ys"></div>-->
         <div id="map"></div>
         <div id="totalxd" class="shadow">
-            <div id="mapas_tipos">
-                <h1>TIPO DE MAPA</h1>
-                <div class="mapa_tipo activo inline" data-tipo="afectacion"><img src="<?php echo BASE ?>media/img/people_affected_population_64px_icon.png" /><h1>Afectados</h1></div>
-                <div class="mapa_tipo inline" data-tipo="eventos"><img src="<?php echo BASE ?>media/img/activity_scale_operation_64px_icon.png" /><h1>Eventos</h1></div>
+            <div id="data_title">
+                <h2>Personas afectadas</h2>
             </div>
             <div id="data">
-                <!--
-                <h1 class="inline">Eventos por</h1>
-                <select class="select">
-                    <option value="d">Departamento</option>
-                    <option value="r">Regi&oacute;n</option>
-                </select>
-                -->
-                
-                <!--
-                <div class="inline" id="totalxd_y">
-                    <?php //echo date('Y') ?>
-                </div>
-                -->
                 <div id="tabs">
                   <ul>
                     <li><a href="#resumen">Resumen</a></li>
                     <li><a href="#departamentos">Departamentos</a></li>
                   </ul>
                   <div id="resumen">
-                    <h2>Personas afectadas</h2>
-                    <div id="resumen_total_ec" class="left ec resumen_total"></div>
-                    <div id="resumen_total_dn" class="left dn resumen_total"></div>
-                    <div class="clear"></div>
-                    <div id="resumen_ec" class="left">
-                        <div class="hide resumen_row">
-                            <div class="num"></div>
-                            <div class="cat"></div>
-                        </div>
+                    <div class="left ec resumen_total">
+                        <div id="resumen_total_ec" class="num"></div>
+                        <div class="cat">Total</div>
                     </div>
-                    <div id="resumen_dn" class="left">
-                        <div class="hide resumen_row">
-                            <div class="num"></div>
-                            <div class="cat"></div>
-                        </div>
+                    <div class="left dn resumen_total">
+                        <div id="resumen_total_dn" class="num"></div>
+                        <div class="cat">Total</div>
                     </div>
                     <div class="clear"></div>
+                    <div class="div_table_totalxd">
+                        <div id="resumen_ec" class="left">
+                            <div class="hide resumen_row">
+                                <div class="num"></div>
+                                <div class="cat"></div>
+                            </div>
+                        </div>
+                        <div id="resumen_dn" class="left">
+                            <div class="hide resumen_row">
+                                <div class="num"></div>
+                                <div class="cat"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
                   </div>
                   <div id="departamentos">
-                    <div id="div_table_totalxd">
+                    <div id="div_table_totalxd" class="div_table_totalxd">
                         <table id="table_totalxd">
                             <thead>
                                 <tr><th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
@@ -387,6 +369,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     </div>
                   </div>
                 </div>
+            <div class="clear"></div>
             </div>
         </div>
         <div class="clear"></div>

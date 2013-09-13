@@ -155,7 +155,7 @@ $(function(){
 
     // Date events
     var _ms = 2;  // Meses hacia atras
-    var _ds = 7; // Dias iniciales hacia atras
+    var _ds = 30; // Dias iniciales hacia atras
 
     var _today = new Date();
     var _year = _today.getFullYear();
@@ -341,7 +341,7 @@ $(function(){
 
     totalesxDepto();
 
-    map();
+    //map();
     
     // Click en el departamento en la lista derecha
     var $table = $('#table_totalxd');
@@ -631,13 +631,13 @@ totalesxDepto = function(more) {
                     
                 $('#resumen_total_ec').html(total_ec);
                 
-                var total_ec = 0;
-                for (var d in data.rsms_ec) {
+                var total_dn = 0;
+                for (var d in data.rsms_dn) {
                     $div = $('.resumen_row:first').clone();
                     $div.removeClass('hide');
                     $div.addClass('dnt');
                     
-                    rsm = data.rsms_ec[d];
+                    rsm = data.rsms_dn[d];
                     
                     $div.find('.num').html(rsm.n);
                     $div.find('.cat').html(rsm.t);
@@ -645,9 +645,9 @@ totalesxDepto = function(more) {
                     $('#resumen_dn').append($div);
                 }
                 
-                $('#resumen_total_dn').html(total_ec);
+                $('#resumen_total_dn').html(total_dn);
 
-                $('#resumen').find('h2').html(titulo);
+                $('#data_title').find('h2').html(titulo);
 
             }
         });

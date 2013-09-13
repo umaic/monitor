@@ -94,7 +94,7 @@ else {
                                'dn' => array(0)
                               );
             
-            //$totalxy = $mc->total($cats_hide);
+            $totalxy = $mc->total($cats_hide);
             //$totalxd = $mc->totalxd($ini, $fin);
             $_t = $mc->totalecdn();
             $tec = $_t['ec'];
