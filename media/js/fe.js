@@ -359,6 +359,11 @@ $(function(){
     $table.find('tr:not(:first) td.n, tr:not(:last) td.n').live('click', function() {
         selDepto($(this).closest('tr').find('td.centroid').html());   // in map.js
     });
+
+    // Oculta icono de destacados
+	if(map.getLayersByName('Destacados')[0].features.length == 0){
+		$('#featured').hide();
+	}
 });
 
 m = function(o){	
