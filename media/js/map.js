@@ -18,10 +18,10 @@ var url_xd = '/json/cluster/?m=0&v=0';
 
 var subdomain_ec = 'violencia_armada';
 //var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
-var url_ec = 'http://localhost/violencia_armada';
+var url_ec = 'http://localhost/violencia_armada/';
 //var url_ec = 'http://190.66.6.168/' +subdomain_ec + url_xd;
 
-var subdomain_dn = 'desastres';
+var subdomain_dn = 'desastres/';
 //var url_dn = 'http://'+subdomain_dn+'.colombiassh.org' + url_xd;
 var url_dn = 'http://localhost/'+subdomain_dn;
 
