@@ -17,13 +17,13 @@ var id_tema = id_org = 0;
 var url_xd = '/json/cluster/?m=0&v=0';
 
 var subdomain_ec = 'violencia_armada';
-var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
-//var subdomain_ec = 'ecompleja'; 
+//var url_ec = 'http://www.colombiassh.org/'+subdomain_ec+'' + url_xd;
+var url_ec = 'http://localhost/violencia_armada';
 //var url_ec = 'http://190.66.6.168/' +subdomain_ec + url_xd;
 
-var subdomain_dn = 'inundaciones';
-var url_dn = 'http://'+subdomain_dn+'.colombiassh.org' + url_xd;
-//var url_dn = 'http://190.66.6.168/' + subdomain_dn + url_xd;
+var subdomain_dn = 'desastres';
+//var url_dn = 'http://'+subdomain_dn+'.colombiassh.org' + url_xd;
+var url_dn = 'http://localhost/'+subdomain_dn;
 
 // Verificados se usan como destacados
 var url_ft = 'http://'+subdomain_dn + '.colombiassh.org/json/index/?m=0&v=1';
