@@ -6,13 +6,12 @@ var base_ol = '';
 var is_portal = false;
 var num_carga = 20;
 var cargar_mas = 0;  // Cuenta las veces que se hace click en cargar mas
-var _afectacion = 1;
 
 var resetLimit = false;
 
 $(function(){
 
-    if (window.location.hostname == 'localhost' || window.location.hostname == '190.66.6.168') {
+    if (window.location.hostname == 'localhost') {
         base = '/monitor';
         base_ol = '/monitor';
     }
@@ -24,9 +23,8 @@ $(function(){
     if (typeof portal !== "undefined") {
         is_portal = true;
     }
-    
-    // Ajax loader
-    $(document)
+
+    $("#loading")
     .ajaxStart(function(){ $('#loading').show(); })
     .ajaxStop(function(){ $('#loading').hide(); });
     
@@ -121,41 +119,23 @@ $(function(){
 
     // Descargar inicidentes
     $('#download_incidents').click(function() {
-        //$('#loading').show();
+        $('#loading').show();
         $.ajax({
-            url: 'download_incidents',
-            success: function() {
-                //$('#loading').hide();
-                location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            
-            }
-        });
+                url: 'download_incidents',
+                success: function() {
+                    $('#loading').hide();
+                    location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            
+                }
+            });
     });
 
     $('.close').click(function() { 
         $(this).closest('.filtro').slideUp();
     });
 
-    // Tipo de mapa
-    $('.mapa_tipo:not(.active)').click(function() {
-        var that = this;
-
-        $.ajax({
-            url: 'mapa_tipo/' + $(that).data('tipo'),
-            success: function() {
-                $('.mapa_tipo').removeClass('activo');
-                $(that).addClass('activo');
-                addFeaturesFirstTime();
-                totalesxDepto();
-            }
-        });
-    });
-
-    //Tabs
-    $('#tabs').tabs();
-
     // Date events
     var _ms = 2;  // Meses hacia atras
-    var _ds = 30; // Dias iniciales hacia atras
+    var _ds = 7; // Dias iniciales hacia atras
 
     var _today = new Date();
     var _year = _today.getFullYear();
@@ -341,9 +321,10 @@ $(function(){
 
     totalesxDepto();
 
-    //map();
+    map();
     
     // Click en el departamento en la lista derecha
+    //
     var $table = $('#table_totalxd');
 
     $table.find(':checkbox').live('click', function() {
@@ -360,7 +341,7 @@ $(function(){
         selDepto($(this).closest('tr').find('td.centroid').html());   // in map.js
     });
 
-    // Oculta icono de destacados
+	// Oculta icono de destacados
 	if(map.getLayersByName('Destacados')[0].features.length == 0){
 		$('#featured').hide();
 	}
@@ -451,7 +432,7 @@ totalesxDepto = function(more) {
         $.ajax({
             url: base + '/getIncidentesPortal/' + _ini + '/' + _fin + '/' + _cats + '/' + limiti + '/' + _states ,
             dataType: 'jsonp',
-            //beforeSend: function(){ $('#loading').show() },
+            beforeSend: function(){ $('#loading').show() },
             success: function(json){
 
                 //for(jj in json) {
@@ -575,7 +556,7 @@ totalesxDepto = function(more) {
                     selDepto($('#state').attr('centroid'));   // in map.js
                 }
                 
-                //$('#loading').hide();
+                $('#loading').hide();
                 
             }
         });
@@ -583,10 +564,10 @@ totalesxDepto = function(more) {
     }
     else {
         
-        $('#table_resumen tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
+        $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
 
         $.ajax({
-            url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _afectacion + _states + '/',
+            url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states,
             dataType: 'json',
             success: function(data) {
                 
@@ -607,6 +588,7 @@ totalesxDepto = function(more) {
                     $table.append('<tr class="f ' + _i.css + ' ' + _i.hide + '"><td><input type="checkbox" name="deptos[]" value="'+_i.state_id+'" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>');
                 }
                 
+                
                 // Aviso de no eventos
                 if ($table.find('.f:not(.hide)').length == 0) {
                     $table.append('<tr><td colspan="4"><br />No existen eventos</td></tr>');
@@ -614,46 +596,6 @@ totalesxDepto = function(more) {
 
                 // Ordena tabla
                 //forceSortTable();
-                
-                // Afectacion
-
-                var titulo = (_afectacion == 1) ? 'Personas afectadas' : 'Número de eventos';
-                var total_ec = 0;
-                for (var d in data.rsms_ec) {
-                    $div = $('.resumen_row:first').clone();
-                    $div.removeClass('hide');
-                    $div.addClass('ect');
-                    
-                    rsm = data.rsms_ec[d];
-                    
-                    $div.find('.num').html(rsm.n);
-                    $div.find('.cat').html(rsm.t);
-
-                    total_ec += rsm.n*1;
-
-                    $('#resumen_ec').append($div);
-                }
-                    
-                $('#resumen_total_ec').html(total_ec);
-                
-                var total_dn = 0;
-                for (var d in data.rsms_dn) {
-                    $div = $('.resumen_row:first').clone();
-                    $div.removeClass('hide');
-                    $div.addClass('dnt');
-                    
-                    rsm = data.rsms_dn[d];
-                    
-                    $div.find('.num').html(rsm.n);
-                    $div.find('.cat').html(rsm.t);
-
-                    $('#resumen_dn').append($div);
-                }
-                
-                $('#resumen_total_dn').html(total_dn);
-
-                $('#data_title').find('h2').html(titulo);
-
             }
         });
 
@@ -749,10 +691,4 @@ getStatesChecked = function(){
     });
 
     return _sts.join(',');
-}
-
-getMapaAfectacion = function(){ 
-    
-    return ($('.mapa_tipo.activo').data('tipo') == 'eventos') ? 0 : 1;
-
 }
