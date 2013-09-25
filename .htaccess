@@ -4,7 +4,7 @@
 	RewriteEngine On
 
 	# Installation directory
-	RewriteBase /monitor
+	RewriteBase /
 
 	# Protect application and system files from being viewed
 	#RewriteRule ^(media) - [F,L]
@@ -16,7 +16,8 @@
 	# Rewrite all other URLs to index.php/URL
     
     RewriteRule ^(getIncidentesPortal)/([0-9.]+)/([0-9.]+)/([a-z0-9=,|]+)/([0-9,]+)/([0-9,]*)$ index.php?m=$1&ini=$2&fin=$3&c=$4&states=$6&limiti=$5 [L,QSA]
-    RewriteRule ^([0-9a-z]+)/([0-9.]+)/([0-9.]+)/([a-z0-9=,|]+)/([0-1]+)/([0-9,]*)$ index.php?m=$1&ini=$2&fin=$3&c=$4&states=$6&afectacion=$5 [L]
+    #RewriteRule ^([0-9a-z]+)/([0-9.]+)/([0-9.]+)/([a-z0-9=,|]+)/([0-1]+)/([0-9,]*)$ index.php?m=$1&ini=$2&fin=$3&c=$4&states=$6&afectacion=$5 [L]
+    RewriteRule ^([0-9a-z]+)/([0-9.]+)/([0-9.]+)/([a-z0-9=,|]+)/([0-9,]*)$ index.php?m=$1&ini=$2&fin=$3&c=$4&states=$5 [L]
     RewriteRule ^([0-9a-z]+)/([0-9]+)$ index.php?m=$1&f=$2 [L]
     RewriteRule ^export/(xls|pdf)/([a-z]+)/([a-zA-Z-]+) index.php?m=export&t=$1&csv=$2&nom=$3 [L]
     RewriteRule ^mapa_tipo/(afectacion|eventos) index.php?m=mapa_tipo&t=$1 [L]

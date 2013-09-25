@@ -16,7 +16,7 @@ $(function(){
         base_ol = '/monitor';
     }
     else {
-        base = 'http://localhost';
+        base = 'http://monitor.colombiassh.org';
         base_ol = '';
     }
 
