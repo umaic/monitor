@@ -107,6 +107,7 @@ class MonitorController {
         $ini = date('Y-m-d H:i:s', intval($ini));  // Se usa intval para que quede igual que ushahidi/application/helper/reports/ :740
         $fin = date('Y-m-d H:i:s', intval($fin));
 
+
         $_t = explode('|', $cats);
         $cond_cats_ec = '';
         if (!empty($_t[0])) {
@@ -140,10 +141,9 @@ class MonitorController {
      * @param int $ini Fecha inicio milisegundos
      * @param int $fin Fecha inicio milisegundos
      * @param string $cats Categorias separadas por ',' filtradas para ec y dn formato ec1,ec2|dn1,dn2
-     * @param int $afectacion, 1 o 0
      * @param string $states States separados por ','
      */ 
-    public function totalxd($ini, $fin, $cats, $afectacion, $states='') {
+    public function totalxd($ini, $fin, $cats, $states) {
         
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
@@ -225,75 +225,8 @@ class MonitorController {
             //}
         }
 
-        // Resumen
-        $_sql = "SELECT COUNT() AS n FROM %slocation AS l
-                 JOIN %sincident AS i ON l.id = i.location_id
-                 JOIN %sincident_category AS ic ON i.id = ic.incident_id
-                 WHERE $cond_tmp";
         
-        // Resumen violencia
-        if ($afectacion == 1) {
-            $_sql = "SELECT SUM(victim_cant) AS sum, category_title AS cat
-                FROM victim v
-                JOIN incident_category ic USING(incident_id)
-                JOIN category c ON ic.category_id = c.id
-                JOIN incident i ON ic.incident_id = i.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
-        }
-        else {
-            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
-                FROM incident i
-                JOIN incident_category ic ON i.id = ic.incident_id
-                JOIN category c ON ic.category_id = c.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
-        }
-        
-        $_sqliec = sprintf($_sql,$cond_cats_ec);
-        
-        $rsms_ec = array();
-        $_rs = $this->db->open($_sqliec);
-        while($_row = $this->db->FO($_rs)) {
-            $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum);
-        }
-        
-        // Resumen desastres
-        if ($afectacion == 1) {
-
-            // Form id = 4, # personas
-            $_sql = "SELECT SUM(form_response) AS sum, category_title AS cat
-                FROM form_response f
-                JOIN incident_category ic USING(incident_id)
-                JOIN category c ON ic.category_id = c.id
-                JOIN incident i ON ic.incident_id = i.id
-                WHERE $cond_tmp AND form_field_id = 4
-                GROUP BY category_id
-                ORDER BY sum DESC";
-
-        }
-        else {
-            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
-                FROM incident i
-                JOIN incident_category ic ON i.id = ic.incident_id
-                JOIN category c ON ic.category_id = c.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
-        }
-        
-        $_sqlidn = sprintf($_sql,$cond_cats_dn);
-        
-        $rsms_dn = array();
-        $_rs = $this->db->open($_sqlidn);
-        while($_row = $this->db->FO($_rs)) {
-            $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum);
-        }
-
-        
-        return compact('r', 't','rsms_ec', 'rsms_dn');
+        return compact('r', 't');
     }
     
     /**
@@ -380,7 +313,11 @@ class MonitorController {
         
         $limi = '~';
         $nl = "\r\n";
-        $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Evento"'.$limi.'"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.'"Referecia"'.$limi.'"Departamento"'.$limi.'"Municipio"'.$nl;
+
+        $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Evento"'.$limi.
+                '"Categorias (Subcategorias)"'.$limit.
+                '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.
+                '"Referecia"'.$limi.'"Departamento"'.$limi.'"Municipio"'.$nl;
 
         $_sql_csv = "SELECT DISTINCT(i.id) AS id, i.incident_date AS date, i.incident_title AS title,
             l.location_name AS ln, city_id, state_id
@@ -417,8 +354,10 @@ class MonitorController {
             $_row_s = $this->db->FO($_rss_s);
              
             $state = (empty($_row_s->state)) ? '' : $_row_s->state;
-            $csv .= '"Violencia armada"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->title.'"'.$limi.'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi;
-            $csv .= '"'.$ref.'"'.$limi.'"'.$state.'"'.$limi.'"'.$city.'"'.$nl;
+            $csv .= '"Violencia armada"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->title.'"'.$limi
+                    .'"'.$cats.'"'.$limi;
+                    .'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi;
+                    '"'.$ref.'"'.$limi.'"'.$state.'"'.$limi.'"'.$city.'"'.$nl;
 
         }
 
@@ -678,16 +617,5 @@ class MonitorController {
         $_r = $this->db->FO($_rs);
         
         return array($_r->id, $_r->centroid);
-    }
-    
-    /*
-     * Coloca el tipo de mapa en session
-     * @param int $tipo
-     */
-    public function setMapaTipo($tipo) {
-        
-        $_SESSION['tipo_mapa'] = $tipo;
-
-        echo '1';
     }
 }

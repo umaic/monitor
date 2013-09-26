@@ -20,7 +20,7 @@ session_start();
 
 // PHP >= 5.3
 //date_default_timezone_set('America/Bogota');
-define ('BASE', '/');  // Comienza con slash, se usa al incluir los assets
+define ('BASE', '/monitor/');  // Comienza con slash, se usa al incluir los assets
 include "config.php";
 require 'controllers/monitor.php';
 $mc = new MonitorController;
@@ -39,8 +39,7 @@ if (!empty($_GET) && isset($_GET['m'])) {
 
             $cats = (empty($_GET['c'])) ? array() : $_GET['c'];
             $states = (empty($_GET['states'])) ? array() : $_GET['states'];
-            $afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
-            $totalxd = $mc->totalxd($ini, $fin, $cats, $afectacion, $states);
+            $totalxd = $mc->totalxd($ini, $fin, $cats, $states);
             
             header('Content-type: text/json');
             header('Content-type: application/json'); 
@@ -72,10 +71,6 @@ if (!empty($_GET) && isset($_GET['m'])) {
         case 'download_incidents':
             $mc->downloadIncidents();
         break;
-
-        case 'mapa_tipo':
-            $mc->setMapaTipo($_GET['tipo']);
-        break;
     }
 }
 else {
@@ -94,7 +89,7 @@ else {
                                'dn' => array(0)
                               );
             
-            $totalxy = $mc->total($cats_hide);
+            //$totalxy = $mc->total($cats_hide);
             //$totalxd = $mc->totalxd($ini, $fin);
             $_t = $mc->totalecdn();
             $tec = $_t['ec'];
