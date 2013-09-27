@@ -315,7 +315,7 @@ class MonitorController {
         $nl = "\r\n";
 
         $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Evento"'.$limi.
-                '"Categorias (Subcategorias)"'.$limit.
+                '"Categorias (Subcategorias)"'.$limi.
                 '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.
                 '"Referecia"'.$limi.'"Departamento"'.$limi.'"Municipio"'.$nl;
 
@@ -326,74 +326,78 @@ class MonitorController {
                  INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id
                  WHERE $cond_csv 
                  ";
-        $_sql_csv_ec = sprintf($_sql_csv,'','','', $cond_cats_ec);
+        
+        //$_sql_csv_ec = sprintf($_sql_csv,'','','', $cond_cats_ec);
+        //$_sql_csv_dn = sprintf($_sql_csv,$_db,$_db,$_db, $cond_cats_dn);
 
-        $_rs = $this->db->open($_sql_csv_ec);
-        while($_r = $this->db->FO($_rs)) {
+        $ushas = array(array('t' => 'Violencia armada', 'db' => '', 'cc' => $cond_cats_ec),
+                      array( 't' => 'Desastres', 'db' => $_db, 'cc' => $cond_cats_dn));
 
-            $_sql_s = "SELECT source_desc AS descr, source_reference AS ref, source 
-                FROM source_detail sd
-                INNER JOIN source s ON sd.source_id = s.id
-                WHERE incident_id = ".$_r->id." LIMIT 1";
+        foreach($ushas as $u => $usha) {
 
-            $_rss = $this->db->open($_sql_s);
-            $_row_s = $this->db->FO($_rss);
-            
-            $desc = (empty($_row_s->descr)) ? '' : str_replace('"','',$_row_s->descr);
-            $ref = (empty($_row_s->ref)) ? '' : $_row_s->ref;
-            $source = (empty($_row_s->source)) ? '' : $_row_s->source;
-            
-            $_sql_c = "SELECT city from city WHERE id = ".$_r->city_id." LIMIT 1";
-            $_rss_c = $this->db->open($_sql_c);
-            $_row_c = $this->db->FO($_rss_c);
-            
-            $city = (empty($_row_c->city)) ? '' : $_row_c->city;
-            
-            $_sql_s = "SELECT state from state WHERE id = ".$_r->state_id." LIMIT 1";
-            $_rss_s = $this->db->open($_sql_s);
-            $_row_s = $this->db->FO($_rss_s);
-             
-            $state = (empty($_row_s->state)) ? '' : $_row_s->state;
-            $csv .= '"Violencia armada"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->title.'"'.$limi
-                    .'"'.$cats.'"'.$limi;
-                    .'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi;
-                    '"'.$ref.'"'.$limi.'"'.$state.'"'.$limi.'"'.$city.'"'.$nl;
+            $_dbu = $usha['db'];
+            $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu, $usha['cc']);
+        
+            $_rs = $this->db->open($_sql_csv_ecdn);
+            while($_r = $this->db->FO($_rs)) {
 
-        }
+                $source = $desc = $ref = $cats = '';
 
-        $_sql_csv_dn = sprintf($_sql_csv,$_db,$_db,$_db, $cond_cats_dn);
+                if ($u == 0) {
+                    // Todo: Ojo, revisar el tema que no se pueden mostrar bitacoras
+                    $_sql_s = "SELECT source_desc AS descr, source_reference AS ref, source 
+                    FROM source_detail sd
+                    INNER JOIN source s ON sd.source_id = s.id
+                    WHERE incident_id = ".$_r->id." LIMIT 1";
 
-        $_rs = $this->db->open($_sql_csv_dn);
-        while($_r = $this->db->FO($_rs)) {
+                    $_rss = $this->db->open($_sql_s);
+                    $_row_s = $this->db->FO($_rss);
+                    
+                    $desc = (empty($_row_s->descr)) ? '' : str_replace('"','',$_row_s->descr);
+                    $ref = (empty($_row_s->ref)) ? '' : $_row_s->ref;
+                    $source = (empty($_row_s->source)) ? '' : $_row_s->source;
+                }
+                else {
+                    $_sql_s = "SELECT media_link AS descr 
+                    FROM media m
+                    WHERE media_type = 4 AND incident_id = ".$_r->id;
 
-            $_sql_s = "SELECT source_desc AS descr, source_reference AS ref, source 
-                FROM source_detail sd
-                INNER JOIN source s ON sd.source_id = s.id
-                WHERE incident_id = ".$_r->id." LIMIT 1";
+                    $_rss = $this->db->open($_sql_s);
+                    $_row_s = $this->db->FO($_rss);
+                    
+                    $source = (empty($_row_s->descr)) ? '' : $_row_s->descr;
+                }
+                
+                $_sql_c = "SELECT city from city WHERE id = ".$_r->city_id." LIMIT 1";
+                $_rss_c = $this->db->open($_sql_c);
+                $_row_c = $this->db->FO($_rss_c);
+                
+                $city = (empty($_row_c->city)) ? '' : $_row_c->city;
+                
+                $_sql_s = "SELECT state from state WHERE id = ".$_r->state_id." LIMIT 1";
+                $_rss_s = $this->db->open($_sql_s);
+                $_row_s = $this->db->FO($_rss_s);
 
-            $_rss = $this->db->open($_sql_s);
-            $_row_s = $this->db->FO($_rss);
-            
-            $desc = (empty($_row_s->descr)) ? '' : $_row_s->descr;
-            $ref = (empty($_row_s->ref)) ? '' : $_row_s->ref;
-            $source = (empty($_row_s->source)) ? '' : $_row_s->source;
-            
-            $desc = str_replace('"','',$_r->descr);
-            
-            $_sql_c = "SELECT city from city WHERE id = ".$_r->city_id." LIMIT 1";
-            $_rss_c = $this->db->open($_sql_c);
-            $_row_c = $this->db->FO($_rss_c);
-            
-            $city = (empty($_row_c->city)) ? '' : $_row_c->city;
-            
-            $_sql_s = "SELECT state from state WHERE id = ".$_r->state_id." LIMIT 1";
-            $_rss_s = $this->db->open($_sql_s);
-            $_row_s = $this->db->FO($_rss_s);
-             
-            $state = (empty($_row_s->state)) ? '' : $_row_s->state;
-            $csv .= '"Desastre"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->title.'"'.$limi.'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi;
-            $csv .= '"'.$ref.'"'.$limi.'"'.$state.'"'.$limi.'"'.$city.'"'.$nl;
+                // Categorias
+                $_sql_c = "SELECT c.id, category_title AS cat 
+                    FROM $_dbu.incident_category ic
+                    INNER JOIN $_dbu.category c ON ic.category_id = c.id
+                    WHERE incident_id = ".$_r->id;
 
+                echo $_sql_c;
+
+                $_rsc = $this->db->open($_sql_c);
+                while ($_row_c = $this->db->FO($_rsc)) {
+                    $cats .= $_row_c->cat;
+                }
+                 
+                $state = (empty($_row_s->state)) ? '' : $_row_s->state;
+                $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->title.'"'.$limi
+                        .'"'.$cats.'"'.$limi
+                        .'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi
+                        .'"'.$state.'"'.$limi.'"'.$city.'"'.$nl;
+
+            }
         }
 
         //echo $csv;
