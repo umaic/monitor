@@ -107,7 +107,6 @@ class MonitorController {
         $ini = date('Y-m-d H:i:s', intval($ini));  // Se usa intval para que quede igual que ushahidi/application/helper/reports/ :740
         $fin = date('Y-m-d H:i:s', intval($fin));
 
-
         $_t = explode('|', $cats);
         $cond_cats_ec = '';
         if (!empty($_t[0])) {
@@ -141,9 +140,10 @@ class MonitorController {
      * @param int $ini Fecha inicio milisegundos
      * @param int $fin Fecha inicio milisegundos
      * @param string $cats Categorias separadas por ',' filtradas para ec y dn formato ec1,ec2|dn1,dn2
+     * @param int $afectacion, 1 o 0
      * @param string $states States separados por ','
      */ 
-    public function totalxd($ini, $fin, $cats, $states) {
+    public function totalxd($ini, $fin, $cats, $afectacion, $states='') {
         
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
@@ -225,8 +225,75 @@ class MonitorController {
             //}
         }
 
+        // Resumen
+        $_sql = "SELECT COUNT() AS n FROM %slocation AS l
+                 JOIN %sincident AS i ON l.id = i.location_id
+                 JOIN %sincident_category AS ic ON i.id = ic.incident_id
+                 WHERE $cond_tmp";
         
-        return compact('r', 't');
+        // Resumen violencia
+        if ($afectacion == 1) {
+            $_sql = "SELECT SUM(victim_cant) AS sum, category_title AS cat
+                FROM victim v
+                JOIN incident_category ic USING(incident_id)
+                JOIN category c ON ic.category_id = c.id
+                JOIN incident i ON ic.incident_id = i.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        else {
+            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
+                FROM incident i
+                JOIN incident_category ic ON i.id = ic.incident_id
+                JOIN category c ON ic.category_id = c.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        
+        $_sqliec = sprintf($_sql,$cond_cats_ec);
+        
+        $rsms_ec = array();
+        $_rs = $this->db->open($_sqliec);
+        while($_row = $this->db->FO($_rs)) {
+            $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum);
+        }
+        
+        // Resumen desastres
+        if ($afectacion == 1) {
+
+            // Form id = 4, # personas
+            $_sql = "SELECT SUM(form_response) AS sum, category_title AS cat
+                FROM form_response f
+                JOIN incident_category ic USING(incident_id)
+                JOIN category c ON ic.category_id = c.id
+                JOIN incident i ON ic.incident_id = i.id
+                WHERE $cond_tmp AND form_field_id = 4
+                GROUP BY category_id
+                ORDER BY sum DESC";
+
+        }
+        else {
+            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
+                FROM incident i
+                JOIN incident_category ic ON i.id = ic.incident_id
+                JOIN category c ON ic.category_id = c.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        
+        $_sqlidn = sprintf($_sql,$cond_cats_dn);
+        
+        $rsms_dn = array();
+        $_rs = $this->db->open($_sqlidn);
+        while($_row = $this->db->FO($_rs)) {
+            $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum);
+        }
+
+        
+        return compact('r', 't','rsms_ec', 'rsms_dn');
     }
     
     /**
@@ -289,23 +356,6 @@ class MonitorController {
      *
      */ 
     public function downloadIncidents() {
-        /*
-        $_sql_csv = "SELECT i.incident_date AS date, s.source, sd.source_desc AS descr,
-            sd.source_reference AS ref, state, city, l.location_name AS ln, l.latitude, l.longitude
-            FROM %slocation AS l
-                 INNER JOIN %sincident AS i ON l.id = i.location_id
-                 INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id
-                 INNER JOIN %scategory AS c ON ic.category_id = c.id
-                 INNER JOIN %ssource_detail AS sd ON i.id = sd.incident_id
-                 INNER JOIN %ssource AS s ON sd.source_id = s.id
-                 INNER JOIN %sstate AS st ON l.state_id = st.id
-                 INNER JOIN %scity AS ct ON l.city_id = ct.id
-                 WHERE $cond_csv 
-                 ";
-
-        $_sql_csv_ec = sprintf($_sql_csv,'','','','','','','','', $cond_cats_ec);
-        echo $_sql_csv_ec;
-         */
         $_db = $this->db_dn.'.';
         $cond_csv = $_SESSION['cond_csv'];
         $cond_cats_ec = $_SESSION['cond_cats_ec'];
@@ -316,15 +366,22 @@ class MonitorController {
 
         $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Evento"'.$limi.
                 '"Categorias (Subcategorias)"'.$limi.
-                '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.
-                '"Referecia"'.$limi.'"Departamento"'.$limi.'"Municipio"'.$nl;
+                '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.'"Referecia"'.$limi.
+                '"Departamento"'.$limi.'"Municipio"'.$limi.'"Lugar"'.$limi.
+                '"# Víctimas civiles"'.$limi.'"Víctimas militares"'.$limi.
+                '"# Víctimas menores 18 años"'.$limi.'"Víctimas mujeres"'.$limi.
+                '"# Víctimas afro"'.$limi.'"Víctimas indígenas"'.$limi.'"Víctimas otros"'.$limi.
+                $nl;
 
-        $_sql_csv = "SELECT DISTINCT(i.id) AS id, i.incident_date AS date, i.incident_title AS title,
-            l.location_name AS ln, city_id, state_id
-            FROM %slocation AS l
+        $_sql_csv = "SELECT i.id AS id, i.incident_date AS date, i.incident_title AS title,
+                    i.incident_description AS des, GROUP_CONCAT(c.category_title) AS cats,
+                    l.location_name AS ln, city_id, state_id, l.location_name AS loc
+                    FROM %slocation AS l
                  INNER JOIN %sincident AS i ON l.id = i.location_id
                  INNER JOIN %sincident_category AS ic ON i.id = ic.incident_id
+                 INNER JOIN %scategory AS c ON ic.category_id = c.id
                  WHERE $cond_csv 
+                 GROUP BY i.id
                  ";
         
         //$_sql_csv_ec = sprintf($_sql_csv,'','','', $cond_cats_ec);
@@ -336,19 +393,31 @@ class MonitorController {
         foreach($ushas as $u => $usha) {
 
             $_dbu = $usha['db'];
-            $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu, $usha['cc']);
+            $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu,$_dbu,$usha['cc']);
+
+            //echo $_sql_csv_ecdn.'<br /><br />';
         
             $_rs = $this->db->open($_sql_csv_ecdn);
             while($_r = $this->db->FO($_rs)) {
 
                 $source = $desc = $ref = $cats = '';
+                $iid = $_r->id;
+
+                // Inicializa num victimas
+                for ($v=0; $v<7; $v++) {
+                    $num_v[$v] = '';
+                }
 
                 if ($u == 0) {
+                    
+                    $title = $_r->des;
+
+                    // Fuentes
                     // Todo: Ojo, revisar el tema que no se pueden mostrar bitacoras
                     $_sql_s = "SELECT source_desc AS descr, source_reference AS ref, source 
                     FROM source_detail sd
                     INNER JOIN source s ON sd.source_id = s.id
-                    WHERE incident_id = ".$_r->id." LIMIT 1";
+                    WHERE incident_id = $iid LIMIT 1";
 
                     $_rss = $this->db->open($_sql_s);
                     $_row_s = $this->db->FO($_rss);
@@ -356,16 +425,51 @@ class MonitorController {
                     $desc = (empty($_row_s->descr)) ? '' : str_replace('"','',$_row_s->descr);
                     $ref = (empty($_row_s->ref)) ? '' : $_row_s->ref;
                     $source = (empty($_row_s->source)) ? '' : $_row_s->source;
+
+                    // # victimas por condicion,age,gender,ethnic
+                    $vcn = array('victim_condition_id' => array(2,4),
+                                 'victim_age_id' => array(3),
+                                 'victim_gender_id' => array(1),
+                                 'victim_ethnic_group_id' => array(2,1,6),
+                             );
+
+                    $v = 0;
+                    foreach($vcn as $col => $vc) {
+                        foreach($vc as $cid) {
+                        
+                            $_sql_v = "SELECT COUNT(id) AS num FROM victim WHERE $col = $cid AND incident_id = $iid";
+                            $_rsv = $this->db->open($_sql_v);
+                            $_row_v = $this->db->FO($_rsv);
+
+                            $num_v[$v] = $_row_v->num;
+
+                            $v++;
+                        }
+                    }
+
                 }
                 else {
+                    $title = $_r->title;
+
                     $_sql_s = "SELECT media_link AS descr 
-                    FROM media m
-                    WHERE media_type = 4 AND incident_id = ".$_r->id;
+                    FROM $_dbu.media m
+                    WHERE media_type = 4 AND incident_id = $iid";
 
                     $_rss = $this->db->open($_sql_s);
                     $_row_s = $this->db->FO($_rss);
                     
                     $source = (empty($_row_s->descr)) ? '' : $_row_s->descr;
+                    
+                    // Victimas, personas
+                    $_sql_v = "SELECT form_response AS num 
+                    FROM $_dbu.form_response
+                    WHERE form_field_id = 4 AND incident_id = $iid";
+
+                    $_rsv = $this->db->open($_sql_v);
+                    $_row_v = $this->db->FO($_rsv);
+                    
+                    $num_v[0] = $_row_v->num;
+
                 }
                 
                 $_sql_c = "SELECT city from city WHERE id = ".$_r->city_id." LIMIT 1";
@@ -378,24 +482,18 @@ class MonitorController {
                 $_rss_s = $this->db->open($_sql_s);
                 $_row_s = $this->db->FO($_rss_s);
 
-                // Categorias
-                $_sql_c = "SELECT c.id, category_title AS cat 
-                    FROM $_dbu.incident_category ic
-                    INNER JOIN $_dbu.category c ON ic.category_id = c.id
-                    WHERE incident_id = ".$_r->id;
-
-                echo $_sql_c;
-
-                $_rsc = $this->db->open($_sql_c);
-                while ($_row_c = $this->db->FO($_rsc)) {
-                    $cats .= $_row_c->cat;
-                }
-                 
                 $state = (empty($_row_s->state)) ? '' : $_row_s->state;
-                $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->title.'"'.$limi
-                        .'"'.$cats.'"'.$limi
-                        .'"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi
-                        .'"'.$state.'"'.$limi.'"'.$city.'"'.$nl;
+                $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$title.'"'.$limi.
+                        '"'.$_r->cats.'"'.$limi.
+                        '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
+                        '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
+
+                // Victimas
+                foreach($num_v as $nv) {
+                    $csv .= $nv.$limi;
+                }
+
+                $csv .= $nl;
 
             }
         }
@@ -621,5 +719,16 @@ class MonitorController {
         $_r = $this->db->FO($_rs);
         
         return array($_r->id, $_r->centroid);
+    }
+    
+    /*
+     * Coloca el tipo de mapa en session
+     * @param int $tipo
+     */
+    public function setMapaTipo($tipo) {
+        
+        $_SESSION['tipo_mapa'] = $tipo;
+
+        echo '1';
     }
 }

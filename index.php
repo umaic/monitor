@@ -39,7 +39,8 @@ if (!empty($_GET) && isset($_GET['m'])) {
 
             $cats = (empty($_GET['c'])) ? array() : $_GET['c'];
             $states = (empty($_GET['states'])) ? array() : $_GET['states'];
-            $totalxd = $mc->totalxd($ini, $fin, $cats, $states);
+            $afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
+            $totalxd = $mc->totalxd($ini, $fin, $cats, $afectacion, $states);
             
             header('Content-type: text/json');
             header('Content-type: application/json'); 
@@ -71,6 +72,10 @@ if (!empty($_GET) && isset($_GET['m'])) {
         case 'download_incidents':
             $mc->downloadIncidents();
         break;
+
+        case 'mapa_tipo':
+            $mc->setMapaTipo($_GET['tipo']);
+        break;
     }
 }
 else {
@@ -89,7 +94,7 @@ else {
                                'dn' => array(0)
                               );
             
-            //$totalxy = $mc->total($cats_hide);
+            $totalxy = $mc->total($cats_hide);
             //$totalxd = $mc->totalxd($ini, $fin);
             $_t = $mc->totalecdn();
             $tec = $_t['ec'];
