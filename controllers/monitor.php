@@ -452,7 +452,7 @@ class MonitorController {
                     $title = $_r->title;
 
                     $_sql_s = "SELECT media_link AS descr 
-                    FROM $_dbu.media m
+                    FROM ".$_dbu."media m
                     WHERE media_type = 4 AND incident_id = $iid";
 
                     $_rss = $this->db->open($_sql_s);
@@ -462,7 +462,7 @@ class MonitorController {
                     
                     // Victimas, personas
                     $_sql_v = "SELECT form_response AS num 
-                    FROM $_dbu.form_response
+                    FROM ".$_dbu."form_response
                     WHERE form_field_id = 4 AND incident_id = $iid";
 
                     $_rsv = $this->db->open($_sql_v);
