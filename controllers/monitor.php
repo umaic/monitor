@@ -5,7 +5,6 @@
  * @package     Monitor
  * @link 		http://monitor.colombiashh.org/api
  */
-
 class MonitorController {
     
     private $db_dn;
@@ -19,6 +18,7 @@ class MonitorController {
         $this->db = Factory::create('mysql');
         $this->db_dn = 'desastres';    
         $this->dbs = array('', $this->db_dn.'.');
+
     }
 
     /**
@@ -146,7 +146,7 @@ class MonitorController {
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
         $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
-        
+
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
 
         $_SESSION['cond_csv'] = $cond_csv;
@@ -263,10 +263,10 @@ class MonitorController {
 
             // Form id = 4, # personas
             $_sql = "SELECT SUM(form_response) AS sum, category_title AS cat
-                FROM form_response f
-                JOIN incident_category ic USING(incident_id)
-                JOIN category c ON ic.category_id = c.id
-                JOIN incident i ON ic.incident_id = i.id
+                FROM $_dbform_response f
+                JOIN %sincident_category ic USING(incident_id)
+                JOIN %scategory c ON ic.category_id = c.id
+                JOIN %sincident i ON ic.incident_id = i.id
                 WHERE $cond_tmp AND form_field_id = 4
                 GROUP BY category_id
                 ORDER BY sum DESC";
@@ -274,15 +274,15 @@ class MonitorController {
         }
         else {
             $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
-                FROM incident i
-                JOIN incident_category ic ON i.id = ic.incident_id
-                JOIN category c ON ic.category_id = c.id
+                FROM %sincident i
+                JOIN %sincident_category ic ON i.id = ic.incident_id
+                JOIN %scategory c ON ic.category_id = c.id
                 WHERE $cond_tmp
                 GROUP BY category_id
                 ORDER BY sum DESC";
         }
         
-        $_sqlidn = sprintf($_sql,$cond_cats_dn);
+        $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
         
         $rsms_dn = array();
         $_rs = $this->db->open($_sqlidn);
@@ -725,8 +725,8 @@ class MonitorController {
      */
     public function setMapaTipo($tipo) {
         
-        $_SESSION['tipo_mapa'] = $tipo;
+        $_SESSION['mapa_tipo'] = $tipo;
 
-        echo '1';
+        echo $tipo;
     }
 }

@@ -649,6 +649,8 @@ totalesxDepto = function(more) {
                     
                     $div.find('.num').html(rsm.n);
                     $div.find('.cat').html(rsm.t);
+                    
+                    total_dn += rsm.n*1;
 
                     $('#resumen_dn').append($div);
                 }

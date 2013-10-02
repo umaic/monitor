@@ -329,10 +329,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
         <!--<div id="ys"></div>-->
         <div id="map"></div>
-        <div id="totalxd" class="shadow">
-            <div id="data_title">
-                <h2>Personas afectadas</h2>
-            </div>
+        <div id="totalxd" class="">
             <div id="data">
                 <div id="tabs">
                   <ul>
@@ -340,6 +337,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <li><a href="#departamentos">Departamentos</a></li>
                   </ul>
                   <div id="resumen">
+                    <div id="data_title">
+                        <h2>Personas afectadas</h2>
+                    </div>
                     <div class="left ec resumen_total">
                         <div id="resumen_total_ec" class="num"></div>
                         <div class="cat">Total</div>
@@ -356,7 +356,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                                 <div class="cat"></div>
                             </div>
                         </div>
-                        <div id="resumen_dn" class="left">
+                        <div id="resumen_dn" class="right">
                             <div class="hide resumen_row">
                                 <div class="num"></div>
                                 <div class="cat"></div>
