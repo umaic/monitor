@@ -117,7 +117,6 @@ class MonitorController {
         if (!empty($_t[1])) {
             $cond_cats_dn = ' category_id IN ('.$_t[1].')';
         }
-        
         $cond_tmp = "
                  incident_date >= '$ini' AND incident_date <= '$fin' 
                  AND incident_active = 1 AND %s";
@@ -140,13 +139,13 @@ class MonitorController {
      * @param int $ini Fecha inicio milisegundos
      * @param int $fin Fecha inicio milisegundos
      * @param string $cats Categorias separadas por ',' filtradas para ec y dn formato ec1,ec2|dn1,dn2
-     * @param int $afectacion, 1 o 0
      * @param string $states States separados por ','
      */ 
-    public function totalxd($ini, $fin, $cats, $afectacion, $states='') {
+    public function totalxd($ini, $fin, $cats, $states='') {
         
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
+        $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
         
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
 
@@ -224,7 +223,6 @@ class MonitorController {
                             );
             //}
         }
-
         // Resumen
         $_sql = "SELECT COUNT() AS n FROM %slocation AS l
                  JOIN %sincident AS i ON l.id = i.location_id
@@ -232,7 +230,7 @@ class MonitorController {
                  WHERE $cond_tmp";
         
         // Resumen violencia
-        if ($afectacion == 1) {
+        if ($afectacion) {
             $_sql = "SELECT SUM(victim_cant) AS sum, category_title AS cat
                 FROM victim v
                 JOIN incident_category ic USING(incident_id)
@@ -261,7 +259,7 @@ class MonitorController {
         }
         
         // Resumen desastres
-        if ($afectacion == 1) {
+        if ($afectacion) {
 
             // Form id = 4, # personas
             $_sql = "SELECT SUM(form_response) AS sum, category_title AS cat

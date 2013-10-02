@@ -25,6 +25,8 @@ include "config.php";
 require 'controllers/monitor.php';
 $mc = new MonitorController;
 
+$_SESSION['mapa_tipo'] = 'afectacion';
+
 // Clean URL
 if (!empty($_GET) && isset($_GET['m'])) {
     switch($_GET['m']) {

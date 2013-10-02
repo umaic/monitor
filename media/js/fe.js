@@ -132,6 +132,24 @@ $(function(){
     $('.close').click(function() { 
         $(this).closest('.filtro').slideUp();
     });
+    
+    // Tipo de mapa
+    $('.mapa_tipo:not(.active)').click(function() {
+        var that = this;
+
+        $.ajax({
+            url: 'mapa_tipo/' + $(that).data('tipo'),
+            success: function() {
+                $('.mapa_tipo').removeClass('activo');
+                $(that).addClass('activo');
+                addFeaturesFirstTime();
+                totalesxDepto();
+            }
+        });
+    });
+    
+    //Tabs
+    $('#tabs').tabs();
 
     // Date events
     var _ms = 2;  // Meses hacia atras
@@ -158,7 +176,7 @@ $(function(){
     setYear('ini',_iniY);
     setYear('fin',_year);
 
-    $('#time').find('select').change(function() {
+    $('#stime').change(function() {
         
         if ($(this).val() != 0) {
             var _ini = getStartEnd('ini');
@@ -168,11 +186,6 @@ $(function(){
             var _ii = _iiObj.getTime();
 
             switch($(this).val()) {
-                // Año
-                case 'a':
-                    _ini = new Date(_year,0,1);
-                    _fin = new Date(_year,11,31);
-                break;
                 // Mes
                 case 'm':
                     _ini = new Date(_ii - daysToMiliseconds(30)); // milisecs
@@ -192,6 +205,11 @@ $(function(){
                 case 'h':
                     _ini = _ii; // milisecs
                     _fin = _today;
+                break;
+                // Año
+                default:
+                    _ini = new Date($(this).val(),0,1);
+                    _fin = new Date($(this).val(),11,31);
                 break;
             }
 
@@ -596,6 +614,48 @@ totalesxDepto = function(more) {
 
                 // Ordena tabla
                 //forceSortTable();
+                
+                // Afectacion
+
+                var titulo = (getMapaAfectacion() == 1) ? 'Personas afectadas' : 'Número de eventos';
+                var total_ec = 0;
+                
+                $('#resumen_ec, #resumen_dn').find('.resumen_row:not(:first)').remove();
+
+                for (var d in data.rsms_ec) {
+                    $div = $('.resumen_row:first').clone();
+                    $div.removeClass('hide');
+                    $div.addClass('ect');
+                    
+                    rsm = data.rsms_ec[d];
+                    
+                    $div.find('.num').html(rsm.n);
+                    $div.find('.cat').html(rsm.t);
+
+                    total_ec += rsm.n*1;
+
+                    $('#resumen_ec').append($div);
+                }
+                    
+                $('#resumen_total_ec').html(total_ec);
+                
+                var total_dn = 0;
+                for (var d in data.rsms_dn) {
+                    $div = $('.resumen_row:first').clone();
+                    $div.removeClass('hide');
+                    $div.addClass('dnt');
+                    
+                    rsm = data.rsms_dn[d];
+                    
+                    $div.find('.num').html(rsm.n);
+                    $div.find('.cat').html(rsm.t);
+
+                    $('#resumen_dn').append($div);
+                }
+                
+                $('#resumen_total_dn').html(total_dn);
+
+                $('#data_title').find('h2').html(titulo);
             }
         });
 
@@ -691,4 +751,10 @@ getStatesChecked = function(){
     });
 
     return _sts.join(',');
+}
+
+getMapaAfectacion = function(){ 
+    
+    return ($('.mapa_tipo.activo').data('tipo') == 'eventos') ? 0 : 1;
+
 }

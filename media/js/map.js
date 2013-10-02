@@ -17,12 +17,12 @@ var id_tema = id_org = 0;
 var url_xd = '/json/cluster/?m=0&v=0';
 
 var subdomain_ec = 'violenciaarmada';
-var url_ec = 'http://localhost/violencia_armada/';
+var url_ec = 'http://localhost/violencia_armada' + url_xd;
 //var url_ec = 'http://'+subdomain_ec + '.colombiassh.org' + url_xd;
 
 var subdomain_dn = 'desastres';
 //var url_dn = 'http://'+subdomain_dn+'.colombiassh.org' + url_xd;
-var url_dn = 'http://localhost/desastres/';
+var url_dn = 'http://localhost/desastres' + url_xd;
 
 // Verificados se usan como destacados
 var url_ft = 'http://'+subdomain_dn + '.colombiassh.org/json/index/?m=0&v=1';
@@ -202,6 +202,9 @@ function addFeatures(inst) {
         
         // States filter
         _uec = addURLParameter(_uec, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+        
+        // Tipo mapa
+        _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
 
         ajaxFeatures(_uec, l_ec);
     }
