@@ -231,7 +231,8 @@ class MonitorController {
         
         // Resumen violencia
         if ($afectacion) {
-            $_sql = "SELECT SUM(victim_cant) AS sum, category_title AS cat
+            $_sql = "SELECT SUM(victim_cant) AS sum, 
+                category_title AS cat, category_color AS color, c.id AS cat_id
                 FROM victim v
                 JOIN incident_category ic USING(incident_id)
                 JOIN category c ON ic.category_id = c.id
@@ -241,7 +242,8 @@ class MonitorController {
                 ORDER BY sum DESC";
         }
         else {
-            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
+            $_sql = "SELECT COUNT(i.id) AS sum, 
+                category_title AS cat, category_color AS color, c.id AS cat_id
                 FROM incident i
                 JOIN incident_category ic ON i.id = ic.incident_id
                 JOIN category c ON ic.category_id = c.id
@@ -255,7 +257,7 @@ class MonitorController {
         $rsms_ec = array();
         $_rs = $this->db->open($_sqliec);
         while($_row = $this->db->FO($_rs)) {
-            $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum);
+            $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum, 'cat_id' => $_row->cat_id, 'c' => $_row->color);
         }
         
         // Resumen desastres
@@ -273,7 +275,7 @@ class MonitorController {
 
         }
         else {
-            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat
+            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat, category_color AS color
                 FROM %sincident i
                 JOIN %sincident_category ic ON i.id = ic.incident_id
                 JOIN %scategory c ON ic.category_id = c.id
@@ -287,7 +289,7 @@ class MonitorController {
         $rsms_dn = array();
         $_rs = $this->db->open($_sqlidn);
         while($_row = $this->db->FO($_rs)) {
-            $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum);
+            $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum, 'c' => $_row->color);
         }
 
         

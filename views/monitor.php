@@ -326,6 +326,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="mapas_tipos">
         <div class="mapa_tipo activo inline" data-tipo="afectacion"><img src="<?php echo BASE ?>media/img/people_affected_population_64px_icon.png" /><h1>Afectados</h1></div>
         <div class="mapa_tipo inline" data-tipo="eventos"><img src="<?php echo BASE ?>media/img/activity_scale_operation_64px_icon.png" /><h1>Eventos</h1></div>
+        
+        <div id="group_fts" class="ungroup"><h1>Desagrupar mapa</h1></div>
     </div>
         <!--<div id="ys"></div>-->
         <div id="map"></div>
@@ -352,6 +354,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <div class="div_table_totalxd">
                         <div id="resumen_ec" class="left">
                             <div class="hide resumen_row">
+                                <div class="cat_color hide">&nbsp;</div>
                                 <div class="num"></div>
                                 <div class="cat"></div>
                             </div>

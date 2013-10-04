@@ -123,7 +123,7 @@ div.tecdn .fcat {
     text-align: left;
     padding: 20px 30px;
     height: 400px;
-    z-index: 900;
+    z-index: 1002;
 }
 div.tecdn .fcat_list {
     height: 300px;
@@ -184,8 +184,6 @@ div.tecdn .fcat ul li.h {
     height: 55px;
     background-color: #555555;
     padding: 5px 0;
-    border: solid #bbbbbb;
-    border-width: 1px 0 1px 0;
 }
 
 #menu div.v:not(:first-child) {
@@ -226,7 +224,7 @@ div.tecdn .fcat ul li.h {
     color: #fff;
 }
 #menu input,select {
-    font-size: 12px;
+    font-size: 13px;
 }
 #menu .r {
     margin: 0 0 0 10px;
@@ -296,18 +294,32 @@ div.tecdn .fcat ul li.h {
     width: 80px;
     cursor: pointer;
 }
-#mapas_tipos .mapa_tipo h1 {
+#mapas_tipos h1 {
     margin: 0;
 }
 #mapas_tipos .activo,
-#mapas_tipos .mapa_tipo:hover {
+#mapas_tipos .mapa_tipo:hover,
+#mapas_tipos #group_fts:hover {
     background-color: #FEFD60;
     border: 1px solid #DBC319;
+}
+#mapas_tipos #group_fts {
+    margin: 10px 0 0 0;
+    padding: 10px 10px 10px 28px;
+    background-color: #f3f3f3;
+    border: 1px solid #e1e1e1;
+    cursor: pointer;
+}
+#mapas_tipos .ungroup {
+    background: url(../img/ungroup.png) no-repeat 15px 7px;
+}
+#mapas_tipos .group {
+    background: url(../img/group.png) no-repeat 15px 7px;
 }
 #totalxd {
     position: absolute;
     right: 0px;
-    width: 350px;
+    width: 360px;
     max-height: 750px;
     padding: 0;
     margin-top: 10px;
@@ -529,6 +541,11 @@ div.filtro_fecha ul li.selected {
     padding: 5px 10px;
     margin: 0px 10px 0 0;
     background-color: #f1f1f1;
+    position: relative;
+    cursor: pointer;
+}
+#resumen .resumen_row:hover {
+    background-color: #e0e0e0;
 }
 #resumen .resumen_row:not(:last-child) {
     border-bottom: 1px solid #cccccc;
@@ -538,6 +555,15 @@ div.filtro_fecha ul li.selected {
     font-size: 32px;
     font-weight: bold;
 }
+
+#resumen .resumen_row .cat_color {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+}
+
 #resumen .resumen_total .num {
     font-size: 24px;
     font-weight: bold;
@@ -558,6 +584,7 @@ div.filtro_fecha ul li.selected {
 #resumen .ect {
     border-right: 1px solid #cccccc;
 }
+
 
 .olControlLoadingPanel, #loading {
 

@@ -1,12 +1,13 @@
 <html>
-<head>
+<head><title>Monitor Humanitario</title>
 <style type="text/css">
     body {
         font-family: Arial;
         margin: 0;
+	scrollbar-base-color: #ff0000;!important
     }
     #monitor {
-        width: 900px;
+        width: 800px;
         height: 400px;
     }
     #map, #aaaa {
@@ -16,15 +17,15 @@
     #tabs div.tab {
         font-size: 11px;
     }
-    #incidentes, #totales {
+    /* Alto de la lista de eventos */
+    #incidentes, #totles {
         width: 400px;
     }
-    /* Alto de la lista de eventos */
     #incidentes {
         position: relative; /* Para que funcione perfectScrollbar */
         height: 400px;
         font-size: 11px;
-        overflow: hidden;
+        overflow: auto;
     }
 </style>
 </head>

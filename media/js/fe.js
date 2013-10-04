@@ -6,6 +6,7 @@ var base_ol = '';
 var is_portal = false;
 var num_carga = 20;
 var cargar_mas = 0;  // Cuenta las veces que se hace click en cargar mas
+var _cluster = true;  // Mapa en cluster, parametro para ushahidi json/cluster, json/index
 
 var resetLimit = false;
 
@@ -136,7 +137,7 @@ $(function(){
     // Tipo de mapa
     $('.mapa_tipo:not(.active)').click(function() {
         var that = this;
-
+        
         $.ajax({
             url: 'mapa_tipo/' + $(that).data('tipo'),
             success: function() {
@@ -146,6 +147,37 @@ $(function(){
                 totalesxDepto();
             }
         });
+    });
+    
+    // Group - Ungroup
+    $('#group_fts').click(function() {
+
+        $(this).toggleClass('group');
+        
+        // Muestra colors de cats
+        $('.cat_color').toggle();
+
+        _cluster = !_cluster;
+
+        var dgt = (_cluster) ? 'Desagrupar' : 'Agrupar'; 
+
+        $(this).find('h1').html(dgt + ' mapa');
+
+        addFeaturesFirstTime();
+        totalesxDepto();
+    });
+
+    // Click categorias en resumen
+    $('#resumen_ec').find('.resumen_row').click(function(){ 
+
+        console.log('a');
+        $('#fcat_ec').find('input:checkbox').attr('checked', false);
+        $('#fcat_ec').find('input:checkbox[value='+$(this).attr('id')+']').attr('checked', true);
+        
+        setCatsHidden();
+        //addFeatures($(this).attr("class").split(' ')[0]);
+        addFeatures('ec');
+        //totalesxDepto();
     });
     
     //Tabs
@@ -190,26 +222,32 @@ $(function(){
                 case 'm':
                     _ini = new Date(_ii - daysToMiliseconds(30)); // milisecs
                     _fin = _today;
+
+                    showGroupUngroup('show');
                 break;
                 // Semana
                 case 's':
                     _ini = new Date(_ii - daysToMiliseconds(7)); // milisecs
                     _fin = _today;
+                    showGroupUngroup('show');
                 break;
                 // Ayer
                 case 'ay':
                     _ini = new Date(_ii - daysToMiliseconds(1)); // milisecs
                     _fin = _today;
+                    showGroupUngroup('show');
                 break;
                 // Hoy
                 case 'h':
                     _ini = _ii; // milisecs
                     _fin = _today;
+                    showGroupUngroup('show');
                 break;
                 // Año
                 default:
                     _ini = new Date($(this).val(),0,1);
                     _fin = new Date($(this).val(),11,31);
+                    showGroupUngroup('false');
                 break;
             }
 
@@ -616,7 +654,6 @@ totalesxDepto = function(more) {
                 //forceSortTable();
                 
                 // Afectacion
-
                 var titulo = (getMapaAfectacion() == 1) ? 'Personas afectadas' : 'Número de eventos';
                 var total_ec = 0;
                 
@@ -629,8 +666,10 @@ totalesxDepto = function(more) {
                     
                     rsm = data.rsms_ec[d];
                     
+                    $div.attr('id', rsm.cat_id);
                     $div.find('.num').html(rsm.n);
                     $div.find('.cat').html(rsm.t);
+                    $div.find('.cat_color').css('background-color', '#' + rsm.c);;
 
                     total_ec += rsm.n*1;
 
@@ -759,4 +798,17 @@ getMapaAfectacion = function(){
     
     return ($('.mapa_tipo.activo').data('tipo') == 'eventos') ? 0 : 1;
 
+}
+
+showGroupUngroup = function(s) {
+
+    $btn = $('#group_fts');
+    
+    if (s == 'show') {
+        $btn.show();
+    }
+    else {
+        $btn.hide();
+    }
+   
 }

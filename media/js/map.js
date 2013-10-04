@@ -14,6 +14,7 @@ var nump_list = 15;
 var id_depto = '00';
 var rm_id_depto = false;
 var id_tema = id_org = 0;
+
 var url_xd = '/json/cluster/?m=0&v=0';
 
 var subdomain_ec = 'violenciaarmada';
@@ -173,6 +174,17 @@ function addFeatures(inst) {
 
     if (inst == undefined) {
         inst = 'ecdn';
+    }
+    
+    if (!_cluster) {
+        url_ec = url_ec.replace('cluster','index');
+        url_dn = url_dn.replace('cluster','index');
+        url_ft = url_ft.replace('cluster','index');
+    }
+    else {
+        url_ec = url_ec.replace('index','cluster');
+        url_dn = url_dn.replace('index','cluster');
+        url_ft = url_ft.replace('index','cluster');
     }
    
     var start = $("#startDate").val();
@@ -465,8 +477,8 @@ function defStyle(){
 				fillColor: "${color}",
 				fillOpacity: "${opacity}",
 				strokeColor: "${strokeColor}",
-				strokeWidth: 4,
-				strokeOpacity: "0.3",
+				strokeWidth: 6,
+				strokeOpacity: "0.5",
 				label:"${clusterCount}",
 				title:"${clusterCount}",
 				//labelAlign: "${labelalign}", // IE doesn't like this for some reason
@@ -539,7 +551,7 @@ function defStyle(){
 						}
 						else
 						{
-							return "bold";
+							return "normal";
 						}
 					},
 					radius: function(feature)
@@ -649,21 +661,31 @@ function defStyle(){
 					color: function(feature)
 					{
                         // Se coloca color fijo pq json/cluster devuelve color de categoria en cada feature
-						if (String(feature.attributes.link).indexOf(subdomain_ec) == -1) {
-                            return '#2ca02c';
+                        if (_cluster) {
+                            if (String(feature.attributes.link).indexOf(subdomain_ec) == -1) {
+                                return '#2ca02c';
+                            }
+                            else {
+                                return '#cc0000';
+                            }
                         }
                         else {
-                            return '#cc0000';
+                            return '#' + feature.attributes.color;
                         }
 					},
 					strokeColor: function(feature)
 					{
                         // Se coloca color fijo pq json/cluster devuelve color de categoria en cada feature
-						if (String(feature.attributes.link).indexOf(subdomain_ec) == -1) {
-                            return '#2ca02c';
+                        if (_cluster) {
+                            if (String(feature.attributes.link).indexOf(subdomain_ec) == -1) {
+                                return '#2ca02c';
+                            }
+                            else {
+                                return '#cc0000';
+                            }
                         }
                         else {
-                            return '#cc0000';
+                            return '#' + feature.attributes.color;
                         }
 					},
 					clusterCount: function(feature)
@@ -679,15 +701,17 @@ function defStyle(){
 						}
 						else
 						{
-							return "";
+							return "1";
 						}
 					},
 					opacity: function(feature)
 					{
+
 						feature_icon = feature.attributes.icon;
-						if (feature_icon!=="")
+						
+                        if (feature_icon!=="")
 						{
-							return "1";
+							return 1;
 						}
 						else
 						{

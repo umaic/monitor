@@ -1,4 +1,4 @@
-<?php define('BASE_PORTAL', '/monitor/'); ?>
+<?php define('BASE_PORTAL', '/'); ?>
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.min.css" />
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/perfect-scrollbar.min.css" />
@@ -166,13 +166,13 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         <div class="clear"></div>
     </div>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui-1.8.21.custom.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/LoadingPanel.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.mousewheel.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/perfect-scrollbar.min.js"></script>
     <script type="text/javascript">
