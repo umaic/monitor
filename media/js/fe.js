@@ -168,9 +168,9 @@ $(function(){
     });
 
     // Click categorias en resumen
-    $('#resumen_ec').find('.resumen_row').click(function(){ 
+    $('.resumen_row', '#resumen_ec').live('click', function(){ 
 
-        console.log('a');
+        console.log($(this).attr('id'));
         $('#fcat_ec').find('input:checkbox').attr('checked', false);
         $('#fcat_ec').find('input:checkbox[value='+$(this).attr('id')+']').attr('checked', true);
         
@@ -628,27 +628,30 @@ totalesxDepto = function(more) {
             success: function(data) {
                 
                 $('#table_totalxd tbody tr').remove();
-                $('#table_totalxd').trigger('update');
+                //$('#table_totalxd').trigger('update');
                 
                 // Totales
                 var _t = data.t;
                 var checked;
 
                 var $table = $('#table_totalxd tbody');
+                
+                var html = $table.html();
 
-                $table.append('<tr class="totalxd"><td></td><td class="left">Total</td><td class="ec">' + _t.ec + '</td><td class="dn">' + _t.dn + '</td></tr>');
+                html += '<tr class="totalxd"><td></td><td class="left">Total</td><td class="ec">' + _t.ec + '</td><td class="dn">' + _t.dn + '</td></tr>';
 
                 for (var d in data.r) {
                     _i = data.r[d];
                     checked = (_i.css == '') ? 'checked' : '';
-                    $table.append('<tr class="f ' + _i.css + ' ' + _i.hide + '"><td><input type="checkbox" name="deptos[]" value="'+_i.state_id+'" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>');
+                    html += '<tr class="f ' + _i.css + ' ' + _i.hide + '"><td><input type="checkbox" name="deptos[]" value="'+_i.state_id+'" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>';
                 }
-                
                 
                 // Aviso de no eventos
                 if ($table.find('.f:not(.hide)').length == 0) {
-                    $table.append('<tr><td colspan="4"><br />No existen eventos</td></tr>');
+                    html += '<tr><td colspan="4"><br />No existen eventos</td></tr>';
                 }
+
+                $table.html(html);
 
                 // Ordena tabla
                 //forceSortTable();
@@ -658,6 +661,8 @@ totalesxDepto = function(more) {
                 var total_ec = 0;
                 
                 $('#resumen_ec, #resumen_dn').find('.resumen_row:not(:first)').remove();
+
+                $resumen_ec = $('#resumen_ec');
 
                 for (var d in data.rsms_ec) {
                     $div = $('.resumen_row:first').clone();
@@ -672,12 +677,15 @@ totalesxDepto = function(more) {
                     $div.find('.cat_color').css('background-color', '#' + rsm.c);;
 
                     total_ec += rsm.n*1;
-
-                    $('#resumen_ec').append($div);
+                    
+                    if (rsm.n > 0) {
+                        $resumen_ec.append($div);
+                    } 
                 }
                     
                 $('#resumen_total_ec').html(total_ec);
                 
+                $resumen_dn = $('#resumen_dn');
                 var total_dn = 0;
                 for (var d in data.rsms_dn) {
                     $div = $('.resumen_row:first').clone();
@@ -691,7 +699,9 @@ totalesxDepto = function(more) {
                     
                     total_dn += rsm.n*1;
 
-                    $('#resumen_dn').append($div);
+                    if (rsm.n > 0) {
+                        $resumen_dn.append($div);
+                    }
                 }
                 
                 $('#resumen_total_dn').html(total_dn);

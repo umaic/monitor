@@ -253,7 +253,7 @@ class MonitorController {
         }
         
         $_sqliec = sprintf($_sql,$cond_cats_ec);
-        
+
         $rsms_ec = array();
         $_rs = $this->db->open($_sqliec);
         while($_row = $this->db->FO($_rs)) {
@@ -264,8 +264,8 @@ class MonitorController {
         if ($afectacion) {
 
             // Form id = 4, # personas
-            $_sql = "SELECT SUM(form_response) AS sum, category_title AS cat
-                FROM $_dbform_response f
+            $_sql = "SELECT SUM(form_response) AS sum, category_title AS cat, category_color AS color
+                FROM ".$_db."form_response f
                 JOIN %sincident_category ic USING(incident_id)
                 JOIN %scategory c ON ic.category_id = c.id
                 JOIN %sincident i ON ic.incident_id = i.id

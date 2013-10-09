@@ -17,9 +17,13 @@ var id_tema = id_org = 0;
 
 var url_xd = '/json/cluster/?m=0&v=0';
 
-var subdomain_ec = 'violenciaarmada';
-var url_ec = 'http://localhost/violencia_armada' + url_xd;
+//var subdomain_ec = 'violenciaarmada';
 //var url_ec = 'http://'+subdomain_ec + '.colombiassh.org' + url_xd;
+
+var subdomain_ec = 'violencia_armada';
+var url_ec = 'http://localhost/violencia_armada';
+var url_ec_orig = url_ec;
+url_ec += url_xd;
 
 var subdomain_dn = 'desastres';
 //var url_dn = 'http://'+subdomain_dn+'.colombiassh.org' + url_xd;
@@ -314,19 +318,24 @@ function onFeatureSelect(attrs) {
             $('#loading').hide();
 
             for(var i=0, j=json.length; i < j; i+=1) {
+                
                 _js = json[i];
+                
                 _html += '<div class="report_list_map from_map"> ' +
                     '<div class="t">'+ _js.t +'</div> ' +
                     '<div>' +
                         '<div class="date detail">'+ _js.d +'</div> ' +
                         '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
-                        '<a href="http://sidih.colombiassh.org/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
-                        'Consulte el perfil de '+ _js.ldn +'</a></span></div> ' +
-                    '</<div></div>';
+                            '<a href="http://sidih.colombiassh.org/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
+                            'Consulte el perfil de '+ _js.ldn +'</a></span>' +
+                        '</div> ' +
+                    '</div>';
                     
-                    _html += '<div class="clear"><div class="left"><b>Categorias</b></div> ' +
+                    _html += '<div class="clear"></div><div class="left"><b>Categorias</b></div> ' +
                              '<div class="opt right linko">' +
-                             '<a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a></div>';
+                                '<a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>' +
+                             '</div>';
+
                     for (c in _js.c) {
                         _html += '<div class="clear cat detail">'+ c;
                         
@@ -344,8 +353,74 @@ function onFeatureSelect(attrs) {
                         }
                         _html += '</div>';
                     }
-                    _html += '</div>';
-                
+                    
+                    //_html += '</div>';
+                    _html += '<div class="clear"></div> ';
+        
+                // Victimas
+                if (_js.v.length > 0) {
+                    _html += '<div><b>Víctimas</b></div> ';
+                    
+                    for (v in _js.v) {
+                        
+                        _html += '<div class="victim"><table><tr>';
+                        
+                        _html += '<td>';
+                        
+                        _v = _js.v[v];
+                        _html += '<div><b>Cantidad</b>: ' + _v['cant'] + '</div> ';
+
+                        
+                        if (_v['gender'] != '') {
+                            _html += '<div> <b>Género:</b> ' + _v['gender'] + '</div> ';
+                        }
+                        
+                        if (_v['status'] != '') {
+                            _html += '<div> <b>Estado:</b> ' + _v['status'] + '</div> ';
+                        }
+                        
+                        _html += '</td>';
+                        _html += '<td>';
+                        
+                        if (_v['age'] != '') {
+                            _html += '<div> <b>Edad:</b> ' + _v['age'];
+                        
+                            if (_v['age_group'] != '') {
+                                _html += ' / ' + _v['age_group'];
+                            }
+                        
+                            _html += '</div> ';
+                            
+                        }
+                        
+                        
+                        if (_v['condition'] != '') {
+                            _html += '<div><b>Condición:</b> ' + _v['condition'];
+                        
+                            if (_v['sub_condition'] != '') {
+                                _html += ' / ' + _v['sub_condition'];
+                            }
+                            _html += '</div> ';
+                            
+                        }
+                        
+                        if (_v['ethnic_group'] != '') {
+                            _html += '<div> <b>Grupo poblacional:</b> ' + _v['ethnic_group'];
+                        
+                            if (_v['sub_ethnic_group'] != '') {
+                                _html += ' / ' + _v['sub_ethnic_group'];
+                            }
+                        
+                            _html += '</div> ';
+                            
+                        }
+                        
+                        _html += '</td>';
+                        
+                        _html += '</table></div> ';
+                    }
+                }
+
                 _html += '<div class="clear"></div> ';
                 
                 if (show['desc'] || _js.f.length == 0) {
@@ -379,30 +454,32 @@ function onFeatureSelect(attrs) {
                     }
                 }
 
+                if (attrs.count > max_e) {
+                    _html += '<div id="mase"><div class="btn"><a href="'+attrs.link+'" target="_blank">Ir al listado completo de eventos</a></div></div>';
+                }
+
+                // Portal EHP
+                if (is_portal) {
+                    $('#incidentes').html(_html);
+                    $('#volver').show();
+                }
+                else {
+                    // Modal window, in fe.js
+                    numr = (attrs.id > max_e) ? max_e : attrs.id;
+                    m({
+                        //t: 'Monitor - ColombiaSSH :: Listado de eventos [ ' + numr + ' registros ]',
+                        t: 'Monitor - ColombiaSSH :: Listado de eventos',
+                        html: _html,
+                        w: 800,
+                        h: 500,
+                        funOpen: listReportsEvents,
+                    });
+                }
+
                 _html += '</div></div>';
 
             }
 
-            if (attrs.count > max_e) {
-                _html += '<div id="mase"><div class="btn"><a href="'+attrs.link+'" target="_blank">Ir al listado completo de eventos</a></div></div>';
-            }
-
-            // Portal EHP
-            if (is_portal) {
-                $('#incidentes').html(_html);
-                $('#volver').show();
-            }
-            else {
-                // Modal window, in fe.js
-                numr = (attrs.count > max_e) ? max_e : attrs.count;
-                m({
-                    t: 'Monitor - ColombiaSSH :: Listado de eventos [ ' + numr + ' registros ]',
-                    html: _html,
-                    w: 800,
-                    h: 500,
-                    funOpen: listReportsEvents,
-                });
-            }
         },
     });
     
