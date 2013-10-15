@@ -243,6 +243,9 @@ function addFeatures(inst) {
         // States filter
         _udn = addURLParameter(_udn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
         
+        // Tipo mapa
+        _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
+        
         ajaxFeatures(_udn, l_dn);
     }
     
@@ -358,67 +361,99 @@ function onFeatureSelect(attrs) {
                     _html += '<div class="clear"></div> ';
         
                 // Victimas
-                if (_js.v.length > 0) {
-                    _html += '<div><b>Víctimas</b></div> ';
-                    
-                    for (v in _js.v) {
+                if (_js.q == 'violencia') {
+                 
+                    if (_js.v.length > 0) {
+                        _html += '<div><b>Víctimas</b></div> ';
                         
-                        _html += '<div class="victim"><table><tr>';
-                        
-                        _html += '<td>';
-                        
-                        _v = _js.v[v];
-                        _html += '<div><b>Cantidad</b>: ' + _v['cant'] + '</div> ';
+                        for (v in _js.v) {
+                            
+                            _html += '<div class="victim"><table><tr>';
+                            
+                            _html += '<td valign="top">';
+                            
+                            _v = _js.v[v];
+                            _html += '<div><b>Cantidad</b>: ' + _v['cant'] + '</div> ';
 
-                        
-                        if (_v['gender'] != '') {
-                            _html += '<div> <b>Género:</b> ' + _v['gender'] + '</div> ';
-                        }
-                        
-                        if (_v['status'] != '') {
-                            _html += '<div> <b>Estado:</b> ' + _v['status'] + '</div> ';
-                        }
-                        
-                        _html += '</td>';
-                        _html += '<td>';
-                        
-                        if (_v['age'] != '') {
-                            _html += '<div> <b>Edad:</b> ' + _v['age'];
-                        
-                            if (_v['age_group'] != '') {
-                                _html += ' / ' + _v['age_group'];
-                            }
-                        
-                            _html += '</div> ';
                             
-                        }
-                        
-                        
-                        if (_v['condition'] != '') {
-                            _html += '<div><b>Condición:</b> ' + _v['condition'];
-                        
-                            if (_v['sub_condition'] != '') {
-                                _html += ' / ' + _v['sub_condition'];
+                            if (_v['gender'] != '') {
+                                _html += '<div> <b>Género:</b> ' + _v['gender'] + '</div> ';
                             }
-                            _html += '</div> ';
                             
-                        }
-                        
-                        if (_v['ethnic_group'] != '') {
-                            _html += '<div> <b>Grupo poblacional:</b> ' + _v['ethnic_group'];
-                        
-                            if (_v['sub_ethnic_group'] != '') {
-                                _html += ' / ' + _v['sub_ethnic_group'];
+                            if (_v['status'] != '') {
+                                _html += '<div> <b>Estado:</b> ' + _v['status'] + '</div> ';
                             }
-                        
-                            _html += '</div> ';
                             
+                            _html += '</td>';
+                            _html += '<td valign="top">';
+                            
+                            if (_v['age'] != '') {
+                                _html += '<div> <b>Edad:</b> ' + _v['age'];
+                            
+                                if (_v['age_group'] != '') {
+                                    _html += ' / ' + _v['age_group'];
+                                }
+                            
+                                _html += '</div> ';
+                                
+                            }
+                            
+                            
+                            if (_v['condition'] != '') {
+                                _html += '<div><b>Condición:</b> ' + _v['condition'];
+                            
+                                if (_v['sub_condition'] != '') {
+                                    _html += ' / ' + _v['sub_condition'];
+                                }
+                                _html += '</div> ';
+                                
+                            }
+                            
+                            if (_v['ethnic_group'] != '') {
+                                _html += '<div> <b>Grupo poblacional:</b> ' + _v['ethnic_group'];
+                            
+                                if (_v['sub_ethnic_group'] != '') {
+                                    _html += ' / ' + _v['sub_ethnic_group'];
+                                }
+                            
+                                _html += '</div> ';
+                                
+                            }
+                            
+                            _html += '</td>';
+                            
+                            _html += '</table></div> ';
                         }
-                        
-                        _html += '</td>';
-                        
-                        _html += '</table></div> ';
                     }
+                }
+                else {
+                    _html += '<div class="victim"><div><b>Afectación</b></div> ';
+                    _html += '<div><table><tr>';
+                    
+                    var p = 0;
+                    for (var k in _js.v) {
+
+                        _v = _js.v[k];
+
+                        if (_v != '') {
+                            tdo = (p == 0 || p == 4 || p == 8 || p == 12) ? true : false;
+                            tdc = (p == 3 || p == 7 || p == 11) ? true : false;
+
+                            if (tdo) {
+                                _html += '<td>';
+                            }
+
+                            _html += '<div><b>' + k + '</b>: ' + _v + '</div>';
+                            
+                            if (tdc) {
+                                _html += '</td>';
+                            }
+
+                            p += 1;
+                        }
+                    }
+                    
+                    _html += '</tr></table></div></div>';
                 }
 
                 _html += '<div class="clear"></div> ';
@@ -453,33 +488,33 @@ function onFeatureSelect(attrs) {
                         _html += '</div>';
                     }
                 }
-
-                if (attrs.count > max_e) {
-                    _html += '<div id="mase"><div class="btn"><a href="'+attrs.link+'" target="_blank">Ir al listado completo de eventos</a></div></div>';
-                }
-
-                // Portal EHP
-                if (is_portal) {
-                    $('#incidentes').html(_html);
-                    $('#volver').show();
-                }
-                else {
-                    // Modal window, in fe.js
-                    numr = (attrs.id > max_e) ? max_e : attrs.id;
-                    m({
-                        //t: 'Monitor - ColombiaSSH :: Listado de eventos [ ' + numr + ' registros ]',
-                        t: 'Monitor - ColombiaSSH :: Listado de eventos',
-                        html: _html,
-                        w: 800,
-                        h: 500,
-                        funOpen: listReportsEvents,
-                    });
-                }
-
+            
                 _html += '</div></div>';
 
             }
+                
+            if (json.length > max_e) {
+                _html += '<div id="mase"><div class="btn"><a href="'+attrs.link+'" target="_blank">Ir al listado completo de eventos</a></div></div>';
+            }
+            
 
+            // Portal EHP
+            if (is_portal) {
+                $('#incidentes').html(_html);
+                $('#volver').show();
+            }
+            else {
+                // Modal window, in fe.js
+                numr = (attrs.id > max_e) ? max_e : attrs.id;
+                m({
+                    //t: 'Monitor - ColombiaSSH :: Listado de eventos [ ' + numr + ' registros ]',
+                    t: 'Monitor - ColombiaSSH :: Listado de eventos',
+                    html: _html,
+                    w: 800,
+                    h: 500,
+                    funOpen: listReportsEvents,
+                });
+            }
         },
     });
     
@@ -554,13 +589,13 @@ function defStyle(){
 				fillColor: "${color}",
 				fillOpacity: "${opacity}",
 				strokeColor: "${strokeColor}",
-				strokeWidth: 6,
-				strokeOpacity: "0.5",
+				strokeWidth: 4,
+				strokeOpacity: "${strokeOpacity}",
 				label:"${clusterCount}",
 				title:"${clusterCount}",
 				//labelAlign: "${labelalign}", // IE doesn't like this for some reason
 				fontWeight: "${fontweight}",
-				fontColor: "#ffffff",
+				fontColor: "${fontColor}",
 				fontSize: "${fontsize}"
 			},
             {
@@ -747,6 +782,7 @@ function defStyle(){
                             }
                         }
                         else {
+                            return '#ffffff';
                             return '#' + feature.attributes.color;
                         }
 					},
@@ -764,6 +800,14 @@ function defStyle(){
                         else {
                             return '#' + feature.attributes.color;
                         }
+					},
+					fontColor: function(feature)
+					{
+                        return (_cluster) ? '#ffffff' : '#000000';
+					},
+					strokeOpacity: function(feature)
+					{
+                        return (_cluster) ? '0.5' : '1';
 					},
 					clusterCount: function(feature)
 					{

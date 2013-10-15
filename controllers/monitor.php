@@ -285,6 +285,8 @@ class MonitorController {
         }
         
         $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
+
+        //echo $_sqlidn;
         
         $rsms_dn = array();
         $_rs = $this->db->open($_sqlidn);

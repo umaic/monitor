@@ -543,6 +543,7 @@ div.filtro_fecha ul li.selected {
     background-color: #f1f1f1;
     position: relative;
     cursor: pointer;
+    border-top: 1px solid #ffffff;
 }
 #resumen .resumen_row:hover {
     background-color: #e0e0e0;
@@ -552,7 +553,7 @@ div.filtro_fecha ul li.selected {
 }
 
 #resumen .resumen_row .num {
-    font-size: 32px;
+    font-size: 20px;
     font-weight: bold;
 }
 
@@ -618,12 +619,12 @@ div.filtro_fecha ul li.selected {
 
 /* Lista de reportes click Feature */
 div.report_list_map {
-    background-color: #efefef;
+    background-color: #fafafa;
     padding: 10px;
     font-size: 12px;
 }
 div.report_list_map:hover {
-    background-color: #dedede;
+    background-color: #efefef;
 
 }
 div.report_list_map:not(:first-child) {
@@ -676,7 +677,7 @@ div.report_list_map div.detail {
 
 div.report_list_map div.victim {
     padding: 10px;
-    background-color: #FFE1DB;
+    background-color: #FFF2F0;
     margin: 2px 10px;
 }
 

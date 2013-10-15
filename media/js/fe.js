@@ -672,7 +672,7 @@ totalesxDepto = function(more) {
                     rsm = data.rsms_ec[d];
                     
                     $div.attr('id', rsm.cat_id);
-                    $div.find('.num').html(rsm.n);
+                    $div.find('.num').html(numberWithCommas(rsm.n));
                     $div.find('.cat').html(rsm.t);
                     $div.find('.cat_color').css('background-color', '#' + rsm.c);;
 
@@ -683,7 +683,7 @@ totalesxDepto = function(more) {
                     } 
                 }
                     
-                $('#resumen_total_ec').html(total_ec);
+                $('#resumen_total_ec').html(numberWithCommas(total_ec));
                 
                 $resumen_dn = $('#resumen_dn');
                 var total_dn = 0;
@@ -694,7 +694,7 @@ totalesxDepto = function(more) {
                     
                     rsm = data.rsms_dn[d];
                     
-                    $div.find('.num').html(rsm.n);
+                    $div.find('.num').html(numberWithCommas(rsm.n));
                     $div.find('.cat').html(rsm.t);
                     
                     total_dn += rsm.n*1;
@@ -704,7 +704,7 @@ totalesxDepto = function(more) {
                     }
                 }
                 
-                $('#resumen_total_dn').html(total_dn);
+                $('#resumen_total_dn').html(numberWithCommas(total_dn));
 
                 $('#data_title').find('h2').html(titulo);
             }
@@ -821,4 +821,13 @@ showGroupUngroup = function(s) {
         $btn.hide();
     }
    
+}
+
+function numberWithCommas(n) {
+    var parts=n.toString().split(".");
+    return parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",") + (parts[1] ? "." + parts[1] : "");
+}
+
+String.prototype.capitalize = function() {
+    return this.charAt(0).toUpperCase() + this.slice(1);
 }
