@@ -34,7 +34,7 @@
         <?php
         $_GET['layout'] = 'portal';
         $state = (isset($_GET['state'])) ? $_GET['state'] : 0;
-        include $_SERVER['DOCUMENT_ROOT']."/monitor/index.php" 
+        include $_SERVER['DOCUMENT_ROOT']."/index.php" 
         ?>
     </div>
 </body>
