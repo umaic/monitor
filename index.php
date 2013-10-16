@@ -20,7 +20,12 @@ session_start();
 
 // PHP >= 5.3
 //date_default_timezone_set('America/Bogota');
-define ('BASE', '/monitor/');  // Comienza con slash, se usa al incluir los assets
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    define ('BASE', '/monitor/');  // Comienza con slash, se usa al incluir los assets
+} 
+else {
+    define ('BASE', '/');  // Comienza con slash, se usa al incluir los assets
+}
 include "config.php";
 require 'controllers/monitor.php';
 $mc = new MonitorController;
