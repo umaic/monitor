@@ -120,7 +120,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </div>
             </div>
             <div id="new_event">
-                <a href="http://violenciaarmadacolombiassh.org/reports/submit" target="_blank">
+                <a href="http://violenciaarmada.colombiassh.org/reports/submit" target="_blank">
                     Reportar un evento
                 </a>
             </div>
