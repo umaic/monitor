@@ -1,3 +1,4 @@
+
 var map;
 var pL;
 var fromProjection;
@@ -54,13 +55,13 @@ var wms = [];
 wms = [
           {'n': 'Departamentos',
           'u' : "http://geonode.openstreetmap.co/geoserver/wms",
-          'l' : 'geonode:Depto_SIGOT',
+          'l' : 'geonode:division_departamental_de_colombia_sigot_igac',
           'v' : false,
           'op' : 1
           },
           {'n': 'Municipios',
           'u' : "http://geonode.openstreetmap.co/geoserver/wms",
-          'l' : 'geonode:Municipios_SIGOT_84',
+          'l' : 'geonode:municipio_sigot',
           'v': false,
           'op': 1 
            },
@@ -71,7 +72,7 @@ function selDepto(centroide) {
     map.setCenter(new OpenLayers.LonLat(_c[0], _c[1]), 2);
 }
 
-function map() {
+function mapRender() {
    
     // Portal
     if (is_portal) {
@@ -570,7 +571,7 @@ function mapMove(event)
         var _vd = true;
         var _vm = false;
 
-        if (map.getZoom() >= 3) {
+        if (map.getZoom() >= 2) {
             _vd = false;
             _vm = true;
         }

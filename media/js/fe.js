@@ -7,7 +7,6 @@ var is_portal = false;
 var num_carga = 20;
 var cargar_mas = 0;  // Cuenta las veces que se hace click en cargar mas
 var _cluster = true;  // Mapa en cluster, parametro para ushahidi json/cluster, json/index
-
 var resetLimit = false;
 
 $(function(){
@@ -62,18 +61,30 @@ $(function(){
         
         if (cs[0] == 'ec') {
             var ly = map.getLayersByName('Emergencia Compleja')[0];
+
+            $r_hide = $('#resumen_ec');
+            $r_show = $('#resumen_dn');
         }
         else {
             var ly = map.getLayersByName('Desastres Naturales')[0];
+            
+            $r_hide = $('#resumen_dn');
+            $r_show = $('#resumen_ec');
         }
         
         if (ly.getVisibility()) {
             $(this).html('Mostrar eventos'); 
             ly.setVisibility(false);
+
+            $r_hide.hide();
+            $r_show.removeClass('left half');
         }
         else {
             $(this).html('Ocultar eventos'); 
             ly.setVisibility(true);
+            
+            $r_hide.show();
+            $r_show.addClass('left half');
         }
         
         $(this).closest('.filtro').slideUp();
@@ -102,6 +113,12 @@ $(function(){
     // Colocar categorias en inputs hidden para envio a json/cluster
     setCatsHidden();
     
+    // Minimize - Maximize total
+    $('#minmax_total').toggle(
+        function() { $('.ui-tabs-panel, #mapas_tipos').hide(); $(this).removeClass('minimize'); $(this).addClass('maximize'); }, 
+        function() { $('.ui-tabs-panel, #mapas_tipos').show(); $(this).addClass('minimize'); $(this).removeClass('maximize'); }
+    );
+
     // Deptos: Todos/ninguno
     var td_st = false;
     $('#totalxd_all_chk').click(function() { 
@@ -170,7 +187,6 @@ $(function(){
     // Click categorias en resumen
     $('.resumen_row', '#resumen_ec').live('click', function(){ 
 
-        console.log($(this).attr('id'));
         $('#fcat_ec').find('input:checkbox').attr('checked', false);
         $('#fcat_ec').find('input:checkbox[value='+$(this).attr('id')+']').attr('checked', true);
         
@@ -377,7 +393,7 @@ $(function(){
 
     totalesxDepto();
 
-    map();
+    mapRender();
     
     // Click en el departamento en la lista derecha
     //
@@ -633,6 +649,7 @@ totalesxDepto = function(more) {
                 // Totales
                 var _t = data.t;
                 var checked;
+                var no_e = true;
 
                 var $table = $('#table_totalxd tbody');
                 
@@ -643,11 +660,16 @@ totalesxDepto = function(more) {
                 for (var d in data.r) {
                     _i = data.r[d];
                     checked = (_i.css == '') ? 'checked' : '';
+
+                    if (no_e && (_i.ec > 0 || _i.dn > 0)) {
+                        no_e = false;
+                    } 
                     html += '<tr class="f ' + _i.css + ' ' + _i.hide + '"><td><input type="checkbox" name="deptos[]" value="'+_i.state_id+'" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>';
                 }
                 
                 // Aviso de no eventos
-                if ($table.find('.f:not(.hide)').length == 0) {
+                //if ($table.find('.f:not(.hide)').length == 0) {
+                if (no_e) {
                     html += '<tr><td colspan="4"><br />No existen eventos</td></tr>';
                 }
 
@@ -659,7 +681,7 @@ totalesxDepto = function(more) {
                 // Afectacion
                 var titulo = (getMapaAfectacion() == 1) ? 'Personas afectadas' : 'Número de eventos';
                 var total_ec = 0;
-                
+                    
                 $('#resumen_ec, #resumen_dn').find('.resumen_row:not(:first)').remove();
 
                 $resumen_ec = $('#resumen_ec');
@@ -682,8 +704,11 @@ totalesxDepto = function(more) {
                         $resumen_ec.append($div);
                     } 
                 }
-                    
-                $('#resumen_total_ec').html(numberWithCommas(total_ec));
+                
+                if (total_ec > 0) {
+                    $('#resumen_total_ec_num').html(numberWithCommas(total_ec));
+                    $resumen_ec.show();
+                }
                 
                 $resumen_dn = $('#resumen_dn');
                 var total_dn = 0;
@@ -704,9 +729,19 @@ totalesxDepto = function(more) {
                     }
                 }
                 
-                $('#resumen_total_dn').html(numberWithCommas(total_dn));
+                if (total_dn > 0) {
+                    $('#resumen_total_dn_num').html(numberWithCommas(total_dn));
+                    $resumen_dn.show();
+                }
 
-                $('#data_title').find('h2').html(titulo);
+                if (total_ec > 0 && total_dn > 0) {
+                    $('#resumen_ec, #resumen_dn').addClass('left half');
+                }
+                else {
+                    $('#resumen_ec, #resumen_dn').removeClass('left half');
+                }
+
+                $('.data_title').find('h2').html(titulo);
             }
         });
 

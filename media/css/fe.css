@@ -230,7 +230,7 @@ div.tecdn .fcat ul li.h {
     margin: 0 0 0 10px;
 }
 #menu .btn {
-    margin: 12px 0 0 10px;
+    margin: 17px 0 0 10px;
 }
 #content {
    min-height: 100%;
@@ -328,7 +328,7 @@ div.tecdn .fcat ul li.h {
 #totalxd #data {
     padding: 0;
 }
-#totalxd #data_title {
+#totalxd .data_title {
     padding: 5px;
     margin: 0;
     background-color: #666666;
@@ -339,7 +339,7 @@ div.tecdn .fcat ul li.h {
 .div_table_totalxd {
     max-height: 550px;
     overflow: hidden;
-    margin: 5px 0 0 0;
+    margin: 0;
 }
 .div_table_totalxd:hover {
     overflow: auto;
@@ -520,7 +520,6 @@ div.filtro_fecha ul li.selected {
 
 #resumen_ec ,
 #resumen_dn {
-    width: 48%;
     word-wrap: break-word
 }
 #resumen .ec {
@@ -539,11 +538,12 @@ div.filtro_fecha ul li.selected {
 }
 #resumen .resumen_row {
     padding: 5px 10px;
-    margin: 0px 10px 0 0;
+    /*margin: 0px 10px 0 0;*/
     background-color: #f1f1f1;
     position: relative;
     cursor: pointer;
     border-top: 1px solid #ffffff;
+    /*min-height: 60px;*/
 }
 #resumen .resumen_row:hover {
     background-color: #e0e0e0;
@@ -575,7 +575,6 @@ div.filtro_fecha ul li.selected {
 }
 #resumen .resumen_total,
 #resumen .resumen_row {
-    width: 139px;
 }
 #resumen .resumen_total {
     padding: 5px 10px;
@@ -681,6 +680,14 @@ div.report_list_map div.victim {
     margin: 2px 10px;
 }
 
+#minmax_total {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    z-index: 1006;
+}
+
 /* Link en modal window */
 .ui-dialog a {
     text-decoration: none;
@@ -741,6 +748,9 @@ div#mase {
 .inline {
     display: inline-block;
 }
+.half {
+    width: 50%;
+}
 .alpha60 {
     /* Fallback for web browsers that doesn't support RGBa */
     background: rgb(30, 30, 30) transparent;
@@ -781,3 +791,16 @@ div#mase {
     background-repeat: no-repeat;
     background-position: 5px center;
 }
+.minimize {
+    background: url(../img/minimize.png) no-repeat 0 0;
+    height: 26px;
+    width: 26px;
+}
+.maximize {
+    background: url(../img/maximize.png) no-repeat 0 0;
+    height: 26px;
+    width: 26px;
+}
+
+
+

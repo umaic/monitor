@@ -4,7 +4,6 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
-<link rel="stylesheet" type="text/css" href="http://monitor.colombiassh.org/media/css/brand.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
 </head>
@@ -333,33 +332,34 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         <div id="map"></div>
         <div id="totalxd" class="">
             <div id="data">
+                <div id="minmax_total" class="minimize"></div>
                 <div id="tabs">
                   <ul>
                     <li><a href="#resumen">Resumen</a></li>
                     <li><a href="#departamentos">Departamentos</a></li>
+                    <li><a href="#tendencia">Tendencia</a></li>
                   </ul>
                   <div id="resumen">
-                    <div id="data_title">
+                    <div class="data_title">
                         <h2>Personas afectadas</h2>
                     </div>
-                    <div class="left ec resumen_total">
-                        <div id="resumen_total_ec" class="num"></div>
-                        <div class="cat">Total</div>
-                    </div>
-                    <div class="left dn resumen_total">
-                        <div id="resumen_total_dn" class="num"></div>
-                        <div class="cat">Total</div>
-                    </div>
-                    <div class="clear"></div>
                     <div class="div_table_totalxd">
-                        <div id="resumen_ec" class="left">
+                        <div id="resumen_ec" class="hide">
+                            <div id="resumen_total_ec" class="ec resumen_total">
+                                <div id="resumen_total_ec_num" class="num"></div>
+                                <div class="cat">Total</div>
+                            </div>
                             <div class="hide resumen_row">
                                 <div class="cat_color hide">&nbsp;</div>
                                 <div class="num"></div>
                                 <div class="cat"></div>
                             </div>
                         </div>
-                        <div id="resumen_dn" class="right">
+                        <div id="resumen_dn" class="hide">
+                            <div id="resumen_total_dn" class="dn resumen_total">
+                                <div id="resumen_total_dn_num" class="num"></div>
+                                <div class="cat">Total</div>
+                            </div>
                             <div class="hide resumen_row">
                                 <div class="num"></div>
                                 <div class="cat"></div>
@@ -367,18 +367,24 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         </div>
                         <div class="clear"></div>
                   </div>
-                  <div id="departamentos">
-                    <div id="div_table_totalxd" class="div_table_totalxd">
-                        <table id="table_totalxd">
-                            <thead>
-                                <tr><th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
-                            </thead>
-                            <tbody>
-                            </tbody>
-                        </table>
+              </div>
+              <div id="departamentos">
+                <div id="div_table_totalxd" class="div_table_totalxd">
+                    <div class="data_title">
+                        <h2>Personas afectadas</h2>
                     </div>
-                  </div>
+                    <table id="table_totalxd">
+                        <thead>
+                            <tr><th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
                 </div>
+              </div>
+              <div id="tendencia">
+                Proximamente --- :)
+              </div>
             <div class="clear"></div>
             </div>
         </div>
