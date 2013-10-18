@@ -34,7 +34,7 @@ else {
     var url_dn = 'http://'+subdomain_dn+'.colombiassh.org';
 
     // Verificados se usan como destacados
-    var url_ft = 'http://'+subdomain_dn + '.colombiassh.org/json/index/?m=0&v=1';
+    var url_ft = url_dn + '/json/index/?m=0&v=1';
 }
 
 url_ec += url_xd;
@@ -192,12 +192,10 @@ function addFeatures(inst) {
     if (!_cluster) {
         url_ec = url_ec.replace('cluster','index');
         url_dn = url_dn.replace('cluster','index');
-        url_ft = url_ft.replace('cluster','index');
     }
     else {
         url_ec = url_ec.replace('index','cluster');
         url_dn = url_dn.replace('index','cluster');
-        url_ft = url_ft.replace('index','cluster');
     }
    
     var start = $("#startDate").val();
@@ -436,33 +434,36 @@ function onFeatureSelect(attrs) {
                     }
                 }
                 else {
-                    _html += '<div class="victim"><div><b>Afectación</b></div> ';
-                    _html += '<div><table><tr>';
-                    
-                    var p = 0;
-                    for (var k in _js.v) {
 
-                        _v = _js.v[k];
+                    if (_js.v.length > 0) {
+                        _html += '<div class="victim"><div><b>Afectación</b></div> ';
+                        _html += '<div><table><tr>';
+                        
+                        var p = 0;
+                        for (var k in _js.v) {
 
-                        if (_v != '') {
-                            tdo = (p == 0 || p == 4 || p == 8 || p == 12) ? true : false;
-                            tdc = (p == 3 || p == 7 || p == 11) ? true : false;
+                            _v = _js.v[k];
 
-                            if (tdo) {
-                                _html += '<td>';
+                            if (_v != '') {
+                                tdo = (p == 0 || p == 4 || p == 8 || p == 12) ? true : false;
+                                tdc = (p == 3 || p == 7 || p == 11) ? true : false;
+
+                                if (tdo) {
+                                    _html += '<td>';
+                                }
+
+                                _html += '<div><b>' + k + '</b>: ' + _v + '</div>';
+                                
+                                if (tdc) {
+                                    _html += '</td>';
+                                }
+
+                                p += 1;
                             }
-
-                            _html += '<div><b>' + k + '</b>: ' + _v + '</div>';
-                            
-                            if (tdc) {
-                                _html += '</td>';
-                            }
-
-                            p += 1;
                         }
+                        
+                        _html += '</tr></table></div></div>';
                     }
-                    
-                    _html += '</tr></table></div></div>';
                 }
 
                 _html += '<div class="clear"></div> ';
@@ -484,7 +485,7 @@ function onFeatureSelect(attrs) {
                             }
                             
                             // Source desc
-                            if (_js.f[k][3] != '') {
+                            if (_js.f[k][3] != undefined && _js.f[k][3] != '') {
                                 _html += '<div class="fcc"><b>Descripci\u00f3n tomada de la fuente</b>: "' + _js.f[k][3] + '"</div>';
                             }
                             
