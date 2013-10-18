@@ -330,6 +330,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
         <!--<div id="ys"></div>-->
         <div id="map"></div>
+        <div id="featured" class="hide">
+            <div><b>Eventos destacados por:</b></div>
+            <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
+             
+        </div>
         <div id="totalxd" class="">
             <div id="data">
                 <div id="minmax_total" class="minimize"></div>

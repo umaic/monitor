@@ -543,9 +543,22 @@ function ajaxFeatures(u, l) {
                 //map.addLayer(l);
                 l.addFeatures(_f);
                 $('#loading').hide();
+	
+                // Show/Hide icono de destacados
+                showHideFeaturedIcon(); // funcion en este archivo
             },
         beforeSend: function(){ $('#loading').show() }
     });
+}
+
+function showHideFeaturedIcon() {
+    var $f = $('#featured');
+    if (map.getLayersByName('Destacados')[0].features.length > 0){
+        $f.show();
+    }
+    else {
+        $f.hide();
+    }
 }
 
 function mapMove(event)
