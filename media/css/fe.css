@@ -70,14 +70,14 @@ button {
     /*background: #FFE7E7 url(../img/logo_ec.png) no-repeat 15px 15px;*/
     /*background: #FFE7E7;*/
     background: #F9f9f9;
-    right: 0;
+    right: 180px;
     color: #d40000;
 }
 #tdn {
     /*background: #e3f4d7 url(../img/logo_dn.png) no-repeat 10px 15px;*/
     background: #c6e9af;
-    right: 180px;
     color: #2ca02c;
+    right: 0;
 }
 div.tecdn {
     width: 170px;

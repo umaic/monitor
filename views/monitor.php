@@ -397,17 +397,15 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
     <div id="footer">
     </div>
-<!--
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js,jquery-ui.min.js,openlayers/OpenLayers.min.js,fe.min.js,map.min.js,/url_tools.min.js"></script>
--->
+    <!--<script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js,jquery-ui.min.js,openlayers/OpenLayers.min.js,fe.min.js,map.min.js,/url_tools.min.js"></script>-->
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
-<script type="text/javascript">
+    <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-138811-20']);
    _gaq.push(['_setDomainName', 'colombiassh.org']);
