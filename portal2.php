@@ -14,13 +14,15 @@
     }
     #map, #aaaa {
         width: 400px;
-        height: 400px;
         margin: 0 !important;
+    }
+    #map {
+        height: 400px;
     }
     /* Alto de la lista de eventos */
     #tabs {
         width: 390px;
-        height: 400px;
+        height: 390px;
         overflow: auto;
     }
     #incidentes {

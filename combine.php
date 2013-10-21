@@ -87,7 +87,6 @@
     
             // Determine used compression method
             $encoding = $gzip ? 'gzip' : ($deflate ? 'deflate' : 'none');
-		$encoding = 'none';
     
             // Check for buggy versions of Internet Explorer
             if (!strstr($_SERVER['HTTP_USER_AGENT'], 'Opera') && 
