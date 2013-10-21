@@ -7,7 +7,7 @@ else {
 }
 ?>
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.css">
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.min.css" />
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.css" />
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/perfect-scrollbar.min.css" />
 
 <?php 
@@ -153,17 +153,20 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         &nbsp;
                         <div class="inline" id="periodo_texto"></div>
                     </div>
-                    <div id="mapas_tipos">
-                        <div class="mapa_tipo activo inline" data-tipo="afectacion">
-                            <img src="<?php echo BASE ?>media/img/people_affected_population_24px_icon.png" class="left" />Mapa personas afectadas
-                        </div>
-                        <div class="mapa_tipo inline" data-tipo="eventos">
-                            <img src="<?php echo BASE ?>media/img/activity_scale_operation_24px_icon.png" class="left" />Mapa n&uacute;mero de eventos
-                        </div>
-                        
-                        <div id="group_fts" class="inline ungroup">Desagrupar mapa</div>
-                    </div>
                 </div>
+                <div id="mapas_tipos" class="right">
+                    <div class="mapa_tipo activo inline" data-tipo="afectacion">
+                        <img src="<?php echo BASE ?>media/img/people_affected_population_24px_icon.png" class="left" />
+                        Mapa de personas afectadas
+                    </div>
+                    <div class="mapa_tipo inline" data-tipo="eventos">
+                        <img src="<?php echo BASE ?>media/img/activity_scale_operation_24px_icon.png" class="left" />
+                        Mapa de n&uacute;mero de eventos
+                    </div>
+                    
+                    <div id="group_fts" class="inline ungroup">Desagrupar mapa por categoria</div>
+                </div>
+                <!--
                 <div id="totales" class="right">
                     <div class="total">
                         <div id="num_total" class="inline">Total: <span id="num_total_span"></span></div>
@@ -171,25 +174,57 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         <div id="num_total_dn" class="inline desastres">Desastres: <span id="num_total_dn_span"></span></div>
                     </div>
                 </div>
+                -->
             </div>
             <div class="clear"></div>
         <div class="left">
             <div id="map"></div>
         </div>
-        <div id="incidentes" class="">
+        <div class="left" id="tabs">
+              <ul>
+                <li><a href="#resumen">Resumen por categorias</a></li>
+                <li><a href="#incidentes">Lista de eventos</a></li>
+              </ul>
+              <div id="resumen">
+                <div class="data_title">
+                    <h2>Personas afectadas</h2>
+                </div>
+                <div class="div_table_totalxd">
+                    <div id="resumen_ec" class="hide">
+                        <div id="resumen_total_ec" class="ec resumen_total">
+                            <div id="resumen_total_ec_num" class="num"></div>
+                            <div class="cat">Total</div>
+                        </div>
+                        <div class="hide resumen_row">
+                            <div class="cat_color hide">&nbsp;</div>
+                            <div class="num"></div>
+                            <div class="cat"></div>
+                        </div>
+                    </div>
+                    <div id="resumen_dn" class="hide">
+                        <div id="resumen_total_dn" class="dn resumen_total">
+                            <div id="resumen_total_dn_num" class="num"></div>
+                            <div class="cat">Total</div>
+                        </div>
+                        <div class="hide resumen_row">
+                            <div class="num"></div>
+                            <div class="cat"></div>
+                        </div>
+                    </div>
+                    <div class="clear"></div>
+              </div>
+              </div>
+            <div id="incidentes" class="">
+            </div>
         </div>
         <div class="clear"></div>
     </div>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/LoadingPanel.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.tablesorter.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.mousewheel.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/perfect-scrollbar.min.js"></script>
     <script type="text/javascript">
         var portal = 1;
         $(function() {

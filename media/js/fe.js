@@ -626,6 +626,7 @@ totalesxDepto = function(more) {
                 
                 $('#loading').hide();
                 
+                resumenAfectacion(json);
             }
         });
     
@@ -674,6 +675,14 @@ totalesxDepto = function(more) {
                 // Ordena tabla
                 //forceSortTable();
                 
+                resumenAfectacion(data);
+            }
+        });
+
+    }
+}
+
+resumenAfectacion = function(data) {
                 // Afectacion
                 var titulo = (getMapaAfectacion() == 1) ? 'Personas afectadas' : 'Número de eventos';
                 var total_ec = 0;
@@ -738,10 +747,7 @@ totalesxDepto = function(more) {
                 }
 
                 $('.data_title').find('h2').html(titulo);
-            }
-        });
 
-    }
 }
 
 forceSortTable = function() {

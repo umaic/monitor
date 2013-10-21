@@ -17,18 +17,15 @@
         height: 400px;
         margin: 0 !important;
     }
-    #tabs div.tab {
-        font-size: 11px;
-    }
     /* Alto de la lista de eventos */
-    #incidentes, #totles {
-        width: 400px;
+    #tabs {
+        width: 390px;
+        height: 400px;
+        overflow: auto;
     }
     #incidentes {
         position: relative; /* Para que funcione perfectScrollbar */
-        height: 400px;
         font-size: 11px;
-        overflow: auto;
     }
 </style>
 </head>

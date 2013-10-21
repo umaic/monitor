@@ -192,39 +192,6 @@ div.tecdn .fcat ul li.h {
    height: 100%;
    margin: 0;
 }
-#tabs {
-    width: 100%;
-    margin-bottom: -1px;
-}
-#tabs div.tab {
-    float: left;
-    margin: 0 3px;
-    border: solid #cccccc;
-    border-width: 1px 1px 0px 1px;
-    font-size: 12px;
-    padding: 5px;
-    cursor: pointer;
-    color: #cccccc;
-    border-radius: 3px 3px 0 0;
-    background-color: #f1f1f1;
-}
-#tabs div.active {
-    background-color: #ffffff;
-}
-#tabs #tab_ec.active {
-    color: #d40000;
-}
-#tabs #tab_dn.active {
-    color: #2ca02c;
-}
-.tab_data .no {
-    font-size: 16px;
-    width: 250px;
-    margin: 10px auto;
-}
-.tab_data .btn {
-    margin: 10px 0 0 80px;
-}
 #filtros {
     background-color: #0f6bb6;
 }
@@ -461,6 +428,94 @@ div.filtro_fecha ul li.selected {
     text-transform: uppercase;
 }
 
+#tabs .data_title {
+    padding: 5px;
+    margin: 0;
+    background-color: #666666;
+    color: #ffffff;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
+    border-radius: 3px 3px 0 0;
+}
+
+#tabs h2 {
+    margin: 0;
+    text-align: center;
+    font-size: 16px;
+}
+
+div.report_list_map div.victim {
+    padding: 10px;
+    background-color: #FFF2F0;
+    margin: 2px 10px;
+}
+
+#resumen_ec ,
+#resumen_dn {
+    word-wrap: break-word
+}
+#resumen .ec {
+    background-color: #D40000;
+    color: #ffffff;
+}
+#resumen .ect {
+    color: #D40000;
+}
+#resumen .dn {
+    background-color: #2CA02C;
+    color: #ffffff;
+}
+#resumen .dnt {
+    color: #2CA02C;
+}
+#resumen .resumen_row {
+    padding: 5px 10px;
+    /*margin: 0px 10px 0 0;*/
+    background-color: #f1f1f1;
+    position: relative;
+    cursor: pointer;
+    border-top: 1px solid #ffffff;
+    /*min-height: 60px;*/
+}
+#resumen .resumen_row:hover {
+    background-color: #e0e0e0;
+}
+#resumen .resumen_row:not(:last-child) {
+    border-bottom: 1px solid #cccccc;
+}
+
+#resumen .resumen_row .num {
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#resumen .resumen_row .cat_color {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 20px;
+    height: 20px;
+}
+
+#resumen .resumen_total .num {
+    font-size: 24px;
+    font-weight: bold;
+}
+#resumen .resumen_total .cat,
+#resumen .resumen_row .cat {
+    font-size: 12px;
+}
+#resumen .resumen_total,
+#resumen .resumen_row {
+}
+#resumen .resumen_total {
+    padding: 5px 10px;
+    font-size: 24px;
+    margin: 0;
+}
+#resumen .ect {
+    border-right: 1px solid #cccccc;
+}
+
 /* Modal que es monitor */
 #qmm {
     font-size: 15px !important;
@@ -618,13 +673,13 @@ div#mase {
     background-color: #f3f3f3;
     border: 1px solid #e1e1e1;
     cursor: pointer;
-    height: 30px;
+    width: 100px;
 }
 #mapas_tipos .ungroup {
-    background: url(../img/ungroup.png) no-repeat 0 7px;
+    background: url(../img/ungroup.png) no-repeat 0 3px;
 }
 #mapas_tipos .group {
-    background: url(../img/group.png) no-repeat 0 7px;
+    background: url(../img/group.png) no-repeat 0 3px;
 }
 
 /* Generales */
@@ -675,6 +730,9 @@ div#mase {
 }
 .inline {
     display: inline-block;
+}
+.half {
+    width: 50%;
 }
 .alpha60 {
     /* Fallback for web browsers that doesn't support RGBa */

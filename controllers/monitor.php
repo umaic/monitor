@@ -239,7 +239,6 @@ class MonitorController {
                          'hide' => $hide
                         );
         }
-        // Resumen
         
         // Resumen violencia
         if ($afectacion) {
@@ -684,10 +683,77 @@ class MonitorController {
             //$evs[] = array('e' => $conf, 't' => $_rt->n);
         }
         
+        $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+        // Resumen violencia
+        if ($afectacion) {
+            $_sql = "SELECT SUM(victim_cant) AS sum, 
+                category_title AS cat, category_color AS color, c.id AS cat_id
+                FROM victim v
+                JOIN incident_category ic ON v.incident_category_id = ic.id
+                JOIN category c ON ic.category_id = c.id
+                JOIN incident i ON ic.incident_id = i.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        else {
+            $_sql = "SELECT COUNT(i.id) AS sum, 
+                category_title AS cat, category_color AS color, c.id AS cat_id
+                FROM incident i
+                JOIN incident_category ic ON i.id = ic.incident_id
+                JOIN category c ON ic.category_id = c.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        
+        $_sqliec = sprintf($_sql,$cond_cats_ec);
+        //echo $_sqliec;
+
+        $rsms_ec = array();
+        $_rs = $this->db->open($_sqliec);
+        while($_row = $this->db->FO($_rs)) {
+            $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum, 'cat_id' => $_row->cat_id, 'c' => $_row->color);
+        }
+        
+        // Resumen desastres
+        if ($afectacion) {
+
+            // Form id = 4, # personas
+            $_sql = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, category_title AS cat, category_color AS color
+                FROM ".$_db."form_response f
+                JOIN %sincident i ON f.incident_id = i.id
+                JOIN %sincident_category ic ON ic.incident_id = i.id
+                JOIN %scategory c ON ic.category_id = c.id
+                WHERE $cond_tmp AND form_field_id = 4
+                GROUP BY category_id
+                ORDER BY sum DESC";
+
+        }
+        else {
+            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat, category_color AS color
+                FROM %sincident i
+                JOIN %sincident_category ic ON i.id = ic.incident_id
+                JOIN %scategory c ON ic.category_id = c.id
+                WHERE $cond_tmp
+                GROUP BY category_id
+                ORDER BY sum DESC";
+        }
+        
+        $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
+
+        //echo $_sqlidn;
+        
+        $rsms_dn = array();
+        $_rs = $this->db->open($_sqlidn);
+        while($_row = $this->db->FO($_rs)) {
+            $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum, 'c' => $_row->color);
+        }
+        
         // Ordena por fecha desc los eventos para mezclarlos
         usort($evs, array('MonitorController', 'orderArrayByDate'));
         
-        return array('e' => $evs, 't' => $total, 't_e' => $total_ec, 't_d' => $total_dn);
+        return array('e' => $evs, 't' => $total, 't_e' => $total_ec, 't_d' => $total_dn, 'rsms_ec' => $rsms_ec, 'rsms_dn' => $rsms_dn);
 
     }
 
