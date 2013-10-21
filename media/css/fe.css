@@ -264,12 +264,16 @@ div.tecdn .fcat ul li.h {
     padding: 10px 10px 0 10px;
     font-size: 14px;
     border-radius: 3px;
-    background-color: #FFE931;
+    background-color: #f1f1f1;
 }
 #featured #t {
-    padding: 10px 0 0 50px !important;
-    background: url(../img/paro_icon.png) no-repeat -10px 0;
+    padding: 10px 0 0 65px !important;
+    background-image: url(../img/paro_icon.png);
+    background-repeat: no-repeat;
+    background-position: 0 10px;
+    background-size: 48px 48px;
     height: 60px;
+    font-size: 13px;
 }
 #map, 
 #mapas_tipos,
