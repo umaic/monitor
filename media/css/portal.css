@@ -587,6 +587,46 @@ div#mase {
     top: 1px;
 }
 
+#mapas_tipos {
+    margin: 10px 0;
+    font-size: 11px;
+}
+#mapas_tipos .mapa_tipo {
+    padding: 3px;
+    background-color: #f3f3f3;
+    border: 1px solid #e1e1e1;
+    width: 120px;
+    cursor: pointer;
+    margin: 0;
+}
+#mapas_tipos h1 {
+    margin: 0;
+}
+#mapas_tipos img {
+    margin-right: 5px;
+}
+
+#mapas_tipos .activo,
+#mapas_tipos .mapa_tipo:hover,
+#mapas_tipos #group_fts:hover {
+    background-color: #FEFD60;
+    border: 1px solid #DBC319;
+}
+#mapas_tipos #group_fts {
+    margin: 0;
+    padding: 3px 3px 3px 28px;
+    background-color: #f3f3f3;
+    border: 1px solid #e1e1e1;
+    cursor: pointer;
+    height: 30px;
+}
+#mapas_tipos .ungroup {
+    background: url(../img/ungroup.png) no-repeat 0 7px;
+}
+#mapas_tipos .group {
+    background: url(../img/group.png) no-repeat 0 7px;
+}
+
 /* Generales */
 .ec {
     background-color: #FFE7E7;

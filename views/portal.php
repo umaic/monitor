@@ -1,4 +1,11 @@
-<?php define('BASE_PORTAL', '/'); ?>
+<?php
+if ($_SERVER['SERVER_NAME'] == 'localhost') {
+    define ('BASE_PORTAL', '/monitor/');  // Comienza con slash, se usa al incluir los assets
+} 
+else {
+    define ('BASE_PORTAL', '/');  // Comienza con slash, se usa al incluir los assets
+}
+?>
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.min.css" />
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/perfect-scrollbar.min.css" />
@@ -6,8 +13,6 @@
 <?php 
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 ?>
-
-<body>
         <div id="tec" class="tecdn hide">
             <a href="http://www.colombiassh.org/emergenciacompleja/" target="_blank">
                 <img src="<?php echo BASE_PORTAL ?>media/img/logo_ec.png" />
@@ -138,7 +143,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <input type="hidden" id="endDate" value="">
                     <input type="hidden" id="yyyy_ini" value="">
                     <input type="hidden" id="yyyy_fin" value="">
-                    <div id="time" class="inline">
+                    <div id="time" class="">
                         <label class="inline">Consultar:</label>
                         <select id="stime">
                             <option value="s" selected>Ultima semana</option>
@@ -147,6 +152,16 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         </select>
                         &nbsp;
                         <div class="inline" id="periodo_texto"></div>
+                    </div>
+                    <div id="mapas_tipos">
+                        <div class="mapa_tipo activo inline" data-tipo="afectacion">
+                            <img src="<?php echo BASE ?>media/img/people_affected_population_24px_icon.png" class="left" />Mapa personas afectadas
+                        </div>
+                        <div class="mapa_tipo inline" data-tipo="eventos">
+                            <img src="<?php echo BASE ?>media/img/activity_scale_operation_24px_icon.png" class="left" />Mapa n&uacute;mero de eventos
+                        </div>
+                        
+                        <div id="group_fts" class="inline ungroup">Desagrupar mapa</div>
                     </div>
                 </div>
                 <div id="totales" class="right">
@@ -203,4 +218,3 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     
 </body>
 </html>
-
