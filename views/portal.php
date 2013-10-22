@@ -166,24 +166,20 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     
                     <div id="group_fts" class="inline ungroup">Desagrupar mapa por categoria</div>
                 </div>
-                <!--
-                <div id="totales" class="right">
-                    <div class="total">
-                        <div id="num_total" class="inline">Total: <span id="num_total_span"></span></div>
-                        <div id="num_total_ec" class="inline violencia">Violencia: <span id="num_total_ec_span"></span></div>
-                        <div id="num_total_dn" class="inline desastres">Desastres: <span id="num_total_dn_span"></span></div>
-                    </div>
-                </div>
-                -->
             </div>
             <div class="clear"></div>
         <div class="left">
             <div id="map"></div>
         </div>
+        <div id="featured" class="">
+            <div><b>Eventos destacados por:</b></div>
+            <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
+             
+        </div>
         <div class="left" id="tabs">
               <ul>
                 <li><a href="#resumen">Resumen por categorias</a></li>
-                <li><a href="#incidentes">Lista de eventos</a></li>
+                <li><a href="#lista">Lista de eventos</a></li>
               </ul>
               <div id="resumen">
                 <div class="data_title">
@@ -214,7 +210,15 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <div class="clear"></div>
               </div>
               </div>
-            <div id="incidentes" class="">
+              <div id="lista">
+                <div id="totales" class="right">
+                    <div class="total">
+                        <div id="num_total" class="inline">Total: <span id="num_total_span"></span></div>
+                        <div id="num_total_ec" class="inline violencia">Violencia: <span id="num_total_ec_span"></span></div>
+                        <div id="num_total_dn" class="inline desastres">Desastres: <span id="num_total_dn_span"></span></div>
+                    </div>
+                </div>
+                <div id="incidentes" class=""></div>
             </div>
         </div>
         <div class="clear"></div>

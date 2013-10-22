@@ -598,7 +598,7 @@ div.report_list_map div.detail {
     font-size: 14px;
 }
 #totales .total div {
-    width: 124px;
+    width: 104px;
     text-align: center;
 }
 
@@ -680,6 +680,24 @@ div#mase {
 }
 #mapas_tipos .group {
     background: url(../img/group.png) no-repeat 0 3px;
+}
+#featured {
+    background-color: #F1F1F1;
+    border-radius: 3px 3px 3px 3px;
+    font-size: 11px;
+    left: 240px;
+    padding: 10px 10px 0;
+    position: absolute;
+    top: 40px;
+    z-index: 1005;
+}
+#featured #t {
+    background-image: url("../img/paro_icon.png");
+    background-position: 0 10px;
+    background-repeat: no-repeat;
+    background-size: 24px 24px;
+    height: 40px;
+    padding: 10px 0 0 30px !important;
 }
 
 /* Generales */
