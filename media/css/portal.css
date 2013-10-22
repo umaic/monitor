@@ -440,7 +440,7 @@ div.filtro_fecha ul li.selected {
 #tabs h2 {
     margin: 0;
     text-align: center;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 div.report_list_map div.victim {
@@ -497,19 +497,18 @@ div.report_list_map div.victim {
 }
 
 #resumen .resumen_total .num {
-    font-size: 24px;
+    font-size: 14px;
     font-weight: bold;
 }
 #resumen .resumen_total .cat,
 #resumen .resumen_row .cat {
-    font-size: 12px;
+    font-size: 11px;
 }
 #resumen .resumen_total,
 #resumen .resumen_row {
 }
 #resumen .resumen_total {
     padding: 5px 10px;
-    font-size: 24px;
     margin: 0;
 }
 #resumen .ect {
