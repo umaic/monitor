@@ -699,6 +699,10 @@ div#mase {
     padding: 10px 0 0 30px !important;
 }
 
+.ui-tabs-panel {
+    padding: 0.5em 0 !important;
+}
+
 /* Generales */
 .ec {
     background-color: #FFE7E7;
