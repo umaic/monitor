@@ -335,7 +335,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
              
         </div>
-        <div id="totalxd" class="">
+        <div id="totalxd" class="relative">
+            <div id="loading_data" class="alpha60">
+                <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
+                    &nbsp;Cargando datos....
+            </div>
             <div id="data">
                 <div id="minmax_total" class="minimize"></div>
                 <div id="tabs">
@@ -345,14 +349,15 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <li><a href="#tendencia">Tendencia</a></li>
                   </ul>
                   <div id="resumen">
-                    <div class="data_title">
-                        <h2>Personas afectadas</h2>
-                    </div>
                     <div class="div_table_totalxd">
                         <div id="resumen_ec" class="hide">
                             <div id="resumen_total_ec" class="ec resumen_total">
                                 <div id="resumen_total_ec_num" class="num"></div>
-                                <div class="cat">Total</div>
+                                <div class="cat bold">Total de
+                                    <span class="data_title">
+                                        Personas afectadas
+                                    </span>
+                                </div>
                             </div>
                             <div class="hide resumen_row">
                                 <div class="cat_color hide">&nbsp;</div>
@@ -363,7 +368,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         <div id="resumen_dn" class="hide">
                             <div id="resumen_total_dn" class="dn resumen_total">
                                 <div id="resumen_total_dn_num" class="num"></div>
-                                <div class="cat">Total</div>
+                                <div class="cat">Total de
+                                    <span class="data_title">
+                                        Personas afectadas
+                                    </span>
+                                </div>
                             </div>
                             <div class="hide resumen_row">
                                 <div class="num"></div>

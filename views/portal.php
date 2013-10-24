@@ -167,58 +167,69 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <div id="group_fts" class="inline ungroup">Desagrupar mapa por categoria</div>
                 </div>
             </div>
-            <div class="clear"></div>
-        <div class="left">
-            <div id="map"></div>
-        </div>
-        <div id="featured" class="">
-            <div><b>Eventos destacados por:</b></div>
-            <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
-             
-        </div>
-        <div class="left" id="tabs">
-              <ul>
-                <li><a href="#resumen">Resumen por categorias</a></li>
-                <li><a href="#lista">Lista de eventos</a></li>
-              </ul>
-              <div id="resumen">
-                <div class="data_title">
-                    <h2>Personas afectadas</h2>
+        <div class="clear"></div>
+        <div id="content_map_tabs">
+            <div class="left">
+                <div id="map"></div>
+            </div>
+            <div id="featured" class="">
+                <div><b>Eventos destacados por:</b></div>
+                <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
+                 
+            </div>
+            <div class="left" id="tabs">
+                <div id="loading_data" class="alpha60">
+                    <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
+                    &nbsp;Cargando datos....
                 </div>
-                <div class="div_table_totalxd">
-                    <div id="resumen_ec" class="hide">
-                        <div id="resumen_total_ec" class="ec resumen_total">
-                            <div id="resumen_total_ec_num" class="num"></div>
-                            <div class="cat">Total</div>
+                  <ul>
+                    <li><a href="#resumen">Resumen por categorias</a></li>
+                    <li><a href="#lista">Lista de eventos</a></li>
+                  </ul>
+                  <div id="resumen">
+                    <div class="div_table_totalxd">
+                        <div id="resumen_ec" class="hide">
+                            <div id="resumen_total_ec" class="ec resumen_total">
+                                <div id="resumen_total_ec_num" class="num"></div>
+                                <div class="cat bold">Total de
+                                    <span class="data_title">
+                                        Personas afectadas
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="hide resumen_row">
+                                <div class="cat_color hide">&nbsp;</div>
+                                <div class="num"></div>
+                                <div class="cat"></div>
+                            </div>
                         </div>
-                        <div class="hide resumen_row">
-                            <div class="cat_color hide">&nbsp;</div>
-                            <div class="num"></div>
-                            <div class="cat"></div>
+                        <div id="resumen_dn" class="hide">
+                            <div id="resumen_total_dn" class="dn resumen_total">
+                                <div id="resumen_total_dn_num" class="num"></div>
+                                <div class="cat">Total de
+                                    <span class="data_title">
+                                        Personas afectadas
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="hide resumen_row">
+                                <div class="num"></div>
+                                <div class="cat"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                  </div>
+                  </div>
+                  <div id="lista">
+                    <div id="totales" class="right">
+                        <div class="total">
+                            <div id="num_total" class="inline">Total: <span id="num_total_span"></span></div>
+                            <div id="num_total_ec" class="inline violencia">Violencia: <span id="num_total_ec_span"></span></div>
+                            <div id="num_total_dn" class="inline desastres">Desastres: <span id="num_total_dn_span"></span></div>
                         </div>
                     </div>
-                    <div id="resumen_dn" class="hide">
-                        <div id="resumen_total_dn" class="dn resumen_total">
-                            <div id="resumen_total_dn_num" class="num"></div>
-                            <div class="cat">Total</div>
-                        </div>
-                        <div class="hide resumen_row">
-                            <div class="num"></div>
-                            <div class="cat"></div>
-                        </div>
-                    </div>
-                    <div class="clear"></div>
-              </div>
-              </div>
-              <div id="lista">
-                <div id="totales" class="right">
-                    <div class="total">
-                        <div id="num_total" class="inline">Total: <span id="num_total_span"></span></div>
-                        <div id="num_total_ec" class="inline violencia">Violencia: <span id="num_total_ec_span"></span></div>
-                        <div id="num_total_dn" class="inline desastres">Desastres: <span id="num_total_dn_span"></span></div>
-                    </div>
+                    <div id="incidentes" class=""></div>
                 </div>
-                <div id="incidentes" class=""></div>
             </div>
         </div>
         <div class="clear"></div>

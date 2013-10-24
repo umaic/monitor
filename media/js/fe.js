@@ -471,6 +471,8 @@ totalesxDepto = function(more) {
     var _cats = $('#currentCatE').val() + '|' + $("#currentCatD").val();
     var num;
     var num_total;
+
+    $('#loading_data').show();
     
     _states = getStatesChecked();
     
@@ -495,7 +497,6 @@ totalesxDepto = function(more) {
         if (limiti == 0) {
             $('.tab_data').html('<div>&nbsp;&nbsp;<img src="' + base + '/media/img/ajax-loader-mini.gif" />&nbsp;Cargando datos...</div>');
         }
-        
         
         $.ajax({
             url: base + '/getIncidentesPortal/' + _ini + '/' + _fin + '/' + _cats + '/' + limiti + '/' + _states ,
@@ -627,6 +628,8 @@ totalesxDepto = function(more) {
                 $('#loading').hide();
                 
                 resumenAfectacion(json);
+                
+                $('#loading_data').hide();
             }
         });
     
@@ -676,6 +679,8 @@ totalesxDepto = function(more) {
                 //forceSortTable();
                 
                 resumenAfectacion(data);
+                
+                $('#loading_data').hide();
             }
         });
 
@@ -683,70 +688,70 @@ totalesxDepto = function(more) {
 }
 
 resumenAfectacion = function(data) {
-                // Afectacion
-                var titulo = (getMapaAfectacion() == 1) ? 'Personas afectadas' : 'Número de eventos';
-                var total_ec = 0;
-                    
-                $('#resumen_ec, #resumen_dn').find('.resumen_row:not(:first)').remove();
+    // Afectacion
+    var titulo = (getMapaAfectacion() == 1) ? 'personas afectadas' : 'eventos';
+    var total_ec = 0;
+        
+    $('#resumen_ec, #resumen_dn').find('.resumen_row:not(:first)').remove();
 
-                $resumen_ec = $('#resumen_ec');
+    $resumen_ec = $('#resumen_ec');
 
-                for (var d in data.rsms_ec) {
-                    $div = $('.resumen_row:first').clone();
-                    $div.removeClass('hide');
-                    $div.addClass('ect');
-                    
-                    rsm = data.rsms_ec[d];
-                    
-                    $div.attr('id', rsm.cat_id);
-                    $div.find('.num').html(numberWithCommas(rsm.n));
-                    $div.find('.cat').html(rsm.t);
-                    $div.find('.cat_color').css('background-color', '#' + rsm.c);;
+    for (var d in data.rsms_ec) {
+        $div = $('.resumen_row:first').clone();
+        $div.removeClass('hide');
+        $div.addClass('ect');
+        
+        rsm = data.rsms_ec[d];
+        
+        $div.attr('id', rsm.cat_id);
+        $div.find('.num').html(numberWithCommas(rsm.n));
+        $div.find('.cat').html(rsm.t);
+        $div.find('.cat_color').css('background-color', '#' + rsm.c);;
 
-                    total_ec += rsm.n*1;
-                    
-                    if (rsm.n > 0) {
-                        $resumen_ec.append($div);
-                    } 
-                }
-                
-                if (total_ec > 0) {
-                    $('#resumen_total_ec_num').html(numberWithCommas(total_ec));
-                    $resumen_ec.show();
-                }
-                
-                $resumen_dn = $('#resumen_dn');
-                var total_dn = 0;
-                for (var d in data.rsms_dn) {
-                    $div = $('.resumen_row:first').clone();
-                    $div.removeClass('hide');
-                    $div.addClass('dnt');
-                    
-                    rsm = data.rsms_dn[d];
-                    
-                    $div.find('.num').html(numberWithCommas(rsm.n));
-                    $div.find('.cat').html(rsm.t);
-                    
-                    total_dn += rsm.n*1;
+        total_ec += rsm.n*1;
+        
+        if (rsm.n > 0) {
+            $resumen_ec.append($div);
+        } 
+    }
+    
+    if (total_ec > 0) {
+        $('#resumen_total_ec_num').html(numberWithCommas(total_ec));
+        $resumen_ec.show();
+    }
+    
+    $resumen_dn = $('#resumen_dn');
+    var total_dn = 0;
+    for (var d in data.rsms_dn) {
+        $div = $('.resumen_row:first').clone();
+        $div.removeClass('hide');
+        $div.addClass('dnt');
+        
+        rsm = data.rsms_dn[d];
+        
+        $div.find('.num').html(numberWithCommas(rsm.n));
+        $div.find('.cat').html(rsm.t);
+        
+        total_dn += rsm.n*1;
 
-                    if (rsm.n > 0) {
-                        $resumen_dn.append($div);
-                    }
-                }
-                
-                if (total_dn > 0) {
-                    $('#resumen_total_dn_num').html(numberWithCommas(total_dn));
-                    $resumen_dn.show();
-                }
+        if (rsm.n > 0) {
+            $resumen_dn.append($div);
+        }
+    }
+    
+    if (total_dn > 0) {
+        $('#resumen_total_dn_num').html(numberWithCommas(total_dn));
+        $resumen_dn.show();
+    }
 
-                if (total_ec > 0 && total_dn > 0) {
-                    $('#resumen_ec, #resumen_dn').addClass('left half');
-                }
-                else {
-                    $('#resumen_ec, #resumen_dn').removeClass('left half');
-                }
+    if (total_ec > 0 && total_dn > 0) {
+        $('#resumen_ec, #resumen_dn').addClass('left half');
+    }
+    else {
+        $('#resumen_ec, #resumen_dn').removeClass('left half');
+    }
 
-                $('.data_title').find('h2').html(titulo);
+    $('.data_title').html(titulo);
 
 }
 
