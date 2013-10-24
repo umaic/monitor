@@ -628,6 +628,8 @@ totalesxDepto = function(more) {
                 $('#loading').hide();
                 
                 resumenAfectacion(json);
+
+                charts(json.charts);
                 
                 $('#loading_data').hide();
             }
@@ -679,6 +681,8 @@ totalesxDepto = function(more) {
                 //forceSortTable();
                 
                 resumenAfectacion(data);
+                
+                charts(data.charts);
                 
                 $('#loading_data').hide();
             }
@@ -753,6 +757,105 @@ resumenAfectacion = function(data) {
 
     $('.data_title').html(titulo);
 
+}
+
+charts = function(data_charts) {
+    
+    Highcharts.setOptions({
+        chart: {
+            style: {
+                fontFamily: 'Arial',
+                fontSize: '11px'
+            }
+        }
+    });
+    
+    var s = data_charts[0];
+    $('#chart_1').highcharts({
+        chart: {
+            type: 'line',
+            width: 350,
+            height: 300,
+            style: {
+            }
+        },
+        plotOptions: {
+            series: {
+                marker: {
+                    radius: 3,
+                }
+            }
+        },
+        title: {
+            text: s.title,
+            style: { fontSize: '14px' }
+        },
+        xAxis: {
+            categories: s.xAxis
+        },
+        yAxis: {
+            title: {
+                text: s.yAxis
+            }
+        },
+        series: s.data
+    });
+    
+    var marginPie = [30,30,30,30];
+
+    var s = data_charts[1];
+    $('#chart_2').highcharts({
+        chart: {
+            type: 'pie',
+            width: 170,
+            height: 200,
+            margin: marginPie,
+            style: {
+            }
+        },
+        plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+        title: {
+            text: s.title,
+            style: { fontSize: '13px' }
+        },
+        series: [{ data: s.data }]
+    });
+    
+    var s = data_charts[2];
+    $('#chart_3').highcharts({
+        chart: {
+            type: 'pie',
+            width: 170,
+            height: 200,
+            margin: marginPie,
+            style: {
+            }
+        },
+        plotOptions: {
+                pie: {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: false
+                    },
+                    showInLegend: true
+                }
+            },
+        title: {
+            text: s.title,
+            style: { fontSize: '13px' }
+        },
+        series: [{ data: s.data }]
+    });
 }
 
 forceSortTable = function() {

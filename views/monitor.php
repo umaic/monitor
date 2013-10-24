@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.min.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
 </head>
 
@@ -397,7 +397,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </div>
               </div>
               <div id="tendencia">
-                Proximamente --- :)
+                <div id="chart_1" class="chart"></div>
+                <div id="chart_2" class="chart inline"></div>
+                <div id="chart_3" class="chart inline"></div>
               </div>
             <div class="clear"></div>
             </div>
@@ -411,9 +413,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/map.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
     <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-138811-20']);

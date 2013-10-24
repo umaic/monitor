@@ -305,8 +305,34 @@ class MonitorController {
         while($_row = $this->db->FO($_rs)) {
             $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum, 'c' => $_row->color);
         }
+
+        $charts[0] = array('title' => 'Conteo en el tiempo', 
+                             'xAxis' => array('dias' => array(1,2,3,4,5)),
+                             'yAxis' => array('title' => array('text' => 'Personas')),
+                             'data' => array(array('name' => 'Violencia', 
+                                                   'data' => array(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
+                                                   'color' => '#d40000'
+                                                    ),
+                                             array('name' => 'Desastres', 
+                                                   'data' => array(-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
+                                                   'color' => '#2CA02C'
+                                         )
+                                )
+                         );
         
-        return compact('r', 't','rsms_ec', 'rsms_dn');
+        $charts[1] = array('title' => 'Víctimas por grupo poblacional', 
+            'data' => array(array('Afro', 65), 
+                            array('Indígenas', 35)
+                            )
+                         );
+        
+        $charts[2] = array('title' => 'Víctimas por género', 
+            'data' => array(array('Afro', 15), 
+                            array('Indígenas', 71)
+                            )
+                         );
+
+        return compact('r', 't','rsms_ec', 'rsms_dn','charts');
     }
     
     /**
