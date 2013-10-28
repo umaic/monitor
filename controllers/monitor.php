@@ -305,6 +305,18 @@ class MonitorController {
         while($_row = $this->db->FO($_rs)) {
             $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum, 'c' => $_row->color);
         }
+        
+        // Charts
+        // Calcula si eje x en dias o meses
+        $segundos = abs($fin - $ini) / 1000;
+        
+        // Eje x meses, 12
+        if ($segundos < 60*60*24*365) {
+            $ejex = 
+        }
+        else { // Eje x dias, 15 o 30
+
+        }
 
         $charts[0] = array('title' => 'Conteo en el tiempo', 
                              'xAxis' => array('dias' => array(1,2,3,4,5)),
