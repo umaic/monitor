@@ -10,6 +10,7 @@ class MonitorController {
     private $db_dn;
     private $db;
     private $dbs;
+    private $meses;
 
     function __construct() {
         $this->root = dirname( __FILE__ ).'/../'; 
@@ -18,6 +19,7 @@ class MonitorController {
         $this->db = Factory::create('mysql');
         $this->db_dn = 'desastres';    
         $this->dbs = array('', $this->db_dn.'.');
+        $this->meses = array('','Ene','Feb','Mar','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic');
 
     }
 
@@ -136,8 +138,8 @@ class MonitorController {
     /**
      * Get total of incidents per depto
      *
-     * @param int $ini Fecha inicio milisegundos
-     * @param int $fin Fecha inicio milisegundos
+     * @param int $ini Fecha inicio yyyy-mm-dd H:i:s
+     * @param int $fin Fecha inicio yyyy-mm-dd H:i:s
      * @param string $cats Categorias separadas por ',' filtradas para ec y dn formato ec1,ec2|dn1,dn2
      * @param string $states States separados por ','
      */ 
@@ -242,15 +244,20 @@ class MonitorController {
         
         // Resumen violencia
         if ($afectacion) {
-            $_sql = "SELECT SUM(victim_cant) AS sum, 
-                category_title AS cat, category_color AS color, c.id AS cat_id
+            $_sqlr = "SELECT SUM(victim_cant) AS sum, 
+                category_title AS cat, category_color AS color, c.id AS cat_id,
+                MONTH(incident_date) AS mes
                 FROM victim v
                 JOIN incident_category ic ON v.incident_category_id = ic.id
                 JOIN category c ON ic.category_id = c.id
                 JOIN incident i ON ic.incident_id = i.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
+                WHERE $cond_tmp";
+
+            $_sql = $_sqlr ." GROUP BY category_id
+                              ORDER BY sum DESC";
+
+            $_sql_chart = $_sqlr ." GROUP BY %s";
+
         }
         else {
             $_sql = "SELECT COUNT(i.id) AS sum, 
@@ -308,21 +315,43 @@ class MonitorController {
         
         // Charts
         // Calcula si eje x en dias o meses
-        $segundos = abs($fin - $ini) / 1000;
+        $ini_segundos = strtotime($ini);
+        $fin_segundos = strtotime($fin);
+
+        $segundos = abs($fin_segundos - $ini_segundos);
+
+        //echo $segundos;
         
         // Eje x meses, 12
-        if ($segundos < 60*60*24*365) {
-            $ejex = 
+        $por_mes = false;
+        if ($segundos > 60*60*24*31) {
+            $group_by = 'MONTH(incident_date)';
+            $titlex = 'Meses';
+            $por_mes = true;
         }
         else { // Eje x dias, 15 o 30
+            $group_by = 'DAY(incident_date), MONTH(incident_date)';
+            $titlex = 'Dias';
+        }
+        
+        $_sqliecc = sprintf($_sql_chart,$cond_cats_ec, $group_by);
+        //echo $_sqliecc;
 
+        $data_lines = array();
+        $ejex = array();
+        $d = 1;
+        $_rs = $this->db->open($_sqliecc);
+        while($_row = $this->db->FO($_rs)) {
+            $ejex[] = ($por_mes) ? $this->meses[$_row->mes] : $d;
+            $data_lines[] = $_row->sum*1;
+            $d++;
         }
 
         $charts[0] = array('title' => 'Conteo en el tiempo', 
-                             'xAxis' => array('dias' => array(1,2,3,4,5)),
+                             'xAxis' => array('title' => array('text' => $titlex), 'dias' => $ejex),
                              'yAxis' => array('title' => array('text' => 'Personas')),
                              'data' => array(array('name' => 'Violencia', 
-                                                   'data' => array(7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6),
+                                                   'data' => $data_lines,
                                                    'color' => '#d40000'
                                                     ),
                                              array('name' => 'Desastres', 

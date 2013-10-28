@@ -16,7 +16,7 @@ $(function(){
         base_ol = '/monitor';
     }
     else {
-        base = 'http://monitor.colombiassh.org';
+        base = window.location.hostname;
         base_ol = '';
     }
 
@@ -790,14 +790,8 @@ charts = function(data_charts) {
             text: s.title,
             style: { fontSize: '14px' }
         },
-        xAxis: {
-            categories: s.xAxis
-        },
-        yAxis: {
-            title: {
-                text: s.yAxis
-            }
-        },
+        xAxis: s.xAxis,
+        yAxis: s.yAxis,
         series: s.data
     });
     
