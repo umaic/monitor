@@ -19,7 +19,7 @@ class MonitorController {
         $this->db = Factory::create('mysql');
         $this->db_dn = 'desastres';    
         $this->dbs = array('', $this->db_dn.'.');
-        $this->meses = array('','Ene','Feb','Mar','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic');
+        $this->meses = array('','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic');
 
     }
 
@@ -256,18 +256,21 @@ class MonitorController {
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
 
-            $_sql_chart = $_sqlr ." GROUP BY %s";
+            $_sql_chart_ec = $_sqlr ." GROUP BY %s";
 
         }
         else {
-            $_sql = "SELECT COUNT(i.id) AS sum, 
+            $_sqlr = "SELECT COUNT(i.id) AS sum, 
                 category_title AS cat, category_color AS color, c.id AS cat_id
                 FROM incident i
                 JOIN incident_category ic ON i.id = ic.incident_id
                 JOIN category c ON ic.category_id = c.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
+                WHERE $cond_tmp";
+            
+            $_sql = $_sqlr ." GROUP BY category_id
+                              ORDER BY sum DESC";
+
+            $_sql_chart_ec = $_sqlr ." GROUP BY %s";
         }
         
         $_sqliec = sprintf($_sql,$cond_cats_ec);
@@ -288,9 +291,12 @@ class MonitorController {
                 JOIN %sincident i ON f.incident_id = i.id
                 JOIN %sincident_category ic ON ic.incident_id = i.id
                 JOIN %scategory c ON ic.category_id = c.id
-                WHERE $cond_tmp AND form_field_id = 4
-                GROUP BY category_id
-                ORDER BY sum DESC";
+                WHERE $cond_tmp AND form_field_id = 4";
+            
+            $_sql = $_sqlr ." GROUP BY category_id
+                              ORDER BY sum DESC";
+
+            $_sql_chart_dn = $_sqlr ." GROUP BY %s";
 
         }
         else {
@@ -298,9 +304,12 @@ class MonitorController {
                 FROM %sincident i
                 JOIN %sincident_category ic ON i.id = ic.incident_id
                 JOIN %scategory c ON ic.category_id = c.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
+                WHERE $cond_tmp";
+            
+            $_sql = $_sqlr ." GROUP BY category_id
+                              ORDER BY sum DESC";
+
+            $_sql_chart_dn = $_sqlr ." GROUP BY %s";
         }
         
         $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
@@ -323,42 +332,66 @@ class MonitorController {
         //echo $segundos;
         
         // Eje x meses, 12
-        $por_mes = false;
+        $periodo = '';
         if ($segundos > 60*60*24*31) {
             $group_by = 'MONTH(incident_date)';
             $titlex = 'Meses';
-            $por_mes = true;
+            $periodo = 'y';
+        }
+        else if ($segundos > 60*60*24*8 && empty($periodo)) {
+            $group_by = 'DAY(incident_date), MONTH(incident_date)';
+            $titlex = 'Dias';
+            $periodo = 'm';
         }
         else { // Eje x dias, 15 o 30
             $group_by = 'DAY(incident_date), MONTH(incident_date)';
             $titlex = 'Dias';
+            $periodo = 'd';
         }
         
-        $_sqliecc = sprintf($_sql_chart,$cond_cats_ec, $group_by);
-        //echo $_sqliecc;
+        $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
 
         $data_lines = array();
         $ejex = array();
         $d = 1;
         $_rs = $this->db->open($_sqliecc);
         while($_row = $this->db->FO($_rs)) {
-            $ejex[] = ($por_mes) ? $this->meses[$_row->mes] : $d;
+
+                    $ejex[] = $d;
+
             $data_lines[] = $_row->sum*1;
             $d++;
         }
 
-        $charts[0] = array('title' => 'Conteo en el tiempo', 
-                             'xAxis' => array('title' => array('text' => $titlex), 'dias' => $ejex),
-                             'yAxis' => array('title' => array('text' => 'Personas')),
-                             'data' => array(array('name' => 'Violencia', 
+        if (!empty($data_lines)) {
+            $data[] = array('name' => 'Violencia', 
                                                    'data' => $data_lines,
                                                    'color' => '#d40000'
-                                                    ),
-                                             array('name' => 'Desastres', 
-                                                   'data' => array(-0.2, 0.8, 5.7, 11.3, 17.0, 22.0, 24.8, 24.1, 20.1, 14.1, 8.6, 2.5),
+                                                    );
+        }
+
+        // Desastres
+        $_sqlidnc = sprintf($_sql_chart_dn,$cond_cats_dn, $group_by);
+
+        $data_lines = array();
+        $d = 1;
+        $_rs = $this->db->open($_sqlidnc);
+        while($_row = $this->db->FO($_rs)) {
+            $data_lines[] = $_row->sum*1;
+            $d++;
+        }
+
+        if (!empty($data_lines)) {
+            $data[] = array('name' => 'Desastres', 
+                                                   'data' => $data_lines,
                                                    'color' => '#2CA02C'
-                                         )
-                                )
+                                                    );
+        }
+
+        $charts[0] = array('title' => 'Conteo en el tiempo', 
+                             'xAxis' => array('title' => array('text' => $titlex), 'categories' => $ejex),
+                             'yAxis' => array('title' => array('text' => 'Personas')),
+                             'data' => $data
                          );
         
         $charts[1] = array('title' => 'Víctimas por grupo poblacional', 
