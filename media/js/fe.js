@@ -795,14 +795,14 @@ charts = function(data_charts) {
         series: s.data
     });
     
-    var marginPie = [30,30,30,30];
+    var marginPie = [10,30,10,30];
 
     var s = data_charts[1];
     $('#chart_2').highcharts({
         chart: {
             type: 'pie',
             width: 170,
-            height: 200,
+            height: 230,
             margin: marginPie,
             style: {
             }
@@ -812,14 +812,16 @@ charts = function(data_charts) {
                     allowPointSelect: true,
                     cursor: 'pointer',
                     dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
+                        enabled: true,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
                 }
             },
         title: {
             text: s.title,
-            style: { fontSize: '13px' }
+            style: { fontSize: '13px', margin: 0 }
         },
         series: [{ data: s.data }]
     });
@@ -829,7 +831,7 @@ charts = function(data_charts) {
         chart: {
             type: 'pie',
             width: 170,
-            height: 200,
+            height: 230,
             margin: marginPie,
             style: {
             }

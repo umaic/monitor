@@ -13,7 +13,7 @@
         height: 400px;
     }
     #map, #aaaa {
-        width: 400px;
+        width: 490px;
         margin: 0 !important;
     }
     #map {
@@ -21,7 +21,7 @@
     }
     /* Alto de la lista de eventos */
     #tabs {
-        width: 390px;
+        width: 300px;
         height: 390px;
         overflow: auto;
     }
