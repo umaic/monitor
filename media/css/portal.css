@@ -584,12 +584,10 @@ div.report_list_map div.detail {
 }
 
 #totales .total {
-    background-color: #eeeeee !important;
-    font-weight: bold;
     font-size: 12px;
 }
 #totales .total div {
-    width: 120px;
+    width: 110px;
     text-align: center;
 }
 
@@ -602,7 +600,8 @@ div#cargar_mas {
 }
 div.no {
     font-size: 14px !important;
-    margin: 0 0 0 20px;
+    margin: 20px auto;
+    width: 200px;
 }
 
 /* Link en modal window */

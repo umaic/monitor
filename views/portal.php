@@ -247,6 +247,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/highcharts.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/perfect-scrollbar.min.js"></script>
     <script type="text/javascript">
         var portal = 1;
         $(function() {
@@ -263,6 +264,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             $('#incidentes').on("click",".t",function() {
                 $(this).parent('div').find('.hide').toggle();
             });
+            
+            //$('#tabs').perfectScrollbar();
             
         });
     </script>

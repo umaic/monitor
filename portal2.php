@@ -22,11 +22,14 @@
     #tabs {
         width: 380px;
         height: 460px;
+        overflow: hidden;
+        margin: 0 0 0 5px;
+        /* position: relative; Para perfect scroll bar */
+    }
+    #tabs:hover {
         overflow: auto;
-        margin: 0 0 0 5px,
     }
     #incidentes {
-        position: relative; /* Para que funcione perfectScrollbar */
         font-size: 11px;
     }
 </style>

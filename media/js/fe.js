@@ -632,6 +632,7 @@ totalesxDepto = function(more) {
                 charts(json.charts);
                 
                 $('#loading_data').hide();
+            
             }
         });
     
