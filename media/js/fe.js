@@ -778,7 +778,7 @@ charts = function(data_charts) {
         chart: {
             type: 'line',
             width: 350,
-            height: 200,
+            height: 250,
             style: {
             }
         },
@@ -806,7 +806,9 @@ charts = function(data_charts) {
     });
     
     if (data_charts[1] != undefined) {
-    
+        
+        $('#charts_pie').show();
+        
         var marginPie = [30,30,10,30];
         var pie_h = 180;
         var pie_w = 350;
@@ -862,6 +864,9 @@ charts = function(data_charts) {
             },
             series: [{ data: s.data }]
         });
+    }
+    else {
+        $('#charts_pie').hide();
     }
 }
 
