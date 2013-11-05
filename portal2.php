@@ -12,7 +12,7 @@
 	    scrollbar-base-color: #ff0000;!important
     }
     #map, #aaaa {
-        width: 500px;
+        width: 450px;
         margin: 0 !important;
     }
     #map {
@@ -20,7 +20,7 @@
     }
     /* Alto de la lista de eventos */
     #tabs {
-        width: 400px;
+        width: 380px;
         height: 460px;
         overflow: auto;
         margin: 0 0 0 5px,

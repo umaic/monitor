@@ -645,6 +645,7 @@ div#mase {
     width: 144px;
     cursor: pointer;
     margin: 0 3px 0 0;
+    border-radius: 2px;
 }
 #mapas_tipos h1 {
     margin: 0;
