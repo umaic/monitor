@@ -177,7 +177,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </div>
             </div>
         </div>
-            <div class="left" id="tabs">
+            <div class="right" id="tabs">
                 <div id="loading_data" class="alpha60">
                     <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
                     &nbsp;Cargando datos....
