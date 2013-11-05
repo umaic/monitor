@@ -770,6 +770,8 @@ charts = function(data_charts) {
         }
     });
     
+    var title_style = { fontSize: '14px', margin: 0 }
+    
     var s = data_charts[0];
     $('#chart_1').highcharts({
         chart: {
@@ -788,40 +790,45 @@ charts = function(data_charts) {
         },
         title: {
             text: s.title,
-            style: { fontSize: '14px' }
+            style: title_style
         },
         xAxis: s.xAxis,
         yAxis: s.yAxis,
         series: s.data
     });
     
-    var marginPie = [10,30,10,30];
+    var marginPie = [30,30,10,30];
+    var pie_h = 180;
+    var pie_w = 350;
+
+    var pie_plot_options = {
+                    allowPointSelect: true,
+                    cursor: 'pointer',
+                    dataLabels: {
+                        enabled: true,
+                        distance: 20,
+                        color: '#000000',
+                        connectorColor: '#000000',
+                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                    }
+                };
 
     var s = data_charts[1];
     $('#chart_2').highcharts({
         chart: {
             type: 'pie',
-            width: 170,
-            height: 230,
+            width: pie_w,
+            height: pie_h,
             margin: marginPie,
             style: {
             }
         },
         plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                    }
-                }
+                pie: pie_plot_options
             },
         title: {
             text: s.title,
-            style: { fontSize: '13px', margin: 0 }
+            style: title_style
         },
         series: [{ data: s.data }]
     });
@@ -830,25 +837,18 @@ charts = function(data_charts) {
     $('#chart_3').highcharts({
         chart: {
             type: 'pie',
-            width: 170,
-            height: 230,
+            width: pie_w,
+            height: pie_h,
             margin: marginPie,
             style: {
             }
         },
         plotOptions: {
-                pie: {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: false
-                    },
-                    showInLegend: true
-                }
+                pie: pie_plot_options 
             },
         title: {
             text: s.title,
-            style: { fontSize: '13px' }
+            style: title_style
         },
         series: [{ data: s.data }]
     });

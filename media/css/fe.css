@@ -525,7 +525,8 @@ div.filtro_fecha ul li.selected {
 #resumen_dn {
     word-wrap: break-word
 }
-#resumen .ec {
+#resumen .ec,
+#tendencia .ec {
     background-color: #D40000;
     color: #ffffff;
 }

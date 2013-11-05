@@ -399,8 +399,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
               <div id="tendencia">
                 <div id="chart_1" class="chart"></div>
                 <div class="ec"><h2>Violencia Armada</h2></div>
-                <div id="chart_2" class="chart inline"></div>
-                <div id="chart_3" class="chart inline"></div>
+                <div id="chart_2" class="chart"></div>
+                <div id="chart_3" class="chart"></div>
               </div>
             <div class="clear"></div>
             </div>
