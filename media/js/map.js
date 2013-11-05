@@ -440,25 +440,27 @@ function onFeatureSelect(attrs) {
                         _html += '<div><table><tr>';
                         
                         var p = 0;
-                        for (var k in _js.v) {
+                        for (var k in _js.v[0]) {
 
-                            _v = _js.v[k];
+                            _v = _js.v[0];
 
                             if (_v != '') {
                                 tdo = (p == 0 || p == 4 || p == 8 || p == 12) ? true : false;
                                 tdc = (p == 3 || p == 7 || p == 11) ? true : false;
 
-                                if (tdo) {
-                                    _html += '<td>';
-                                }
+                                if (_v[k] != '') {
+                                    if (tdo) {
+                                        _html += '<td>';
+                                    }
 
-                                _html += '<div><b>' + k + '</b>: ' + _v + '</div>';
-                                
-                                if (tdc) {
-                                    _html += '</td>';
-                                }
+                                    _html += '<div><b>' + k + '</b>: ' + _v[k] + '</div>';
+                                    
+                                    if (tdc) {
+                                        _html += '</td>';
+                                    }
 
-                                p += 1;
+                                    p += 1;
+                                }
                             }
                         }
                         
