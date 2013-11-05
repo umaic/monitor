@@ -257,7 +257,7 @@ class MonitorController {
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
 
-            $_sql_chart_ec = $_sqlr ." GROUP BY %s";
+            $_sql_chart_ec = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
 
         }
         else {
@@ -299,7 +299,7 @@ class MonitorController {
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
 
-            $_sql_chart_dn = $_sqlr ." GROUP BY %s";
+            $_sql_chart_dn = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
 
         }
         else {
