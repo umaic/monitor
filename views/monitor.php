@@ -344,10 +344,16 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <div id="minmax_total" class="minimize"></div>
                 <div id="tabs">
                   <ul>
+                    <li><a href="#tendencia">Tendencia</a></li>
                     <li><a href="#resumen">Resumen</a></li>
                     <li><a href="#departamentos">Departamentos</a></li>
-                    <li><a href="#tendencia">Tendencia</a></li>
                   </ul>
+                  <div id="tendencia">
+                    <div id="chart_1" class="chart"></div>
+                    <div class="ec"><h2>Violencia Armada</h2></div>
+                    <div id="chart_2" class="chart"></div>
+                    <div id="chart_3" class="chart"></div>
+                  </div>
                   <div id="resumen">
                     <div class="div_table_totalxd">
                         <div id="resumen_ec" class="hide">
@@ -395,12 +401,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         </tbody>
                     </table>
                 </div>
-              </div>
-              <div id="tendencia">
-                <div id="chart_1" class="chart"></div>
-                <div class="ec"><h2>Violencia Armada</h2></div>
-                <div id="chart_2" class="chart"></div>
-                <div id="chart_3" class="chart"></div>
               </div>
             <div class="clear"></div>
             </div>

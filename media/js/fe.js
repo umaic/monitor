@@ -792,66 +792,76 @@ charts = function(data_charts) {
             text: s.title,
             style: title_style
         },
-        xAxis: s.xAxis,
+        //xAxis: s.xAxis,
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats: { // don't display the dummy year
+                month: '%e. %b',
+                year: '%b'
+            }
+        },
         yAxis: s.yAxis,
         series: s.data
     });
     
-    var marginPie = [30,30,10,30];
-    var pie_h = 180;
-    var pie_w = 350;
-
-    var pie_plot_options = {
-                    allowPointSelect: true,
-                    cursor: 'pointer',
-                    dataLabels: {
-                        enabled: true,
-                        distance: 20,
-                        color: '#000000',
-                        connectorColor: '#000000',
-                        format: '<b>{point.name}</b>: {point.percentage:.1f} %'
-                    }
-                };
-
-    var s = data_charts[1];
-    $('#chart_2').highcharts({
-        chart: {
-            type: 'pie',
-            width: pie_w,
-            height: pie_h,
-            margin: marginPie,
-            style: {
-            }
-        },
-        plotOptions: {
-                pie: pie_plot_options
-            },
-        title: {
-            text: s.title,
-            style: title_style
-        },
-        series: [{ data: s.data }]
-    });
+    if (data_charts[1] != undefined) {
     
-    var s = data_charts[2];
-    $('#chart_3').highcharts({
-        chart: {
-            type: 'pie',
-            width: pie_w,
-            height: pie_h,
-            margin: marginPie,
-            style: {
-            }
-        },
-        plotOptions: {
-                pie: pie_plot_options 
+        var marginPie = [30,30,10,30];
+        var pie_h = 180;
+        var pie_w = 350;
+
+        var pie_plot_options = {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: true,
+                            distance: 20,
+                            color: '#000000',
+                            connectorColor: '#000000',
+                            format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+                        }
+                    };
+
+        var s = data_charts[1];
+        $('#chart_2').highcharts({
+            chart: {
+                type: 'pie',
+                width: pie_w,
+                height: pie_h,
+                margin: marginPie,
+                style: {
+                }
             },
-        title: {
-            text: s.title,
-            style: title_style
-        },
-        series: [{ data: s.data }]
-    });
+            plotOptions: {
+                    pie: pie_plot_options
+                },
+            title: {
+                text: s.title,
+                style: title_style
+            },
+            series: [{ data: s.data }]
+        });
+        
+        var s = data_charts[2];
+        $('#chart_3').highcharts({
+            chart: {
+                type: 'pie',
+                width: pie_w,
+                height: pie_h,
+                margin: marginPie,
+                style: {
+                }
+            },
+            plotOptions: {
+                    pie: pie_plot_options 
+                },
+            title: {
+                text: s.title,
+                style: title_style
+            },
+            series: [{ data: s.data }]
+        });
+    }
 }
 
 forceSortTable = function() {
