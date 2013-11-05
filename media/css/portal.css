@@ -590,7 +590,7 @@ div.report_list_map div.detail {
     font-size: 12px;
 }
 #totales .total div {
-    width: 100px;
+    width: 120px;
     text-align: center;
 }
 
@@ -642,9 +642,9 @@ div#mase {
     padding: 3px;
     background-color: #f3f3f3;
     border: 1px solid #e1e1e1;
-    width: 117px;
+    width: 144px;
     cursor: pointer;
-    margin: 0;
+    margin: 0 3px 0 0;
 }
 #mapas_tipos h1 {
     margin: 0;
@@ -677,10 +677,10 @@ div#mase {
     background-color: #F1F1F1;
     border-radius: 3px 3px 3px 3px;
     font-size: 11px;
-    left: 240px;
+    left: 280px;
     padding: 10px 10px 0;
     position: absolute;
-    top: 50px;
+    top: 80px;
     z-index: 1005;
 }
 #featured #t {

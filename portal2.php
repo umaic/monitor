@@ -3,17 +3,16 @@
 <head><title>Monitor Humanitario</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
+    html, body {
+        width: 100%;
+    }
     body {
         font-family: Arial;
         margin: 0;
-	scrollbar-base-color: #ff0000;!important
-    }
-    #monitor {
-        width: 800px;
-        height: 400px;
+	    scrollbar-base-color: #ff0000;!important
     }
     #map, #aaaa {
-        width: 390px;
+        width: 500px;
         margin: 0 !important;
     }
     #map {
@@ -21,7 +20,7 @@
     }
     /* Alto de la lista de eventos */
     #tabs {
-        width: 350px;
+        width: 400px;
         height: 460px;
         overflow: auto;
         margin: 0 0 0 5px,

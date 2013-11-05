@@ -777,7 +777,7 @@ charts = function(data_charts) {
         chart: {
             type: 'line',
             width: 300,
-            height: 300,
+            height: 200,
             style: {
             }
         },

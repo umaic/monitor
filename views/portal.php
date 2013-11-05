@@ -160,11 +160,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <div id="mapas_tipos" class="">
                     <div class="mapa_tipo activo inline" data-tipo="afectacion">
                         <img src="<?php echo BASE ?>media/img/people_affected_population_24px_icon.png" class="left" />
-                        Mapa personas afectadas
+                        Mapa de personas afectadas
                     </div>
                     <div class="mapa_tipo inline" data-tipo="eventos">
                         <img src="<?php echo BASE ?>media/img/activity_scale_operation_24px_icon.png" class="left" />
-                        Mapa n&uacute;mero de eventos
+                        Mapa de n&uacute;mero de eventos
                     </div>
                     
                     <div id="group_fts" class="inline ungroup">Desagrupar mapa por categoria</div>
@@ -228,7 +228,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                   </div>
                   </div>
                   <div id="lista">
-                    <div id="totales" class="right">
+                    <div id="totales" class="">
                         <div class="total">
                             <div id="num_total" class="inline">Total: <span id="num_total_span"></span></div>
                             <div id="num_total_ec" class="inline violencia">Violencia: <span id="num_total_ec_span"></span></div>
