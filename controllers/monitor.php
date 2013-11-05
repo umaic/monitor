@@ -150,10 +150,14 @@ class MonitorController {
         $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
 
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
+        
+        //echo $cond_tmp;
 
         $_SESSION['cond_csv'] = $cond_csv;
         $_SESSION['cond_cats_ec'] = $cond_cats_ec;
         $_SESSION['cond_cats_dn'] = $cond_cats_dn;
+
+        list($rsms_ec, $rsms_dn, $charts) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
 
         $_db = $this->db_dn.'.';
 
@@ -242,211 +246,6 @@ class MonitorController {
                         );
         }
         
-        // Resumen violencia
-        if ($afectacion) {
-            $_sqlr = "SELECT SUM(victim_cant) AS sum, 
-                category_title AS cat, category_color AS color, c.id AS cat_id,
-                DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year,
-                victim_ethnic_group_id, victim_gender_id
-                FROM victim v
-                JOIN incident_category ic ON v.incident_category_id = ic.id
-                JOIN category c ON ic.category_id = c.id
-                JOIN incident i ON ic.incident_id = i.id
-                WHERE $cond_tmp";
-
-            $_sql = $_sqlr ." GROUP BY category_id
-                              ORDER BY sum DESC";
-
-            $_sql_chart_ec = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
-
-        }
-        else {
-            $_sqlr = "SELECT COUNT(i.id) AS sum, 
-                category_title AS cat, category_color AS color, c.id AS cat_id,
-                DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year
-                FROM incident i
-                JOIN incident_category ic ON i.id = ic.incident_id
-                JOIN category c ON ic.category_id = c.id
-                WHERE $cond_tmp";
-            
-            $_sql = $_sqlr ." GROUP BY category_id
-                              ORDER BY sum DESC";
-
-            $_sql_chart_ec = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
-        }
-        
-        $_sqliec = sprintf($_sql,$cond_cats_ec);
-        //echo $_sqliec;
-
-        $rsms_ec = array();
-        $_rs = $this->db->open($_sqliec);
-        while($_row = $this->db->FO($_rs)) {
-            $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum, 'cat_id' => $_row->cat_id, 'c' => $_row->color);
-        }
-        
-        // Resumen desastres
-        if ($afectacion) {
-
-            // Form id = 4, # personas
-            $_sqlr = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, category_title AS cat, category_color AS color,
-                DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year
-                FROM ".$_db."form_response f
-                JOIN %sincident i ON f.incident_id = i.id
-                JOIN %sincident_category ic ON ic.incident_id = i.id
-                JOIN %scategory c ON ic.category_id = c.id
-                WHERE $cond_tmp AND form_field_id = 4";
-            
-            $_sql = $_sqlr ." GROUP BY category_id
-                              ORDER BY sum DESC";
-
-            $_sql_chart_dn = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
-
-        }
-        else {
-            $_sqlr = "SELECT COUNT(i.id) AS sum, category_title AS cat, category_color AS color,
-                DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year
-                FROM %sincident i
-                JOIN %sincident_category ic ON i.id = ic.incident_id
-                JOIN %scategory c ON ic.category_id = c.id
-                WHERE $cond_tmp";
-            
-            $_sql = $_sqlr ." GROUP BY category_id
-                              ORDER BY sum DESC";
-
-            $_sql_chart_dn = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
-        }
-        
-        $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
-
-        //echo $_sqlidn;
-        
-        $rsms_dn = array();
-        $_rs = $this->db->open($_sqlidn);
-        while($_row = $this->db->FO($_rs)) {
-            $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum, 'c' => $_row->color);
-        }
-        
-        // Charts
-        // Calcula si eje x en dias o meses
-        $ini_segundos = strtotime($ini);
-        $fin_segundos = strtotime($fin);
-
-        $segundos = abs($fin_segundos - $ini_segundos);
-
-        //echo $segundos;
-        
-        // Eje x meses, 12
-        $periodo = '';
-        if ($segundos > 60*60*24*31) {
-            $group_by = 'MONTH(incident_date)';
-            $titlex = 'Meses';
-            $periodo = 'y';
-        }
-        else if ($segundos > 60*60*24*8 && empty($periodo)) {
-            $group_by = 'DAY(incident_date), MONTH(incident_date)';
-            $titlex = 'Dias';
-            $periodo = 'm';
-        }
-        else { // Eje x dias, 15 o 30
-            $group_by = 'DAY(incident_date), MONTH(incident_date)';
-            $titlex = 'Dias';
-            $periodo = 'd';
-        }
-        
-        $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
-
-        $data_lines = array();
-        $data = array();
-        $ejex = array();
-        $_rs = $this->db->open($_sqliecc);
-        while($_row = $this->db->FO($_rs)) {
-            $date = strtotime($_row->year.'-'.$_row->mes.'-'.$_row->dia) * 1000; // Tiene que ser en milisegundos
-            $data_lines[] = array($date ,$_row->sum*1);
-        }
-
-        if (!empty($data_lines)) {
-            $data[] = array('name' => 'Violencia', 
-                                                   'data' => $data_lines,
-                                                   'color' => '#d40000'
-                                                    );
-        }
-
-
-        // Desastres
-        $_sqlidnc = sprintf($_sql_chart_dn,$_db,$_db,$_db,$cond_cats_dn, $group_by);
-        //echo $_sqlidnc;
-
-        $data_lines = array();
-        $_rs = $this->db->open($_sqlidnc);
-        while($_row = $this->db->FO($_rs)) {
-
-            $date = strtotime($_row->year.'-'.$_row->mes.'-'.$_row->dia) * 1000; // Tiene que ser en milisegundos
-            $data_lines[] = array($date ,$_row->sum*1);
-        }
-        
-        if (!empty($data_lines)) {
-            $data[] = array('name' => 'Desastres', 
-                                                   'data' => $data_lines,
-                                                   'color' => '#2CA02C'
-                                                    );
-        }
-
-        $charts[0] = array('title' => 'Conteo en el tiempo', 
-                             //'xAxis' => array('title' => array('text' => $titlex), 'categories' => $ejex),
-                             'yAxis' => array('title' => array('text' => 'Personas')),
-                             'data' => $data
-                         );
-
-        if ($afectacion) {
-            // Pie de grupo etnico
-            $group_by = 'victim_ethnic_group_id';
-            $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
-
-            //echo $_sqliecc;
-
-            // Consulta ethnic groups
-            $_sql = "SELECT * FROM victim_ethnic_group";
-            $_rs = $this->db->open($_sql);
-            while($_row = $this->db->FO($_rs)) {
-                $ethnic_groups[$_row->id] = $_row->ethnic_group;
-            }
-            
-            $data_pie_ethnic = array();
-            $_rs = $this->db->open($_sqliecc);
-            while($_row = $this->db->FO($_rs)) {
-                if (!empty($_row->victim_ethnic_group_id)) {
-                    $data_pie_ethnic[] = array($ethnic_groups[$_row->victim_ethnic_group_id],$_row->sum*1);
-                }
-            }
-            
-            // Pie de genero
-            $group_by = 'victim_gender_id';
-            $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
-
-            // Consulta genders
-            $_sql = "SELECT * FROM victim_gender";
-            $_rs = $this->db->open($_sql);
-            while($_row = $this->db->FO($_rs)) {
-                $genders[$_row->id] = $_row->gender;
-            }
-            
-            $data_pie_gender = array();
-            $_rs = $this->db->open($_sqliecc);
-            while($_row = $this->db->FO($_rs)) {
-                if (!empty($_row->victim_gender_id)) {
-                    $data_pie_gender[] = array($genders[$_row->victim_gender_id],$_row->sum*1);
-                }
-            }
-            
-            $charts[1] = array('title' => 'Víctimas por grupo poblacional', 
-                'data' => $data_pie_ethnic
-                             );
-            
-            $charts[2] = array('title' => 'Víctimas por género', 
-                'data' => $data_pie_gender
-                             );
-        }  
-
         return compact('r', 't','rsms_ec', 'rsms_dn','charts');
     }
     
@@ -823,29 +622,88 @@ class MonitorController {
 
             //$evs[] = array('e' => $conf, 't' => $_rt->n);
         }
-        
+
+        list($rsms_ec, $rsms_dn, $charts) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
+ 
+        // Ordena por fecha desc los eventos para mezclarlos
+        usort($evs, array('MonitorController', 'orderArrayByDate'));
+
+        $e = $evs;
+        $t = $total;
+        $t_e = $total_ec;
+        $t_dn = $total_dn;
+
+        return compact('e','t','t_e','t_d','rsms_ec','rsms_dn','charts');
+
+    }
+
+    private function getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv){
+
         $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+        
+        $_db = $this->db_dn.'.';
+        
+        //echo $cond_tmp;
+        
+        if ($afectacion) {
+            $_sqle = "SELECT SUM(victim_cant) AS n
+                FROM %svictim v
+                JOIN %sincident_category ic ON v.incident_category_id = ic.id
+                JOIN %sincident AS i ON ic.incident_id = i.id
+                JOIN %slocation AS l ON l.id = i.location_id
+                WHERE $cond_tmp";
+            
+            $_sqld = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
+                FROM %sform_response f
+                JOIN %sincident AS i ON f.incident_id = i.id
+                JOIN %slocation AS l ON l.id = i.location_id
+                JOIN %sincident_category ic USING(incident_id)
+                WHERE $cond_tmp AND form_field_id = 4";
+            
+            $_sqliec = sprintf($_sqle,'','','','',$cond_cats_ec);
+            $_sqlidn = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
+        }
+        else {
+            $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
+                 JOIN %sincident AS i ON l.id = i.location_id
+                 JOIN %sincident_category AS ic ON i.id = ic.incident_id
+                 WHERE $cond_tmp";
+        
+            $_sqliec = sprintf($_sql,'','','',$cond_cats_ec);
+            $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
+        }
+        
         // Resumen violencia
         if ($afectacion) {
-            $_sql = "SELECT SUM(victim_cant) AS sum, 
-                category_title AS cat, category_color AS color, c.id AS cat_id
+            $_sqlr = "SELECT SUM(victim_cant) AS sum, 
+                category_title AS cat, category_color AS color, c.id AS cat_id,
+                DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year,
+                victim_ethnic_group_id, victim_gender_id
                 FROM victim v
                 JOIN incident_category ic ON v.incident_category_id = ic.id
                 JOIN category c ON ic.category_id = c.id
                 JOIN incident i ON ic.incident_id = i.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
+                WHERE $cond_tmp";
+
+            $_sql = $_sqlr ." GROUP BY category_id
+                              ORDER BY sum DESC";
+
+            $_sql_chart_ec = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
+
         }
         else {
-            $_sql = "SELECT COUNT(i.id) AS sum, 
-                category_title AS cat, category_color AS color, c.id AS cat_id
+            $_sqlr = "SELECT COUNT(i.id) AS sum, 
+                category_title AS cat, category_color AS color, c.id AS cat_id,
+                DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year
                 FROM incident i
                 JOIN incident_category ic ON i.id = ic.incident_id
                 JOIN category c ON ic.category_id = c.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
+                WHERE $cond_tmp";
+            
+            $_sql = $_sqlr ." GROUP BY category_id
+                              ORDER BY sum DESC";
+
+            $_sql_chart_ec = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
         }
         
         $_sqliec = sprintf($_sql,$cond_cats_ec);
@@ -861,24 +719,32 @@ class MonitorController {
         if ($afectacion) {
 
             // Form id = 4, # personas
-            $_sql = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, category_title AS cat, category_color AS color
+            $_sqlr = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, category_title AS cat, category_color AS color,
+                DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year
                 FROM ".$_db."form_response f
                 JOIN %sincident i ON f.incident_id = i.id
                 JOIN %sincident_category ic ON ic.incident_id = i.id
                 JOIN %scategory c ON ic.category_id = c.id
-                WHERE $cond_tmp AND form_field_id = 4
-                GROUP BY category_id
-                ORDER BY sum DESC";
+                WHERE $cond_tmp AND form_field_id = 4";
+            
+            $_sql = $_sqlr ." GROUP BY category_id
+                              ORDER BY sum DESC";
+
+            $_sql_chart_dn = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
 
         }
         else {
-            $_sql = "SELECT COUNT(i.id) AS sum, category_title AS cat, category_color AS color
+            $_sqlr = "SELECT COUNT(i.id) AS sum, category_title AS cat, category_color AS color,
+                DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year
                 FROM %sincident i
                 JOIN %sincident_category ic ON i.id = ic.incident_id
                 JOIN %scategory c ON ic.category_id = c.id
-                WHERE $cond_tmp
-                GROUP BY category_id
-                ORDER BY sum DESC";
+                WHERE $cond_tmp";
+            
+            $_sql = $_sqlr ." GROUP BY category_id
+                              ORDER BY sum DESC";
+
+            $_sql_chart_dn = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
         }
         
         $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
@@ -891,11 +757,129 @@ class MonitorController {
             $rsms_dn[] = array('t' => $_row->cat, 'n' => $_row->sum, 'c' => $_row->color);
         }
         
-        // Ordena por fecha desc los eventos para mezclarlos
-        usort($evs, array('MonitorController', 'orderArrayByDate'));
-        
-        return array('e' => $evs, 't' => $total, 't_e' => $total_ec, 't_d' => $total_dn, 'rsms_ec' => $rsms_ec, 'rsms_dn' => $rsms_dn);
+        // Charts
+        // Calcula si eje x en dias o meses
+        $ini_segundos = strtotime($ini);
+        $fin_segundos = strtotime($fin);
 
+        $segundos = abs($fin_segundos - $ini_segundos);
+
+        //echo $segundos;
+        
+        // Eje x meses, 12
+        $periodo = '';
+        if ($segundos > 60*60*24*31) {
+            $group_by = 'MONTH(incident_date)';
+            $titlex = 'Meses';
+            $periodo = 'y';
+        }
+        else if ($segundos > 60*60*24*8 && empty($periodo)) {
+            $group_by = 'DAY(incident_date), MONTH(incident_date)';
+            $titlex = 'Dias';
+            $periodo = 'm';
+        }
+        else { // Eje x dias, 15 o 30
+            $group_by = 'DAY(incident_date), MONTH(incident_date)';
+            $titlex = 'Dias';
+            $periodo = 'd';
+        }
+        
+        $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
+
+        $data_lines = array();
+        $data = array();
+        $ejex = array();
+        $_rs = $this->db->open($_sqliecc);
+        while($_row = $this->db->FO($_rs)) {
+            $date = strtotime($_row->year.'-'.$_row->mes.'-'.$_row->dia) * 1000; // Tiene que ser en milisegundos
+            $data_lines[] = array($date ,$_row->sum*1);
+        }
+
+        if (!empty($data_lines)) {
+            $data[] = array('name' => 'Violencia', 
+                                                   'data' => $data_lines,
+                                                   'color' => '#d40000'
+                                                    );
+        }
+
+
+        // Desastres
+        $_sqlidnc = sprintf($_sql_chart_dn,$_db,$_db,$_db,$cond_cats_dn, $group_by);
+        //echo $_sqlidnc;
+
+        $data_lines = array();
+        $_rs = $this->db->open($_sqlidnc);
+        while($_row = $this->db->FO($_rs)) {
+
+            $date = strtotime($_row->year.'-'.$_row->mes.'-'.$_row->dia) * 1000; // Tiene que ser en milisegundos
+            $data_lines[] = array($date ,$_row->sum*1);
+        }
+        
+        if (!empty($data_lines)) {
+            $data[] = array('name' => 'Desastres', 
+                                                   'data' => $data_lines,
+                                                   'color' => '#2CA02C'
+                                                    );
+        }
+
+        $chart_line_yaxis_title = ($afectacion) ? 'Personas' : 'Eventos';
+        $charts[0] = array('title' => 'Conteo en el tiempo', 
+                             //'xAxis' => array('title' => array('text' => $titlex), 'categories' => $ejex),
+                             'yAxis' => array('title' => array('text' => $chart_line_yaxis_title)),
+                             'data' => $data
+                         );
+
+        if ($afectacion) {
+            // Pie de grupo etnico
+            $group_by = 'victim_ethnic_group_id';
+            $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
+
+            //echo $_sqliecc;
+
+            // Consulta ethnic groups
+            $_sql = "SELECT * FROM victim_ethnic_group";
+            $_rs = $this->db->open($_sql);
+            while($_row = $this->db->FO($_rs)) {
+                $ethnic_groups[$_row->id] = str_replace(array('Sin información'), array('Sin info.'), $_row->ethnic_group);
+            }
+            
+            $data_pie_ethnic = array();
+            $_rs = $this->db->open($_sqliecc);
+            while($_row = $this->db->FO($_rs)) {
+                if (!empty($_row->victim_ethnic_group_id)) {
+                    $data_pie_ethnic[] = array($ethnic_groups[$_row->victim_ethnic_group_id],$_row->sum*1);
+                }
+            }
+            
+            // Pie de genero
+            $group_by = 'victim_gender_id';
+            $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
+
+            // Consulta genders
+            $_sql = "SELECT * FROM victim_gender";
+            $_rs = $this->db->open($_sql);
+            while($_row = $this->db->FO($_rs)) {
+                $genders[$_row->id] = $_row->gender;
+            }
+            
+            $data_pie_gender = array();
+            $_rs = $this->db->open($_sqliecc);
+            while($_row = $this->db->FO($_rs)) {
+                if (!empty($_row->victim_gender_id)) {
+                    $data_pie_gender[] = array($genders[$_row->victim_gender_id],$_row->sum*1);
+                }
+            }
+            
+            $charts[1] = array('title' => 'Víctimas por grupo poblacional', 
+                'data' => $data_pie_ethnic
+                             );
+            
+            $charts[2] = array('title' => 'Víctimas por género', 
+                'data' => $data_pie_gender
+                             );
+        }  
+
+        return array($rsms_ec,$rsms_dn,$charts);
     }
 
     /*

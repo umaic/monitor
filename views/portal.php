@@ -135,8 +135,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         <img src="<?php echo BASE_PORTAL ?>media/img/ajax-loader.png" />
     </div>
     <div id="content" class="clear">
+        <div class="left">
             <div id="menu">
-                <div id="aaaa" class="left">
+                <div id="aaaa">
                     <input type="hidden" id="currentCatE" value="0">
                     <input type="hidden" id="currentCatD" value="0">
                     <input type="hidden" id="startDate" value="">
@@ -154,38 +155,44 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                         <div class="inline" id="periodo_texto"></div>
                     </div>
                 </div>
-                <div id="mapas_tipos" class="right">
+            </div>
+            <div id="content_map_tabs">
+                <div id="mapas_tipos" class="">
                     <div class="mapa_tipo activo inline" data-tipo="afectacion">
                         <img src="<?php echo BASE ?>media/img/people_affected_population_24px_icon.png" class="left" />
-                        Mapa de personas afectadas
+                        Mapa personas afectadas
                     </div>
                     <div class="mapa_tipo inline" data-tipo="eventos">
                         <img src="<?php echo BASE ?>media/img/activity_scale_operation_24px_icon.png" class="left" />
-                        Mapa de n&uacute;mero de eventos
+                        Mapa n&uacute;mero de eventos
                     </div>
                     
                     <div id="group_fts" class="inline ungroup">Desagrupar mapa por categoria</div>
                 </div>
-            </div>
-        <div class="clear"></div>
-        <div id="content_map_tabs">
-            <div class="left">
                 <div id="map"></div>
+                <div id="featured" class="">
+                    <div><b>Eventos destacados por:</b></div>
+                    <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
+                     
+                </div>
             </div>
-            <div id="featured" class="">
-                <div><b>Eventos destacados por:</b></div>
-                <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
-                 
-            </div>
+        </div>
             <div class="left" id="tabs">
                 <div id="loading_data" class="alpha60">
                     <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
                     &nbsp;Cargando datos....
                 </div>
                   <ul>
-                    <li><a href="#resumen">Resumen por categorias</a></li>
+                    <li><a href="#tendencia">Tendencia</a></li>
+                    <li><a href="#resumen">Resumen</a></li>
                     <li><a href="#lista">Lista de eventos</a></li>
                   </ul>
+                  <div id="tendencia">
+                    <div id="chart_1" class="chart"></div>
+                    <div class="ec"><h2>Violencia Armada</h2></div>
+                    <div id="chart_2" class="chart"></div>
+                    <div id="chart_3" class="chart"></div>
+                  </div>
                   <div id="resumen">
                     <div class="div_table_totalxd">
                         <div id="resumen_ec" class="hide">
@@ -231,7 +238,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <div id="incidentes" class=""></div>
                 </div>
             </div>
-        </div>
         <div class="clear"></div>
     </div>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>

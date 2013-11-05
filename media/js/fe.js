@@ -776,7 +776,7 @@ charts = function(data_charts) {
     $('#chart_1').highcharts({
         chart: {
             type: 'line',
-            width: 350,
+            width: 300,
             height: 300,
             style: {
             }
@@ -808,7 +808,7 @@ charts = function(data_charts) {
     
         var marginPie = [30,30,10,30];
         var pie_h = 180;
-        var pie_w = 350;
+        var pie_w = 300;
 
         var pie_plot_options = {
                         allowPointSelect: true,

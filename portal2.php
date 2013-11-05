@@ -13,7 +13,7 @@
         height: 400px;
     }
     #map, #aaaa {
-        width: 490px;
+        width: 390px;
         margin: 0 !important;
     }
     #map {
@@ -21,9 +21,10 @@
     }
     /* Alto de la lista de eventos */
     #tabs {
-        width: 300px;
-        height: 390px;
+        width: 350px;
+        height: 460px;
         overflow: auto;
+        margin: 0 0 0 5px,
     }
     #incidentes {
         position: relative; /* Para que funcione perfectScrollbar */

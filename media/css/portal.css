@@ -477,7 +477,7 @@ div.report_list_map div.victim {
 }
 
 #resumen .resumen_row .num {
-    font-size: 20px;
+    font-size: 16px;
     font-weight: bold;
 }
 
@@ -587,10 +587,10 @@ div.report_list_map div.detail {
 #totales .total {
     background-color: #eeeeee !important;
     font-weight: bold;
-    font-size: 14px;
+    font-size: 12px;
 }
 #totales .total div {
-    width: 104px;
+    width: 100px;
     text-align: center;
 }
 
@@ -642,7 +642,7 @@ div#mase {
     padding: 3px;
     background-color: #f3f3f3;
     border: 1px solid #e1e1e1;
-    width: 120px;
+    width: 117px;
     cursor: pointer;
     margin: 0;
 }
@@ -694,6 +694,11 @@ div#mase {
 
 .ui-tabs-panel {
     padding: 0.5em 0 !important;
+}
+
+.ui-tabs-nav li {
+    font-weight: normal !important;
+    font-size: 12px !important;
 }
 
 #content_map_tabs {
