@@ -193,7 +193,7 @@ $(function(){
         setCatsHidden();
         //addFeatures($(this).attr("class").split(' ')[0]);
         addFeatures('ec');
-        //totalesxDepto();
+        totalesxDepto();
     });
     
     //Tabs

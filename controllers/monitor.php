@@ -272,7 +272,7 @@ class MonitorController {
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
 
-            $_sql_chart_ec = $_sqlr ." GROUP BY %s";
+            $_sql_chart_ec = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
         }
         
         $_sqliec = sprintf($_sql,$cond_cats_ec);
@@ -313,7 +313,7 @@ class MonitorController {
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
 
-            $_sql_chart_dn = $_sqlr ." GROUP BY %s";
+            $_sql_chart_dn = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
         }
         
         $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
