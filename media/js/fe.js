@@ -640,6 +640,7 @@ totalesxDepto = function(more) {
         
         $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
 
+        console.log(base);
         $.ajax({
             url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states,
             dataType: 'json',
