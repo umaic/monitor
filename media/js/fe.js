@@ -182,6 +182,9 @@ $(function(){
 
         addFeaturesFirstTime();
         totalesxDepto();
+        
+        // Activa resumen
+        $('#tabs').tabs("select", 1);
     });
 
     // Click categorias en resumen

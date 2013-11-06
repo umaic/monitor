@@ -513,7 +513,7 @@ function onFeatureSelect(attrs) {
             // Portal EHP
             if (is_portal) {
                 $('#incidentes').html(_html).show();
-                $('#tabs').tabs("select", 1);
+                $('#tabs').tabs("select", 2);
                 $('#volver').show();
             }
             else {
