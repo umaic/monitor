@@ -24,7 +24,6 @@ if (window.location.hostname == 'localhost') {
     var subdomain_ec = 'violencia_armada';
     var url_ec = 'http://localhost/violencia_armada';
     var url_dn = 'http://localhost/desastres';
-    var url_ft = url_dn + '/json/index/?m=0&v=1';
 }
 else {
     var subdomain_dn = 'desastres';
@@ -33,9 +32,11 @@ else {
 
     var url_dn = 'http://'+subdomain_dn+'.colombiassh.org';
 
-    // Verificados se usan como destacados
-    var url_ft = url_dn + '/json/index/?m=0&v=1';
 }
+
+// Verificados se usan como destacados
+var url_ft_ec = url_ec + '/json/index/?m=0';
+var url_ft_dn = url_dn + '/json/index/?m=0';
 
 url_ec += url_xd;
 url_dn += url_xd;
@@ -272,12 +273,14 @@ function addFeatures(inst) {
             map.addLayer(l_ft);
         }
         
-        var _uft = addURLParameter(url_ft, uparams_ft);
-        
         // States filter
         //_uft = addURLParameter(_uft, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+        var _uft_dn = addURLParameter(url_ft_dn, uparams_ft);
+        ajaxFeatures(_uft_dn, l_ft);
         
-        ajaxFeatures(_uft, l_ft);
+        var _uft_ec = addURLParameter(url_ft_ec, uparams_ft);
+        ajaxFeatures(_uft_ec, l_ft);
+
     }
 
     selectCtrl = new OpenLayers.Control.SelectFeature([l_ec, l_dn, l_ft],
