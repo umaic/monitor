@@ -802,7 +802,10 @@ charts = function(data_charts) {
             dateTimeLabelFormats: { // don't display the dummy year
                 month: '%e. %b',
                 year: '%b'
-            }
+            },
+            gridLineWidth: 1,
+            lineColor: '#000',
+            tickColor: '#000',
         },
         yAxis: s.yAxis,
         series: s.data

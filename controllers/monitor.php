@@ -789,6 +789,8 @@ class MonitorController {
         $data_lines = array();
         $data = array();
         $ejex = array();
+        $color_v = '#d40000';
+        $color_d = '#2CA02C'; 
         $_rs = $this->db->open($_sqliecc);
         while($_row = $this->db->FO($_rs)) {
             $date = strtotime($_row->year.'-'.$_row->mes.'-'.$_row->dia) * 1000; // Tiene que ser en milisegundos
@@ -798,7 +800,7 @@ class MonitorController {
         if (!empty($data_lines)) {
             $data[] = array('name' => 'Violencia', 
                                                    'data' => $data_lines,
-                                                   'color' => '#d40000'
+                                                   'color' => $color_v,
                                                     );
         }
 
@@ -818,15 +820,24 @@ class MonitorController {
         if (!empty($data_lines)) {
             $data[] = array('name' => 'Desastres', 
                                                    'data' => $data_lines,
-                                                   'color' => '#2CA02C'
+                                                   'color' => $color_d,
+                                                   'yAxis' => 1
                                                     );
         }
 
         $chart_line_yaxis_title = ($afectacion) ? 'Personas' : 'Eventos';
         $charts[0] = array('title' => 'Conteo en el tiempo', 
                              //'xAxis' => array('title' => array('text' => $titlex), 'categories' => $ejex),
-                             'yAxis' => array('title' => array('text' => $chart_line_yaxis_title)),
-                             'data' => $data
+            'yAxis' => array(
+                                array('title' => array('text' => $chart_line_yaxis_title, 'style' => array('color' => $color_v)),
+                                      'labels' => array('style' => array('color' => $color_v)),
+                                ),
+                                array('title' => array('text' => $chart_line_yaxis_title, 'style' => array('color' => $color_d)),
+                                      'labels' => array('style' => array('color' => $color_d)),
+                                      'opposite' => true,
+                                )
+                            ),
+                            'data' => $data
                          );
 
         if ($afectacion) {
