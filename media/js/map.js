@@ -614,8 +614,9 @@ function defStyle(){
 	var	style = new OpenLayers.Style({
 				'externalGraphic': "${icon}",
 				'graphicTitle': "${cluster_count}",
-                'graphicWidth': "${radius}",
-                'graphicHeight': "${radius}",
+                graphicWidth: 64,
+                graphicHeight: 64,
+cursor: 'pointer',
 				pointRadius: "${radius}",
 				fillColor: "${color}",
 				fillOpacity: "${opacity}",
