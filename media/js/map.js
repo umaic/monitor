@@ -560,10 +560,10 @@ function ajaxFeatures(u, l) {
 function showHideFeaturedIcon() {
     var $f = $('#featured');
     if (map.getLayersByName('Destacados')[0].features.length > 0){
-        $f.show();
+        //$f.show();
     }
     else {
-        $f.hide();
+        //$f.hide();
     }
 }
 
@@ -616,7 +616,7 @@ function defStyle(){
 				'graphicTitle': "${cluster_count}",
                 graphicWidth: 64,
                 graphicHeight: 64,
-cursor: 'pointer',
+                cursor: 'pointer',
 				pointRadius: "${radius}",
 				fillColor: "${color}",
 				fillOpacity: "${opacity}",
