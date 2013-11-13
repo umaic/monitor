@@ -352,8 +352,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <div id="chart_1" class="chart"></div>
                     <div id="charts_pie">
                         <div class="ec"><h2>Violencia Armada</h2></div>
-                        <div id="chart_2" class="chart"></div>
-                        <div id="chart_3" class="chart"></div>
+                        <div id="chart_2" class="chart hide"></div>
+                        <div id="chart_3" class="chart hide"></div>
+                        <div id="chart_4" class="chart"></div>
+                        <div id="chart_5" class="chart"></div>
                     </div>
                   </div>
                   <div id="resumen">
@@ -416,7 +418,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>

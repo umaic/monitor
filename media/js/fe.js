@@ -831,6 +831,10 @@ charts = function(data_charts) {
                         }
                     };
 
+        var column_plot_options = {
+            stacking: 'normal',
+        }
+
         var s = data_charts[1];
         $('#chart_2').highcharts({
             chart: {
@@ -863,6 +867,27 @@ charts = function(data_charts) {
             },
             plotOptions: {
                     pie: pie_plot_options 
+                },
+            title: {
+                text: s.title,
+                style: title_style
+            },
+            series: [{ data: s.data }]
+        });
+        
+        // columna g. poblacional
+        var s = data_charts[2];
+        $('#chart_4').highcharts({
+            chart: {
+                type: 'column',
+                width: pie_w,
+                height: pie_h,
+                margin: marginPie,
+                style: {
+                }
+            },
+            plotOptions: {
+                    column: column_plot_options 
                 },
             title: {
                 text: s.title,
