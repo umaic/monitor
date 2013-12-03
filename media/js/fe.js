@@ -879,6 +879,7 @@ charts = function(data_charts) {
         });
         
         // columna g. poblacional
+        /*
         var s = data_charts[2];
         $('#chart_4').highcharts({
             chart: {
@@ -898,6 +899,7 @@ charts = function(data_charts) {
             },
             series: [{ data: s.data }]
         });
+        */
     }
     else {
         $('#charts_pie').hide();
