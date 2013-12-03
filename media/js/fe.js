@@ -86,6 +86,9 @@ $(function(){
             $r_hide.show();
             $r_show.addClass('left half');
         }
+            
+        var ly_ft = map.getLayersByName('Destacados')[0];
+        ly_ft.setVisibility(!ly_ft.getVisibility());
         
         $(this).closest('.filtro').slideUp();
         
