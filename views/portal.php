@@ -192,6 +192,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <div class="ec"><h2>Violencia Armada</h2></div>
                     <div id="chart_2" class="chart"></div>
                     <div id="chart_3" class="chart"></div>
+                    <div id="chart_4" class="chart hide"></div>
+                    <div id="chart_5" class="chart hide"></div>
                   </div>
                   <div id="resumen">
                     <div class="div_table_totalxd">
