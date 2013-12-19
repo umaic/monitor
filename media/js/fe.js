@@ -719,12 +719,16 @@ resumenAfectacion = function(data) {
         $div.find('.cat').html(rsm.t);
         $div.find('.cat_color').css('background-color', '#' + rsm.c);;
 
-        total_ec += rsm.n*1;
+        //total_ec += rsm.n*1;
         
         if (rsm.n > 0) {
             $resumen_ec.append($div);
         } 
     }
+        
+    // El total se toma de la lista de departamentos, porque este total
+    // sumado no corresponde, dado que un evento puede tener varias categorias
+    total_ec = data.t.ec;
     
     if (total_ec > 0) {
         $('#resumen_total_ec_num').html(numberWithCommas(total_ec));
@@ -743,12 +747,16 @@ resumenAfectacion = function(data) {
         $div.find('.num').html(numberWithCommas(rsm.n));
         $div.find('.cat').html(rsm.t);
         
-        total_dn += rsm.n*1;
+        //total_dn += rsm.n*1;
 
         if (rsm.n > 0) {
             $resumen_dn.append($div);
         }
     }
+    
+    // El total se toma de la lista de departamentos, porque este total
+    // sumado no corresponde, dado que un evento puede tener varias categorias
+    total_dn = data.t.dn;
     
     if (total_dn > 0) {
         $('#resumen_total_dn_num').html(numberWithCommas(total_dn));
