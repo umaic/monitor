@@ -102,7 +102,7 @@ div.tecdn div.cat {
     margin: 0 auto;
 }
 div.tecdn div.tot {
-    font-size: 16px;
+    font-size: 14px;
     font-family: dosis;
 }
 div.tecdn div.cat:hover {
@@ -181,56 +181,55 @@ div.tecdn .fcat ul li.h {
     z-index: 900;
 }
 #menu {
-    height: 55px;
-    background-color: #555555;
-    padding: 5px 0;
+    background-color: #444444;
+    height: auto;
+    width: 80px;
+    color: #b3b3b3;
+    font-size: 11px;
+    text-align: center;
+    margin: 0;
+    bottom: 0;
 }
-
-#menu div.v:not(:first-child) {
-    border-left: 1px solid #ffffff;
-}
-#menu div.v {
-    float: left;
-    padding: 0 15px;
+#menu li {
+    padding: 6px 10px;
     cursor: pointer;
-    color: #2b1100;
 }
-
-#menu div.v:hover {
-    color: #ff9900;
+#menu li:hover {
+    background-color: #1a1a1a;
 }
-#menu div.v div {
-    float: left;
-    margin: 0 5px 0 0;
-    display: table-row;
+#menu li span {
+    height: 65px;
+    vertical-align: bottom;
+    display: table-cell;
+    background-image: url(../img/menu_sprite.png);
+    background-repeat: no-repeat;
 }
-#menu div.v div.a {
-    font-size: 27px;
-    letter-spacing: -1px;
+#menu .menu_victimas {
+    background-position: center 0;
 }
-#menu div.v div.n {
-    font-size: 14px;
+#menu .menu_eventos {
+    background-position: center -80px;
 }
-#menu div.circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
+#menu .menu_desagrupar {
+    background-position: center -160px;
 }
-#menu #aaaa {
+#menu .menu_fecha {
+    background-position: center -240px;
 }
-#menu label {
-    display: block;
-    font-size: 14px;
-    color: #fff;
+#menu .menu_violencia {
+    background-position: center -320px;
 }
-#menu input,select {
-    font-size: 13px;
+#menu .menu_desastres {
+    background-position: center -400px;
 }
-#menu .r {
-    margin: 0 0 0 10px;
+#menu .menu_acceso {
+    background-position: center -480px;
 }
-#menu .btn {
-    margin: 17px 0 0 10px;
+#menu .menu_1612 {
+    background-position: center -560px;
+}
+#menu .menu_descargar {
+    background-position: center -640px;
 }
 #content {
    min-height: 100%;
@@ -258,7 +257,6 @@ div.tecdn .fcat ul li.h {
     background-color: #000000;
 }
 #featured {
-    position: absolute;
     top: 330px;
     right: 370px;
     padding: 10px 10px 0 10px;
@@ -275,17 +273,21 @@ div.tecdn .fcat ul li.h {
     height: 60px;
     font-size: 13px;
 }
+#menu,
 #map, 
 #mapas_tipos,
 #totalxd {
-    top: 145px;
+    top: 80px;
+    position: absolute;
 }
 #map {
-    width: 100%;
-    height: auto;
+    /*width: 100%;*/
+    /*height: auto;*/
     margin: 0;
-    position: absolute;
     bottom: 0;
+    right: 0;
+    left: 80px;
+
 }
 #mapas_tipos {
     margin: 10px 20px;
@@ -325,7 +327,6 @@ div.tecdn .fcat ul li.h {
     background: url(../img/group.png) no-repeat 15px 7px;
 }
 #totalxd {
-    position: absolute;
     right: 0px;
     width: 360px;
     max-height: 750px;

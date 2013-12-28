@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.min.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
 </head>
 
@@ -194,7 +194,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         <div id="loading" class="alpha60">
             <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
         </div>
-    <div id="menu">
+    <div id="menua" class="hide">
         <div id="aaaa">
             <input type="hidden" id="currentCatE" value="0">
             <input type="hidden" id="currentCatD" value="0">
@@ -203,30 +203,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <input type="hidden" id="yyyy_ini" value="">
             <input type="hidden" id="yyyy_fin" value="">
             <?php 
-            /*        
-            foreach($totalxy as $_a => $_t) { ?>
-                <div class="v">
-                    <div class="a">
-                        <?php echo $_a ?>
-                    </div>
-                    <!--
-                    <div>
-                        <div class="circle ec"></div><div class="n"><?php echo $_t['ec'] ?></div>
-                        <div class="circle dn clear"></div><div class="n"><?php echo $_t['dn'] ?></div>
-                    </div>
-                    -->
-                </div>
-            <?php
-            } 
-             */
             ?>
-        <!--<div id="ys"></div>-->
-        <!--
-        <h1 class="inline">Eventos por</h1>
-        <select class="select">
-            <option value="d">Departamento</option>
-            <option value="r">Regi&oacute;n</option>
-        </select>-->
         <div id="ini_fin" class="inline">
             <div class="r left">
                 <label>Desde</label><input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
@@ -304,32 +281,26 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         </div>
         </div>
         </div>
-                <?php
-                   /* 
-            foreach($totalxy as $_a => $_t) { ?>
-                <div class="v">
-                    <div class="a">
-                        <?php echo $_a ?>
-                    </div>
-                    <!--
-                    <div>
-                        <div class="circle ec"></div><div class="n"><?php echo $_t['ec'] ?></div>
-                        <div class="circle dn clear"></div><div class="n"><?php echo $_t['dn'] ?></div>
-                    </div>
-                    -->
-                </div>
-            <?php
-            } 
-                    */
-            ?>
-    <div id="mapas_tipos">
+    <div id="mapas_tipos" class="hide">
         <div class="mapa_tipo activo inline" data-tipo="afectacion"><img src="<?php echo BASE ?>media/img/people_affected_population_64px_icon.png" /><h1>Afectados</h1></div>
         <div class="mapa_tipo inline" data-tipo="eventos"><img src="<?php echo BASE ?>media/img/activity_scale_operation_64px_icon.png" /><h1>Eventos</h1></div>
         
         <div id="group_fts" class="ungroup"><h1>Desagrupar mapa</h1></div>
     </div>
-        <!--<div id="ys"></div>-->
-        <div id="map"></div>
+        <div id="menu" class="">
+            <ul>
+                <li><span class="menu_victimas">Mapa de v&iacute;ctimas</span></li>
+                <li><span class="menu_eventos">Mapa de eventos</span></li>
+                <li><span class="menu_desagrupar">Desagrupar mapa</span></li>
+                <li><span class="menu_fecha">Filtrar por fecha</span></li>
+                <li><span class="menu_violencia">Categorias violencia</span></li>
+                <li><span class="menu_desastres">Categorias desastres</span></li>
+                <li><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>
+                <li><span class="menu_1612">Menores en conflicto</span></li>
+                <li><span class="menu_descargar">Descargar eventos</span></li>
+            </ul>
+        </div>
+        <div id="map" class=""></div>
         <div id="featured" class="hide">
             <div><b>Eventos destacados por:</b></div>
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
