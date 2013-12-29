@@ -17,6 +17,9 @@ html, body {
 a {
     text-decoration: none;
 }
+a:hover {
+    text-decoration: underline;
+}
 ul {
     margin: 0;
     padding: 0;
@@ -60,7 +63,6 @@ button {
     width: 400px;
     color: #2b1100;
     font-size: 13px;
-    letter-spacing: -0.5px;
 }
 #header #b a {
     text-decoration: none;
@@ -111,62 +113,79 @@ div.tecdn div.cat:hover {
 div.tecdn div {
     text-align: center;
 }
-div.tecdn .fcat {
+.fcat {
     display: none;
-    background-color: #ffffff;
-    border: 1px solid #cccccc;
-    box-shadow: 0 0 1px #888888;
-    border-radius: 1px;
+    background-color: #1a1a1a;
     position: absolute;
-    right: 0px;
+    left: 80px;
     width: 650px;
     text-align: left;
     padding: 20px 30px;
     height: 400px;
-    z-index: 1002;
+    z-index: 1020;
+    font-size: 13px;
 }
-div.tecdn .fcat_list {
+.fcat label {
+    color: #ffffff;
+}
+.fcat_list {
     height: 300px;
     width: 100%;
     overflow: auto;
 }
-div.tecdn .close {
+.close {
     margin: 0 0 0 20px;
     display: block;
 }
-div.tecdn .fcat h2 {
+.fcat h2 {
     margin: 0;
 }
-div.tecdn .fcat h2 {
-    letter-spacing: -1px;
+#fcat_ec {
+    top: 200px;
 }
-div.tecdn #fcat_ec h2,
-div.tecdn #fcat_ec ul li.p {
+#fcat_ec h2,
+#fcat_ec ul li.p {
     color: #d40000;
 }
-div.tecdn #fcat_dn h2,
-div.tecdn #fcat_dn ul li.p {
+#fcat_dn {
+    top: 250px;
+}
+#fcat_dn h2,
+#fcat_dn ul li.p {
     color: #2ca02c;
 }
-div.tecdn a {
-    color: #0472EC;
+#fcat_acceso {
+    top: 300px;
 }
-div.tecdn .fcat ul {
+#fcat_acceso h2 {
+    color: #fff;
+}
+#fcat_acceso ul {
+    margin: 10px 0;
+}
+#fcat_acceso ul li {
+    padding: 5px 0;
+}
+.fcat a {
+    color: #ffffff;
+    text-decoration: underline;
+}
+.fcat ul.cats {
     list-style: none;
     width: 600px;
     clear: both;
     display: inline-block;
 }
-div.tecdn .fcat div {
+.fcat div {
     font-family: Arial !important;
     text-align: left;
 }
-div.tecdn .fcat ul li.p {
+.fcat ul li.p {
     font-size: 14px;
     font-weight: bold;
     margin: 10px 0;
 }
-div.tecdn .fcat ul li.h {
+.fcat ul li.h {
     font-size: 12px;
     width: 50%;
     float: left;
@@ -194,6 +213,7 @@ div.tecdn .fcat ul li.h {
     padding: 6px 10px;
     cursor: pointer;
 }
+#menu .menu_activo,
 #menu li:hover {
     background-color: #1a1a1a;
 }
@@ -465,12 +485,11 @@ div#ini_fin input.fecha {
 }
 div.filtro_fecha {
     background-color: #f9f9f9;
-    border: 1px solid #cccccc;
-    border-radius: 4px;
+    border-radius: 0 4px 4px 4px;
     padding: 10px;
     display: none;
-    width: 200px;
-    margin: 0 0 0 10px;
+    width: 300px;
+    margin: 0;
     shadow-box: 0 0 1px #333333;
     position: absolute;
     z-index: 900;
@@ -480,6 +499,36 @@ div.filtro_fecha .close {
     width: 22px;
     height: 22px;
     cursor: pointer;
+}
+div#ini_fin {
+    top: 150px; 
+}
+#ini_fin h2 {
+    color: #fff;
+    margin-bottom: 30px !important;
+}
+#ini_fin label {
+    display: block;
+}
+#ini_fin .r {
+    margin-bottom: 20px;
+    margin-top: 10px;
+}
+#ini_fin fieldset {
+    border: 1px solid #cccccc;
+    margin-right: 10px;
+    height: 300px;
+    width: 180px;
+}
+#ini_fin fieldset legend{
+    font-size: 18px;
+    color: #fff;
+}
+#ini_fin div.radio label {
+    display: inline-block;
+}
+#ini_fin div.radio {
+    padding: 3px;
 }
 div#ini_fin a,
 div#ini_fin a:visited {
@@ -734,7 +783,7 @@ div#mase {
     word-wrap: normal;
     text-shadow: 0 1px 0 #fff;
     display: inline-block;
-    font-size: 14px;
+    font-size: 12px;
 }
 .btn:hover {
     box-shadow: 0 1px 2px rgba(0,0,0,0.25), 0 0 3px #fff inset;

@@ -68,57 +68,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <div class="inline">Filtrar categor&iacute;as</div>
                 <div class="inline arrow-down"></div>
             </div>
-            <div id="fcat_ec" class="filtro fcat">
-                <div class="left">
-                     <h2>Categorias Violencia Armada</h2>
-                     <br />
-                    <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
-                    </div>
-                    <div class="inline">
-                    <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
-                    </div>
-                </div>
-                <div class="right">
-                    <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
-                </div>
-                <div class="right">
-                    <div id="" class="ec btn btn_show_e">Ocultar eventos</div>
-                    <div id="btn_fcat_ec" class="ec btn btn_fcat">Filtrar mapa</div>
-                </div>
-                <div class="fcat_list">
-                    <?php 
-                    foreach($cats_f['ec'] as $_cp => $_cts) { ?>
-                        <div>
-                            <ul>
-                                <li class="p">
-                                    <?php echo $_cp ?>
-                                </li>
-                                <?php
-                                //$_h = count($_ch);
-                                foreach($_cts as $_idh => $_ch) { 
-                                    $_id = "cat_$_idh";
-                                    $chk = 'checked';
-                                    if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['ec'])) {
-                                            $chk = '';
-                                        
-                                    }
-                                    ?>
-                                    <li class="h">
-                                        <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> />
-                                        <label for="<?php echo $_id ?>"><?php echo $_ch ?></label>
-                                    </li>
-                                <?php
-                                }
-                                ?>
-                            </ul>
-                        </div>
-
-                    <?php
-                    } 
-                    ?>
-                </div>
-            </div>
             <div id="new_event">
                 <a href="http://violenciaarmada.colombiassh.org/reports/submit" target="_blank">
                     Reportar un evento
@@ -133,55 +82,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <div class="it cat">
                 <div class="inline">Filtrar categor&iacute;as</div>
                 <div class="inline arrow-down"></div>
-            </div>
-            <div id="fcat_dn" class="filtro fcat">
-                <div class="left">
-                     <h2>Categorias Desastres Naturales</h2>
-                     <br />
-                    <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
-                    </div>
-                    <div class="inline">
-                    <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
-                    </div>
-                </div>
-                <div class="right">
-                    <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
-                </div>
-                <div class="right">
-                    <div id="" class="dn btn btn_show_e">Ocultar eventos</div>
-                    <div id="btn_fcat_dn" class="dn btn btn_fcat">Filtrar mapa</div>
-                </div>
-                <div class="fcat_list">
-                    <?php 
-                    foreach($cats_f['dn'] as $_cp => $_cts) { ?>
-                        <div>
-                            <ul>
-                                <li class="p"><?php echo $_cp ?></li>
-                                <?php
-                                //$_h = count($_ch);
-                                foreach($_cts as $_idh => $_ch) { 
-                                    $_id = "cat_$_idh";
-                                    $chk = 'checked';
-                                    if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['dn'])) {
-                                            $chk = '';
-                                        
-                                    }
-                                    ?>
-                                    <li class="h">
-                                        <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> />
-                                        <label for="<?php echo $_id ?>"><?php echo $_ch ?></label>
-                                    </li>
-                                <?php
-                                }
-                                ?>
-                            </ul>
-                        </div>
-
-                    <?php
-                    } 
-                    ?>
-                </div>
             </div>
             <div>
                 <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
@@ -204,83 +104,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <input type="hidden" id="yyyy_fin" value="">
             <?php 
             ?>
-        <div id="ini_fin" class="inline">
-            <div class="r left">
-                <label>Desde</label><input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
-                <div class="filtro_fecha" id="ini_div">
-                    <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
-                    <div class="right close"></div>
-                    <div class="clear"></div>
-                    <div class="inline yyyy l">
-                        <p><b>A&ntilde;o</b></p>
-                        <ul>
-                            <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
-                        </ul>
-                    </div>
-                    <div class="inline mes l">
-                        <p><b>Mes</b></p>
-                        <ul>
-                            <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='ini' y='mes'>$mes</li>"; } ?>
-                        </ul>
-                    </div>
-                    <div class="inline dia l">
-                        <p><b>D&iacute;a</b></p>
-                        <ul>
-                            <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='ini' y='dia'>$i</li>"; } ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <div class="r left">
-                <label>Hasta</label><input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
-                <div class="filtro_fecha" id="fin_div">
-                    <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
-                    <div class="right close"></div>
-                    <div class="clear"></div>
-                    <div class="inline yyyy l">
-                        <p><b>A&ntilde;o</b></p>
-                        <ul>
-                            <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
-                        </ul>
-                    </div>
-                    <div class="inline mes l">
-                        <p><b>Mes</b></p>
-                        <ul>
-                            <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='fin' y='mes'>$mes</li>"; } ?>
-                        </ul>
-                    </div>
-                    <div class="inline dia l">
-                        <p><b>D&iacute;a</b></p>
-                        <ul>
-                            <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='fin' y='dia'>$i</li>"; } ?>
-                        </ul>
-                    </div>
-                </div>
-            </div>
-            <!--<div class="inline"><img src="<?php echo BASE ?>media/img/calendar.png" width="18" height="18" /><a href="#" id="lff">Aplicar filtro de fechas</a></div>-->
-            <div id="time" class="r left">
-                <label class="inline">O consultar:</label>
-                <select id="stime">
-                    <option value=0>----</option>
-                    <option value="h">Hoy</option>
-                    <option value="ay">Ayer y hoy</option>
-                    <option value="s" selected="selected">Ultima semana</option>
-                    <option value="m">Ultimo mes</option>
-                    <optgroup label="A&ntilde;os">
-                    <?php
-                    foreach($totalxy as $_a => $_t) { ?>
-                        <option value="<?php echo $_a ?>">Todo <?php echo $_a ?></option>
-                    <?php
-                    }
-                    ?> 
-                    </optgroup>
-                </select>
-            </div>
-            <div id="filter_states" class="r btn left"><img src="media/img/filter.png" />&nbsp;&nbsp;Filtrar mapa</div>
-            <div id="download_incidents" class="r btn left"><img src="media/img/xls.png" />&nbsp;&nbsp;Descargar eventos</div>
         </div>
-        </div>
-        </div>
+    </div>
     <div id="mapas_tipos" class="hide">
         <div class="mapa_tipo activo inline" data-tipo="afectacion"><img src="<?php echo BASE ?>media/img/people_affected_population_64px_icon.png" /><h1>Afectados</h1></div>
         <div class="mapa_tipo inline" data-tipo="eventos"><img src="<?php echo BASE ?>media/img/activity_scale_operation_64px_icon.png" /><h1>Eventos</h1></div>
@@ -289,17 +114,298 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
         <div id="menu" class="">
             <ul>
-                <li><span class="menu_victimas">Mapa de v&iacute;ctimas</span></li>
-                <li><span class="menu_eventos">Mapa de eventos</span></li>
-                <li><span class="menu_desagrupar">Desagrupar mapa</span></li>
-                <li><span class="menu_fecha">Filtrar por fecha</span></li>
-                <li><span class="menu_violencia">Categorias violencia</span></li>
-                <li><span class="menu_desastres">Categorias desastres</span></li>
-                <li><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>
-                <li><span class="menu_1612">Menores en conflicto</span></li>
+                <li class="mapa_tipo menu_activo inline" data-tipo="afectacion"><span class="menu_victimas" data-div="">Mapa de v&iacute;ctimas</span></li>
+                <li class="mapa_tipo inline" data-tipo="eventos"><span class="menu_eventos">Mapa de eventos</span></li>
+                <li id="group_fts"><span class="menu_desagrupar">Desagrupar mapa</span></li>
+                <li class="sub" data-div="ini_fin"><span class="menu_fecha">Filtrar por fecha</span></li>
+                <li class="sub" data-div="fcat_ec"><span class="menu_violencia">Categorias violencia</span></li>
+                <li class="sub" data-div="fcat_dn"><span class="menu_desastres">Categorias desastres</span></li>
+                <li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>
+                <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
                 <li><span class="menu_descargar">Descargar eventos</span></li>
             </ul>
         </div>
+        <!-- Filtro categorias Violencia -->
+        <div id="fcat_ec" class="filtro fcat">
+            <div class="left">
+                 <h2>Categorias Violencia Armada</h2>
+                 <br />
+                <div class="inline linko">
+                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                </div>
+                <div class="inline">
+                <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
+                </div>
+            </div>
+            <div class="right">
+                <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+            </div>
+            <div class="right">
+                <div id="" class="ec btn btn_show_e">Ocultar eventos</div>
+                <div id="btn_fcat_ec" class="ec btn btn_fcat">Filtrar mapa</div>
+            </div>
+            <div class="fcat_list">
+                <?php 
+                foreach($cats_f['ec'] as $_cp => $_cts) { ?>
+                    <div>
+                        <ul class="cats">
+                            <li class="p">
+                                <?php echo $_cp ?>
+                            </li>
+                            <?php
+                            //$_h = count($_ch);
+                            foreach($_cts as $_idh => $_ch) { 
+                                $_id = "cat_$_idh";
+                                $chk = 'checked';
+                                if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['ec'])) {
+                                        $chk = '';
+                                    
+                                }
+                                ?>
+                                <li class="h">
+                                    <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> />
+                                    <label for="<?php echo $_id ?>"><?php echo $_ch ?></label>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
+
+                <?php
+                } 
+                ?>
+            </div>
+        </div>
+        <!-- Filtro categorias Violencia :: Fin -->
+        
+        <!-- Filtro categorias Desastres -->
+        <div id="fcat_dn" class="filtro fcat">
+            <div class="left">
+                 <h2>Categorias Desastres Naturales</h2>
+                 <br />
+                <div class="inline linko">
+                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                </div>
+                <div class="inline">
+                <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
+                </div>
+            </div>
+            <div class="right">
+                <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+            </div>
+            <div class="right">
+                <div id="" class="dn btn btn_show_e">Ocultar eventos</div>
+                <div id="btn_fcat_dn" class="dn btn btn_fcat">Filtrar mapa</div>
+            </div>
+            <div class="fcat_list">
+                <?php 
+                foreach($cats_f['dn'] as $_cp => $_cts) { ?>
+                    <div>
+                        <ul class="cats">
+                            <li class="p"><?php echo $_cp ?></li>
+                            <?php
+                            //$_h = count($_ch);
+                            foreach($_cts as $_idh => $_ch) { 
+                                $_id = "cat_$_idh";
+                                $chk = 'checked';
+                                if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['dn'])) {
+                                        $chk = '';
+                                    
+                                }
+                                ?>
+                                <li class="h">
+                                    <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> />
+                                    <label for="<?php echo $_id ?>"><?php echo $_ch ?></label>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    </div>
+
+                <?php
+                } 
+                ?>
+            </div>
+        </div>
+        <!-- Filtro categorias Desastres :: Fin -->
+        
+        <!-- Filtro fecha -->
+        <div id="ini_fin" class="filtro fcat">
+            <div class="left">
+                 <h2>Filtrar monitor por periodo</h2>
+            </div>
+            <div class="right">
+                <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+            </div>
+            <div class="right">
+                <div id="" class="dn btn btn_show_e">Ocultar eventos</div>
+                <div id="filter_states" class="dn btn btn_fcat">Filtrar mapa</div>
+            </div>
+            <div class="clear"></div>
+            <div>
+                <fieldset class="left">
+                    <legend>Periodo</legend>
+                    <div class="r">
+                        <label>Desde</label><input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
+                        <div class="filtro_fecha" id="ini_div">
+                            <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
+                            <div class="right close"></div>
+                            <div class="clear"></div>
+                            <div class="inline yyyy l">
+                                <p><b>A&ntilde;o</b></p>
+                                <ul>
+                                    <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
+                                </ul>
+                            </div>
+                            <div class="inline mes l">
+                                <p><b>Mes</b></p>
+                                <ul>
+                                    <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='ini' y='mes'>$mes</li>"; } ?>
+                                </ul>
+                            </div>
+                            <div class="inline dia l">
+                                <p><b>D&iacute;a</b></p>
+                                <ul>
+                                    <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='ini' y='dia'>$i</li>"; } ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="r">
+                        <label>Hasta</label><input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
+                        <div class="filtro_fecha" id="fin_div">
+                            <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
+                            <div class="right close"></div>
+                            <div class="clear"></div>
+                            <div class="inline yyyy l">
+                                <p><b>A&ntilde;o</b></p>
+                                <ul>
+                                    <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
+                                </ul>
+                            </div>
+                            <div class="inline mes l">
+                                <p><b>Mes</b></p>
+                                <ul>
+                                    <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='fin' y='mes'>$mes</li>"; } ?>
+                                </ul>
+                            </div>
+                            <div class="inline dia l">
+                                <p><b>D&iacute;a</b></p>
+                                <ul>
+                                    <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='fin' y='dia'>$i</li>"; } ?>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+                
+                <fieldset class="left">
+                    <legend>A&ntilde;os</legend>
+                        <div>
+                            <?php
+                            foreach($totalxy as $_a => $_t) { ?>
+                                <div class="radio">
+                                    <input type="radio" id="a_<?php echo $_a ?>" value="<?php echo $_a ?>" name="rap" />
+                                    <label for="a_<?php echo $_a ?>"><?php echo $_a ?></label>
+                                </div>
+                            <?php
+                            }
+                            ?> 
+
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset class="left">
+                    <legend>Otros</legend>
+                    <div id="time" class="r left">
+                        <div class="radio">
+                            <input type="radio" id="hoy" value="h" name="rap" />
+                            <label for="hoy">Hoy</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="ayer-y-hoy" value="ay" name="rap" />
+                            <label for="ayer-y-hoy">Ayer y hoy</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="semana" value="s" name="rap" />
+                            <label for="semana">Ultima semana</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" id="mes" value="m" name="rap" />
+                            <label for="mes">Ultimo mes</label>
+                        </div>
+                </fieldset>
+                
+            </div>
+            <!--
+            <div id="filter_states" class="r btn left"><img src="media/img/filter.png" />&nbsp;&nbsp;Filtrar mapa</div>
+            <div id="download_incidents" class="r btn left"><img src="media/img/xls.png" />&nbsp;&nbsp;Descargar eventos</div>
+            -->
+        </div>
+        <!-- Filtro fecha :: FIN-->
+        
+        <!-- Filtro categorias acceso -->
+        <div id="fcat_acceso" class="filtro fcat">
+            <div class="left">
+                 <h2>Posible restriccion al acceso humanitario</h2>
+                 <br />
+                <div class="inline linko">
+                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Restricción_al_acceso_humanitario" target="_blank">Definici&oacute;n de categorias</a>
+                </div>
+                <div class="inline">
+                <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
+                </div>
+            </div>
+            <div class="right">
+                <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+            </div>
+            <div class="right">
+                <div id="" class="dn btn btn_show_e">Ocultar eventos</div>
+                <div id="btn_fcat_dn" class="dn btn btn_fcat">Filtrar mapa</div>
+            </div>
+            <div class="fcat_list">
+                        <ul>
+                            <li>
+                                <input type="checkbox" id="acceso_cat_3" name="acceso_cat_3" value="cat_3" />
+                                <label for="acceso_cat_3">
+                                    Restricciones o interferencia con el paso de agencias, 
+                                    personal o bienes en el pa&iacute;s
+                                </label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="acceso_cat_4" name="acceso_cat_4" value="cat_4" />
+                                <label for="acceso_cat_4">
+                                Operaciones militares y hostilidades continuas impidiendo 
+                                a las operaciones humanitarias
+                                </label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="acceso_cat_5" name="acceso_cat_5" value="cat_5" />
+                                <label for="acceso_cat_5">
+                                    Amenazas y violaciones encontra el personal humanitario
+                                    y sus instalaciones
+                                </label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="acceso_cat_7" name="acceso_cat_7" value="cat_7" />
+                                <label for="acceso_cat_7">
+                                    Presencia de minas (MAP) y ordenanza no explotada (MUSE)
+                                </label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="acceso_cat_9" name="acceso_cat_9" value="cat_9" />
+                                <label for="acceso_cat_9">
+                                    Restricciones sobre, o obstrucción de, acceso a 
+                                    servicios y asistencia por parte de las poblaciones
+                                </label>
+                            </li>
+                        </ul>
+            </div>
+        </div>
+        <!-- Filtro categorias Desastres :: Fin -->
+        
         <div id="map" class=""></div>
         <div id="featured" class="hide">
             <div><b>Eventos destacados por:</b></div>

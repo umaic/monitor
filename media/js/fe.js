@@ -41,17 +41,28 @@ $(function(){
 		return false;
 	});
 
+    // Menu
+    $menu_li = $('#menu').find('li.sub');
+    $menu_li.click(function() {
+        $('.filtro').hide();
+        $('#' + $(this).data('div')).show();
+        
+        $menu_li.removeClass('menu_activo');
+        $(this).addClass('menu_activo');
+    });
     // Filtro cats
+    /*
     $('.cat').click(function() {
         $('div.filtro').hide();
         $(this).siblings('div.filtro').slideDown();
     });
+    */
     
     $('.btn_fcat').click(function() {
         setCatsHidden();
         addFeatures($(this).attr("class").split(' ')[0]);
         totalesxDepto();
-        $(this).closest('.filtro').slideUp();
+        $(this).closest('.filtro').hide();
     });
 
     // Oculta eventos
@@ -90,16 +101,18 @@ $(function(){
         var ly_ft = map.getLayersByName('Destacados')[0];
         ly_ft.setVisibility(!ly_ft.getVisibility());
         
-        $(this).closest('.filtro').slideUp();
+        $(this).closest('.filtro').hide();
         
     });
 
     // Click outside menu
+    /*
     $(document).click(function(e) {
         if (!$(e.target).closest('.cat, .filtro').length) {
             $('.filtro').slideUp();
         }
     });
+    */
 
     //  Categorias : Todas/ninguna
     var td_ec = false;
@@ -151,7 +164,7 @@ $(function(){
     });
 
     $('.close').click(function() { 
-        $(this).closest('.filtro').slideUp();
+        $(this).closest('.filtro_fecha').slideUp();
     });
     
     // Tipo de mapa
@@ -161,8 +174,8 @@ $(function(){
         $.ajax({
             url: 'mapa_tipo/' + $(that).data('tipo'),
             success: function() {
-                $('.mapa_tipo').removeClass('activo');
-                $(that).addClass('activo');
+                $('.mapa_tipo').removeClass('menu_activo');
+                $(that).addClass('menu_activo');
                 addFeaturesFirstTime();
                 totalesxDepto();
             }
@@ -286,8 +299,8 @@ $(function(){
             markIniFin(_ini.getDate(),_ini.getMonth(),_iniY,
             _fin.getDate(),_fin.getMonth(),_finY);
 
-            totalesxDepto();
-            addFeaturesFirstTime();
+            //totalesxDepto();
+            //addFeaturesFirstTime();
 
             resetLimit = true;
             cargar_mas = 0;
