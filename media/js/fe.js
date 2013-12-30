@@ -11,7 +11,8 @@ var resetLimit = false;
 
 $(function(){
 
-    if (window.location.hostname == 'localhost') {
+    if (window.location.hostname == 'localhost'
+        || window.location.hostname == '190.66.6.168') {
         base = '/monitor';
         base_ol = '/monitor';
     }
