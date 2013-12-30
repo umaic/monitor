@@ -20,7 +20,7 @@ session_start();
 
 // PHP >= 5.3
 //date_default_timezone_set('America/Bogota');
-if ($_SERVER['SERVER_NAME'] == 'localhost') {
+if (in_array($_SERVER['SERVER_NAME'], array('localhost','190.66.6.168'))) {
     define ('BASE', '/monitor/');  // Comienza con slash, se usa al incluir los assets
 } 
 else {
