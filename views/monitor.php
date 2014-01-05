@@ -240,7 +240,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="" class="dn btn btn_show_e">Ocultar eventos</div>
                 <div id="filter_states" class="dn btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="clear"></div>
@@ -362,40 +361,39 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <a class="close" href="#"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="" class="dn btn btn_show_e">Ocultar eventos</div>
-                <div id="btn_fcat_dn" class="dn btn btn_fcat">Filtrar mapa</div>
+                <div id="btn_fcat_acceso" class="dn btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="fcat_list">
-                        <ul>
+                        <ul id="fcat_list_acceso">
                             <li>
-                                <input type="checkbox" id="acceso_cat_3" name="acceso_cat_3" value="cat_3" />
+                                <input type="checkbox" id="acceso_cat_3" name="acceso_cat" value="cat_3" />
                                 <label for="acceso_cat_3">
                                     Restricciones o interferencia con el paso de agencias, 
                                     personal o bienes en el pa&iacute;s
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="acceso_cat_4" name="acceso_cat_4" value="cat_4" />
+                                <input type="checkbox" id="acceso_cat_4" name="acceso_cat" value="cat_4" />
                                 <label for="acceso_cat_4">
                                 Operaciones militares y hostilidades continuas impidiendo 
                                 a las operaciones humanitarias
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="acceso_cat_5" name="acceso_cat_5" value="cat_5" />
+                                <input type="checkbox" id="acceso_cat_5" name="acceso_cat" value="cat_5" />
                                 <label for="acceso_cat_5">
                                     Amenazas y violaciones encontra el personal humanitario
                                     y sus instalaciones
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="acceso_cat_7" name="acceso_cat_7" value="cat_7" />
+                                <input type="checkbox" id="acceso_cat_7" name="acceso_cat" value="cat_7" />
                                 <label for="acceso_cat_7">
                                     Presencia de minas (MAP) y ordenanza no explotada (MUSE)
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="acceso_cat_9" name="acceso_cat_9" value="cat_9" />
+                                <input type="checkbox" id="acceso_cat_9" name="acceso_cat" value="cat_9" />
                                 <label for="acceso_cat_9">
                                     Restricciones sobre, o obstrucción de, acceso a 
                                     servicios y asistencia por parte de las poblaciones
@@ -412,6 +410,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
              
         </div>
+        <div id="titulo_general"></div>
         <div id="totalxd" class="relative">
             <div id="loading_data" class="alpha60">
                 <img src="<?php echo BASE ?>media/img/ajax-loader.png" />

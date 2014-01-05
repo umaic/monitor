@@ -132,8 +132,18 @@ $(function(){
     
     // Minimize - Maximize total
     $('#minmax_total').toggle(
-        function() { $('.ui-tabs-panel, #mapas_tipos').hide(); $(this).removeClass('minimize'); $(this).addClass('maximize'); }, 
-        function() { $('.ui-tabs-panel, #mapas_tipos').show(); $(this).addClass('minimize'); $(this).removeClass('maximize'); }
+        function() { 
+            //$('.ui-tabs-panel, #mapas_tipos').hide(); 
+            $('.ui-tabs-panel').hide(); 
+            $(this).removeClass('minimize'); 
+            $(this).addClass('maximize'); 
+        }, 
+        function() { 
+            //$('.ui-tabs-panel, #mapas_tipos').show(); 
+            $('.ui-tabs-panel').show(); 
+            $(this).addClass('minimize'); 
+            $(this).removeClass('maximize'); 
+        }
     );
 
     // Deptos: Todos/ninguno
@@ -164,8 +174,14 @@ $(function(){
             });
     });
 
-    $('.close').click(function() { 
-        $(this).closest('.filtro_fecha').slideUp();
+    // Cerrar filtro
+    $('a.close').click(function() { 
+        $(this).closest('.filtro').hide();
+    });
+    
+    // Cerrar opciones fecha
+    $('.filtro_fecha').find('div.close').click(function() { 
+        $(this).closest('.filtro_fecha').hide();
     });
     
     // Tipo de mapa
@@ -244,7 +260,7 @@ $(function(){
     setYear('ini',_iniY);
     setYear('fin',_year);
 
-    $('#stime').change(function() {
+    $('input[name=rap]').click(function() {
         
         if ($(this).val() != 0) {
             var _ini = getStartEnd('ini');
@@ -375,7 +391,7 @@ $(function(){
                     alert('Desde debe ser menor que Hasta');
                     $input.val('');
                     $div.find('li').removeClass('selected');
-                    $('stime').val(0);
+                    //$('stime').val(0);
                 }
                 else {
                 
@@ -386,7 +402,7 @@ $(function(){
                     
                     $('#endDate').val(_fin / 1000);
 
-                    $('#stime').val(0);
+                    //$('#stime').val(0);
                 }
             }
         });
@@ -659,8 +675,17 @@ totalesxDepto = function(more) {
     }
     else {
         
-        $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
+        // Afectacion
+        var titulo = (getMapaAfectacion() == 1) ? 'v&iacute;ctimas' : 'eventos';
+            
+        // Titulo derecha
+        var t_ini = $('#ini_text').val();
+        var t_fin = $('#fin_text').val();
 
+        $('#titulo_general').html('Mapa de ' + titulo + '<br /> ' + t_ini + ' al ' + t_fin);
+        
+        $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
+        
         $.ajax({
             url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states,
             dataType: 'json',
@@ -713,6 +738,8 @@ totalesxDepto = function(more) {
 }
 
 resumenAfectacion = function(data) {
+    
+    
     // Afectacion
     var titulo = (getMapaAfectacion() == 1) ? 'personas afectadas' : 'eventos';
     var total_ec = 0;
@@ -951,7 +978,7 @@ setCatsHidden = function() {
     });
 
     $('#currentCatD').val(_ids);
-
+    
 }
 
 daysToMiliseconds = function(d) {
@@ -1023,6 +1050,18 @@ getMapaAfectacion = function(){
     
     return ($('.mapa_tipo.activo').data('tipo') == 'eventos') ? 0 : 1;
 
+}
+
+getAccesoCats = function(){  
+    
+    var acceso = [];
+
+    // Filtro acceso
+    $('#fcat_list_acceso').find(':checked').each(function(){ 
+        acceso.push($(this).val()); 
+    });
+
+    return acceso.join(',');
 }
 
 showGroupUngroup = function(s) {

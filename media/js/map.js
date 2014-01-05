@@ -229,6 +229,9 @@ function addFeatures(inst) {
         
         // Tipo mapa
         _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
+        
+        // Categorias acceso
+        _uec = addURLParameter(_uec, [['acceso', getAccesoCats()]]); // getMapaAfectacion in fe.js
 
         ajaxFeatures(_uec, l_ec);
     }

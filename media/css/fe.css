@@ -122,7 +122,7 @@ div.tecdn div {
     text-align: left;
     padding: 20px 30px;
     height: 400px;
-    z-index: 1020;
+    z-index: 2020;
     font-size: 13px;
 }
 .fcat label {
@@ -186,7 +186,7 @@ div.tecdn div {
     margin: 10px 0;
 }
 .fcat ul li.h {
-    font-size: 12px;
+    /* font-size: 12px; */
     width: 50%;
     float: left;
 }
@@ -210,7 +210,7 @@ div.tecdn div {
     bottom: 0;
 }
 #menu li {
-    padding: 6px 10px;
+    padding: 3px 10px;
     cursor: pointer;
 }
 #menu .menu_activo,
@@ -731,7 +731,14 @@ div.report_list_map div.victim {
     background-color: #FFF2F0;
     margin: 2px 10px;
 }
-
+#titulo_general {
+    position: absolute;
+    top: 90px;
+    left: 125px;
+    font-size: 22px;
+    color: #1a1a1a;
+    text-shadow: 2px 0 0 #ffffff;
+}
 #minmax_total {
     position: absolute;
     top: 10px;
@@ -751,6 +758,10 @@ div#mase {
 }
 .ui-tabs-panel {
     padding: 0.5em 0 !important;
+}
+.ui-tabs-nav li {
+    font-weight: normal !important;
+    font-size: 12px !important;
 }
 
 /* Generales */
