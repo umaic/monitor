@@ -25,6 +25,8 @@ $(function(){
         is_portal = true;
     }
 
+    set100Height();
+
     $("#loading")
     .ajaxStart(function(){ $('#loading').show(); })
     .ajaxStop(function(){ $('#loading').hide(); });
@@ -1084,4 +1086,8 @@ function numberWithCommas(n) {
 
 String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
+}
+
+set100Height = function(){ 
+    $('#map, #menu').css('height', $(document).height());
 }
