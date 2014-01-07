@@ -207,7 +207,7 @@ div.tecdn div {
     font-size: 11px;
     text-align: center;
     margin: 0;
-    bottom: 0;
+    /*bottom: 0;*/
 }
 #menu li {
     padding: 3px 10px;
@@ -735,9 +735,11 @@ div.report_list_map div.victim {
     position: absolute;
     top: 90px;
     left: 125px;
-    font-size: 22px;
+    font-size: 14px;
     color: #1a1a1a;
-    text-shadow: 2px 0 0 #ffffff;
+    background-color: #fff;
+    padding: 5px;
+    box-shadow: 0 0 2px #333333;
 }
 #minmax_total {
     position: absolute;

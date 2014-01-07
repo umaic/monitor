@@ -356,7 +356,7 @@ class MonitorController {
             $_rs = $this->db->open($_sql_csv_ecdn);
             while($_r = $this->db->FO($_rs)) {
 
-                $source = $desc = $ref = $cats = '';
+                $des = $source = $desc = $ref = $cats = '';
                 $iid = $_r->id;
 
                 // Inicializa num victimas
