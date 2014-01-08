@@ -20,10 +20,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <!--<div id="brand">Colombia<b>SSH</b></div>-->
     <div id="header">
         <div id="i" class="left">
-            <div id="logo"></div>
-            <div id="b" class="">
-                Monitor permite visualizar la situaci&oacute;n
-                humanitaria <br />en el pa&iacute;s de manera georeferenciada. <a href="#" id="lmh">Leer m&aacute;s</a>
+            <div id="logo" class="inline"></div>
+            <div id="b" class="inline wordwrap">
+                    Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
+                    humanitaria en Colombia para poder visualizar la situaci&oacute;n 
+                    humanitaria en el pa&iacute;s de manera georeferenciada.
                 <div id="qlmh" class="hide">
                     <div id="lmm">
                         <img src="<?php echo BASE ?>media/img/logo.png" />
@@ -51,7 +52,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <div class="inline arrow-down"></div>
             </div>
             -->
-            <div id="new_event">
+            <div class="new_event nev">
                 <a href="http://violenciaarmada.colombiassh.org/reports/submit" target="_blank">
                     Reportar un evento
                 </a>
@@ -69,11 +70,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
             -->
             <div>
-                <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
-                    <div id="new_event">
+                <div class="new_event ned">
+                    <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
                         Reportar un evento
-                    </div>
-                </a>
+                    </a>
+                </div>
             </div>
         </div>
         <div class="clear"></div>

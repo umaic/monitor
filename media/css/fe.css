@@ -53,7 +53,7 @@ label {
 }
 
 #header #i {
-    padding: 5px 10px 0 10px;
+    padding: 0 10px;
 }
 #header #logo {
     background: url(../img/logo.png) 0 0 no-repeat;
@@ -101,7 +101,7 @@ div.tecdn div.cat {
     margin: 0 auto;
 }
 div.tecdn div.tot {
-    font-size: 14px;
+    font-size: 16px;
     font-family: dosis;
 }
 div.tecdn div.cat:hover {
@@ -379,15 +379,26 @@ div.tecdn div {
     padding: 4px 0 0 24px;
     font-size: 12px;
 }
-#new_event {
+.new_event {
     padding: 0 0 0 22px;
     margin: 5px 0 0 0;
     line-height: 30px;
-    background: url(../img/plus.png) 20px 5px no-repeat;
     border-width: 0 0 1px 0;
 }
-#new_event a {
+.new_event {
     display: block;
+}
+.nev {
+    background: url(../img/plus_rojo.png) 20px 5px no-repeat;
+}
+.ned {
+    background: url(../img/plus_verde.png) 20px 5px no-repeat;
+}
+.ned a {
+    color: #2ca02c !important;
+}
+.nev a {
+    color: #d40000 !important;
 }
 #totalxd table {
     width: 95%;
