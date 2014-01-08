@@ -53,7 +53,7 @@ label {
 }
 
 #header #i {
-    padding: 5px 10px;
+    padding: 5px 10px 0 10px;
 }
 #header #logo {
     background: url(../img/logo.png) 0 0 no-repeat;
@@ -66,9 +66,9 @@ label {
     color: #2b1100;
     font-size: 13px;
 }
-#header #b a {
-    text-decoration: none;
+#header a {
     color: #0066ff;
+    font-size: 13px;
 }
 #tec {
     /*background: #FFE7E7 url(../img/logo_ec.png) no-repeat 15px 15px;*/
@@ -130,6 +130,9 @@ div.tecdn div {
     width: 100%;
     overflow: auto;
 }
+.fcat_list ul li {
+    padding: 10px 0;
+}
 .close {
     margin: 0 0 0 20px;
     display: block;
@@ -161,7 +164,6 @@ div.tecdn div {
     margin: 10px 0;
 }
 #fcat_acceso ul li {
-    padding: 10px 0;
 }
 .fcat a {
     color: #ffffff;
@@ -178,7 +180,7 @@ div.tecdn div {
     text-align: left;
 }
 .fcat ul li.p {
-    font-size: 14px;
+    font-size: 16px;
     font-weight: bold;
     margin: 10px 0;
 }
@@ -294,13 +296,14 @@ div.tecdn div {
 #mapas_tipos,
 #totalxd,
 #titulo_general {
-    top: 20px;
+    top: 10px;
     position: absolute;
+    z-index: 1000;
 }
 #map {
-    width: 100%;
-    /*height: auto;*/
     margin: 0;
+    width: 90%;
+    margin: auto;
 }
 #mapas_tipos {
     margin: 10px 20px;
@@ -381,7 +384,6 @@ div.tecdn div {
     line-height: 30px;
     background: url(../img/plus.png) 20px 5px no-repeat;
     border-width: 0 0 1px 0;
-    font-size: 12px;
 }
 #new_event a {
     display: block;
@@ -724,7 +726,6 @@ div.report_list_map div.victim {
     margin: 2px 10px;
 }
 #titulo_general {
-    position: absolute;
     left: 125px;
     font-size: 16px;
     color: #1a1a1a;

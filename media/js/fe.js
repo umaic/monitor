@@ -26,6 +26,12 @@ $(function(){
     }
     
     set100Height();
+    //setMapWidth();
+
+    $(window).resize(function(){ 
+        set100Height();
+        //setMapWidth();
+    });
 
     $(document).ready(function(){
       $('input').iCheck({
@@ -1097,4 +1103,8 @@ String.prototype.capitalize = function() {
 
 set100Height = function(){ 
     $('#map, #menu').css('height', $(document).height());
+}
+setMapWidth = function(){ 
+    //$('#map').css('width', $(document).width() - $('#menu').css('width'));
+    $('#map').css('width', $(document).width());
 }

@@ -21,10 +21,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="header">
         <div id="i" class="left">
             <div id="logo"></div>
-            <div id="b" class="wordwrap">
-                Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
-                humanitaria en Colombia para poder visualizar la situaci&oacute;n 
-                humanitaria en el pa&iacute;s de manera georeferenciada. <a href="#" id="lmh">M&aacute;s</a>
+            <div id="b" class="">
+                Monitor permite visualizar la situaci&oacute;n
+                humanitaria <br />en el pa&iacute;s de manera georeferenciada. <a href="#" id="lmh">Leer m&aacute;s</a>
                 <div id="qlmh" class="hide">
                     <div id="lmm">
                         <img src="<?php echo BASE ?>media/img/logo.png" />
