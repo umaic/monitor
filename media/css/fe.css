@@ -43,24 +43,26 @@ input[type=text]:focus {
 button {
     font-size: 11px;
 }
-
-#header {
-    height: 70px;
-    background-color: #e3dbdb;
-    color: #280b0b;
-    padding: 5px 10px;;
+label {
+    cursor: pointer;
 }
 
+#header {
+    background-color: #e3dbdb;
+    color: #280b0b;
+}
+
+#header #i {
+    padding: 5px 10px;
+}
 #header #logo {
     background: url(../img/logo.png) 0 0 no-repeat;
     width: 235px;
-    display: table-cell;
+    height: 60px;
 }
 
 #header #b {
-    display: table-cell;
     padding: 10px;
-    width: 400px;
     color: #2b1100;
     font-size: 13px;
 }
@@ -72,20 +74,15 @@ button {
     /*background: #FFE7E7 url(../img/logo_ec.png) no-repeat 15px 15px;*/
     /*background: #FFE7E7;*/
     background: #F9f9f9;
-    right: 180px;
     color: #d40000;
 }
 #tdn {
     /*background: #e3f4d7 url(../img/logo_dn.png) no-repeat 10px 15px;*/
     background: #c6e9af;
     color: #2ca02c;
-    right: 0;
 }
 div.tecdn {
     width: 170px;
-    position: absolute;
-    top: 0;
-    box-shadow: -1px 0 1px #e1e1e1;
     padding: 5px;
 }
 div.tecdn div.it {
@@ -164,7 +161,7 @@ div.tecdn div {
     margin: 10px 0;
 }
 #fcat_acceso ul li {
-    padding: 5px 0;
+    padding: 10px 0;
 }
 .fcat a {
     color: #ffffff;
@@ -208,7 +205,6 @@ div.tecdn div {
     text-align: center;
     margin: 0;
 /*    bottom: 0; */
-    min-height: 100%;
 }
 #menu li {
     padding: 3px 10px;
@@ -253,7 +249,8 @@ div.tecdn div {
     background-position: center -640px;
 }
 #content {
-   margin: 0;
+    margin: 0;
+    position: relative;
 }
 #filtros {
     background-color: #0f6bb6;
@@ -293,20 +290,17 @@ div.tecdn div {
     height: 60px;
     font-size: 13px;
 }
-#map, 
+/*#map, */
 #mapas_tipos,
-#totalxd {
-    top: 80px;
+#totalxd,
+#titulo_general {
+    top: 20px;
     position: absolute;
 }
 #map {
-    /*width: 100%;*/
+    width: 100%;
     /*height: auto;*/
     margin: 0;
-    bottom: 0;
-    right: 0;
-    left: 80px;
-
 }
 #mapas_tipos {
     margin: 10px 20px;
@@ -350,7 +344,6 @@ div.tecdn div {
     width: 360px;
     max-height: 750px;
     padding: 0;
-    margin-top: 10px;
     font-size: 11px;
 }
 #totalxd #data {
@@ -527,7 +520,7 @@ div#ini_fin {
     display: inline-block;
 }
 #ini_fin div.radio {
-    padding: 3px;
+    padding: 10px;
 }
 div#ini_fin a,
 div#ini_fin a:visited {
@@ -732,7 +725,6 @@ div.report_list_map div.victim {
 }
 #titulo_general {
     position: absolute;
-    top: 90px;
     left: 125px;
     font-size: 16px;
     color: #1a1a1a;
@@ -873,4 +865,8 @@ div#mase {
 }
 .relative {
     position: relative;
+}
+.wordwrap { 
+   white-space: pre-line;      /* CSS3 */   
+   word-wrap: break-word;      /* IE */
 }

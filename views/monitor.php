@@ -5,6 +5,7 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
 </head>
 
@@ -13,76 +14,61 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
 ?>
 
 <body>
-    <div id="content">
+    <div id="loading" class="alpha60">
+        <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
+    </div>
     <!--<div id="brand">Colombia<b>SSH</b></div>-->
     <div id="header">
-        <div id="logo"></div>
-        <div id="b">
-            Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
-            humanitaria en Colombia para poder visualizar la situaci&oacute;n 
-            humanitaria en el pa&iacute;s de manera georeferenciada. <a href="#" id="lmh">Leer m&aacute;s</a>
-            <div id="qlmh" class="hide">
-                <div id="lmm">
-                    <img src="<?php echo BASE ?>media/img/logo.png" />
-                </div>
-                <div id="qmm">
-                    Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
-                    humanitaria en Colombia para poder visualizar la situaci&oacute;n 
-                    humanitaria en el pa&iacute;s de manera georeferenciada. <br /><br />
-                    Permite la visualizaci&oacute;n de multiples fuentes de informaci&oacute;n 
-                    tanto de desastres naturales como de emergencia compleja.  
-                    OCHA Colombia provee esta plataforma como un servicio com&uacute;n humanitario 
-                    para el Equipo Humanitario del Pa&iacute;s (EHP) y los miembros de los respetivos Clusters
+        <div id="i" class="left">
+            <div id="logo"></div>
+            <div id="b" class="wordwrap">
+                Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
+                humanitaria en Colombia para poder visualizar la situaci&oacute;n 
+                humanitaria en el pa&iacute;s de manera georeferenciada. <a href="#" id="lmh">M&aacute;s</a>
+                <div id="qlmh" class="hide">
+                    <div id="lmm">
+                        <img src="<?php echo BASE ?>media/img/logo.png" />
+                    </div>
+                    <div id="qmm">
+                        Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
+                        humanitaria en Colombia para poder visualizar la situaci&oacute;n 
+                        humanitaria en el pa&iacute;s de manera georeferenciada. <br /><br />
+                        Permite la visualizaci&oacute;n de multiples fuentes de informaci&oacute;n 
+                        tanto de desastres naturales como de emergencia compleja.  
+                        OCHA Colombia provee esta plataforma como un servicio com&uacute;n humanitario 
+                        para el Equipo Humanitario del Pa&iacute;s (EHP) y los miembros de los respetivos Clusters
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    <!--
-    <div id="filtros">
-        <div class="opf">Restricci&oacute;n al acceso humanitario</div>
-        <div class="filtro">
-            <div class="right">
-                <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Restricci%C3%B3n_al_acceso_humanitario" target="_blank">? Wiki Acceso Humanitario</a>
-            </div>
-            <div class="i f clear">Mostrar eventos que posiblemente
-            restringen el acceso humanitario</div>
-            <div class="i">Restricciones o interferencia con el paso
-            de agencias, personal o bienes en el país</div>
-            <div class="i">Operaciones militares y hostilidades 
-            continuas impidiendo a las operaciones 
-            humanitarias</div>
-            <div class="i">Amenazas y violaciones encontra el personal
-            humanitario y sus instalaciones</div>
-            <div class="i">Presencia de minas (MAP) y ordenanza
-            no explotada (MUSE)</div>
-        </div>
-        <div class="opf">Resoluciones del Consejo de Seguridad</div>
-    </div>
-    -->
-        <div id="tec" class="tecdn">
+        <div id="tec" class="tecdn right">
             <a href="http://violenciaarmada.colombiassh.org/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
+            <!--
             <div class="cat it">
                 <div class="inline">Filtrar categor&iacute;as</div>
                 <div class="inline arrow-down"></div>
             </div>
+            -->
             <div id="new_event">
                 <a href="http://violenciaarmada.colombiassh.org/reports/submit" target="_blank">
                     Reportar un evento
                 </a>
             </div>
         </div>
-        <div id="tdn" class="tecdn">
+        <div id="tdn" class="tecdn right">
             <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_dn.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
+            <!--
             <div class="it cat">
                 <div class="inline">Filtrar categor&iacute;as</div>
                 <div class="inline arrow-down"></div>
             </div>
+            -->
             <div>
                 <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
                     <div id="new_event">
@@ -91,9 +77,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </a>
             </div>
         </div>
-        <div id="loading" class="alpha60">
-            <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
-        </div>
+        <div class="clear"></div>
+    </div>
     <div id="menua" class="hide">
         <div id="aaaa">
             <input type="hidden" id="currentCatE" value="0">
@@ -112,7 +97,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         
         <div id="group_fts" class="ungroup"><h1>Desagrupar mapa</h1></div>
     </div>
-        <div id="menu" class="">
+    <div id="content">
+        <div id="menu" class="left">
             <ul>
                 <li class="mapa_tipo menu_activo inline" data-tipo="afectacion"><span class="menu_victimas" data-div="">Mapa de v&iacute;ctimas</span></li>
                 <li class="mapa_tipo inline" data-tipo="eventos"><span class="menu_eventos">Mapa de eventos</span></li>
@@ -314,7 +300,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                             ?> 
 
                         </div>
-                    </div>
                 </fieldset>
                 <fieldset class="left">
                     <legend>Otros</legend>
@@ -338,10 +323,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </fieldset>
                 
             </div>
-            <!--
-            <div id="filter_states" class="r btn left"><img src="media/img/filter.png" />&nbsp;&nbsp;Filtrar mapa</div>
-            <div id="download_incidents" class="r btn left"><img src="media/img/xls.png" />&nbsp;&nbsp;Descargar eventos</div>
-            -->
         </div>
         <!-- Filtro fecha :: FIN-->
         
@@ -404,7 +385,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         </div>
         <!-- Filtro categorias Desastres :: Fin -->
         
-        <div id="map" class=""></div>
+        <div id="map" class="left"></div>
         <div id="featured" class="hide">
             <div><b>Eventos destacados por:</b></div>
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
@@ -498,6 +479,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
     <script type="text/javascript">
     var _gaq = _gaq || [];
     _gaq.push(['_setAccount', 'UA-138811-20']);

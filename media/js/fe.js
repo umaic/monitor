@@ -24,8 +24,15 @@ $(function(){
     if (typeof portal !== "undefined") {
         is_portal = true;
     }
-
+    
     set100Height();
+
+    $(document).ready(function(){
+      $('input').iCheck({
+        checkboxClass: 'icheckbox_flat-orange',
+        radioClass: 'iradio_flat-orange'
+      });
+    });
 
     $("#loading")
     .ajaxStart(function(){ $('#loading').show(); })
