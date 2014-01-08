@@ -192,6 +192,7 @@ $(function(){
     // Cerrar filtro
     $('a.close').click(function() { 
         $(this).closest('.filtro').hide();
+        $('li[data-div="' + $(this).attr('data-div') + '"]').removeClass('menu_activo');
     });
     
     // Cerrar opciones fecha
@@ -217,7 +218,7 @@ $(function(){
     // Group - Ungroup
     $('#group_fts').click(function() {
 
-        $(this).toggleClass('group');
+        //$(this).toggleClass('group');
         
         // Muestra colors de cats
         $('.cat_color').toggle();

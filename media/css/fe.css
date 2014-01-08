@@ -302,8 +302,9 @@ div.tecdn div {
 }
 #map {
     margin: 0;
-    width: 90%;
-    margin: auto;
+    width: -moz-calc(100% - 80px);
+    width: -webkit-calc(100% - 80px);
+    width: calc(100% - 80px);
 }
 #mapas_tipos {
     margin: 10px 20px;
