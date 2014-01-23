@@ -203,13 +203,14 @@ div.tecdn div {
     height: auto;
     width: 80px;
     color: #b3b3b3;
-    font-size: 11px;
+    font-size: 12px;
     text-align: center;
     margin: 0;
+    box-shadow: 2px 0 0 #333333;
 /*    bottom: 0; */
 }
 #menu li {
-    padding: 3px 10px;
+    padding: 10px;
     cursor: pointer;
 }
 #menu .menu_activo,
@@ -217,20 +218,11 @@ div.tecdn div {
     background-color: #1a1a1a;
 }
 #menu li span {
-    height: 65px;
+    height: 70px;
     vertical-align: bottom;
     display: table-cell;
     background-image: url(../img/menu_sprite.png);
     background-repeat: no-repeat;
-}
-#menu .menu_victimas {
-    background-position: center 0;
-}
-#menu .menu_eventos {
-    background-position: center -80px;
-}
-#menu .menu_desagrupar {
-    background-position: center -160px;
 }
 #menu .menu_fecha {
     background-position: center -240px;
@@ -249,6 +241,48 @@ div.tecdn div {
 }
 #menu .menu_descargar {
     background-position: center -640px;
+}
+#submenu {
+    left: 125px;
+}
+#submenu div {
+    margin-right: 10px;
+}
+#submenu div.op {
+    box-shadow: 0 0 3px #999999;
+    cursor: pointer;
+}
+#submenu .menu_victimas {
+    background-position: center 3px;
+}
+#submenu .menu_eventos {
+    background-position: center -78px;
+}
+#submenu .menu_desagrupar {
+    background-position: center -158px;
+}
+#submenu .mapa_tipo {
+    background-color: #444444;
+    border: 1px solid #1a1a1a;
+    width: 70px;
+    text-align: center;
+    padding: 5px 0;
+}
+#submenu .mapa_tipo span {
+    height: 70px;
+    vertical-align: bottom;
+    display: table-cell;
+    background-image: url(../img/menu_sprite.png);
+    background-repeat: no-repeat;
+    color: #b3b3b3;
+}
+#submenu .mapa_tipo .activo {
+    background-color: #FEFD60;
+    border: 1px solid #DBC319;
+}
+#submenu .mapa_tipo span,
+#titulo_general {
+    height: 65px;
 }
 #content {
     margin: 0;
@@ -295,7 +329,7 @@ div.tecdn div {
 /*#map, */
 #mapas_tipos,
 #totalxd,
-#titulo_general {
+#submenu {
     top: 10px;
     position: absolute;
     z-index: 1000;
@@ -738,12 +772,16 @@ div.report_list_map div.victim {
     margin: 2px 10px;
 }
 #titulo_general {
-    left: 125px;
-    font-size: 16px;
     color: #1a1a1a;
     background-color: #fff;
     padding: 5px 10px;
-    box-shadow: 0 0 5px #cccccc;
+}
+#titulo_general #tgt {
+    font-size: 24px; 
+}
+#titulo_general #tgc {
+    font-size: 14px; 
+    margin-top: 10px;
 }
 #minmax_total {
     position: absolute;

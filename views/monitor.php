@@ -94,9 +94,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="content">
         <div id="menu" class="left">
             <ul>
-                <li class="mapa_tipo menu_activo inline" data-tipo="afectacion"><span class="menu_victimas" data-div="">Mapa de v&iacute;ctimas</span></li>
-                <li class="mapa_tipo inline" data-tipo="eventos"><span class="menu_eventos">Mapa de eventos</span></li>
-                <li id="group_fts"><span class="menu_desagrupar">Desagrupar mapa</span></li>
                 <li class="sub" data-div="ini_fin"><span class="menu_fecha">Filtrar por fecha</span></li>
                 <li class="sub" data-div="fcat_ec"><span class="menu_violencia">Categorias violencia</span></li>
                 <li class="sub" data-div="fcat_dn"><span class="menu_desastres">Categorias desastres</span></li>
@@ -385,7 +382,21 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
              
         </div>
-        <div id="titulo_general"></div>
+        <div id="submenu">
+            <div id="titulo_general" class="left op">
+                <div id="tgt"></div>
+                <div id="tgc"></div>
+            </div>
+            <div class="mapa_tipo activo left op" data-tipo="afectacion">
+                <span class="menu_victimas">Mapa v&iacute;ctimas</span>
+            </div>
+            <div class="mapa_tipo left op" data-tipo="eventos">
+                <span class="menu_eventos">Mapa eventos</span>
+            </div>
+            <div id="group_fts" class="mapa_tipo left op">
+                <span class="menu_desagrupar">Desagrupar mapa</span>
+            </div>
+        </div>
         <div id="totalxd" class="relative">
             <div id="loading_data" class="alpha60">
                 <img src="<?php echo BASE ?>media/img/ajax-loader.png" />

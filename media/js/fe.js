@@ -698,7 +698,8 @@ totalesxDepto = function(more) {
         var t_ini = $('#ini_text').val();
         var t_fin = $('#fin_text').val();
 
-        $('#titulo_general').html('Mapa de ' + titulo + '<br /> ' + t_ini + ' al ' + t_fin);
+        $('#titulo_general > #tgt').html('Mapa de ' + titulo);
+        $('#titulo_general > #tgc').html(t_ini + ' al ' + t_fin);
         
         $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
         
