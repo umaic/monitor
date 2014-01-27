@@ -316,7 +316,7 @@ class MonitorController {
         $cond_csv = $_SESSION['cond_csv']; // Se crea en $this->totalxd, fila 152 
         $cond_cats_ec = $_SESSION['cond_cats_ec'];
         $cond_cats_dn = $_SESSION['cond_cats_dn'];
-        
+
         $limi = '~';
         $nl = "\r\n";
 
@@ -351,8 +351,6 @@ class MonitorController {
             $_dbu = $usha['db'];
             $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu,$_dbu,$usha['cc']);
 
-            //echo $_sql_csv_ecdn.'<br /><br />';
-        
             $_rs = $this->db->open($_sql_csv_ecdn);
             while($_r = $this->db->FO($_rs)) {
 

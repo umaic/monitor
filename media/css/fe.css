@@ -50,25 +50,37 @@ label {
 #header {
     background-color: #e3dbdb;
     color: #280b0b;
+    font-family: dosis;
 }
 
 #header #i {
-    padding: 0 10px;
+    padding: 20px 10px 0 20px;
 }
 #header #logo {
     background: url(../img/logo.png) 0 0 no-repeat;
     width: 235px;
-    height: 60px;
+    height: 58px;
 }
 
 #header #b {
-    padding: 10px;
+    margin: 58px 0 0 0;
     color: #2b1100;
     font-size: 13px;
 }
+#header #b ul {
+    list-style: none;
+}
+#header #b ul li {
+    display: inline;
+}
+#header #b ul li a {
+    font-size: 16px !important;
+    color:#2B1100;
+    padding: 0 5px;
+}
 #header a {
     color: #0066ff;
-    font-size: 13px;
+    font-size: 14px;
 }
 #tec {
     /*background: #FFE7E7 url(../img/logo_ec.png) no-repeat 15px 15px;*/
@@ -84,6 +96,7 @@ label {
 div.tecdn {
     width: 170px;
     padding: 5px;
+    text-align: center;
 }
 div.tecdn div.it {
     margin: 0 0 5px 0;
@@ -101,8 +114,7 @@ div.tecdn div.cat {
     margin: 0 auto;
 }
 div.tecdn div.tot {
-    font-size: 16px;
-    font-family: dosis;
+    font-size: 14px;
 }
 div.tecdn div.cat:hover {
     box-shadow: 0 0 1px #f9f9f9;
@@ -199,23 +211,34 @@ div.tecdn div {
     z-index: 900;
 }
 #menu {
-    background-color: #444444;
     height: auto;
     width: 80px;
-    color: #b3b3b3;
     font-size: 12px;
     text-align: center;
     margin: 0;
-    box-shadow: 2px 0 0 #333333;
-/*    bottom: 0; */
+    box-shadow: 1px 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+#menu,
+#submenu #mapa_tipo {
+    background-color: #25292b;
+    color: #b3b3b3;
+}
+#submenu #titulo_general,
+#submenu #mapa_tipo {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
 }
 #menu li {
-    padding: 10px;
+    padding: 12px;
     cursor: pointer;
+    border-bottom: 1px solid #191c1d;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 #menu .menu_activo,
-#menu li:hover {
+#submenu .menu_activo,
+#menu li:hover,
+#submenu .mapa_tipo:hover {
     background-color: #1a1a1a;
+    color: #F7941E;
 }
 #menu li span {
     height: 70px;
@@ -246,42 +269,42 @@ div.tecdn div {
     left: 125px;
 }
 #submenu div {
-    margin-right: 10px;
 }
 #submenu div.op {
-    box-shadow: 0 0 3px #999999;
     cursor: pointer;
+    border-right: 1px solid #191c1d;
+    box-shadow: 1px 0 rgba(255, 255, 255, 0.04);
 }
 #submenu .menu_victimas {
-    background-position: center 3px;
+    background-position: center 1px;
 }
 #submenu .menu_eventos {
-    background-position: center -78px;
+    background-position: center -79px;
 }
 #submenu .menu_desagrupar {
-    background-position: center -158px;
+    background-position: center -159px;
+}
+  
+#submenu #mapa_tipo {
+    margin-left: 5px;
 }
 #submenu .mapa_tipo {
-    background-color: #444444;
-    border: 1px solid #1a1a1a;
-    width: 70px;
     text-align: center;
     padding: 5px 0;
 }
 #submenu .mapa_tipo span {
-    height: 70px;
     vertical-align: bottom;
     display: table-cell;
     background-image: url(../img/menu_sprite.png);
     background-repeat: no-repeat;
-    color: #b3b3b3;
+    width: 85px;
+    margin: 0 auto;
 }
 #submenu .mapa_tipo .activo {
     background-color: #FEFD60;
     border: 1px solid #DBC319;
 }
-#submenu .mapa_tipo span,
-#titulo_general {
+#submenu .mapa_tipo span {
     height: 65px;
 }
 #content {
@@ -414,19 +437,21 @@ div.tecdn div {
     font-size: 12px;
 }
 .new_event {
-    padding: 0 0 0 22px;
-    margin: 5px 0 0 0;
+    padding: 0 5px 0 25px;
+    margin: 5px auto 0 auto;
     line-height: 30px;
     border-width: 0 0 1px 0;
-}
-.new_event {
     display: block;
+    border-radius: 3px;
+    border: 1px solid #cccccc;
+    width: 110px;
 }
 .nev {
-    background: url(../img/plus_rojo.png) 20px 5px no-repeat;
+    background: url(../img/plus_rojo.png) 5px 7px no-repeat, #e5e5e5;
 }
 .ned {
-    background: url(../img/plus_verde.png) 20px 5px no-repeat;
+    background: url(../img/plus_verde.png) 5px 7px no-repeat, #e5e5e5;
+
 }
 .ned a {
     color: #2ca02c !important;
@@ -774,14 +799,14 @@ div.report_list_map div.victim {
 #titulo_general {
     color: #1a1a1a;
     background-color: #fff;
-    padding: 5px 10px;
+    padding: 15px 10px 5px 10px;
 }
 #titulo_general #tgt {
     font-size: 24px; 
 }
 #titulo_general #tgc {
-    font-size: 14px; 
-    margin-top: 10px;
+    font-size: 12px; 
+    margin-top: 14px;
 }
 #minmax_total {
     position: absolute;

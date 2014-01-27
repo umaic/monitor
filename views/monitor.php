@@ -20,11 +20,15 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <!--<div id="brand">Colombia<b>SSH</b></div>-->
     <div id="header">
         <div id="i" class="left">
-            <div id="logo" class="inline"></div>
-            <div id="b" class="inline wordwrap">
-                    Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
-                    humanitaria en Colombia para poder visualizar la situaci&oacute;n 
-                    humanitaria en el pa&iacute;s de manera georeferenciada.
+            <div id="logo" class="left"></div>
+        </div>
+            <div id="b" class="left">
+                    <ul>
+                        <li><a id="lmh" href="#">Que es monitor?</a></li>
+                        <li><a href="http://www.salahumanitaria.co" target="_blank">Sala Humanitaria</a></li>
+                        <li><a href="http://sidih.colombiassh.org" target="_blank">Sidih</a></li>
+                        <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki Humanitario</a></li>
+                    </ul>
                 <div id="qlmh" class="hide">
                     <div id="lmm">
                         <img src="<?php echo BASE ?>media/img/logo.png" />
@@ -40,7 +44,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     </div>
                 </div>
             </div>
-        </div>
         <div id="tec" class="tecdn right">
             <a href="http://violenciaarmada.colombiassh.org/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
@@ -69,12 +72,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <div class="inline arrow-down"></div>
             </div>
             -->
-            <div>
-                <div class="new_event ned">
-                    <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
-                        Reportar un evento
-                    </a>
-                </div>
+            <div class="new_event ned">
+                <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
+                    Reportar un evento
+                </a>
             </div>
         </div>
         <div class="clear"></div>
@@ -99,7 +100,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <li class="sub" data-div="fcat_dn"><span class="menu_desastres">Categorias desastres</span></li>
                 <li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>
                 <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
-                <li><span class="menu_descargar">Descargar eventos</span></li>
+                <li><span class="menu_descargar" id="download_incidents">Descargar eventos</span></li>
             </ul>
         </div>
         <!-- Filtro categorias Violencia -->
@@ -132,7 +133,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                             <?php
                             //$_h = count($_ch);
                             foreach($_cts as $_idh => $_ch) { 
-                                $_id = "cat_$_idh";
+                                $_id = "cat_ec_$_idh";
                                 $chk = 'checked';
                                 if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['ec'])) {
                                         $chk = '';
@@ -159,7 +160,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         <!-- Filtro categorias Desastres -->
         <div id="fcat_dn" class="filtro fcat">
             <div class="left">
-                 <h2>Categorias Desastres Naturales</h2>
+                 <h2>Categorias Desastres</h2>
                  <br />
                 <div class="inline linko">
                     <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
@@ -184,7 +185,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                             <?php
                             //$_h = count($_ch);
                             foreach($_cts as $_idh => $_ch) { 
-                                $_id = "cat_$_idh";
+                                $_id = "cat_dn_$_idh";
                                 $chk = 'checked';
                                 if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['dn'])) {
                                         $chk = '';
@@ -383,18 +384,21 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
              
         </div>
         <div id="submenu">
-            <div id="titulo_general" class="left op">
+            <div id="titulo_general" class="left">
                 <div id="tgt"></div>
                 <div id="tgc"></div>
             </div>
-            <div class="mapa_tipo activo left op" data-tipo="afectacion">
-                <span class="menu_victimas">Mapa v&iacute;ctimas</span>
-            </div>
-            <div class="mapa_tipo left op" data-tipo="eventos">
-                <span class="menu_eventos">Mapa eventos</span>
-            </div>
-            <div id="group_fts" class="mapa_tipo left op">
-                <span class="menu_desagrupar">Desagrupar mapa</span>
+            <div id="mapa_tipo" class="left">
+                <div class="mapa_tipo menu_activo left op" data-tipo="afectacion">
+                    <span class="menu_victimas">V&iacute;ctimas</span>
+                </div>
+                <div class="mapa_tipo left op" data-tipo="eventos">
+                    <span class="menu_eventos">Eventos</span>
+                </div>
+                <div id="group_fts" class="mapa_tipo left op">
+                    <span class="menu_desagrupar">Desagrupado</span>
+                </div>
+    
             </div>
         </div>
         <div id="totalxd" class="relative">

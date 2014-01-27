@@ -225,9 +225,9 @@ $(function(){
 
         _cluster = !_cluster;
 
-        var dgt = (_cluster) ? 'Desagrupar' : 'Agrupar'; 
+        var dgt = (_cluster) ? 'Desagrupado' : 'Agrupado'; 
 
-        $(this).find('h1').html(dgt + ' mapa');
+        $(this).find('span').html(dgt);
 
         addFeaturesFirstTime();
         totalesxDepto();
@@ -699,7 +699,7 @@ totalesxDepto = function(more) {
         var t_fin = $('#fin_text').val();
 
         $('#titulo_general > #tgt').html('Mapa de ' + titulo);
-        $('#titulo_general > #tgc').html(t_ini + ' al ' + t_fin);
+        $('#titulo_general > #tgc').html(t_ini + ' - ' + t_fin);
         
         $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
         
