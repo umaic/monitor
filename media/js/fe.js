@@ -134,6 +134,7 @@ $(function(){
     var td_ec = false;
     $('.tn_fcat').click(function() { 
         $(this).closest('.filtro').find('input:checkbox').each(function() {
+            $(this).iCheck('toggle');
             $(this).attr('checked', td_ec);
         });
         

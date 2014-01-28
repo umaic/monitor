@@ -300,6 +300,12 @@ function addFeatures(inst) {
 
             map.addLayer(l_ec);
         }
+            
+        // Oculta capa desastres
+        if (map.getLayersByName('Desastres Naturales').length > 0) {
+            l_dn = map.getLayersByName('Desastres Naturales')[0];
+            l_dn.setVisibility(false);
+        }
         
         // States filter
         _uft_ec = addURLParameter(url_ft_ec, uparams_acceso);

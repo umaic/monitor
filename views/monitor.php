@@ -109,10 +109,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                  <h2>Categorias Violencia Armada</h2>
                  <br />
                 <div class="inline linko">
-                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
                 </div>
                 <div class="inline">
-                <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
+                |&nbsp;<a class="tn_fcat" href="#">Seleccionar todas/ninguna</a>
                 </div>
             </div>
             <div class="right">
@@ -163,10 +163,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                  <h2>Categorias Desastres</h2>
                  <br />
                 <div class="inline linko">
-                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
                 </div>
                 <div class="inline">
-                <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
+                |&nbsp;<a class="tn_fcat" href="#">Seleccionar todas/ninguna</a>
                 </div>
             </div>
             <div class="right">
@@ -324,10 +324,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                  <h2>Posible restriccion al acceso humanitario</h2>
                  <br />
                 <div class="inline linko">
-                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Restricción_al_acceso_humanitario" target="_blank">Definici&oacute;n de categorias</a>
+                    <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Restricción_al_acceso_humanitario" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
                 </div>
                 <div class="inline">
-                <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
+                |&nbsp;<a class="tn_fcat" href="#">Seleccionar todas/ninguna</a>
                 </div>
             </div>
             <div class="right">
@@ -339,34 +339,34 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <div class="fcat_list">
                         <ul id="fcat_list_acceso">
                             <li>
-                                <input type="checkbox" id="acceso_cat_3" name="acceso_cat" value="cat_3" />
+                                <input type="checkbox" id="acceso_cat_3" name="acceso_cat" value="cat_3" checked />
                                 <label for="acceso_cat_3">
                                     Restricciones o interferencia con el paso de agencias, 
                                     personal o bienes en el pa&iacute;s
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="acceso_cat_4" name="acceso_cat" value="cat_4" />
+                                <input type="checkbox" id="acceso_cat_4" name="acceso_cat" value="cat_4" checked />
                                 <label for="acceso_cat_4">
                                 Operaciones militares y hostilidades continuas impidiendo 
                                 a las operaciones humanitarias
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="acceso_cat_5" name="acceso_cat" value="cat_5" />
+                                <input type="checkbox" id="acceso_cat_5" name="acceso_cat" value="cat_5" checked />
                                 <label for="acceso_cat_5">
                                     Amenazas y violaciones encontra el personal humanitario
                                     y sus instalaciones
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="acceso_cat_7" name="acceso_cat" value="cat_7" />
+                                <input type="checkbox" id="acceso_cat_7" name="acceso_cat" value="cat_7" checked />
                                 <label for="acceso_cat_7">
                                     Presencia de minas (MAP) y ordenanza no explotada (MUSE)
                                 </label>
                             </li>
                             <li>
-                                <input type="checkbox" id="acceso_cat_9" name="acceso_cat" value="cat_9" />
+                                <input type="checkbox" id="acceso_cat_9" name="acceso_cat" value="cat_9" checked />
                                 <label for="acceso_cat_9">
                                     Restricciones sobre, o obstrucción de, acceso a 
                                     servicios y asistencia por parte de las poblaciones
