@@ -334,7 +334,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <a class="close" href="#" data-div="fcat_acceso"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="btn_fcat_acceso" class="dn btn btn_fcat">Filtrar mapa</div>
+                <div id="btn_fcat_acceso" class="acceso btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="fcat_list">
                         <ul id="fcat_list_acceso">

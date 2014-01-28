@@ -230,9 +230,6 @@ function addFeatures(inst) {
         // Tipo mapa
         _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
         
-        // Categorias acceso
-        _uec = addURLParameter(_uec, [['acceso', getAccesoCats()]]); // getMapaAfectacion in fe.js
-
         ajaxFeatures(_uec, l_ec);
     }
     
@@ -283,6 +280,30 @@ function addFeatures(inst) {
         
         var _uft_ec = addURLParameter(url_ft_ec, uparams_ft);
         ajaxFeatures(_uft_ec, l_ft);
+
+    }
+
+    
+    // Acceso
+    if (inst == 'acceso') {
+        
+        var uparams_acceso = uparams.concat([['acceso', 1]]);
+        uparams_acceso = uparams_acceso.concat([['acceso_cats', getAccesoCats()]]);
+
+        if (map.getLayersByName('Emergencia Compleja').length > 0) {
+            l_ec = map.getLayersByName('Emergencia Compleja')[0];
+            l_ec.removeFeatures(l_ec.features);
+        }
+        else {
+            l_ec = new OpenLayers.Layer.Vector('Emergencia Compleja', 
+                { styleMap: Styles });
+
+            map.addLayer(l_ec);
+        }
+        
+        // States filter
+        _uft_ec = addURLParameter(url_ft_ec, uparams_acceso);
+        ajaxFeatures(_uft_ec, l_ec);
 
     }
 
