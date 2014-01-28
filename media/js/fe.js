@@ -1069,7 +1069,7 @@ getStatesChecked = function(){
 
 getMapaAfectacion = function(){ 
     
-    return ($('.mapa_tipo.activo').data('tipo') == 'eventos') ? 0 : 1;
+    return ($('.mapa_tipo.menu_activo').data('tipo') == 'eventos') ? 0 : 1;
 
 }
 

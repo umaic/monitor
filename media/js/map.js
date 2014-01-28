@@ -301,10 +301,14 @@ function addFeatures(inst) {
             map.addLayer(l_ec);
         }
             
-        // Oculta capa desastres
+        // Oculta capa desastres y featured
         if (map.getLayersByName('Desastres Naturales').length > 0) {
             l_dn = map.getLayersByName('Desastres Naturales')[0];
             l_dn.setVisibility(false);
+        }
+        if (map.getLayersByName('Destacados').length > 0) {
+            l_ft = map.getLayersByName('Destacados')[0];
+            l_ft.setVisibility(false);
         }
         
         // States filter
