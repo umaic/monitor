@@ -277,7 +277,10 @@ $(function(){
     setYear('ini',_iniY);
     setYear('fin',_year);
 
-    $('input[name=rap]').click(function() {
+    //$('input[name=rap]').click(function() {
+
+    // Se cambia a este por el plugin iCheck
+    $('input[name=rap]').on('ifClicked', function(event){
         
         if ($(this).val() != 0) {
             var _ini = getStartEnd('ini');
