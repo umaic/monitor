@@ -148,6 +148,7 @@ class MonitorController {
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
         $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+        $acceso = ($_SESSION['acceso'] == 1) ? true : false;
 
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
         
@@ -163,11 +164,16 @@ class MonitorController {
 
         if ($afectacion) {
             $_sqle = "SELECT SUM(victim_cant) AS n
-                FROM %svictim v
-                JOIN %sincident_category ic ON v.incident_category_id = ic.id
-                JOIN %sincident AS i ON ic.incident_id = i.id
-                JOIN %slocation AS l ON l.id = i.location_id
-                WHERE $cond_tmp";
+                FROM victim v
+                JOIN incident_category ic ON v.incident_category_id = ic.id
+                JOIN incident AS i ON ic.incident_id = i.id
+                JOIN location AS l ON l.id = i.location_id";
+
+            if ($acceso) {
+                $_sqle .= ' JOIN form_response '; 
+            }
+
+            $_sqle = " WHERE $cond_tmp";
             
             $_sqld = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
                 FROM %sform_response f
@@ -176,7 +182,7 @@ class MonitorController {
                 JOIN %sincident_category ic USING(incident_id)
                 WHERE $cond_tmp AND form_field_id = 4";
             
-            $_sqliec = sprintf($_sqle,'','','','',$cond_cats_ec);
+            $_sqliec = sprintf($_sqle,$cond_cats_ec);
             $_sqlidn = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
         }
         else {
@@ -212,11 +218,14 @@ class MonitorController {
             $_rse = $this->db->open($_sqlec);
             $_ec = $this->db->FO($_rse);
             $_nec = (empty($_ec->n)) ? '' : $_ec->n;
+
+            if (!$acceso) {
+                $_sqldn = sprintf($_sqlidn,$_row->id);
+                $_rsd = $this->db->open($_sqldn);
+                //echo $_sqldn;
+                $_dn = $this->db->FO($_rsd);
+            }
             
-            $_sqldn = sprintf($_sqlidn,$_row->id);
-            $_rsd = $this->db->open($_sqldn);
-            //echo $_sqldn;
-            $_dn = $this->db->FO($_rsd);
             $_ndn = (empty($_dn->n)) ? '' : $_dn->n;
 
             $class = 'unselected';
@@ -941,13 +950,13 @@ class MonitorController {
     }
     
     /*
-     * Coloca el tipo de mapa en session
-     * @param int $tipo
+     * Coloca variable en sesión
+     * @param string $var
+     * @param string $valor
      */
-    public function setMapaTipo($tipo) {
+    public function setSessionVar($var, $valor) {
         
-        $_SESSION['mapa_tipo'] = $tipo;
+        $_SESSION[$var] = $valor;
 
-        echo $tipo;
     }
 }

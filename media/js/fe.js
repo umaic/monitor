@@ -8,6 +8,7 @@ var num_carga = 20;
 var cargar_mas = 0;  // Cuenta las veces que se hace click en cargar mas
 var _cluster = true;  // Mapa en cluster, parametro para ushahidi json/cluster, json/index
 var resetLimit = false;
+var acceso = false;
 
 $(function(){
 
@@ -75,10 +76,26 @@ $(function(){
     */
     
     $('.btn_fcat').click(function() {
+
         setCatsHidden();
-        addFeatures($(this).attr("class").split(' ')[0]);
+
+        var inst = $(this).attr("class").split(' ')[0];
+        
+        // Si es filtrar mapa desde acceso, cambia el texto de ocultar
+        // eventos en desastres
+        acceso = false;
+        if (inst == 'acceso') {
+            $('#btn_show_dn').html('Mostrar eventos');
+
+            acceso = true;
+        }
+        
+        addFeatures(inst);
+        
         totalesxDepto();
+        
         $(this).closest('.filtro').hide();
+
     });
 
     // Oculta eventos
@@ -206,7 +223,7 @@ $(function(){
         var that = this;
         
         $.ajax({
-            url: 'mapa_tipo/' + $(that).data('tipo'),
+            url: 'session_var/mapa_tipo/' + $(that).data('tipo'),
             success: function() {
                 $('.mapa_tipo').removeClass('menu_activo');
                 $(that).addClass('menu_activo');
@@ -698,6 +715,10 @@ totalesxDepto = function(more) {
         // Afectacion
         var titulo = (getMapaAfectacion() == 1) ? 'v&iacute;ctimas' : 'eventos';
             
+        // Acceso
+        if (acceso) {
+            titulo = 'restricción <br /> al acceso';
+        }
         // Titulo derecha
         var t_ini = $('#ini_text').val();
         var t_fin = $('#fin_text').val();

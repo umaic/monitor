@@ -34,6 +34,10 @@ if (empty($_SESSION['mapa_tipo'])) {
     $_SESSION['mapa_tipo'] = 'afectacion';
 }
 
+if (empty($_SESSION['acceso'])) {
+    $_SESSION['acceso'] = 0;
+}
+
 // Clean URL
 if (!empty($_GET) && isset($_GET['m'])) {
     switch($_GET['m']) {
@@ -82,8 +86,8 @@ if (!empty($_GET) && isset($_GET['m'])) {
             $mc->downloadIncidents();
         break;
 
-        case 'mapa_tipo':
-            $mc->setMapaTipo($_GET['tipo']);
+        case 'session_var':
+            $mc->setSessionVar($_GET['valor']);
         break;
     }
 }

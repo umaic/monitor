@@ -231,7 +231,7 @@ div.tecdn div {
     padding: 12px;
     cursor: pointer;
     border-bottom: 1px solid #191c1d;
-    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.04);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 #menu .menu_activo,
 #submenu .menu_activo,
