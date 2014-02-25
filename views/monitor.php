@@ -45,7 +45,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </div>
             </div>
         <div id="tec" class="tecdn right">
-            <a href="http://violenciaarmada.colombiassh.org/reports/submit" target="_blank">
+            <a href="http://violenciaarmada.salahumanitaria.co/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
@@ -56,13 +56,13 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
             -->
             <div class="new_event nev">
-                <a href="http://violenciaarmada.colombiassh.org/reports/submit" target="_blank">
+                <a href="http://violenciaarmada.salahumanitaria.co/reports/submit" target="_blank">
                     Reportar un evento
                 </a>
             </div>
         </div>
         <div id="tdn" class="tecdn right">
-            <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
+            <a href="http://desastres.salahumanitaria.co/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_dn.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
@@ -73,7 +73,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
             -->
             <div class="new_event ned">
-                <a href="http://desastres.colombiassh.org/reports/submit" target="_blank">
+                <a href="http://desastres.salahumanitaria.co/reports/submit" target="_blank">
                     Reportar un evento
                 </a>
             </div>
