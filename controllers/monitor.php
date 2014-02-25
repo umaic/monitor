@@ -331,6 +331,7 @@ class MonitorController {
 
         $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Título evento"'.$limi.'"Resumen evento"'.$limi.
                 '"Categorias (Subcategorias)"'.$limi.
+                '"Acceso"'.$limi.'"Resoluciones"'.$limi.
                 '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.'"Referecia"'.$limi.
                 '"Departamento"'.$limi.'"Municipio"'.$limi.'"Lugar"'.$limi.
                 '"# Total Víctimas (Violencia armada) / Personas Afectadas (Desastres)"'.$limi.'"# Víctimas civiles"'.$limi.'"Víctimas militares"'.$limi.
@@ -370,6 +371,9 @@ class MonitorController {
                 for ($v=0; $v<7; $v++) {
                     $num_v[$v] = '';
                 }
+
+                $acceso = '';
+                $res_1612 = '';
 
                 if ($u == 0) {
                     
@@ -412,6 +416,40 @@ class MonitorController {
                         }
                     }
 
+                    // Acceso y 1612
+                    $form_field_id_acc = 1; // Preguntas de acceso
+
+                    $_sql_acc_1612 = "SELECT form_response AS r
+                        FROM ".$_dbu."form_response AS fr
+                        INNER JOIN incident AS i ON fr.incident_id = i.id
+                    WHERE form_field_id = %s AND incident_id = $iid AND restricting_access = 1";
+
+                    $_sql_acc = sprintf($_sql_acc_1612,$form_field_id_acc);
+
+                    if ($iid == 71757) {
+                        //echo $_sql_acc.'<br />';
+                    } 
+
+                    $_rsv = $this->db->open($_sql_acc);
+                    $acceso = array();
+                    while ($_row_a = $this->db->FO($_rsv)) {
+                        $acceso[] = $_row_a->r;
+                    }
+
+                    $acceso = implode(',', $acceso);
+                    
+                    $form_field_id_1612 = 2; // Preguntas de 1612
+
+                    $_sql_1612 = sprintf($_sql_acc_1612,$form_field_id_1612);
+
+                    $_rsv = $this->db->open($_sql_1612);
+                    $res_1612 = array();
+                    while ($_row_a = $this->db->FO($_rsv)) {
+                        $res_1612[] = $_row_a->r;
+                    }
+
+                    $res_1612 = implode(',', $res_1612);
+
                 }
                 else {
                     $title = $_r->title;
@@ -450,6 +488,7 @@ class MonitorController {
                 $state = (empty($_row_s->state)) ? '' : $_row_s->state;
                 $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
                         '"'.$_r->cats.'"'.$limi.
+                        '"'.$acceso.'"'.$limi.'"'.$res_1612.'"'.$limi.
                         '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
                         '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
 
