@@ -26,7 +26,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <ul>
                         <li><a id="lmh" href="#">Que es monitor?</a></li>
                         <li><a href="http://www.salahumanitaria.co" target="_blank">Sala Humanitaria</a></li>
-                        <li><a href="http://sidih.colombiassh.org" target="_blank">Sidih</a></li>
+                        <li><a href="http://sidih.salahumanitaria.co" target="_blank">Sidih</a></li>
                         <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki Humanitario</a></li>
                     </ul>
                 <div id="qlmh" class="hide">
