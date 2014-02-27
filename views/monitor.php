@@ -11,6 +11,8 @@
 
 <?php 
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
+$url_violencia = "http://violenciaarmada.salahumanitaria.co/reports/submit";
+$url_desastres = "http://desastres.colombiassh.org/reports/submit";
 ?>
 
 <body>
@@ -45,7 +47,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </div>
             </div>
         <div id="tec" class="tecdn right">
-            <a href="http://violenciaarmada.salahumanitaria.co/reports/submit" target="_blank">
+            <a href="<?php echo $url_violencia ?>" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
@@ -56,13 +58,13 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
             -->
             <div class="new_event nev">
-                <a href="http://violenciaarmada.salahumanitaria.co/reports/submit" target="_blank">
+                <a href="<?php echo $url_violencia ?>" target="_blank">
                     Reportar un evento
                 </a>
             </div>
         </div>
         <div id="tdn" class="tecdn right">
-            <a href="http://desastres.salahumanitaria.co/reports/submit" target="_blank">
+            <a href="<?php echo $url_desastres ?>http://desastres.salahumanitaria.co/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_dn.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
@@ -73,7 +75,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
             -->
             <div class="new_event ned">
-                <a href="http://desastres.salahumanitaria.co/reports/submit" target="_blank">
+                <a href="<?php echo $url_desastres ?>" target="_blank">
                     Reportar un evento
                 </a>
             </div>
