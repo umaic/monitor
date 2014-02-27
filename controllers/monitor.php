@@ -173,7 +173,7 @@ class MonitorController {
                 $_sqle .= ' JOIN form_response '; 
             }
 
-            $_sqle = " WHERE $cond_tmp";
+            $_sqle .= " WHERE $cond_tmp";
             
             $_sqld = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
                 FROM %sform_response f
