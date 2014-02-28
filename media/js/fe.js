@@ -223,7 +223,7 @@ $(function(){
         var that = this;
         
         $.ajax({
-            url: 'session_var/mapa_tipo/' + $(that).data('tipo'),
+            url: 'mapa_tipo/' + $(that).data('tipo'),
             success: function() {
                 $('.mapa_tipo').removeClass('menu_activo');
                 $(that).addClass('menu_activo');
