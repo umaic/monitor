@@ -64,7 +64,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
             </div>
         </div>
         <div id="tdn" class="tecdn right">
-            <a href="<?php echo $url_desastres ?>http://desastres.salahumanitaria.co/reports/submit" target="_blank">
+            <a href="<?php echo $url_desastres ?>" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_dn.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
