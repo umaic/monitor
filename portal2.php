@@ -37,7 +37,7 @@
 <body>
     <div id="monitor">
 <?php
-        $_GET['layout'] = 'portal';
+        //$_GET['layout'] = 'portal';
         $state = (isset($_GET['state'])) ? $_GET['state'] : 0;
         include dirname(__FILE__)."/index.php" 
         ?>

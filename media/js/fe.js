@@ -4,6 +4,7 @@ var _mes =
 var base = '';
 var base_ol = '';
 var is_portal = false;
+var layout;
 var num_carga = 20;
 var cargar_mas = 0;  // Cuenta las veces que se hace click en cargar mas
 var _cluster = true;  // Mapa en cluster, parametro para ushahidi json/cluster, json/index
@@ -24,6 +25,10 @@ $(function(){
 
     if (typeof portal !== "undefined") {
         is_portal = true;
+    }
+    
+    if (typeof layout !== "undefined") {
+        layout = 'monito';
     }
     
     set100Height();
@@ -267,7 +272,9 @@ $(function(){
     });
     
     //Tabs
-    $('#tabs').tabs();
+    if ($('#tabs').length > 0) {
+        $('#tabs').tabs();
+    }
 
     // Date events
     var _ms = 2;  // Meses hacia atras
@@ -550,7 +557,11 @@ totalesxDepto = function(more) {
     _states = getStatesChecked();
     
     // Portal EHP
-    if (is_portal) {
+    //if (is_portal) {
+    if (layout == 'portal_home') {
+
+    }
+    else if (layout == 'portal') {
         
         if (typeof more === 'undefined') {
             $('.tab_data').html('');

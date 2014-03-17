@@ -14,31 +14,7 @@ else {
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 ?>
         <div id="tec" class="tecdn hide">
-            <a href="http://www.colombiassh.org/emergenciacompleja/" target="_blank">
-                <img src="<?php echo BASE_PORTAL ?>media/img/logo_ec.png" />
-            </a>
-            <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
-            <div class="cat it">
-                <div class="inline">Categorias</div>
-                <div class="inline arrow-down"></div>
-            </div>
             <div id="fcat_ec" class="filtro fcat">
-                <div class="left">
-                     <h2>Categorias Conflicto Armado</h2>
-                     <br />
-                    <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
-                    </div>
-                    <div class="inline">
-                    <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
-                    </div>
-                </div>
-                <div class="right">
-                    <a class="close" href="#"><img src="<?php echo BASE_PORTAL ?>media/img/close.png" alt="Cerrar" /></a>
-                </div>
-                <div class="right">
-                    <div id="btn_fcat_ec" class="ec btn btn_fcat">Filtrar mapa</div>
-                </div>
                 <div class="fcat_list">
                     <?php 
                     foreach($cats_f['ec'] as $_cp => $_cts) { ?>
@@ -74,31 +50,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div id="tdn" class="tecdn hide">
-            <a href="http://inundaciones.colombiassh.org" target="_blank">
-                <img src="<?php echo BASE_PORTAL ?>media/img/logo_dn.png" />
-            </a>
-            <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
-            <div class="it cat">
-                <div class="inline">Categorias</div>
-                <div class="inline arrow-down"></div>
-            </div>
             <div id="fcat_dn" class="filtro fcat">
-                <div class="left">
-                     <h2>Categorias Desastres Naturales</h2>
-                     <br />
-                    <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
-                    </div>
-                    <div class="inline">
-                    <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
-                    </div>
-                </div>
-                <div class="right">
-                    <a class="close" href="#"><img src="<?php echo BASE_PORTAL ?>media/img/close.png" alt="Cerrar" /></a>
-                </div>
-                <div class="right">
-                    <div id="btn_fcat_ec" class="dn btn btn_fcat">Filtrar mapa</div>
-                </div>
                 <div class="fcat_list">
                     <?php 
                     foreach($cats_f['dn'] as $_cp => $_cts) { ?>
@@ -252,6 +204,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/perfect-scrollbar.min.js"></script>
     <script type="text/javascript">
         var portal = 1;
+        var layout = 'portal';
         $(function() {
             /*
             $('.tab').click(function() {
