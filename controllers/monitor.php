@@ -682,6 +682,37 @@ class MonitorController {
         return compact('e','t','t_e','t_d','rsms_ec','rsms_dn','charts');
 
     }
+    
+    /**
+     * 
+     * Resumen para el home del portal
+     *
+     */ 
+    public function getResumenPortalHome($ini, $fin) {
+
+        $_selet_csv = "SELECT DISTINCT i.id AS id, i.incident_title AS t, i.incident_date AS date, l.location_name AS ln, state_id ";
+        $_sql_csv = "$_selet_csv $_from $_order $_limit";
+        
+        $_sql_total = "SELECT COUNT(DISTINCT i.id) AS n $_from LIMIT 1";
+        
+
+        // Desplazamiento 
+        $evs = array_merge($evs, $conf);
+
+
+        list($rsms_ec, $rsms_dn, $charts) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
+ 
+        // Ordena por fecha desc los eventos para mezclarlos
+        usort($evs, array('MonitorController', 'orderArrayByDate'));
+
+        $e = $evs;
+        $t = $total;
+        $t_e = $total_ec;
+        $t_dn = $total_dn;
+
+        return compact('e','t','t_e','t_d','rsms_ec','rsms_dn','charts');
+
+    }
 
     private function getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv){
 
