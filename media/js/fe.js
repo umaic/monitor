@@ -560,6 +560,10 @@ totalesxDepto = function(more) {
     //if (is_portal) {
     if (layout == 'portal_home') {
 
+        $.ajax({
+            url: base + '/getCifrasPortalHome/' + _ini + '/' + _fin + '/' + _cats + '/' + limiti + '/' + _states ,
+            dataType: 'jsonp',
+        });
     }
     else if (layout == 'portal') {
         
@@ -876,7 +880,9 @@ charts = function(data_charts) {
                 fontFamily: 'Arial',
                 fontSize: '11px'
             }
-        }
+        },
+        yAxis: { min: 0}
+
     });
     
     var title_style = { fontSize: '14px', margin: 0 }
