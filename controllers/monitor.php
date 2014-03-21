@@ -690,27 +690,44 @@ class MonitorController {
      */ 
     public function getResumenPortalHome($ini, $fin) {
 
-        $_selet_csv = "SELECT DISTINCT i.id AS id, i.incident_title AS t, i.incident_date AS date, l.location_name AS ln, state_id ";
-        $_sql_csv = "$_selet_csv $_from $_order $_limit";
+        $resumen = array();
+        $sql_t = "SELECT COUNT(DISTINCT i.id) AS n 
+                  FROM incident AS i 
+                  JOIN incident_category AS ic ON i.id = ic.incident_id 
+                  WHERE %s AS i LIMIT 1";
         
-        $_sql_total = "SELECT COUNT(DISTINCT i.id) AS n $_from LIMIT 1";
+
+        // Desplazamiento Masivo
+        $cats = '42, 44, 46, 41, 43, 45';
+        $_sql = sprintf($sql_t,$cats); 
+        $_rs = $this->db->open($_sql);
+        $des = $this->db->fo($_rs);
+
+        // Confinamiento 45
+        $cats = 45;
+        $_sql = sprintf($sql_t,$cats); 
+        $_rs = $this->db->open($_sql);
+        $con = $this->db->fo($_rs);
         
+        // Acciones Bélicas 
+        $cats = '2, 3, 4, 5, 6, 7, 8';
+        $_sql = sprintf($sql_t,$cats); 
+        $_rs = $this->db->open($_sql);
+        $acc = $this->db->fo($_rs);
 
-        // Desplazamiento 
-        $evs = array_merge($evs, $conf);
-
-
-        list($rsms_ec, $rsms_dn, $charts) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
- 
-        // Ordena por fecha desc los eventos para mezclarlos
-        usort($evs, array('MonitorController', 'orderArrayByDate'));
-
-        $e = $evs;
-        $t = $total;
-        $t_e = $total_ec;
-        $t_dn = $total_dn;
-
-        return compact('e','t','t_e','t_d','rsms_ec','rsms_dn','charts');
+        // Amenazas
+        $cats = 11;
+        $_sql = sprintf($sql_t,$cats); 
+        $_rs = $this->db->open($_sql);
+        $ame = $this->db->fo($_rs);
+        
+        // Homicidios en persona protegida 17
+        $cats = 17;
+        $_sql = sprintf($sql_t,$cats); 
+        $_rs = $this->db->open($_sql);
+        $hom = $this->db->fo($_rs);
+        
+        return compact('des','con','acc','ame','hom');
 
     }
 
@@ -788,7 +805,7 @@ class MonitorController {
 
         $rsms_ec = array();
         $_rs = $this->db->open($_sqliec);
-        while($_row = $this->db->FO($_rs)) {
+        while($_row = $this->db->fo($_rs)) {
             $rsms_ec[] = array('t' => $_row->cat, 'n' => $_row->sum, 'cat_id' => $_row->cat_id, 'c' => $_row->color);
         }
         

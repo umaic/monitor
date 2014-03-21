@@ -39,12 +39,12 @@ $(function(){
         //setMapWidth();
     });
 
-    $(document).ready(function(){
-      $('input').iCheck({
-        checkboxClass: 'icheckbox_square-orange',
-        radioClass: 'iradio_square-orange'
-      });
-    });
+    if (layout == 'monitor') {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-orange',
+            radioClass: 'iradio_square-orange'
+        });
+    }
 
     $("#loading")
     .ajaxStart(function(){ $('#loading').show(); })
@@ -561,7 +561,7 @@ totalesxDepto = function(more) {
     if (layout == 'portal_home') {
 
         $.ajax({
-            url: base + '/getCifrasPortalHome/' + _ini + '/' + _fin + '/' + _cats + '/' + limiti + '/' + _states ,
+            url: base + '/getCifrasPortalHome/' + _ini + '/' + _fin + '/' + _cats ,
             dataType: 'jsonp',
         });
     }
