@@ -284,7 +284,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                     <legend>A&ntilde;os</legend>
                         <div>
                             <?php
-                            foreach($totalxy as $_a => $_t) { ?>
+                            foreach($totalxy as $_a) { ?>
                                 <div class="radio">
                                     <input type="radio" id="a_<?php echo $_a ?>" value="<?php echo $_a ?>" name="rap" />
                                     <label for="a_<?php echo $_a ?>"><?php echo $_a ?></label>
@@ -379,7 +379,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         </div>
         <!-- Filtro categorias Desastres :: Fin -->
         
-        <div id="map" class="left"></div>
+        <div id="map" class="map_monitor left"></div>
         <div id="featured" class="hide">
             <div><b>Eventos destacados por:</b></div>
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>

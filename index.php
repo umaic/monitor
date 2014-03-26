@@ -77,6 +77,22 @@ if (!empty($_GET) && isset($_GET['m'])) {
             header('Content-type: application/json');
             echo $_GET['callback'] . '('.json_encode($incidentes).');';
         break;
+        
+        case 'getResumenPortalHome':
+            
+            if (!empty($_GET['ini']) && is_numeric($_GET['ini'])) {
+                $ini = $_GET['ini'];
+            } 
+            if (!empty($_GET['fin']) && is_numeric($_GET['fin'])) {
+                $fin = $_GET['fin'];
+            }
+
+            $incidentes = $mc->getResumenPortalHome($ini, $fin);
+            
+            header('Content-type: text/json');
+            header('Content-type: application/json');
+            echo $_GET['callback'] . '('.json_encode($incidentes).');';
+        break;
     
         case 'export':
             $mc->export($_GET['t'],$_GET['csv'],$_GET['nom']);
@@ -87,7 +103,7 @@ if (!empty($_GET) && isset($_GET['m'])) {
         break;
 
         case 'session_var':
-            $mc->setSessionVar($_GET['valor']);
+            $mc->setSessionVar($_GET['var'], $_GET['valor']);
         break;
     }
 }
@@ -95,52 +111,37 @@ else {
     $layout = (empty($_GET['layout'])) ? 'monitor' : $_GET['layout'];
     $fl = dirname( __FILE__ ).'/views/'.$layout.'.php';
 
+    //$ini = strtotime("-1 week");
+    $ini = strtotime(date('Y')."-1-1");
+    $fin = strtotime(date('Y')."-12-31");
+
+    $cats_hide = array('ec' => array(
+                                    52, //C. Complementaria: Homicidio
+                                    53  // C. Complementaria: Intento de homicidio
+                                    ),
+                       'dn' => array(0)
+                      );
+    
+    // Se usaba este para mostrar el total por años
+    //$totalxy = $mc->total($cats_hide);
+    $yyyy = date('Y');
+    for ($a=$yyyy;$a>=2008;$a--) {
+        $totalxy[] = $a;
+    }
+    
+    $_t = $mc->totalecdn();
+    $tec = $_t['ec'];
+    $tdn = $_t['dn'];
+
+    if ($layout != 'portal_home') {
+        // Categorias para filtros
+        $cats_db = $mc->getCats();
+        $cats_f = $cats_db['tree'];
+        $cats_u = (empty($_GET['c'])) ? $cats_db['h'] : explode(',', $_GET['c']);
+    }
+
     switch($layout) {
-        case 'monitor':
-            $ini = strtotime("-1 week");
-            $fin = strtotime(date('Y')."-12-31");
-
-            $cats_hide = array('ec' => array(
-                                            52, //C. Complementaria: Homicidio
-                                            53  // C. Complementaria: Intento de homicidio
-                                            ),
-                               'dn' => array(0)
-                              );
-            
-            $totalxy = $mc->total($cats_hide);
-            //$totalxd = $mc->totalxd($ini, $fin);
-            $_t = $mc->totalecdn();
-            $tec = $_t['ec'];
-            $tdn = $_t['dn'];
-
-            // Categorias para filtros
-            $cats_db = $mc->getCats();
-            $cats_f = $cats_db['tree'];
-            $cats_u = (empty($_GET['c'])) ? $cats_db['h'] : explode(',', $_GET['c']);
-        break;
-        
         case 'portal':
-            $ini = strtotime("-1 week");
-            $fin = strtotime(date('Y')."-12-31");
-
-            $cats_hide = array('ec' => array(
-                                            52, //C. Complementaria: Homicidio
-                                            53  // C. Complementaria: Intento de homicidio
-                                            ),
-                               'dn' => array(0)
-                              );
-            
-            $totalxy = $mc->total($cats_hide);
-            //$totalxd = $mc->totalxd($ini, $fin);
-            $_t = $mc->totalecdn();
-            $tec = $_t['ec'];
-            $tdn = $_t['dn'];
-
-            // Categorias para filtros
-            $cats_db = $mc->getCats();
-            $cats_f = $cats_db['tree'];
-            $cats_u = (empty($_GET['c'])) ? $cats_db['h'] : explode(',', $_GET['c']);
-            
             $state_id = 0;
             $centroid = '';
             if (!empty($state)){
@@ -150,7 +151,6 @@ else {
                 $centroid = $state_info[1];
             }
 
-            //$incidentes = $mc->getIncidentesPortal();
         break;
     }
 

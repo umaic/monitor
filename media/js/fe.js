@@ -10,8 +10,44 @@ var cargar_mas = 0;  // Cuenta las veces que se hace click en cargar mas
 var _cluster = true;  // Mapa en cluster, parametro para ushahidi json/cluster, json/index
 var resetLimit = false;
 var acceso = false;
+var _year, _month, _day, _today;
 
 $(function(){
+
+
+    _today = new Date();
+    _year = _today.getFullYear();
+    _month = _today.getMonth();
+    _day = _today.getDate();
+    
+    /* Este bloque cuando el periodo inicial era una semana
+    var _ms = 2;  // Meses hacia atras
+    var _ds = 7; // Dias iniciales hacia atras
+    var _ii = new Date(_year,_month,_day,0,0).getTime();
+    var _iniObj = new Date(_ii - daysToMiliseconds(_ds));
+    var _iniD = _iniObj.getDate();
+    var _iniM = _iniObj.getMonth();
+    var _iniY = _iniObj.getFullYear();
+    */
+
+    // Ahora periodo inicial es el acumulado del año
+    var _iniObj = new Date(_year,0,1);
+    var _iniD = 1;
+    var _iniM = 0;
+    var _iniY = _year;
+
+    var _ini = _iniObj.getTime(); // milisecs
+    var _fin = new Date().getTime();
+
+    // Para ushahidi va en segundos
+    $('#startDate').val(_ini/1000);
+    $('#endDate').val(_fin/1000);
+
+    markIniFin(_iniD,_iniM,_iniY,_day,_month,_year);
+
+    setYear('ini',_iniY);
+    setYear('fin',_year);
+
 
     if (window.location.hostname == 'localhost'
         || window.location.hostname == '190.66.6.168') {
@@ -27,8 +63,8 @@ $(function(){
         is_portal = true;
     }
     
-    if (typeof layout !== "undefined") {
-        layout = 'monito';
+    if (typeof layout === "undefined") {
+        layout = 'monitor';
     }
     
     set100Height();
@@ -39,16 +75,8 @@ $(function(){
         //setMapWidth();
     });
 
-    if (layout == 'monitor') {
-        $('input').iCheck({
-            checkboxClass: 'icheckbox_square-orange',
-            radioClass: 'iradio_square-orange'
-        });
-    }
-
-    $("#loading")
-    .ajaxStart(function(){ $('#loading').show(); })
-    .ajaxStop(function(){ $('#loading').hide(); });
+    $(document).ajaxStart(function(){ $('#loading').show(); });
+    $(document).ajaxStop(function(){ $('#loading').hide(); });
     
     // Intro text
     $('#lmh').click(function() {
@@ -80,155 +108,167 @@ $(function(){
     });
     */
     
-    $('.btn_fcat').click(function() {
-
-        setCatsHidden();
-
-        var inst = $(this).attr("class").split(' ')[0];
-        
-        // Si es filtrar mapa desde acceso, cambia el texto de ocultar
-        // eventos en desastres
-        acceso = false;
-        if (inst == 'acceso') {
-            $('#btn_show_dn').html('Mostrar eventos');
-
-            acceso = true;
-        }
-        
-        addFeatures(inst);
-        
-        totalesxDepto();
-        
-        $(this).closest('.filtro').hide();
-
-    });
-
-    // Oculta eventos
-    $('.btn_show_e').click(function() {
-
-        var cs = $(this).attr('class').split(' ');
-        
-        if (cs[0] == 'ec') {
-            var ly = map.getLayersByName('Emergencia Compleja')[0];
-
-            $r_hide = $('#resumen_ec');
-            $r_show = $('#resumen_dn');
-        }
-        else {
-            var ly = map.getLayersByName('Desastres Naturales')[0];
-            
-            $r_hide = $('#resumen_dn');
-            $r_show = $('#resumen_ec');
-        }
-        
-        if (ly.getVisibility()) {
-            $(this).html('Mostrar eventos'); 
-            ly.setVisibility(false);
-
-            $r_hide.hide();
-            $r_show.removeClass('left half');
-        }
-        else {
-            $(this).html('Ocultar eventos'); 
-            ly.setVisibility(true);
-            
-            $r_hide.show();
-            $r_show.addClass('left half');
-        }
-            
-        var ly_ft = map.getLayersByName('Destacados')[0];
-        ly_ft.setVisibility(!ly_ft.getVisibility());
-        
-        $(this).closest('.filtro').hide();
-        
-    });
-
-    // Click outside menu
-    /*
-    $(document).click(function(e) {
-        if (!$(e.target).closest('.cat, .filtro').length) {
-            $('.filtro').slideUp();
-        }
-    });
-    */
-
-    //  Categorias : Todas/ninguna
-    var td_ec = false;
-    $('.tn_fcat').click(function() { 
-        $(this).closest('.filtro').find('input:checkbox').each(function() {
-            $(this).iCheck('toggle');
-            $(this).attr('checked', td_ec);
+    if (layout == 'monitor') {
+        $('input').iCheck({
+            checkboxClass: 'icheckbox_square-orange',
+            radioClass: 'iradio_square-orange'
         });
-        
-        td_ec = !td_ec;
-        
-        return false;
-    });
-    
-    // Colocar categorias en inputs hidden para envio a json/cluster
-    setCatsHidden();
-    
-    // Minimize - Maximize total
-    $('#minmax_total').toggle(
-        function() { 
-            //$('.ui-tabs-panel, #mapas_tipos').hide(); 
-            $('.ui-tabs-panel').hide(); 
-            $(this).removeClass('minimize'); 
-            $(this).addClass('maximize'); 
-        }, 
-        function() { 
-            //$('.ui-tabs-panel, #mapas_tipos').show(); 
-            $('.ui-tabs-panel').show(); 
-            $(this).addClass('minimize'); 
-            $(this).removeClass('maximize'); 
-        }
-    );
 
-    // Deptos: Todos/ninguno
-    var td_st = false;
-    $('#totalxd_all_chk').click(function() { 
-        $('#table_totalxd').find(':checkbox:not(:first)').each(function() {
-            $(this).attr('checked', td_st);
+    
+        $('.btn_fcat').click(function() {
+
+            setCatsHidden();
+
+            var inst = $(this).attr("class").split(' ')[0];
+            
+            // Si es filtrar mapa desde acceso, cambia el texto de ocultar
+            // eventos en desastres
+            acceso = false;
+            if (inst == 'acceso') {
+                $('#btn_show_dn').html('Mostrar eventos');
+
+                acceso = true;
+            }
+            
+            addFeatures(inst);
+            totalesxDepto();
+            
+            $(this).closest('.filtro').hide();
+
         });
-        
-        td_st = !td_st;
-    });
 
-    // Filtrar deptos
-    $('#filter_states').click(function(){ 
-        addFeaturesFirstTime();
-        totalesxDepto();
-    });
+        // Oculta eventos
+        $('.btn_show_e').click(function() {
 
-    // Descargar inicidentes
-    $('#download_incidents').click(function() {
-        $('#loading').show();
-        $.ajax({
-                url: 'download_incidents',
-                success: function() {
-                    $('#loading').hide();
-                    location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            
-                }
+            var cs = $(this).attr('class').split(' ');
+            
+            if (cs[0] == 'ec') {
+                var ly = map.getLayersByName('Emergencia Compleja')[0];
+
+                $r_hide = $('#resumen_ec');
+                $r_show = $('#resumen_dn');
+            }
+            else {
+                var ly = map.getLayersByName('Desastres Naturales')[0];
+                
+                $r_hide = $('#resumen_dn');
+                $r_show = $('#resumen_ec');
+            }
+            
+            if (ly.getVisibility()) {
+                $(this).html('Mostrar eventos'); 
+                ly.setVisibility(false);
+
+                $r_hide.hide();
+                $r_show.removeClass('left half');
+            }
+            else {
+                $(this).html('Ocultar eventos'); 
+                ly.setVisibility(true);
+                
+                $r_hide.show();
+                $r_show.addClass('left half');
+            }
+                
+            var ly_ft = map.getLayersByName('Destacados')[0];
+            ly_ft.setVisibility(!ly_ft.getVisibility());
+            
+            $(this).closest('.filtro').hide();
+            
+        });
+
+        // Click outside menu
+        /*
+        $(document).click(function(e) {
+            if (!$(e.target).closest('.cat, .filtro').length) {
+                $('.filtro').slideUp();
+            }
+        });
+        */
+
+        //  Categorias : Todas/ninguna
+        var td_ec = false;
+        $('.tn_fcat').click(function() { 
+            $(this).closest('.filtro').find('input:checkbox').each(function() {
+                $(this).iCheck('toggle');
+                $(this).attr('checked', td_ec);
             });
-    });
+            
+            td_ec = !td_ec;
+            
+            return false;
+        });
+        
+        // Colocar categorias en inputs hidden para envio a json/cluster
+        setCatsHidden();
+        
+        // Minimize - Maximize total
+        $('#minmax_total').toggle(
+            function() { 
+                //$('.ui-tabs-panel, #mapas_tipos').hide(); 
+                $('.ui-tabs-panel').hide(); 
+                $(this).removeClass('minimize'); 
+                $(this).addClass('maximize'); 
+            }, 
+            function() { 
+                //$('.ui-tabs-panel, #mapas_tipos').show(); 
+                $('.ui-tabs-panel').show(); 
+                $(this).addClass('minimize'); 
+                $(this).removeClass('maximize'); 
+            }
+        );
 
-    // Cerrar filtro
-    $('a.close').click(function() { 
-        $(this).closest('.filtro').hide();
-        $('li[data-div="' + $(this).attr('data-div') + '"]').removeClass('menu_activo');
-    });
+        // Deptos: Todos/ninguno
+        var td_st = false;
+        $('#totalxd_all_chk').click(function() { 
+            $('#table_totalxd').find(':checkbox:not(:first)').each(function() {
+                $(this).attr('checked', td_st);
+            });
+            
+            td_st = !td_st;
+        });
+
+        // Filtrar deptos
+        $('#filter_states').click(function(){ 
+            addFeaturesFirstTime();
+            totalesxDepto();
+        });
+
+        // Descargar inicidentes
+        $('#download_incidents').click(function() {
+            $('#loading').show();
+            $.ajax({
+                    url: 'download_incidents',
+                    success: function() {
+                        $('#loading').hide();
+                        location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            
+                    }
+                });
+        });
+
+        // Cerrar filtro
+        $('a.close').click(function() { 
+            $(this).closest('.filtro').hide();
+            $('li[data-div="' + $(this).attr('data-div') + '"]').removeClass('menu_activo');
+        });
+        
+        // Cerrar opciones fecha
+        $('.filtro_fecha').find('div.close').click(function() { 
+            $(this).closest('.filtro_fecha').hide();
+        });
     
-    // Cerrar opciones fecha
-    $('.filtro_fecha').find('div.close').click(function() { 
-        $(this).closest('.filtro_fecha').hide();
-    });
+
+        $('input[name=rap]').on('ifClicked', function(event){
+            applyPeriod($(this).val());
+        });
+    }
     
     // Tipo de mapa
     $('.mapa_tipo:not(.active)').click(function() {
         var that = this;
         
         $.ajax({
-            url: 'mapa_tipo/' + $(that).data('tipo'),
+            url: 'session_var/mapa_tipo/' + $(that).data('tipo'),
             success: function() {
                 $('.mapa_tipo').removeClass('menu_activo');
                 $(that).addClass('menu_activo');
@@ -259,6 +299,15 @@ $(function(){
         $('#tabs').tabs("select", 1);
     });
 
+    if (layout != 'monitor') {
+        // Dropdown de periodos 
+        $('#stime').change(function() {
+            applyPeriod($(this).val());
+            addFeatures();
+            totalesxDepto();
+        });
+    }
+
     // Click categorias en resumen
     $('.resumen_row', '#resumen_ec').live('click', function(){ 
 
@@ -271,205 +320,82 @@ $(function(){
         totalesxDepto();
     });
     
-    //Tabs
-    if ($('#tabs').length > 0) {
-        $('#tabs').tabs();
-    }
-
-    // Date events
-    var _ms = 2;  // Meses hacia atras
-    var _ds = 7; // Dias iniciales hacia atras
-
-    var _today = new Date();
-    var _year = _today.getFullYear();
-    var _month = _today.getMonth();
-    var _day = _today.getDate();
-    var _ii = new Date(_year,_month,_day,0,0).getTime();
-    var _iniObj = new Date(_ii - daysToMiliseconds(_ds));
-    var _iniD = _iniObj.getDate();
-    var _iniM = _iniObj.getMonth();
-    var _iniY = _iniObj.getFullYear();
-    var _ini = _iniObj.getTime(); // milisecs
-    var _fin = new Date().getTime();
-
-    // Para ushahidi va en segundos
-    $('#startDate').val(_ini/1000);
-    $('#endDate').val(_fin/1000);
-
-    markIniFin(_iniD,_iniM,_iniY,_day,_month,_year);
-
-    setYear('ini',_iniY);
-    setYear('fin',_year);
-
-    //$('input[name=rap]').click(function() {
-
-    // Se cambia a este por el plugin iCheck
-    $('input[name=rap]').on('ifClicked', function(event){
+    if (layout != 'portal_home') {
+    
+        //Tabs
+        if ($('#tabs').length > 0) {
+            $('#tabs').tabs();
+        }
+    
+        // Fecha inicio - Fecha fin
+        $('.fecha').click(function (){
+            $('div.filtro_fecha:not(#' + $(this).attr('dv') + ')').hide();
+            $('#' + $(this).attr('dv')).slideToggle();
+        });
+    
+        $('div.filtro_fecha').each(function() {
         
-        if ($(this).val() != 0) {
+            var that = this;
+
+            $(this).find('li').click(function() { 
+                
+                $(this).closest('div').find('li').removeClass('selected');
+                $(this).addClass('selected');
+                var q = $(this).attr('q');
+                var y = $(this).attr('y');
+
+                var $input = $('#' + $(this).attr('q') + '_text');
+                var $div = $('#' + q + '_div');
+
+                
+                if ($div.find('li.selected').length == 3) {
+
+                    var _ini = new
+                    Date($('li.selected[q=ini][y=yyyy]').attr('val'),$('li.selected[q=ini][y=mes]').attr('val')-1,$('li.selected[q=ini][y=dia]').attr('val')).getTime();
+
+                    var _fin = new
+                    Date($('li.selected[q=fin][y=yyyy]').attr('val'),$('li.selected[q=fin][y=mes]').attr('val')-1,$('li.selected[q=fin][y=dia]').attr('val')).getTime();
+                    
+                    if (_ini > _fin) {
+                        alert('Desde debe ser menor que Hasta');
+                        $input.val('');
+                        $div.find('li').removeClass('selected');
+                        //$('stime').val(0);
+                    }
+                    else {
+                    
+                        $input.val($('li.selected[q='+q+'][y=dia]').text() + ' de ' +
+                        $('li.selected[q='+q+'][y=mes]').text()+' '+ $('li.selected[q='+q+'][y=yyyy]').text());
+                        
+                        $('#startDate').val(_ini / 1000);
+                        
+                        $('#endDate').val(_fin / 1000);
+
+                        //$('#stime').val(0);
+                    }
+                }
+            });
+        });
+    
+        $('div.filtro_fecha').find('.close').click(function() {  $('div.filtro_fecha').slideUp(); });
+    
+        $('#lff').click(function() {
+            
             var _ini = getStartEnd('ini');
             var _fin = getStartEnd('fin');
             
-            var _iiObj = new Date(_year,_month,_day,0,0);
-            var _ii = _iiObj.getTime();
-
-            switch($(this).val()) {
-                // Mes
-                case 'm':
-                    _ini = new Date(_ii - daysToMiliseconds(30)); // milisecs
-                    _fin = _today;
-
-                    showGroupUngroup('show');
-                break;
-                // Semana
-                case 's':
-                    _ini = new Date(_ii - daysToMiliseconds(7)); // milisecs
-                    _fin = _today;
-                    showGroupUngroup('show');
-                break;
-                // Ayer
-                case 'ay':
-                    _ini = new Date(_ii - daysToMiliseconds(1)); // milisecs
-                    _fin = _today;
-                    showGroupUngroup('show');
-                break;
-                // Hoy
-                case 'h':
-                    _ini = _ii; // milisecs
-                    _fin = _today;
-                    showGroupUngroup('show');
-                break;
-                // Año
-                default:
-                    _ini = new Date($(this).val(),0,1);
-                    _fin = new Date($(this).val(),11,31);
-                    showGroupUngroup('false');
-                break;
+            if (_ini > _fin) {
+                alert('La fecha Desde debe ser menor que la fecha Hasta');
+            }
+            else {
+                addFeaturesFirstTime();
+                totalesxDepto();
             }
 
-            //$('#dslider').dateRangeSlider('values', _ini,_fin);
-            $('#startDate').val(_ini/1000); // Segundos para ushahidi
-            $('#endDate').val(_fin/1000); // Segundos para ushahidi
-            
-            var _iniY = _ini.getFullYear();
-            var _finY = _fin.getFullYear();
-
-            setYear('ini', _iniY);
-            setYear('fin', _finY);
-
-            markIniFin(_ini.getDate(),_ini.getMonth(),_iniY,
-            _fin.getDate(),_fin.getMonth(),_finY);
-
-            //totalesxDepto();
-            //addFeaturesFirstTime();
-
-            resetLimit = true;
-            cargar_mas = 0;
-        }
-    });
-
-    // Years menu
-    $('#aaaa div.v').click(function() { 
-        var _y = parseInt($(this).find('div.a').text());
-        $('#startDate').val(new Date(_y,0,1,0,0,0,0).getTime()/1000);
-        $('#endDate').val(new Date(_y,11,31).getTime()/1000);
-
-        addFeaturesFirstTime();
-
-        //$('#totalxd_y').html(_y);
-        setYear('ini',_y);
-        setYear('fin',_y);
-
-        $('#fin_text').val('31 de Diciembre');
-        markIniFin(1,0,_y,31,11,_y);
-
-        $('#time').hide();
-
-        // Totales por departamento
-        totalesxDepto();
+            return false;
         
-        /*
-        var bmin = new Date(_y,0,1);
-        var bmax = (_y == new Date().getFullYear()) ? new Date() : new Date(_y,11,31);
-        
-        $('#dslider').dateRangeSlider('bounds', bmin, bmax);
-        $('#dslider').dateRangeSlider('values', bmin, bmax);
-        */
-
-    });
-
-    // Table sorter
-    var sorting = [[1,1]];
-    //$("#table_totalxd").tablesorter({sortList: [sorting] });
-    
-    // Fecha inicio - Fecha fin
-    $('.fecha').click(function (){
-        $('div.filtro_fecha:not(#' + $(this).attr('dv') + ')').hide();
-        $('#' + $(this).attr('dv')).slideToggle();
-    });
-
-    $('div.filtro_fecha').each(function() {
-        
-        var that = this;
-
-        $(this).find('li').click(function() { 
-            
-            $(this).closest('div').find('li').removeClass('selected');
-            $(this).addClass('selected');
-            var q = $(this).attr('q');
-            var y = $(this).attr('y');
-
-            var $input = $('#' + $(this).attr('q') + '_text');
-            var $div = $('#' + q + '_div');
-
-            
-            if ($div.find('li.selected').length == 3) {
-
-                var _ini = new
-                Date($('li.selected[q=ini][y=yyyy]').attr('val'),$('li.selected[q=ini][y=mes]').attr('val')-1,$('li.selected[q=ini][y=dia]').attr('val')).getTime();
-
-                var _fin = new
-                Date($('li.selected[q=fin][y=yyyy]').attr('val'),$('li.selected[q=fin][y=mes]').attr('val')-1,$('li.selected[q=fin][y=dia]').attr('val')).getTime();
-                
-                if (_ini > _fin) {
-                    alert('Desde debe ser menor que Hasta');
-                    $input.val('');
-                    $div.find('li').removeClass('selected');
-                    //$('stime').val(0);
-                }
-                else {
-                
-                    $input.val($('li.selected[q='+q+'][y=dia]').text() + ' de ' +
-                    $('li.selected[q='+q+'][y=mes]').text()+' '+ $('li.selected[q='+q+'][y=yyyy]').text());
-                    
-                    $('#startDate').val(_ini / 1000);
-                    
-                    $('#endDate').val(_fin / 1000);
-
-                    //$('#stime').val(0);
-                }
-            }
         });
-    });
-    
-    $('div.filtro_fecha').find('.close').click(function() {  $('div.filtro_fecha').slideUp(); });
-
-    $('#lff').click(function() {
-            
-        var _ini = getStartEnd('ini');
-        var _fin = getStartEnd('fin');
-        
-        if (_ini > _fin) {
-            alert('La fecha Desde debe ser menor que la fecha Hasta');
-        }
-        else {
-            addFeaturesFirstTime();
-            totalesxDepto();
-        }
-
-        return false;
-    
-    });
+    }
 
     totalesxDepto();
 
@@ -494,6 +420,69 @@ $(function(){
     });
 
 });
+
+function applyPeriod(val) {
+    if (val != 0) {
+        var _ini = getStartEnd('ini');
+        var _fin = getStartEnd('fin');
+        
+        var _iiObj = new Date(_year,_month,_day,0,0);
+        var _ii = _iiObj.getTime();
+
+        switch(val) {
+            // Mes
+            case 'm':
+                _ini = new Date(_ii - daysToMiliseconds(30)); // milisecs
+                _fin = _today;
+
+                showGroupUngroup('show');
+            break;
+            // Semana
+            case 's':
+                _ini = new Date(_ii - daysToMiliseconds(7)); // milisecs
+                _fin = _today;
+                showGroupUngroup('show');
+            break;
+            // Ayer
+            case 'ay':
+                _ini = new Date(_ii - daysToMiliseconds(1)); // milisecs
+                _fin = _today;
+                showGroupUngroup('show');
+            break;
+            // Hoy
+            case 'h':
+                _ini = _ii; // milisecs
+                _fin = _today;
+                showGroupUngroup('show');
+            break;
+            // Año
+            default:
+                _ini = new Date(val,0,1);
+                _fin = new Date(val,11,31);
+                showGroupUngroup('false');
+            break;
+        }
+
+        //$('#dslider').dateRangeSlider('values', _ini,_fin);
+        $('#startDate').val(_ini/1000); // Segundos para ushahidi
+        $('#endDate').val(_fin/1000); // Segundos para ushahidi
+        
+        var _iniY = _ini.getFullYear();
+        var _finY = _fin.getFullYear();
+
+        setYear('ini', _iniY);
+        setYear('fin', _finY);
+
+        markIniFin(_ini.getDate(),_ini.getMonth(),_iniY,
+        _fin.getDate(),_fin.getMonth(),_finY);
+
+        //totalesxDepto();
+        //addFeaturesFirstTime();
+
+        resetLimit = true;
+        cargar_mas = 0;
+    }
+}
 
 m = function(o){	
 	
@@ -552,8 +541,6 @@ totalesxDepto = function(more) {
     var num;
     var num_total;
 
-    $('#loading_data').show();
-    
     _states = getStatesChecked();
     
     // Portal EHP
@@ -561,8 +548,35 @@ totalesxDepto = function(more) {
     if (layout == 'portal_home') {
 
         $.ajax({
-            url: base + '/getCifrasPortalHome/' + _ini + '/' + _fin + '/' + _cats ,
+            url: base + '/getResumenPortalHome/' + _ini + '/' + _fin,
             dataType: 'jsonp',
+            success: function(json){
+/*
+                $('#des').html(json.des);
+                $('#con').html(json.con);
+                $('#acc').html(json.acc);
+                $('#ataq').html(json.ataq);
+                $('#hom').html(json.hom);
+                $('#ame').html(json.ame);
+*/
+                for (j in json) {
+                    
+                    $('#' + j).html(json[j]['t']);
+                    $('#' + j + '_div').data('index', json[j]['v']);
+                }
+
+                var $r = $('#resumen'); // your parent ul element
+                
+                $r.append($('div.r').sort(function(a, b) { return $(b).data('index') - $(a).data('index'); }));
+
+                for (j in json) {
+
+                    if (json[j]['v'] == 0) {
+                        $('#' + j).html('--');
+                    }
+                }
+
+            }
         });
     }
     else if (layout == 'portal') {
@@ -1133,7 +1147,6 @@ showGroupUngroup = function(s) {
     else {
         $btn.hide();
     }
-   
 }
 
 function numberWithCommas(n) {
@@ -1146,9 +1159,9 @@ String.prototype.capitalize = function() {
 }
 
 set100Height = function(){ 
-    $('#map, #menu').css('height', $(document).height());
+    $('.map_monitor, #menu').css('height', $(document).height());
 }
 setMapWidth = function(){ 
     //$('#map').css('width', $(document).width() - $('#menu').css('width'));
-    $('#map').css('width', $(document).width());
+    $('.map_monitor').css('width', $(document).width());
 }

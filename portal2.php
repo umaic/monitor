@@ -11,12 +11,19 @@
         margin: 0;
 	    scrollbar-base-color: #ff0000;!important
     }
-    #map, #aaaa {
+    .map_portal, #aaaa {
         width: 450px;
         margin: 5px 0 0 0 !important;
     }
-    #map {
+    .map_portal {
         height: 400px;
+    }
+    .map_portal_home {
+        width: 100%;
+        margin: 5px 0 0 0 !important;
+    }
+    .map_portal_home {
+        height: 390px;
     }
     /* Alto de la lista de eventos */
     #tabs {
@@ -37,7 +44,6 @@
 <body>
     <div id="monitor">
 <?php
-        //$_GET['layout'] = 'portal';
         $state = (isset($_GET['state'])) ? $_GET['state'] : 0;
         include dirname(__FILE__)."/index.php" 
         ?>

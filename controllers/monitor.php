@@ -53,21 +53,7 @@ class MonitorController {
      */ 
     public function total($cats_hide) {
         
-        /*
-        require 'libraries/factory.php';
-        
-        $f = Factory::create('file');
-        $p = 'data/monitor.json';
-
-        $fp = $f->open($p, 'r');
-        $j = $f->read($fp, $p);
-        $i = json_decode($j, true);
-
-        //echo json_encode(array('h' => array(2012,2011,2013)));
-
-        return $i['totales'];
-         */
-        
+        // Se usaba este para mostrar el total por años
         $_sql = 'SELECT COUNT(i.id) AS n FROM %sincident i 
                  JOIN %sincident_category AS ic ON i.id = ic.incident_id
                  JOIN %scategory AS c ON ic.category_id = c.id
@@ -690,44 +676,67 @@ class MonitorController {
      */ 
     public function getResumenPortalHome($ini, $fin) {
 
-        $resumen = array();
-        $sql_t = "SELECT COUNT(DISTINCT i.id) AS n 
-                  FROM incident AS i 
-                  JOIN incident_category AS ic ON i.id = ic.incident_id 
-                  WHERE %s AS i LIMIT 1";
+        list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, '', '');
         
+        $resumen = array();
+        
+        $cond = " WHERE category_id IN (%s) AND $cond_tmp";
+        
+        $sqle = "SELECT COUNT(DISTINCT i.id) AS n
+                FROM incident AS i
+                JOIN incident_category ic ON ic.incident_id = i.id 
+                $cond";
+        
+        $sqlv = "SELECT SUM(victim_cant) AS n
+                FROM victim v
+                JOIN incident_category ic ON v.incident_category_id = ic.id
+                JOIN incident AS i ON ic.incident_id = i.id
+                $cond AND victim_cant IS NOT NULL";
 
         // Desplazamiento Masivo
-        $cats = '42, 44, 46, 41, 43, 45';
-        $_sql = sprintf($sql_t,$cats); 
-        $_rs = $this->db->open($_sql);
-        $des = $this->db->fo($_rs);
-
-        // Confinamiento 45
-        $cats = 45;
-        $_sql = sprintf($sql_t,$cats); 
-        $_rs = $this->db->open($_sql);
-        $con = $this->db->fo($_rs);
+        $cats['des'] = '42, 44, 46, 41, 43, 45';
+        $sql['des'] = $sqlv;
+        
+        // Confinamiento 13
+        $cats['con'] = 13;
+        $sql['con'] = $sqlv;
         
         // Acciones Bélicas 
-        $cats = '2, 3, 4, 5, 6, 7, 8';
-        $_sql = sprintf($sql_t,$cats); 
-        $_rs = $this->db->open($_sql);
-        $acc = $this->db->fo($_rs);
-
+        $cats['acc'] = '2, 3, 4, 5, 6, 7, 8';
+        $sql['acc'] = $sqle;
+        
+        // Ataques a objetivos ilícitos de guerra
+        $cats['ataq'] = '28, 29, 30, 31, 32, 33, 34';
+        $sql['ataq'] = $sqle;
+        
         // Amenazas
-        $cats = 11;
-        $_sql = sprintf($sql_t,$cats); 
-        $_rs = $this->db->open($_sql);
-        $ame = $this->db->fo($_rs);
+        $cats['ame'] = 11;
+        $sql['ame'] = $sqle;
         
         // Homicidios en persona protegida 17
-        $cats = 17;
-        $_sql = sprintf($sql_t,$cats); 
-        $_rs = $this->db->open($_sql);
-        $hom = $this->db->fo($_rs);
+        $cats['hom'] = 17;
+        $sql['hom'] = $sqlv;
         
-        return compact('des','con','acc','ame','hom');
+        foreach($cats as $c => $cat) {
+            $_sql = sprintf($sql[$c],$cat,'1=1'); 
+            $_rs = $this->db->open($_sql);
+            $row = $this->db->FO($_rs);
+
+            if (!empty($row->n)) {
+                $resumen[$c]['v'] = $row->n;
+            }
+            else {
+                $resumen[$c]['v'] = 0;
+            }
+        }
+
+        arsort($resumen);
+
+        foreach($resumen as $c => $v) {
+            $resumen[$c]['t'] = number_format($v['v'],0,'',',');
+        }
+        
+        return $resumen;
 
     }
 

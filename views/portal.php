@@ -88,7 +88,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
     <div id="content" class="clear">
         <div class="left">
-            <div id="menu">
+            <div id="menu_portal">
                 <div id="aaaa">
                     <input type="hidden" id="currentCatE" value="0">
                     <input type="hidden" id="currentCatD" value="0">
@@ -121,7 +121,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     
                     <div id="group_fts" class="inline ungroup">Desagrupar mapa por categoria</div>
                 </div>
-                <div id="map"></div>
+                <div id="map" class="map_portal"></div>
                 <div id="featured" class="">
                     <div><b>Eventos destacados por:</b></div>
                     <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
@@ -198,7 +198,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/highcharts.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/perfect-scrollbar.min.js"></script>
