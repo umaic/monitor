@@ -106,7 +106,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
             </ul>
         </div>
         <!-- Filtro categorias Violencia -->
-        <div id="fcat_ec" class="filtro fcat">
+        <div id="fcat_ec" class="filtro fcat" data-index="1">
             <div class="left">
                  <h2>Categorias Violencia Armada</h2>
                  <br />
@@ -160,7 +160,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         <!-- Filtro categorias Violencia :: Fin -->
         
         <!-- Filtro categorias Desastres -->
-        <div id="fcat_dn" class="filtro fcat">
+        <div id="fcat_dn" class="filtro fcat" data-index="2">
             <div class="left">
                  <h2>Categorias Desastres</h2>
                  <br />
@@ -212,7 +212,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         <!-- Filtro categorias Desastres :: Fin -->
         
         <!-- Filtro fecha -->
-        <div id="ini_fin" class="filtro fcat">
+        <div id="ini_fin" class="filtro fcat" data-index="0">
             <div class="left">
                  <h2>Filtrar monitor por periodo</h2>
             </div>
@@ -314,6 +314,10 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                             <input type="radio" id="mes" value="m" name="rap" />
                             <label for="mes">Ultimo mes</label>
                         </div>
+                        <div class="radio">
+                            <input type="radio" id="acumulado" value="acum" name="rap" checked />
+                            <label for="acumulado">Acumulado del año</label>
+                        </div>
                 </fieldset>
                 
             </div>
@@ -321,7 +325,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         <!-- Filtro fecha :: FIN-->
         
         <!-- Filtro categorias acceso -->
-        <div id="fcat_acceso" class="filtro fcat">
+        <div id="fcat_acceso" class="filtro fcat" data-index="3">
             <div class="left">
                  <h2>Posible restriccion al acceso humanitario</h2>
                  <br />
@@ -377,7 +381,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                         </ul>
             </div>
         </div>
-        <!-- Filtro categorias Desastres :: Fin -->
+        <!-- Filtro Acceso :: Fin -->
         
         <div id="map" class="map_monitor left"></div>
         <div id="featured" class="hide">
@@ -392,7 +396,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
             </div>
             <div id="mapa_tipo" class="left">
                 <div class="mapa_tipo menu_activo left op" data-tipo="afectacion">
-                    <span class="menu_victimas">V&iacute;ctimas</span>
+                    <span class="menu_victimas">Afectados</span>
                 </div>
                 <div class="mapa_tipo left op" data-tipo="eventos">
                     <span class="menu_eventos">Eventos</span>

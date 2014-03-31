@@ -11,7 +11,7 @@
         margin: 0;
 	    scrollbar-base-color: #ff0000;!important
     }
-    .map_portal, #aaaa {
+    .map_portal {
         width: 450px;
         margin: 5px 0 0 0 !important;
     }
@@ -45,6 +45,11 @@
     <div id="monitor">
 <?php
         $state = (isset($_GET['state'])) ? $_GET['state'] : 0;
+
+        if (empty($_GET['layout'])) {
+            $_GET['layout'] = 'portal';
+        }
+
         include dirname(__FILE__)."/index.php" 
         ?>
     </div>

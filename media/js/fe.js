@@ -94,8 +94,15 @@ $(function(){
     // Menu
     $menu_li = $('#menu').find('li.sub');
     $menu_li.click(function() {
-        $('.filtro').hide();
-        $('#' + $(this).data('div')).show();
+
+        $('.filtro').fadeOut(100);
+        
+        // Top del filtro
+        var $div = $('#' + $(this).data('div'));
+        var topx = 100*$div.data('index') + 'px';
+
+        $div.css('top', topx);
+        $div.fadeIn(100);
         
         $menu_li.removeClass('menu_activo');
         $(this).addClass('menu_activo');
@@ -430,6 +437,13 @@ function applyPeriod(val) {
         var _ii = _iiObj.getTime();
 
         switch(val) {
+            // Acumulado
+            case 'acum':
+                _ini = new Date(_year,0,1);
+                _fin = _today;
+
+                showGroupUngroup('show');
+            break;
             // Mes
             case 'm':
                 _ini = new Date(_ii - daysToMiliseconds(30)); // milisecs
@@ -451,7 +465,7 @@ function applyPeriod(val) {
             break;
             // Hoy
             case 'h':
-                _ini = _ii; // milisecs
+                _ini = new Date(_ii); // milisecs
                 _fin = _today;
                 showGroupUngroup('show');
             break;
