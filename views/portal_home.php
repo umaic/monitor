@@ -84,13 +84,14 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div class="clear"></div>
+        <div id="brand">Fuente de informaci&oacute;n &nbsp;<img src="http://monitor.colombiassh.org/favicon.ico"> <a href="http://monitor.colombiassh.org" target="_blank">Monitor</a></div>
     </div>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/highcharts.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/perfect-scrollbar.min.js"></script>
     <script type="text/javascript">

@@ -34,7 +34,7 @@ select {
 #time {
     text-align: center;
     background-color: ##f9f9f9;
-    padding: 10px;
+    padding: 10px 0;
 }
 #resumen div.r {
     background-color: #f1f1f1;
@@ -52,4 +52,13 @@ select {
 }
 #loading_data {
     display: none;
+}
+
+#brand {
+    font-size: 12px;
+    color: #999999;
+    text-align: center;
+}
+#brand a {
+    color: #0066ff;
 }

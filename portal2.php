@@ -23,7 +23,7 @@
         margin: 5px 0 0 0 !important;
     }
     .map_portal_home {
-        height: 390px;
+        height: 300px;
     }
     /* Alto de la lista de eventos */
     #tabs {
