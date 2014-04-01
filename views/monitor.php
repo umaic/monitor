@@ -235,7 +235,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                             <div class="inline yyyy l">
                                 <p><b>A&ntilde;o</b></p>
                                 <ul>
-                                    <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
+                                    <?php foreach($totalxy as $_a) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
                                 </ul>
                             </div>
                             <div class="inline mes l">
@@ -261,7 +261,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                             <div class="inline yyyy l">
                                 <p><b>A&ntilde;o</b></p>
                                 <ul>
-                                    <?php foreach($totalxy as $_a => $_t) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
+                                    <?php foreach($totalxy as $_a) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
                                 </ul>
                             </div>
                             <div class="inline mes l">
