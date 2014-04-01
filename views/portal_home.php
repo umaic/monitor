@@ -73,7 +73,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                          o contra el orden social vigente, ajustándose a las leyes o costumbres de la guerra, con el fin de mantener, modificar, sustituir o destruir un modelo de Estado o de sociedad. (CINEP, y Justicia y Paz; 1996, pág. 3)</div>
                 </div>
                 <div id="ataq_div" class="r">
-                    <h4 class="left">Ataques a objetivos il&iacute;citos de guerra</h4><h3 id="ataq" class="right"></h3>
+                    <h4 class="left">Ataques a obj. il&iacute;citos de guerra</h4><h3 id="ataq" class="right"></h3>
                     <div class="clear nota"><b><u>No. de eventos</u></b> de Ataques a Bienes culturales y religiosos, Infraestructura vial, misión humanitaria, misión médica, bienes indispensables para la supervivencia de la población civil, misión religiosa</div>
                 </div>
                 <div id="hom_div" class="r">
