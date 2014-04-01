@@ -1,4 +1,3 @@
-
 var map;
 var pL;
 var fromProjection;
@@ -15,6 +14,7 @@ var nump_list = 15;
 var id_depto = '00';
 var rm_id_depto = false;
 var id_tema = id_org = 0;
+var maximo = 0; // Maximo count en cluster
 
 var url_xd = '/json/cluster/?m=0&v=0';
 
@@ -580,6 +580,15 @@ function ajaxFeatures(u, l) {
         dataType: 'jsonp',
         success: function(json){
                 var _f = geojson.read(json);
+
+                // Calcula el numero máximo de features en un cluster
+                var fts = json.features;
+                for(j in fts) {
+                    if (fts[j].properties.count > maximo) {
+                        maximo = fts[j].properties.count;
+                    } 
+                }
+
                 //map.addLayer(l);
                 l.addFeatures(_f);
                 $('#loading').hide();
@@ -694,31 +703,8 @@ function defStyle(){
 						}
 						else
 						{
-							feature_count = feature.attributes.count;
-							if (feature_count > 1000)
-							{
-								return "20px";
-							}
-							else if (feature_count > 500)
-							{
-								return "18px";
-							}
-							else if (feature_count > 100)
-							{
-								return "14px";
-							}
-							else if (feature_count > 10)
-							{
-								return "12px";
-							}
-							else if (feature_count >= 2)
-							{
-								return "10px";
-							}
-							else
-							{
-								return "";
-							}
+
+                            return "11px";
 						}
 					},
 					fontweight: function(feature)
@@ -735,7 +721,19 @@ function defStyle(){
 					},
 					radius: function(feature)
 					{
+
 						feature_count = feature.attributes.count;
+
+                        var num = 10;
+                        var intervalo = maximo / num;
+                        for (var i=0;i<num;i++) {
+                            console.log(intervalo*i);
+                            console.log(feature_count);
+                            if (feature_count < intervalo*i) {
+                                return markerRadius * (i+1);
+                            }
+                        }
+
 						if (feature_count > 1000) {
 							return markerRadius * 7;
 						}

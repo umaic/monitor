@@ -45,7 +45,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div id="brand">
-            Visualización de eventos georeferenciados de <br /><span style="color:#008000;">desastres naturales</span> y <span style="color:#ff0000;">violencia armada</span>
+            Visualización de # de afectados en eventos georeferenciados de <span style="color:#008000;">desastres naturales</span> y <span style="color:#ff0000;">violencia armada</span>
         </div>
         <div id="map" class="map_portal_home"></div>
         <div>
@@ -92,13 +92,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         </div>
     </div>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/highcharts.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/perfect-scrollbar.min.js"></script>
     <script type="text/javascript">
         var portal = 1;
         var layout = 'portal_home';
