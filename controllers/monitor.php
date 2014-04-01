@@ -474,7 +474,7 @@ class MonitorController {
                 $state = (empty($_row_s->state)) ? '' : $_row_s->state;
                 $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
                         '"'.$_r->cats.'"'.$limi.
-                        '"'.$acceso.'"'.$limi.'"'.$res_1612.'"'.$limi.
+                        '"'.$acceso.'"'.$limi.'"NAN"'.$limi.
                         '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
                         '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
 
