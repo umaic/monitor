@@ -431,7 +431,8 @@ class MonitorController {
                     $_rsv = $this->db->open($_sql_1612);
                     $res_1612 = array();
                     while ($_row_a = $this->db->FO($_rsv)) {
-                        $res_1612[] = $_row_a->r;
+                        //$res_1612[] = $_row_a->r;
+                        $res_1612[] = 'NAN';
                     }
 
                     $res_1612 = implode(',', $res_1612);
@@ -474,7 +475,7 @@ class MonitorController {
                 $state = (empty($_row_s->state)) ? '' : $_row_s->state;
                 $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
                         '"'.$_r->cats.'"'.$limi.
-                        '"'.$acceso.'"'.$limi.'"NAN"'.$limi.
+                        '"'.$acceso.'"'.$limi.'"'.$res_1612.'"'.$limi.
                         '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
                         '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
 
