@@ -44,6 +44,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </div>
             </div>
         </div>
+        <div id="brand">
+            Visualización de eventos georeferenciados de <br /><span style="color:#008000;">desastres naturales</span> y <span style="color:#ff0000;">violencia armada</span>
+        </div>
         <div id="map" class="map_portal_home"></div>
         <div>
             <div id="resumen">
@@ -84,7 +87,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div class="clear"></div>
-        <div id="brand">Fuente de informaci&oacute;n &nbsp;<img src="http://monitor.colombiassh.org/favicon.ico"> <a href="http://monitor.colombiassh.org" target="_blank">Monitor</a></div>
+        <div id="brand">
+            Ver mas detalles en &nbsp;<img src="http://monitor.colombiassh.org/favicon.ico"> <a href="http://monitor.colombiassh.org" target="_blank">Monitor</a>
+        </div>
     </div>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
@@ -97,6 +102,15 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript">
         var portal = 1;
         var layout = 'portal_home';
+
+        $(function(){ 
+            var h = $('div.r').css('height');
+
+            $('div.r').toggle(function(){ 
+                $(this).css('height', 'auto');
+            },
+            function(){ $(this).css('height', h) });
+        });
     </script>
     
 </body>

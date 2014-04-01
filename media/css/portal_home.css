@@ -1,5 +1,5 @@
 #resumen h3 {
-    font-size: 12px;
+    font-size: 14px;
     margin: 0;
     background-color: #C1272C;
     color: #fff;
@@ -34,12 +34,15 @@ select {
 #time {
     text-align: center;
     background-color: ##f9f9f9;
-    padding: 10px 0;
+    padding: 10px 0 0 0;
 }
 #resumen div.r {
     background-color: #f1f1f1;
     border-bottom: 1px solid #cccccc;
     padding: 5px 10px;
+    height: 30px;
+    overflow: hidden;
+    cursor: pointer;
 }
 #resumen div.r:not(:first) {
     border-top: 1px solid #ffffff;
@@ -55,9 +58,11 @@ select {
 }
 
 #brand {
-    font-size: 12px;
+    font-size: 11px;
     color: #999999;
     text-align: center;
+    width: 90%;
+    margin: 10px auto;
 }
 #brand a {
     color: #0066ff;
