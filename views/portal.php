@@ -86,10 +86,13 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="loading" class="alpha60">
         <img src="<?php echo BASE_PORTAL ?>media/img/ajax-loader.png" />
     </div>
-    <div id="salahumanitaria">
-        <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" />
+    <?php 
+    if (empty($_GET['salahumanitaria'])) { ?>
+        <div>
+            <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" />
+        </div>
         <p>&nbsp;</p>
-    </div>
+    <?php } ?>
     <div id="content" class="clear">
         <div class="left">
             <div id="menu_portal">
@@ -223,12 +226,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             $('#incidentes').on("click",".t",function() {
                 $(this).parent('div').find('.hide').toggle();
             });
-
-            // Oculta branding de salahumanitaria
-            console.log(window.parent.location.href.indexOf('salahumanitaria'));
-            if (window.parent.location.href.indexOf('salahumanitaria') != -1) {
-                $('#salahumanitaria').hide();
-            }
             
         });
     </script>
