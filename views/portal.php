@@ -225,6 +225,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             });
 
             // Oculta branding de salahumanitaria
+            console.log(window.parent.location.href.indexOf('salahumanitaria'));
             if (window.parent.location.href.indexOf('salahumanitaria') != -1) {
                 $('#salahumanitaria').hide();
             }
