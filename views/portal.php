@@ -86,6 +86,12 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="loading" class="alpha60">
         <img src="<?php echo BASE_PORTAL ?>media/img/ajax-loader.png" />
     </div>
+    <?php if (strpos($_SERVER['SERVER_NAME'],'salahumanitaria') === false) { ?>
+        <div>
+            <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" />
+        </div>
+        <p>&nbsp;</p>
+    <?php } ?>
     <div id="content" class="clear">
         <div class="left">
             <div id="menu_portal">
@@ -97,11 +103,20 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <input type="hidden" id="yyyy_ini" value="">
                     <input type="hidden" id="yyyy_fin" value="">
                     <div id="time" class="">
-                        <label class="inline">Consultar:</label>
+                        <label class="inline">Periodo:</label>
                         <select id="stime">
-                            <option value="s" selected>Ultima semana</option>
+                            <option value="acum" selected>Acumulado <?php echo $totalxy[0] ?></option>
                             <option value="m">Ultimo mes</option>
-                            <option value="a">Todo el a&ntilde;o</option>
+                            <option value="s">Ultima semana</option>
+                            <optgroup label="Años">
+                            <!--<option value="a">Todo el a&ntilde;o</option>-->
+                            <?php
+                            foreach($totalxy as $_a) { ?>
+                                <option value="<?php echo $_a ?>">Todo <?php echo $_a ?></option>
+                            <?php
+                            }
+                            ?> 
+                            </optgroup>
                         </select>
                         &nbsp;
                         <div class="inline" id="periodo_texto"></div>

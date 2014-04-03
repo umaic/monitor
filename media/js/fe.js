@@ -206,9 +206,6 @@ $(function(){
             return false;
         });
         
-        // Colocar categorias en inputs hidden para envio a json/cluster
-        setCatsHidden();
-        
         // Minimize - Maximize total
         $('#minmax_total').toggle(
             function() { 
@@ -328,6 +325,9 @@ $(function(){
     });
     
     if (layout != 'portal_home') {
+        
+        // Colocar categorias en inputs hidden para envio a json/cluster
+        setCatsHidden();
     
         //Tabs
         if ($('#tabs').length > 0) {
@@ -552,6 +552,7 @@ totalesxDepto = function(more) {
     var _fin = getStartEnd('fin');
 
     var _cats = $('#currentCatE').val() + '|' + $("#currentCatD").val();
+
     var num;
     var num_total;
 
@@ -565,14 +566,6 @@ totalesxDepto = function(more) {
             url: base + '/getResumenPortalHome/' + _ini + '/' + _fin,
             dataType: 'jsonp',
             success: function(json){
-/*
-                $('#des').html(json.des);
-                $('#con').html(json.con);
-                $('#acc').html(json.acc);
-                $('#ataq').html(json.ataq);
-                $('#hom').html(json.hom);
-                $('#ame').html(json.ame);
-*/
                 for (j in json) {
                     
                     $('#' + j).html(json[j]['t']);
@@ -644,13 +637,13 @@ totalesxDepto = function(more) {
                                 '<div class="hide">' +
                                     '<div class="date detail">'+ _js.d +'</div> ' +
                                     '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
-                                    '<a href="http://sidih.colombiassh.org/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
+                                    '<a href="http://sidih.salahumanitaria.co/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
                                     'Perfil '+ _js.ldn +'</a></span></div> ' +
                                 '</<div></div>';
                                 
                                 _html += '<div class="clear hide"><div class="left"><b>Categorias</b></div> ' +
                                          '<div class="opt right linko">' +
-                                         '<a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n</a></div>';
+                                         '<a href="http://www.salahumanitaria.co/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n</a></div>';
                                 for (c in _js.c) {
                                     _html += '<div class="clear cat">&raquo;&nbsp;'+ c;
                                     
