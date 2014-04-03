@@ -89,7 +89,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <?php 
     if (empty($_GET['salahumanitaria'])) { ?>
         <div>
-            <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" />
+            <a href="http://www.salahumanitaria.co" target="_blank">
+                <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" border="0" />
+            </a>
         </div>
         <p>&nbsp;</p>
     <?php } ?>
