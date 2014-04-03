@@ -86,12 +86,10 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="loading" class="alpha60">
         <img src="<?php echo BASE_PORTAL ?>media/img/ajax-loader.png" />
     </div>
-    <?php if (strpos($_SERVER['SERVER_NAME'],'salahumanitaria') === false) { ?>
-        <div>
-            <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" />
-        </div>
+    <div id="salahumanitaria">
+        <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" />
         <p>&nbsp;</p>
-    <?php } ?>
+    </div>
     <div id="content" class="clear">
         <div class="left">
             <div id="menu_portal">
@@ -220,21 +218,16 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         var portal = 1;
         var layout = 'portal';
         $(function() {
-            /*
-            $('.tab').click(function() {
-                $('.tab_data').hide();
-                $('.tab').removeClass('active');
-                $('#' + $(this).attr('show')).show();
-                $(this).addClass('active');
-            });
-            */
             
             // Row events
             $('#incidentes').on("click",".t",function() {
                 $(this).parent('div').find('.hide').toggle();
             });
-            
-            //$('#tabs').perfectScrollbar();
+
+            // Oculta branding de salahumanitaria
+            if (window.parent.location.href.indexOf('salahumanitaria') != -1) {
+                $('#salahumanitaria').hide();
+            }
             
         });
     </script>
