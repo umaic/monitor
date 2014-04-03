@@ -727,8 +727,8 @@ function defStyle(){
                         var num = 10;
                         var intervalo = maximo / num;
                         for (var i=0;i<num;i++) {
-                            console.log(intervalo*i);
-                            console.log(feature_count);
+                            //console.log(intervalo*i);
+                            //console.log(feature_count);
                             if (feature_count < intervalo*i) {
                                 return markerRadius * (i+1);
                             }
