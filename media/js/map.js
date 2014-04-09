@@ -369,7 +369,7 @@ function onFeatureSelect(attrs) {
                 _js = json[i];
                 
                 _html += '<div class="report_list_map from_map"> ' +
-                    '<div class="t">'+ _js.t +'</div> ' +
+                    '<div class="t"><a href="" onclick="return false;" title="' + _js.id + '">'+ _js.t +'</a></div> ' +
                     '<div>' +
                         '<div class="date detail">'+ _js.d +'</div> ' +
                         '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
