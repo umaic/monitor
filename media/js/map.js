@@ -206,6 +206,30 @@ function addFeatures(inst) {
 
     var uparams = [['s', start], ['e', end], ['z', zoom]];
 
+    if (inst == 'ecdn' || inst == 'dn') {
+        var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
+        if (map.getLayersByName('Desastres Naturales').length > 0) {
+            l_dn = map.getLayersByName('Desastres Naturales')[0];
+            l_dn.removeFeatures(l_dn.features);
+        }
+        else {
+            l_dn = new OpenLayers.Layer.Vector('Desastres Naturales', 
+                { styleMap: Styles });
+
+            map.addLayer(l_dn);
+        }
+        
+        var _udn = addURLParameter(url_dn, uparams_dn);
+        
+        // States filter
+        _udn = addURLParameter(_udn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+        
+        // Tipo mapa
+        _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
+        
+        ajaxFeatures(_udn, l_dn);
+    }
+    
     if (inst == 'ecdn' || inst == 'ec') {
     
         var uparams_ec = uparams.concat([['c', $('#currentCatE').val()]]);
@@ -231,30 +255,6 @@ function addFeatures(inst) {
         _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
         
         ajaxFeatures(_uec, l_ec);
-    }
-    
-    if (inst == 'ecdn' || inst == 'dn') {
-        var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
-        if (map.getLayersByName('Desastres Naturales').length > 0) {
-            l_dn = map.getLayersByName('Desastres Naturales')[0];
-            l_dn.removeFeatures(l_dn.features);
-        }
-        else {
-            l_dn = new OpenLayers.Layer.Vector('Desastres Naturales', 
-                { styleMap: Styles });
-
-            map.addLayer(l_dn);
-        }
-        
-        var _udn = addURLParameter(url_dn, uparams_dn);
-        
-        // States filter
-        _udn = addURLParameter(_udn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-        
-        // Tipo mapa
-        _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
-        
-        ajaxFeatures(_udn, l_dn);
     }
     
     // Destacados, ft=fetured
