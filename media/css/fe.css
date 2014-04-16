@@ -7,7 +7,8 @@ html, body {
 }
 
 @font-face {
-    font-family: dosis; src: url(dosis.ttf);
+    font-family: dosis; 
+    src: url(dosis.ttf);
 }
 
 @font-face {
@@ -27,8 +28,7 @@ ul {
 
 h1 {
     /*font-family: dosis; */
-    font-size: 16px;
-    letter-spacing: -1px;
+    /*font-size: 16px;*/
 }
 
 input[type=text] {
@@ -215,7 +215,8 @@ div.tecdn div {
     color: #b3b3b3;
 }
 #submenu #titulo_general,
-#submenu #mapa_tipo {
+#submenu #mapa_tipo,
+#layers_div {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
 }
 #menu li {
@@ -256,7 +257,8 @@ div.tecdn div {
 #menu .menu_descargar {
     background-position: center -640px;
 }
-#submenu {
+#submenu,
+#layers_div {
     left: 125px;
 }
 #submenu div {
@@ -275,28 +277,31 @@ div.tecdn div {
 #submenu .menu_desagrupar {
     background-position: center -159px;
 }
+
+#submenu .menu_layers {
+    background-position: center -710px;
+}
   
 #submenu #mapa_tipo {
     margin-left: 5px;
 }
-#submenu .mapa_tipo {
+#submenu .op {
     text-align: center;
     padding: 5px 0;
 }
-#submenu .mapa_tipo span {
+#submenu .op span {
     vertical-align: bottom;
     display: table-cell;
     background-image: url(../img/menu_sprite.png);
     background-repeat: no-repeat;
-    width: 85px;
+    width: 70px;
+    height: 55px;
     margin: 0 auto;
+    font-size: 11px;
 }
-#submenu .mapa_tipo .activo {
+#submenu .op .activo {
     background-color: #FEFD60;
     border: 1px solid #DBC319;
-}
-#submenu .mapa_tipo span {
-    height: 65px;
 }
 #content {
     margin: 0;
@@ -343,7 +348,8 @@ div.tecdn div {
 /*#map, */
 #mapas_tipos,
 #totalxd,
-#submenu {
+#submenu,
+#layers_div {
     top: 10px;
     position: absolute;
     z-index: 1000;
@@ -359,7 +365,6 @@ div.tecdn div {
     text-align: center;
     position: absolute;
     right: 350px;
-    z-index: 1001;
 }
 #mapas_tipos .mapa_tipo {
     padding: 10px;
@@ -391,6 +396,47 @@ div.tecdn div {
 #mapas_tipos .group {
     background: url(../img/group.png) no-repeat 15px 7px;
 }
+#layers_div {
+    position: absolute;
+    top: 80px;
+    background-color: #fff;
+    color: #333333;
+    padding: 10px;
+    width: 480px;
+}
+#layers_div p {
+    color: #999999;
+}
+#layers_div ul {
+    list-style: none;
+    height: 300px;
+    overflow: auto;
+    display: block;
+}
+#layers_div ul li {
+    border-top: 1px solid #cccccc;
+    padding: 10px;
+    background-color: #fafafa;
+}
+#layers_div ul li:hover,
+#layers_div ul li.selected {
+    background-color: #f3f3f3;
+}
+#layers_div a {
+    color: #0066ff;
+}
+#layers_div h1 {
+    font-size: 28px;
+    margin: 5px 0;
+}
+#layers_div h3,
+#layers_div p {
+    margin: 5px 0;
+}
+#layers_div .chk {
+    margin: 10px 10px 0 0;
+}
+
 #totalxd {
     right: 0px;
     width: 360px;
@@ -787,14 +833,14 @@ div.report_list_map div.victim {
 #titulo_general {
     color: #1a1a1a;
     background-color: #fff;
-    padding: 15px 10px 5px 10px;
+    padding: 5px 10px;
 }
 #titulo_general #tgt {
     font-size: 24px; 
 }
 #titulo_general #tgc {
     font-size: 12px; 
-    margin-top: 14px;
+    margin-top: 10px;
 }
 #minmax_total {
     position: absolute;
@@ -933,4 +979,7 @@ div#mase {
 .wordwrap { 
    white-space: pre-line;      /* CSS3 */   
    word-wrap: break-word;      /* IE */
+}
+.dosis {
+    font-family: dosis;
 }

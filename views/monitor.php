@@ -108,7 +108,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         <!-- Filtro categorias Violencia -->
         <div id="fcat_ec" class="filtro fcat" data-index="1">
             <div class="left">
-                 <h2>Categorias Violencia Armada</h2>
+                 <h2 class="dosis">Categorias Violencia Armada</h2>
                  <br />
                 <div class="inline linko">
                     <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
@@ -162,7 +162,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         <!-- Filtro categorias Desastres -->
         <div id="fcat_dn" class="filtro fcat" data-index="2">
             <div class="left">
-                 <h2>Categorias Desastres</h2>
+                 <h2 class="dosis">Categorias Desastres</h2>
                  <br />
                 <div class="inline linko">
                     <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
@@ -214,7 +214,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         <!-- Filtro fecha -->
         <div id="ini_fin" class="filtro fcat" data-index="0">
             <div class="left">
-                 <h2>Filtrar monitor por periodo</h2>
+                 <h2 class="dosis">Filtrar monitor por periodo</h2>
             </div>
             <div class="right">
                 <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
@@ -327,7 +327,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         <!-- Filtro categorias acceso -->
         <div id="fcat_acceso" class="filtro fcat" data-index="3">
             <div class="left">
-                 <h2>Posible restriccion al acceso humanitario</h2>
+                 <h2 class="dosis">Posible restriccion al acceso humanitario</h2>
                  <br />
                 <div class="inline linko">
                     <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Restricción_al_acceso_humanitario" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
@@ -391,7 +391,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         </div>
         <div id="submenu">
             <div id="titulo_general" class="left">
-                <div id="tgt"></div>
+                <div id="tgt" class="dosis"></div>
                 <div id="tgc"></div>
             </div>
             <div id="mapa_tipo" class="left">
@@ -402,10 +402,40 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                     <span class="menu_eventos">Eventos</span>
                 </div>
                 <div id="group_fts" class="mapa_tipo left op">
-                    <span class="menu_desagrupar">Desagrupado</span>
+                    <span class="menu_desagrupar">Desagrupar</span>
                 </div>
-    
+                <div id="layers" class="left op">
+                    <span class="menu_layers">+ Capas</span>
+                </div>
             </div>
+        </div>
+        <div id="layers_div">
+            <h1 class="dosis">Adicionar capas al mapa</h1>
+            <p>
+                Presentamos el listado de capas disponibles en el sistema <a href="http://geonode.salahumanitaria.co" target="_blank">GEONODE</a>
+                de Sala Humanitaria</a>, las cuales pueden ser visualizadas en monitor</p>
+            <ul>
+                <li>
+                    <div class="left chk">
+                        <input type="checkbox" data-n="División Departamental de Colombia - SIGOT, IGAC" value="division_departamental_de_colombia_sigot_igac" />
+                    </div>
+                    <div class="left">
+                        <h3>División Departamental de Colombia - SIGOT, IGAC</h3>
+                        <p class="nota">Abstract</p>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+                <li>
+                    <div class="left chk">
+                        <input type="checkbox" data-n="División Municipal de Colombia - SIGOT, IGAC" value="municipio_sigot" />
+                    </div>
+                    <div class="left">
+                        <h3>División Municipal de Colombia - SIGOT, IGAC</h3>
+                        <p class="nota">Abstract</p>
+                    </div>
+                    <div class="clear"></div>
+                </li>
+            </ul>
         </div>
         <div id="totalxd" class="relative">
             <div id="loading_data" class="alpha60">
@@ -490,8 +520,8 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>

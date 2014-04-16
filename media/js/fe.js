@@ -303,6 +303,25 @@ $(function(){
         $('#tabs').tabs("select", 1);
     });
 
+    $('#layers_div').on('ifClicked', ':checkbox', function(event){
+    //$('#layers').find(':checkbox').click(function() {
+
+        var $t = $(this);
+        var $li = $t.closest('li');
+        var v = true;
+
+        // evalua esto antes de ponerse checked
+        if ($t.is(':checked')) {
+            v = false;
+            $li.removeClass('selected');
+        }
+        else {
+            $li.addClass('selected');
+        }
+
+        addWMSLayer($t.data('n'),$t.val(),v);
+    });
+
     if (layout != 'monitor') {
         // Dropdown de periodos 
         $('#stime').change(function() {

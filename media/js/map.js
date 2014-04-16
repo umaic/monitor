@@ -74,7 +74,35 @@ wms = [
           'v': false,
           'op': 1 
            },
-           ];
+];
+
+
+function addWMSLayer(n,l,v) {
+    
+    var u = 'http://geonode.salahumanitaria.co/geoserver/wms';
+        
+    if (map.getLayersByName(n).length > 0) {
+        var ly = map.getLayersByName(n)[0];
+
+        ly.setVisibility(v);
+    }
+    else {
+        ly = new OpenLayers.Layer.WMS(n, 
+                                  u,
+                                  {
+                                  layers: l,
+                                  transparent: true,
+                                  },
+                                  {
+                                    opacity: 1,
+                                    visibility: true
+                                  }
+                              );
+
+        map.addLayer(ly);
+    }
+    console.log(v);
+}
 
 function selDepto(centroide) {
     var _c = centroide.split(',');
