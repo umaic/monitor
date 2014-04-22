@@ -8,6 +8,7 @@
 
 a {
     text-decoration: none;
+    color: #0066ff;
 }
 ul {
     margin: 0;
@@ -149,44 +150,6 @@ div.tecdn .fcat ul li.h {
     background: url(../img/bg_item.png) no-repeat;
     z-index: 900;
 }
-#menu {
-    /*padding: 5px 0;*/
-    font-size: 13px;
-}
-#menu div.r:not(:first-child) {
-    margin: 0 0 0 10px;
-}
-#menu div.v:not(:first-child) {
-    border-left: 1px solid #ffffff;
-}
-#menu div.v {
-    float: left;
-    padding: 2px 15px;
-    cursor: pointer;
-    color: #ffffff;
-}
-
-#menu div.v:hover {
-    color: #ff9900;
-}
-#menu div.v div {
-    float: left;
-    margin: 0 5px 0 0;
-    display: table-row;
-}
-#menu div.v div.a {
-    font-size: 18px;
-}
-#menu div.v div.n {
-    font-size: 14px;
-}
-#menu div.circle {
-    width: 10px;
-    height: 10px;
-    border-radius: 5px;
-}
-#menu #aaaa {
-}
 #content {
    height: 100%;
    margin: 0;
@@ -249,20 +212,6 @@ div.tecdn .fcat ul li.h {
     display: inline-block;
     padding: 4px 0 0 24px;
     font-size: 12px;
-}
-#new_event {
-    padding: 0 0 0 28px;
-    line-height: 30px;
-    background: url(../img/plus.png) 5px 5px no-repeat, -moz-linear-gradient(top,#e6e6e6 0,#dcdcdc 100%);
-    background: url(../img/plus.png) 5px 5px no-repeat, -ms-linear-gradient(top,#e6e6e6 0,#dcdcdc 100%);
-    background: url(../img/plus.png) 5px 5px no-repeat, -o-linear-gradient(top,#e6e6e6 0,#dcdcdc 100%);
-    background: url(../img/plus.png) 5px 5px no-repeat, -webkit-gradient(linear,left top,left bottom,color-stop(0,#e6e6e6),color-stop(100%,#dcdcdc));
-    background: url(../img/plus.png) 5px 5px no-repeat, linear-gradient(to bottom,#e6e6e6 0,#dcdcdc 100%);
-    background-size: 18px;
-    border: solid #cccccc;
-    border-width: 0 0 1px 0;
-    font-size: 12px;
-    color: #333333;
 }
 #totalxd table {
     width: 95%;
@@ -707,6 +656,17 @@ div#mase {
 #periodo_texto {
     font-size: 12px;
 }
+
+#branding {
+    margin-top: 10px;
+}
+#branding div#sh {
+    margin-left: 10px;
+    font-size: 14px;
+    color: #999999;
+    width: 500px;
+}
+
 
 /* Generales */
 .ec {

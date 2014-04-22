@@ -9,10 +9,24 @@
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
 </head>
 
-<?php 
+<?php
+$sala = 'salahumanitaria.co';
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
-$url_violencia = "http://violenciaarmada.salahumanitaria.co/reports/submit";
-$url_desastres = "http://desastres.colombiassh.org/reports/submit";
+$url_violencia = "http://violenciaarmada.".$sala."/reports/submit";
+$url_desastres = "http://desastres.".$sala."/reports/submit";
+
+// Test geonode server
+$geonode = false;
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_URL, "http://geonode.".$sala);
+curl_setopt($ch, CURLOPT_HEADER, 0);
+//curl_exec($ch);
+
+if(!curl_errno($ch)) {
+ if(curl_getinfo($c, CURLINFO_HTTP_CODE) === 200)
+    $geonode = true;
+}
+curl_close($ch);
 ?>
 
 <body>
@@ -29,7 +43,8 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                         <li><a id="lmh" href="#">Que es monitor?</a></li>
                         <li><a href="http://www.salahumanitaria.co" target="_blank">Sala Humanitaria</a></li>
                         <li><a href="http://sidih.salahumanitaria.co" target="_blank">Sidih</a></li>
-                        <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki Humanitario</a></li>
+                        <li><a href="http://geonode.salahumanitaria.co" target="_blank">Geonode</a></li>
+                        <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki</a></li>
                     </ul>
                 <div id="qlmh" class="hide">
                     <div id="lmm">
@@ -102,7 +117,7 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                 <li class="sub" data-div="fcat_dn"><span class="menu_desastres">Categorias desastres</span></li>
                 <li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>
                 <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
-                <li><span class="menu_descargar" id="download_incidents">Descargar eventos</span></li>
+                <li class="sub" data-div="descargar"><span class="menu_descargar">Descargar eventos</span></li>
             </ul>
         </div>
         <!-- Filtro categorias Violencia -->
@@ -383,6 +398,25 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
         </div>
         <!-- Filtro Acceso :: Fin -->
         
+        <!-- Descargar eventos -->
+        <div id="descargar" class="filtro" data-index="0">
+            <div class="left">
+                 <h2 class="dosis">Descargar eventos</h2>
+            </div>
+            <div class="right">
+                <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+            </div>
+            <div class="clear"></div>
+            <div>
+                Esta opci&oacute;n le permite descargar el listado de eventos que est&aacute;
+                viendo en el mapa, es decir, los eventos con los filtros aplicados, el tiempo
+                de generaci&oacute;n del reporte depende del n&umero;mero de eventos
+                <br /><br />
+                <button class="btn" value="Generar reporte" id="download_incidents" />
+            </div>
+        </div>
+        <!-- Filtro fecha :: FIN-->
+        
         <div id="map" class="map_monitor left"></div>
         <div id="featured" class="hide">
             <div><b>Eventos destacados por:</b></div>
@@ -409,33 +443,52 @@ $url_desastres = "http://desastres.colombiassh.org/reports/submit";
                 </div>
             </div>
         </div>
-        <div id="layers_div">
-            <h1 class="dosis">Adicionar capas al mapa</h1>
-            <p>
-                Presentamos el listado de capas disponibles en el sistema <a href="http://geonode.salahumanitaria.co" target="_blank">GEONODE</a>
-                de Sala Humanitaria</a>, las cuales pueden ser visualizadas en monitor</p>
-            <ul>
-                <li>
-                    <div class="left chk">
-                        <input type="checkbox" data-n="División Departamental de Colombia - SIGOT, IGAC" value="division_departamental_de_colombia_sigot_igac" />
-                    </div>
-                    <div class="left">
-                        <h3>División Departamental de Colombia - SIGOT, IGAC</h3>
-                        <p class="nota">Abstract</p>
-                    </div>
-                    <div class="clear"></div>
-                </li>
-                <li>
-                    <div class="left chk">
-                        <input type="checkbox" data-n="División Municipal de Colombia - SIGOT, IGAC" value="municipio_sigot" />
-                    </div>
-                    <div class="left">
-                        <h3>División Municipal de Colombia - SIGOT, IGAC</h3>
-                        <p class="nota">Abstract</p>
-                    </div>
-                    <div class="clear"></div>
-                </li>
-            </ul>
+        <div id="layers_div" class="filtro">
+            <div class="left">
+                <h1 class="dosis">Adicionar capas al mapa</h1>
+            </div>
+            <div class="right">
+                <a data-div="layers_div" href="#" class="close"><img alt="Cerrar" src="media/img/close.png"></a>
+            </div>
+            <div class="clear"></div>
+            <?php 
+            if ($geonode) { ?>
+                <p>
+                    Presentamos el listado de capas disponibles en el sistema <a href="http://geonode.salahumanitaria.co" target="_blank">GEONODE</a>
+                    de Sala Humanitaria</a>, las cuales pueden ser visualizadas en monitor
+                </p>
+                <div id="layers_loading" class="hide">
+                    <img src="media/img/ajax-loader-mini.gif" /> Cargando capa....
+                </div>
+                <ul>
+                    <li>
+                        <div class="left chk">
+                            <input type="checkbox" data-n="División Departamental de Colombia - SIGOT, IGAC" value="division_departamental_de_colombia_sigot_igac" />
+                        </div>
+                        <div class="left">
+                            <h3>División Departamental de Colombia - SIGOT, IGAC</h3>
+                            <p class="nota">Abstract</p>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                    <li>
+                        <div class="left chk">
+                            <input type="checkbox" data-n="División Municipal de Colombia - SIGOT, IGAC" value="municipio_sigot" />
+                        </div>
+                        <div class="left">
+                            <h3>División Municipal de Colombia - SIGOT, IGAC</h3>
+                            <p class="nota">Abstract</p>
+                        </div>
+                        <div class="clear"></div>
+                    </li>
+                </ul>
+            <?php
+            }
+            else { ?>
+                <p>El servicio: <a href="http://geonode.<?php echo $sala ?>" target="_blank">http://geonode.<?php echo $sala ?></a> no se encuentra disponible</p>
+            <?php
+            }
+            ?>
         </div>
         <div id="totalxd" class="relative">
             <div id="loading_data" class="alpha60">

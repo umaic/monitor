@@ -99,9 +99,18 @@ function addWMSLayer(n,l,v) {
                                   }
                               );
 
+        var $lo = $('#layers_loading');
+
+        ly.events.register("loadstart", ly, function() {
+            $lo.show();
+        });
+        
+        ly.events.register("loadend", ly, function() {
+            $lo.hide();
+        });
+
         map.addLayer(ly);
     }
-    console.log(v);
 }
 
 function selDepto(centroide) {
@@ -150,7 +159,7 @@ function mapRender() {
                 "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png"
             ],
             {
-                attribution: "<a href='http://www.mapquest.com/'  target='_blank'><img src='http://developer.mapquest.com/content/osm/mq_logo.png' border='0' /></a>, <a href='http://www.openstreetmap.org/' target='_blank'>OSM</a>",
+                attribution: "Ver mas detalles en &nbsp;<img src='http://monitor.colombiassh.org/favicon.ico'> <a href='http://monitor.salahumanitaria.co' target='_blank'>monitor.salahumanitaria.co</a>",
                 transitionEffect: "resize",
                 zoomOffset: _zoomOffset,
                 sphericalMercator: true,

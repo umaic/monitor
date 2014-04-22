@@ -902,7 +902,7 @@ class MonitorController {
         }
 
         if (!empty($data_lines)) {
-            $data[] = array('name' => 'Violencia', 
+            $data[] = array('id' => 'violencia', 'name' => 'Violencia', 
                                                    'data' => $data_lines,
                                                    'color' => $color_v,
                                                     );
@@ -922,11 +922,12 @@ class MonitorController {
         }
         
         if (!empty($data_lines)) {
-            $data[] = array('name' => 'Desastres', 
-                                                   'data' => $data_lines,
-                                                   'color' => $color_d,
-                                                   'yAxis' => 1
-                                                    );
+            $data[] = array('id' => 'desastres',
+                                   'name' => 'Desastres', 
+                                   'data' => $data_lines,
+                                   'color' => $color_d,
+                                   'yAxis' => 1
+                                    );
         }
 
         $chart_line_yaxis_title = ($afectacion) ? 'Personas' : 'Eventos';

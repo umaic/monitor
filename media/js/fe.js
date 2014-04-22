@@ -14,7 +14,6 @@ var _year, _month, _day, _today;
 
 $(function(){
 
-
     _today = new Date();
     _year = _today.getFullYear();
     _month = _today.getMonth();
@@ -148,37 +147,9 @@ $(function(){
         $('.btn_show_e').click(function() {
 
             var cs = $(this).attr('class').split(' ');
-            
-            if (cs[0] == 'ec') {
-                var ly = map.getLayersByName('Emergencia Compleja')[0];
 
-                $r_hide = $('#resumen_ec');
-                $r_show = $('#resumen_dn');
-            }
-            else {
-                var ly = map.getLayersByName('Desastres Naturales')[0];
-                
-                $r_hide = $('#resumen_dn');
-                $r_show = $('#resumen_ec');
-            }
+            ocultarViolenciaDesastres(cs);
             
-            if (ly.getVisibility()) {
-                $(this).html('Mostrar eventos'); 
-                ly.setVisibility(false);
-
-                $r_hide.hide();
-                $r_show.removeClass('left half');
-            }
-            else {
-                $(this).html('Ocultar eventos'); 
-                ly.setVisibility(true);
-                
-                $r_hide.show();
-                $r_show.addClass('left half');
-            }
-                
-            var ly_ft = map.getLayersByName('Destacados')[0];
-            ly_ft.setVisibility(!ly_ft.getVisibility());
             
             $(this).closest('.filtro').hide();
             
@@ -285,8 +256,6 @@ $(function(){
     // Group - Ungroup
     $('#group_fts').click(function() {
 
-        //$(this).toggleClass('group');
-        
         // Muestra colors de cats
         $('.cat_color').toggle();
 
@@ -301,6 +270,10 @@ $(function(){
         
         // Activa resumen
         $('#tabs').tabs("select", 1);
+    });
+    
+    $('#layers').click(function() {
+        $('#layers_div').toggle();
     });
 
     $('#layers_div').on('ifClicked', ':checkbox', function(event){
@@ -447,6 +420,42 @@ $(function(){
 
 });
 
+function ocultarViolenciaDesastres(cs) {
+
+    if (cs[0] == 'ec') {
+        var ly = map.getLayersByName('Emergencia Compleja')[0];
+
+        $r_hide = $('#resumen_ec');
+        $r_show = $('#resumen_dn');
+    }
+    else {
+        var ly = map.getLayersByName('Desastres Naturales')[0];
+        
+        $r_hide = $('#resumen_dn');
+        $r_show = $('#resumen_ec');
+    }
+    
+    if (ly.getVisibility()) {
+        $(this).html('Mostrar eventos'); 
+        ly.setVisibility(false);
+
+        $r_hide.hide();
+        $r_show.removeClass('left half');
+    }
+    else {
+        $(this).html('Ocultar eventos'); 
+        ly.setVisibility(true);
+        
+        $r_hide.show();
+        $r_show.addClass('left half');
+    }
+        
+    var ly_ft = map.getLayersByName('Destacados')[0];
+    ly_ft.setVisibility(!ly_ft.getVisibility());
+    
+    $('#chart_1').highcharts().get(cs).setVisible(false,false);
+
+}
 function applyPeriod(val) {
     if (val != 0) {
         var _ini = getStartEnd('ini');

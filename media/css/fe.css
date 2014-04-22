@@ -243,19 +243,19 @@ div.tecdn div {
     background-position: center -240px;
 }
 #menu .menu_violencia {
-    background-position: center -320px;
+    background-position: center -315px;
 }
 #menu .menu_desastres {
-    background-position: center -400px;
+    background-position: center -395px;
 }
 #menu .menu_acceso {
-    background-position: center -480px;
+    background-position: center -475px;
 }
 #menu .menu_1612 {
-    background-position: center -560px;
+    background-position: center -555px;
 }
 #menu .menu_descargar {
-    background-position: center -640px;
+    background-position: center -635px;
 }
 #submenu,
 #layers_div {
@@ -399,7 +399,7 @@ div.tecdn div {
 #layers_div {
     position: absolute;
     top: 80px;
-    background-color: #fff;
+    background-color: rgba(255,255,255,0.7);
     color: #333333;
     padding: 10px;
     width: 480px;
@@ -436,7 +436,11 @@ div.tecdn div {
 #layers_div .chk {
     margin: 10px 10px 0 0;
 }
-
+#layers_loading {
+    padding: 10px 0;
+    font-size: 18px;
+    color: #0066ff;
+}
 #totalxd {
     right: 0px;
     width: 360px;

@@ -87,9 +87,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div class="clear"></div>
-        <div id="brand">
-            Ver mas detalles en &nbsp;<img src="http://monitor.colombiassh.org/favicon.ico"> <a href="http://monitor.colombiassh.org" target="_blank">Monitor</a>
-        </div>
     </div>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>

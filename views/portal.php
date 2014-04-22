@@ -6,7 +6,7 @@ else {
     define ('BASE_PORTAL', '/');  // Comienza con slash, se usa al incluir los assets
 }
 ?>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.min.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.css" />
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/perfect-scrollbar.min.css" />
 
@@ -86,12 +86,23 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <div id="loading" class="alpha60">
         <img src="<?php echo BASE_PORTAL ?>media/img/ajax-loader.png" />
     </div>
-    <?php 
-    if (empty($_GET['salahumanitaria'])) { ?>
-        <div>
-            <a href="http://www.salahumanitaria.co" target="_blank">
-                <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" border="0" />
-            </a>
+    <?php
+    $sala = true;
+    if (empty($_GET['salahumanitaria'])) { 
+        $sala = false;
+        ?>
+        <div id="branding">
+            <div class="left">
+                <a href="http://www.salahumanitaria.co" target="_blank">
+                    <img src="http://www.salahumanitaria.co/sites/www.salahumanitaria.co/files/SalaHumanitariaCol_369x49.png" border="0" />
+                </a>
+            </div>
+            <div id="sh" class="left">
+                <a href="http://www.salahumanitaria.co" target="_blank">SalaHumanitaria.co</a> es un espacio de difusi&oacute;n e informaci&oacute;n sobre
+                la situaci&oacute;n humanitaria en Colombia; 
+                sirve de herramienta de coordinaci&oacute;n para el Equipo
+                Humanitario de Pa&iacute;s al nivel nacional y en el terreno
+            </div>
         </div>
         <p>&nbsp;</p>
     <?php } ?>
@@ -216,8 +227,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/highcharts.js"></script>
     <script type="text/javascript">
         var portal = 1;
@@ -228,6 +239,14 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             $('#incidentes').on("click",".t",function() {
                 $(this).parent('div').find('.hide').toggle();
             });
+
+            <?php
+            // Oculta desastres
+            if (!$sala) { ?>
+                ocultarViolenciaDesastres('dn'); // fe.js
+            <?php    
+            }
+            ?>
             
         });
     </script>
