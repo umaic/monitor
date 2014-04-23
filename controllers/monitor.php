@@ -661,12 +661,22 @@ class MonitorController {
         // Ordena por fecha desc los eventos para mezclarlos
         usort($evs, array('MonitorController', 'orderArrayByDate'));
 
-        $e = $evs;
-        $t = $total;
-        $t_e = $total_ec;
-        $t_dn = $total_dn;
+        $t = array('ec' => 0, 'dn' => 0);
+        
+        foreach($rsms_ec as $r) {
+            $t['ec'] += $r['n'];
+        }
+        
+        foreach($rsms_dn as $r) {
+            $t['dn'] += $r['n'];
+        }
 
-        return compact('e','t','t_e','t_d','rsms_ec','rsms_dn','charts');
+        $e = $evs;
+        //$t = $total;
+        //$t_e = $total_ec;
+        //$t_dn = $total_dn;
+
+        return compact('e','t','rsms_ec','rsms_dn','charts');
 
     }
     
@@ -902,7 +912,7 @@ class MonitorController {
         }
 
         if (!empty($data_lines)) {
-            $data[] = array('id' => 'violencia', 'name' => 'Violencia', 
+            $data[] = array('id' => 'ec', 'name' => 'Violencia', 
                                                    'data' => $data_lines,
                                                    'color' => $color_v,
                                                     );
@@ -922,7 +932,7 @@ class MonitorController {
         }
         
         if (!empty($data_lines)) {
-            $data[] = array('id' => 'desastres',
+            $data[] = array('id' => 'dn',
                                    'name' => 'Desastres', 
                                    'data' => $data_lines,
                                    'color' => $color_d,

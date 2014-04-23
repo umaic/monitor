@@ -148,21 +148,12 @@ $(function(){
 
             var cs = $(this).attr('class').split(' ');
 
-            ocultarViolenciaDesastres(cs);
+            ocultarViolenciaDesastres(cs[0]);
             
             
             $(this).closest('.filtro').hide();
             
         });
-
-        // Click outside menu
-        /*
-        $(document).click(function(e) {
-            if (!$(e.target).closest('.cat, .filtro').length) {
-                $('.filtro').slideUp();
-            }
-        });
-        */
 
         //  Categorias : Todas/ninguna
         var td_ec = false;
@@ -422,7 +413,9 @@ $(function(){
 
 function ocultarViolenciaDesastres(cs) {
 
-    if (cs[0] == 'ec') {
+    var v_chart_serie;
+
+    if (cs == 'ec') {
         var ly = map.getLayersByName('Emergencia Compleja')[0];
 
         $r_hide = $('#resumen_ec');
@@ -433,27 +426,37 @@ function ocultarViolenciaDesastres(cs) {
         
         $r_hide = $('#resumen_dn');
         $r_show = $('#resumen_ec');
+
+        $eventos_desastres = $('#report_list_map_desastres');
+        
     }
     
     if (ly.getVisibility()) {
         $(this).html('Mostrar eventos'); 
         ly.setVisibility(false);
+        v_chart_serie = false;
 
         $r_hide.hide();
         $r_show.removeClass('left half');
+        $eventos_desastres.hide();
     }
     else {
         $(this).html('Ocultar eventos'); 
         ly.setVisibility(true);
+        v_chart_serie = true;
         
         $r_hide.show();
         $r_show.addClass('left half');
+        $eventos_desastres.show();
     }
         
     var ly_ft = map.getLayersByName('Destacados')[0];
     ly_ft.setVisibility(!ly_ft.getVisibility());
     
-    $('#chart_1').highcharts().get(cs).setVisible(false,false);
+    setTimeout(function(){ 
+        $('#chart_1').highcharts().get(cs).setVisible(v_chart_serie,true); 
+    }, 3000);
+    
 
 }
 function applyPeriod(val) {

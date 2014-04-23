@@ -103,6 +103,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 sirve de herramienta de coordinaci&oacute;n para el Equipo
                 Humanitario de Pa&iacute;s al nivel nacional y en el terreno
             </div>
+            <div class="clear"></div>
         </div>
         <p>&nbsp;</p>
     <?php } ?>
@@ -211,7 +212,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                   </div>
                   </div>
                   <div id="lista">
-                    <div id="totales" class="">
+                    <div id="totales" class="hide">
                         <div class="total">
                             <div id="num_total" class="inline">Total: <span id="num_total_span"></span></div>
                             <div id="num_total_ec" class="inline violencia">Violencia: <span id="num_total_ec_span"></span></div>

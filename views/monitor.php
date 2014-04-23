@@ -16,17 +16,7 @@ $url_violencia = "http://violenciaarmada.".$sala."/reports/submit";
 $url_desastres = "http://desastres.".$sala."/reports/submit";
 
 // Test geonode server
-$geonode = false;
-$ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, "http://geonode.".$sala);
-curl_setopt($ch, CURLOPT_HEADER, 0);
-//curl_exec($ch);
-
-if(!curl_errno($ch)) {
- if(curl_getinfo($c, CURLINFO_HTTP_CODE) === 200)
-    $geonode = true;
-}
-curl_close($ch);
+$geonode = true;
 ?>
 
 <body>
@@ -340,7 +330,7 @@ curl_close($ch);
         <!-- Filtro fecha :: FIN-->
         
         <!-- Filtro categorias acceso -->
-        <div id="fcat_acceso" class="filtro fcat" data-index="3">
+        <div id="fcat_acceso" class="filtro fcat" data-index="2">
             <div class="left">
                  <h2 class="dosis">Posible restriccion al acceso humanitario</h2>
                  <br />
@@ -399,23 +389,25 @@ curl_close($ch);
         <!-- Filtro Acceso :: Fin -->
         
         <!-- Descargar eventos -->
-        <div id="descargar" class="filtro" data-index="0">
+        <div id="descargar" class="filtro fcat" data-index="2">
             <div class="left">
-                 <h2 class="dosis">Descargar eventos</h2>
+                 <h2 class="dosis w">Descargar eventos</h2>
             </div>
             <div class="right">
                 <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="clear"></div>
-            <div>
+            <div class="w"><br />
                 Esta opci&oacute;n le permite descargar el listado de eventos que est&aacute;
-                viendo en el mapa, es decir, los eventos con los filtros aplicados, el tiempo
-                de generaci&oacute;n del reporte depende del n&umero;mero de eventos
+                viendo en el mapa, es decir, los eventos con los filtros aplicados. <br /> <br /> El tiempo
+                de generaci&oacute;n del reporte depende del n&uacute;mero de eventos
+            </div>
+            <div>
                 <br /><br />
-                <button class="btn" value="Generar reporte" id="download_incidents" />
+                <div class="btn" id="download_incidents">Comenzar con la descarga....</div>
             </div>
         </div>
-        <!-- Filtro fecha :: FIN-->
+        <!-- Descargar eventos :: FIN-->
         
         <div id="map" class="map_monitor left"></div>
         <div id="featured" class="hide">
