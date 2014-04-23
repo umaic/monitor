@@ -11,6 +11,7 @@ var _cluster = true;  // Mapa en cluster, parametro para ushahidi json/cluster, 
 var resetLimit = false;
 var acceso = false;
 var _year, _month, _day, _today;
+var ocultar = '';
 
 $(function(){
 
@@ -413,6 +414,7 @@ $(function(){
 
 function ocultarViolenciaDesastres(cs) {
 
+
     var v_chart_serie;
 
     if (cs == 'ec') {
@@ -439,6 +441,8 @@ function ocultarViolenciaDesastres(cs) {
         $r_hide.hide();
         $r_show.removeClass('left half');
         $eventos_desastres.hide();
+    
+        ocultar = cs;
     }
     else {
         $(this).html('Ocultar eventos'); 
@@ -448,8 +452,10 @@ function ocultarViolenciaDesastres(cs) {
         $r_hide.show();
         $r_show.addClass('left half');
         $eventos_desastres.show();
+
+        ocultar = '';
     }
-        
+
     var ly_ft = map.getLayersByName('Destacados')[0];
     ly_ft.setVisibility(!ly_ft.getVisibility());
     
@@ -921,6 +927,19 @@ resumenAfectacion = function(data) {
     }
 
     $('.data_title').html(titulo);
+
+    // Mantiene oculto resumen despues de ocultar eventos y dar click en categoria de resumen
+    if (ocultar != '') {
+        $r = $('#resumen_' + ocultar);
+        $r.hide();
+
+        if (ocultar == 'ec') {
+            $('#resumen_dn').removeClass('left half');
+        }
+        else {
+            $('#resumen_ec').removeClass('left half');
+        }
+    }
 
 }
 

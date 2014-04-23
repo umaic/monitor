@@ -6,7 +6,7 @@ else {
     define ('BASE_PORTAL', '/');  // Comienza con slash, se usa al incluir los assets
 }
 ?>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.min.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.css" />
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/perfect-scrollbar.min.css" />
 
@@ -228,8 +228,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/highcharts.js"></script>
     <script type="text/javascript">
         var portal = 1;
@@ -244,7 +244,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <?php
             // Oculta desastres
             if (!$sala) { ?>
-                ocultarViolenciaDesastres('dn'); // fe.js
+                setTimeout(function(){ ocultarViolenciaDesastres('dn')}, 2000); // fe.js
             <?php    
             }
             ?>
