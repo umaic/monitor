@@ -459,9 +459,7 @@ function ocultarViolenciaDesastres(cs) {
     var ly_ft = map.getLayersByName('Destacados')[0];
     ly_ft.setVisibility(!ly_ft.getVisibility());
     
-    setTimeout(function(){ 
-        $('#chart_1').highcharts().get(cs).setVisible(v_chart_serie,true); 
-    }, 3000);
+    $('#chart_1').highcharts().get(cs).setVisible(v_chart_serie,true); 
     
 
 }

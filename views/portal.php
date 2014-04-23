@@ -244,7 +244,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <?php
             // Oculta desastres
             if (!$sala) { ?>
-                setTimeout(function(){ ocultarViolenciaDesastres('dn')}, 2000); // fe.js
+                setTimeout(function(){ ocultarViolenciaDesastres('dn')}, 7000); // fe.js
             <?php    
             }
             ?>
