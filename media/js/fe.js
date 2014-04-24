@@ -410,6 +410,34 @@ $(function(){
         selDepto($(this).closest('tr').find('td.centroid').html());   // in map.js
     });
 
+    // Carga el listado de capas de geonode
+    $.ajax({
+        url: 'geonode_layers.xml',
+        dataType: 'xml',
+        success: function(xml){ 
+            var xmlDoc = $.parseXML(xml);
+console.log(xmlDoc);
+            $(xmlDoc).find('Capability').find('Layer').each(function(){
+                var $t = $(this);
+                console.log($t);
+
+                var li = '<li>' +
+                     '   <div class="left chk">' +
+                     '       <input type="checkbox" data-n="'+$t.find('Name').text()+'" value="division_departamental_de_colombia_sigot_igac" />' +
+                     '   </div>' +
+                     '   <div class="left">' +
+                     '       <h3>División Departamental de Colombia - SIGOT, IGAC</h3>' +
+                     '       <p class="nota">Abstract</p>' +
+                     '   </div>' +
+                     '   <div class="clear"></div>' +
+                     '</li>';
+
+                $('#layers_ul').append(li);
+
+            });
+        }
+    });
+
 });
 
 function ocultarViolenciaDesastres(cs) {

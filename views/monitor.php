@@ -452,7 +452,7 @@ $geonode = true;
                 <div id="layers_loading" class="hide">
                     <img src="media/img/ajax-loader-mini.gif" /> Cargando capa....
                 </div>
-                <ul>
+                <ul id="layers_ul">
                     <li>
                         <div class="left chk">
                             <input type="checkbox" data-n="División Departamental de Colombia - SIGOT, IGAC" value="division_departamental_de_colombia_sigot_igac" />
