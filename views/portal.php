@@ -98,10 +98,11 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </a>
             </div>
             <div id="sh" class="left">
-                <a href="http://www.salahumanitaria.co" target="_blank">SalaHumanitaria.co</a> es un espacio de difusi&oacute;n e informaci&oacute;n sobre
+                <a href="http://www.salahumanitaria.co" target="_blank">http://SalaHumanitaria.co</a> es un espacio de difusi&oacute;n e informaci&oacute;n sobre
                 la situaci&oacute;n humanitaria en Colombia; 
                 sirve de herramienta de coordinaci&oacute;n para el Equipo
-                Humanitario de Pa&iacute;s al nivel nacional y en el terreno
+                Humanitario de Pa&iacute;s compuesto por Agencias del Sistema de las Naciones Unidas y ONG internacionales. (mayor información en 
+<a href="http://www.salahumanitaria.co" target="_blank">http://SalaHumanitaria.co</a> ) 
             </div>
             <div class="clear"></div>
         </div>
@@ -162,7 +163,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             <div class="right" id="tabs">
                 <div id="loading_data" class="alpha60">
                     <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
-                    &nbsp;Cargando datos....
+                    &nbsp;Cargando datos...
                 </div>
                   <ul>
                     <li><a href="#tendencia">Tendencia</a></li>
@@ -258,5 +259,6 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         <input type="checkbox" value="<?php echo $state_id ?>" checked />
     </div>
     
+-
 </body>
 </html>
