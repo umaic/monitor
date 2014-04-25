@@ -453,26 +453,7 @@ $geonode = true;
                     <img src="media/img/ajax-loader-mini.gif" /> Cargando capa....
                 </div>
                 <ul id="layers_ul">
-                    <li>
-                        <div class="left chk">
-                            <input type="checkbox" data-n="División Departamental de Colombia - SIGOT, IGAC" value="division_departamental_de_colombia_sigot_igac" />
-                        </div>
-                        <div class="left">
-                            <h3>División Departamental de Colombia - SIGOT, IGAC</h3>
-                            <p class="nota">Abstract</p>
-                        </div>
-                        <div class="clear"></div>
-                    </li>
-                    <li>
-                        <div class="left chk">
-                            <input type="checkbox" data-n="División Municipal de Colombia - SIGOT, IGAC" value="municipio_sigot" />
-                        </div>
-                        <div class="left">
-                            <h3>División Municipal de Colombia - SIGOT, IGAC</h3>
-                            <p class="nota">Abstract</p>
-                        </div>
-                        <div class="clear"></div>
-                    </li>
+                    <!-- Se carga en fe.js --> 
                 </ul>
             <?php
             }

@@ -268,8 +268,8 @@ $(function(){
         $('#layers_div').toggle();
     });
 
-    $('#layers_div').on('ifClicked', ':checkbox', function(event){
-    //$('#layers').find(':checkbox').click(function() {
+    //$('#layers_div').on('ifClicked', ':checkbox', function(event){
+    $('#layers_div').on('click', ':checkbox', function() {
 
         var $t = $(this);
         var $li = $t.closest('li');
@@ -284,7 +284,7 @@ $(function(){
             $li.addClass('selected');
         }
 
-        addWMSLayer($t.data('n'),$t.val(),v);
+        addWMSLayer($t.val(),$t.val(),v);
     });
 
     if (layout != 'monitor') {
@@ -410,31 +410,17 @@ $(function(){
         selDepto($(this).closest('tr').find('td.centroid').html());   // in map.js
     });
 
-    // Carga el listado de capas de geonode
+    // Carga el listado de capas de geonode del archivo geonode_layers.html el
+    // cual es creado por el script geonode_get_layers.sh
     $.ajax({
-        url: 'geonode_layers.xml',
-        dataType: 'xml',
-        success: function(xml){ 
-            var xmlDoc = $.parseXML(xml);
-console.log(xmlDoc);
-            $(xmlDoc).find('Capability').find('Layer').each(function(){
-                var $t = $(this);
-                console.log($t);
+        url: 'geonode_layers.html',
+        success: function(html){
 
-                var li = '<li>' +
-                     '   <div class="left chk">' +
-                     '       <input type="checkbox" data-n="'+$t.find('Name').text()+'" value="division_departamental_de_colombia_sigot_igac" />' +
-                     '   </div>' +
-                     '   <div class="left">' +
-                     '       <h3>División Departamental de Colombia - SIGOT, IGAC</h3>' +
-                     '       <p class="nota">Abstract</p>' +
-                     '   </div>' +
-                     '   <div class="clear"></div>' +
-                     '</li>';
-
-                $('#layers_ul').append(li);
-
-            });
+            $ul = $('#layers_ul');
+        
+            $ul.append(html);
+            
+            //$ul.find('input').iCheck();
         }
     });
 
