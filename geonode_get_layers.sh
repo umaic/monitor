@@ -2,7 +2,7 @@
 
 file="geonode_layers.xml"
 
-#curl "http://geonode.salahumanitaria.co/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3" -o $file
+curl "http://geonode.salahumanitaria.co/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3" -o $file
 
 i=0
 
