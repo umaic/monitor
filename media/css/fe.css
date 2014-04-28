@@ -403,13 +403,14 @@ div.tecdn div {
 #layers_div {
     position: absolute;
     top: 80px;
-    background-color: rgba(255,255,255,0.7);
+    background-color: rgba(255,255,255,0.8);
     color: #333333;
     padding: 10px;
     width: 480px;
 }
 #layers_div p {
-    color: #999999;
+    color: #666666;
+    width: 400px;
 }
 #layers_div ul {
     list-style: none;
@@ -419,18 +420,18 @@ div.tecdn div {
 }
 #layers_div ul li {
     border-top: 1px solid #cccccc;
-    padding: 10px;
+    padding: 5px 10px;
     background-color: #fafafa;
 }
 #layers_div ul li:hover,
 #layers_div ul li.selected {
-    background-color: #f3f3f3;
+    background-color: rgba(220,222,80,0.4);
 }
 #layers_div a {
     color: #0066ff;
 }
 #layers_div h1 {
-    font-size: 28px;
+    font-size: 26px;
     margin: 5px 0;
 }
 #layers_div h3,
@@ -441,9 +442,22 @@ div.tecdn div {
     margin: 10px 10px 0 0;
 }
 #layers_loading {
-    padding: 10px 0;
-    font-size: 18px;
-    color: #0066ff;
+    margin: 10px 0 0 30px;
+}
+#layers_search {
+    width: 400px;
+    font-size: 12px;
+    background: url(../img/search.png) 5px 50% no-repeat;
+    padding: 7px 25px;
+    margin: 5px 0;
+}
+#layers_loading span {
+    padding: 5px 10px;
+    font-size: 12px;
+    background-color: #0066ff;
+    color: #fff;
+    border-radius: 4px;
+    margin-left: 5px;
 }
 #totalxd {
     right: 0px;

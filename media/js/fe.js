@@ -268,8 +268,8 @@ $(function(){
         $('#layers_div').toggle();
     });
 
-    //$('#layers_div').on('ifClicked', ':checkbox', function(event){
-    $('#layers_div').on('click', ':checkbox', function() {
+    $('#layers_div').on('ifClicked', ':checkbox', function(event){
+    //$('#layers_div').on('click', ':checkbox', function() {
 
         var $t = $(this);
         var $li = $t.closest('li');
@@ -419,15 +419,54 @@ $(function(){
             $ul = $('#layers_ul');
         
             $ul.append(html);
+                
+            // Ordena po
+            //$ul.append($ul.find('li').sort(function(a, b) { return $(b).find('p.nota').html() - $(a).find('p.nota').html(); }));
             
-            //$ul.find('input').iCheck();
+            $ul.find('input').iCheck({
+                checkboxClass: 'icheckbox_square-orange',
+                radioClass: 'iradio_square-orange'
+            });
         }
+    });
+            
+    // Busca layers en el listado de geonode
+    $('#layers_search').keyup(function(e) {
+        clearTimeout($.data(this, 'timer'));
+
+        if (e.keyCode == 13)
+          search(true);
+        else
+          $(this).data('timer', setTimeout(search, 500));
     });
 
 });
 
-function ocultarViolenciaDesastres(cs) {
+function search(force) {
+    var $i = $("#layers_search");
+    var existingString = $i.val();
+    
+    if (!force && existingString.length < 3) return;
 
+    var $l = $('#layers_ul li');
+
+    $l.each(function(){ 
+
+        var re = new RegExp(existingString, 'i');
+
+        $(this).show();
+        var match = re.exec($(this).html());
+        if (match === null) {
+            $(this).hide();
+        }
+    });
+
+
+    $i.focusout(function(){ $l.fadeOut(100); });
+
+}
+
+function ocultarViolenciaDesastres(cs) {
 
     var v_chart_serie;
 

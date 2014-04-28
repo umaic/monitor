@@ -2,7 +2,7 @@
 
 file="geonode_layers.xml"
 
-curl "http://geonode.salahumanitaria.co/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3" -o $file
+#curl "http://geonode.salahumanitaria.co/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3" -o $file
 
 i=0
 
@@ -28,7 +28,7 @@ while read line ; do
 				abstract=$(awk -F "[><]" '/Abstract/{print $3}' <<< $line)
 
 				li="<li><div class='left chk'><input type='checkbox' value='$name' /></div><div class='left'> <h3>$title</h3><p class='nota'>$abstract</p></div><div class='clear'></div> </li>"
-
+				
 				i=0
 				
 				echo $li
@@ -42,6 +42,8 @@ while read line ; do
 	if [ $i -eq 0 ]; then
 		let i=$i+1
 	fi
+
+	
 	
     #title=$( grep -oPm1 "(?<=<Title>)[^<]+" <<< $line)
     #title=$(awk -F "[><]" '/Title/{print $3}' <<< $line)

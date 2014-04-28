@@ -437,7 +437,13 @@ $geonode = true;
         </div>
         <div id="layers_div" class="filtro">
             <div class="left">
-                <h1 class="dosis">Adicionar capas al mapa</h1>
+                <div class="left">
+                    <h1 class="dosis">Adicionar capas al mapa</h1>
+                </div>
+                <div id="layers_loading" class="hide right">
+                    <img src="media/img/ajax-loader-mini.gif" /><span>Cargando capa....</span>
+                </div>
+                <div class="clear"></div>
             </div>
             <div class="right">
                 <a data-div="layers_div" href="#" class="close"><img alt="Cerrar" src="media/img/close.png"></a>
@@ -446,12 +452,13 @@ $geonode = true;
             <?php 
             if ($geonode) { ?>
                 <p>
-                    Presentamos el listado de capas disponibles en el sistema <a href="http://geonode.salahumanitaria.co" target="_blank">GEONODE</a>
-                    de Sala Humanitaria</a>, las cuales pueden ser visualizadas en monitor
+                    Capas disponibles en el sistema <a href="http://geonode.salahumanitaria.co" target="_blank">GEONODE</a>
+                    de Sala Humanitaria</a>
                 </p>
-                <div id="layers_loading" class="hide">
-                    <img src="media/img/ajax-loader-mini.gif" /> Cargando capa....
+                <div class="left">
+                    <input type="text" id="layers_search" name="" value="" placeholder="Buscar por palabra en nombre o descripci&oacute;n" />
                 </div>
+                <div class="clear"></div>
                 <ul id="layers_ul">
                     <!-- Se carga en fe.js --> 
                 </ul>
