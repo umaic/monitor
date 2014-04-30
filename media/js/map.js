@@ -640,10 +640,10 @@ function ajaxFeatures(u, l) {
 function showHideFeaturedIcon() {
     var $f = $('#featured');
     if (map.getLayersByName('Destacados')[0].features.length > 0){
-        //$f.show();
+        $f.show();
     }
     else {
-        //$f.hide();
+        $f.hide();
     }
     $f.hide();
 }
