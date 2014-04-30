@@ -333,7 +333,6 @@ div.tecdn div {
     background-color: #000000;
 }
 #featured {
-    top: 330px;
     right: 370px;
     padding: 10px 10px 0 10px;
     font-size: 14px;
@@ -353,7 +352,8 @@ div.tecdn div {
 #mapas_tipos,
 #totalxd,
 #submenu,
-#layers_div {
+#layers_div,
+#featured {
     top: 10px;
     position: absolute;
     z-index: 1000;
