@@ -435,7 +435,7 @@ $geonode = true;
                 </div>
             </div>
         </div>
-        <div id="layers_div" class="filtro">
+        <div id="layers_div" class="hide filtro">
             <div class="left">
                 <div class="left">
                     <h1 class="dosis">Adicionar capas al mapa</h1>
