@@ -645,7 +645,6 @@ function showHideFeaturedIcon() {
     else {
         $f.hide();
     }
-    $f.hide();
 }
 
 function mapMove(event)
