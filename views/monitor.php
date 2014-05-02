@@ -457,6 +457,7 @@ $geonode = true;
                 </p>
                 <div class="left">
                     <input type="text" id="layers_search" name="" value="" placeholder="Buscar por palabra en nombre o descripci&oacute;n" />
+                    &nbsp;<a href="#" id="geonode_limpiar">Limpiar</a>
                 </div>
                 <div class="clear"></div>
                 <ul id="layers_ul">

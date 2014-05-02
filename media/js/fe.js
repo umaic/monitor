@@ -440,6 +440,8 @@ $(function(){
           $(this).data('timer', setTimeout(search, 500));
     });
 
+    // Reset de buscar layers
+
 });
 
 function search(force) {
