@@ -420,8 +420,10 @@ $(function(){
         
             $ul.append(html);
                 
-            // Ordena po
-            //$ul.append($ul.find('li').sort(function(a, b) { return $(b).find('p.nota').html() - $(a).find('p.nota').html(); }));
+            // Ordena por nombre
+            $ul.append($ul.find('li').sort(function(a, b) { 
+                return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+             }));
             
             $ul.find('input').iCheck({
                 checkboxClass: 'icheckbox_square-orange',
