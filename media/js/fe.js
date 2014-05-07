@@ -422,7 +422,11 @@ $(function(){
                 
             // Ordena por nombre
             $ul.append($ul.find('li').sort(function(a, b) { 
-                return a.text == b.text ? 0 : a.text < b.text ? -1 : 1
+
+                aa = $(a).find('h3').text();
+                bb = $(b).find('h3').text();
+
+                return aa == bb ? 0 : aa < bb ? -1 : 1
              }));
             
             $ul.find('input').iCheck({

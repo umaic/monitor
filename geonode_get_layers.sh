@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#cd /srv/www/htdocs/monitor/
+
 json=$1
 				
 file="geonode_layers.xml"
@@ -49,7 +51,8 @@ while read line ; do
 		let i=$i+1
 	fi
 	
-done < <( echo "cat //Layer/Layer[position()>11]/Name|//Layer/Layer[position()>11]/Title|//Layer/Layer[position()>11]/Abstract" | xmllint --shell geonode_layers.xml )
+done < <( echo "cat //Layer/Layer/Name|//Layer/Layer/Title|//Layer/Layer/Abstract" | xmllint --shell $file )
+#done < <( echo "cat //Layer/Layer[position()>2]/Name|//Layer/Layer[position()>2]/Title|//Layer/Layer[position()>2]/Abstract" | xmllint --shell $file )
 
 if [ $json -eq 1 ]; then
 	r="[$r]"
