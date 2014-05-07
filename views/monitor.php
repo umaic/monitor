@@ -5,6 +5,7 @@
 <link rel="shortcut icon" href="favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
 </head>
@@ -23,7 +24,9 @@ $geonode = true;
     <div id="loading" class="alpha60">
         <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
     </div>
-    <!--<div id="brand">Colombia<b>SSH</b></div>-->
+    <a href="http://www.salahumanitaria.co" target="_blank" class="brand">
+        <div id="brand"></div>
+    </a>
     <div id="header">
         <div id="i" class="left">
             <div id="logo" class="left"></div>

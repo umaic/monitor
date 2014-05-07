@@ -1,10 +1,20 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans);  
+@import url(http://fonts.googleapis.com/css?family=Open+Sans); 
+
 #brand {
-    line-height: 24px;
-    background-color: #ea8a03;
+    line-height: 25px;
+    background-color: #BC2227;
     color: #ffffff;
     font-family: 'Open Sans';
     font-size: 18px;
     padding: 3px 15px;
     text-align: left;
+    font-weight: bold;
+}
+
+#brand:before {
+    content: "SalaHumanitaria.co"
+}
+
+a.brand, a.brand {
+    text-decoration: none !important;
 }

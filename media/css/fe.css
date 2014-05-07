@@ -412,6 +412,7 @@ div.tecdn div {
 #layers_div p {
     color: #666666;
     width: 400px;
+    word-wrap: break-word;
 }
 #layers_div ul {
     list-style: none;
