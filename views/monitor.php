@@ -563,16 +563,13 @@ $geonode = true;
     <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
     <script type="text/javascript">
-    var _gaq = _gaq || [];
-    _gaq.push(['_setAccount', 'UA-138811-20']);
-   _gaq.push(['_setDomainName', 'colombiassh.org']);
-   _gaq.push(['_trackPageview']);
+     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-   (function() {
-    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-    })();
+      ga('create', 'UA-48294292-4', 'salahumanitaria.co');
+      ga('send', 'pageview');
 
     </script>
 </body>
