@@ -28,9 +28,9 @@ if (window.location.hostname == 'localhost') {
 else {
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violenciaarmada';
-    var url_ec = 'http://'+subdomain_ec + '.colombiassh.org';
+    var url_ec = 'http://'+subdomain_ec + '.salahumanitaria.co';
 
-    var url_dn = 'http://'+subdomain_dn+'.colombiassh.org';
+    var url_dn = 'http://'+subdomain_dn+'.salahumanitaria.co';
 
 }
 
