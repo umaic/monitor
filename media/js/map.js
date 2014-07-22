@@ -449,11 +449,12 @@ function onFeatureSelect(attrs) {
                         
                         for (v in _js.v) {
                             
-                            _html += '<div class="victim"><table><tr>';
+                            _v = _js.v[v];
+                            
+                            _html += '<div class="victim"><div class="right">' + _v['category'] + '</div><table><tr>';
                             
                             _html += '<td valign="top">';
                             
-                            _v = _js.v[v];
                             _html += '<div><b>Cantidad</b>: ' + _v['cant'] + '</div> ';
 
                             
