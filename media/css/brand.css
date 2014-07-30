@@ -1,5 +1,9 @@
-@import url(http://fonts.googleapis.com/css?family=Open+Sans); 
-
+@font-face {
+  font-family: 'Open Sans';
+  font-style: normal;
+  font-weight: 400;
+  src: url(freesans.ttf);
+}
 #brand {
     line-height: 25px;
     background-color: #BC2227;
