@@ -2,7 +2,7 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: url(freesans.ttf);
+  src: url(OpenSans.woff) format('woff');
 }
 #brand {
     line-height: 25px;
