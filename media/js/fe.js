@@ -20,7 +20,7 @@ $(function(){
     _month = _today.getMonth();
     _day = _today.getDate();
     
-    // Este bloque cuando el periodo inicial era una semana
+    /* Este bloque cuando el periodo inicial era una semana
     var _ms = 2;  // Meses hacia atras
     var _ds = 7; // Dias iniciales hacia atras
     var _ii = new Date(_year,_month,_day,0,0).getTime();
@@ -28,9 +28,9 @@ $(function(){
     var _iniD = _iniObj.getDate();
     var _iniM = _iniObj.getMonth();
     var _iniY = _iniObj.getFullYear();
+    */
 
     // Ahora periodo inicial es el acumulado del año
-    /*
     var _iniObj = new Date(_year,0,1);
     var _iniD = 1;
     var _iniM = 0;
@@ -38,7 +38,6 @@ $(function(){
 
     var _ini = _iniObj.getTime(); // milisecs
     var _fin = new Date().getTime();
-    */
 
     // Para ushahidi va en segundos
     $('#startDate').val(_ini/1000);
