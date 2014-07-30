@@ -25,9 +25,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     <input type="hidden" id="yyyy_fin" value="">
                     <div id="time" class="">
                         <select id="stime">
-                            <option value="acum" selected>Acumulado <?php echo $totalxy[0] ?></option>
+                            <option value="s" selected>Ultima semana</option>
                             <option value="m">Ultimo mes</option>
-                            <option value="s">Ultima semana</option>
+                            <option value="acum">Acumulado <?php echo $totalxy[0] ?></option>
                             <optgroup label="Años">
                             <!--<option value="a">Todo el a&ntilde;o</option>-->
                             <?php
