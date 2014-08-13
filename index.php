@@ -105,6 +105,10 @@ if (!empty($_GET) && isset($_GET['m'])) {
         case 'session_var':
             $mc->setSessionVar($_GET['var'], $_GET['valor']);
         break;
+
+        case 'genCachePdfDiario':
+            $mc->genCachePdfDiario();
+        break;
     }
 }
 else {

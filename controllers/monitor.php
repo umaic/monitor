@@ -1058,13 +1058,52 @@ class MonitorController {
     }
     
     /*
-     * Coloca variable en sesión
-     * @param string $var
-     * @param string $valor
+     * Consulta url de eventos creados o modificados en el dia
+     *
+     * @return array $eventos
      */
-    public function setSessionVar($var, $valor) {
+    public function genCachePdfDiario() {
         
-        $_SESSION[$var] = $valor;
+        ini_set('max_execution_time', 0);
 
+        $ch = curl_init();
+        
+        // Violencia armada
+        $sql = "SELECT i.id, source_reference AS url
+                FROM incident AS i
+                JOIN source_detail AS s 
+                ON i.id = s.incident_id
+                WHERE incident_dateadd >= NOW() - INTERVAL 1 DAY
+                AND source_reference LIKe 'http%'";
+
+        $rs = $this->db->open($sql);
+        while ( $row = $this->db->FO($rs)) {
+            
+            $u = $row->url;
+            $id = $row->id;
+            $w3hx = 1;
+            
+            $vars = compact('w3hx','id','u');
+
+            $h2pdf = "http://192.168.1.23/html2pdf/index.php?w3hx=1&id=$id&u=$u";
+
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
+            curl_setopt($ch, CURLOPT_URL, $h2pdf);
+
+            $pdf = curl_exec($ch);
+
+            if (False === $pdf)
+                continue;
+
+            // Guarda pdf
+            file_put_contents("ss/v/$id.pdf", $pdf);
+            die;
+
+            sleep(10);
+        }
+        curl_close($ch);
+
+        
     }
 }
