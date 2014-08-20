@@ -27,14 +27,24 @@ $geonode = true;
     <a href="http://www.salahumanitaria.co" target="_blank" class="brand">
         <div id="brand"></div>
     </a>
+<!--
+                        Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
+                        humanitaria en Colombia para poder visualizar la situaci&oacute;n 
+                        humanitaria en el pa&iacute;s de manera georeferenciada. <br /><br />
+                        Permite la visualizaci&oacute;n de multiples fuentes de informaci&oacute;n 
+                        tanto de desastres naturales como de emergencia compleja.  
+                        OCHA Colombia provee esta plataforma como un servicio com&uacute;n humanitario 
+                        para el Equipo Humanitario del Pa&iacute;s (EHP) y los miembros de los respetivos Clusters
+
+-->
     <div id="header">
         <div id="i" class="left">
             <div id="logo" class="left"></div>
         </div>
             <div id="b" class="left">
                     <ul>
-                        <li><a id="lmh" href="#">Que es monitor?</a></li>
-                        <li><a href="http://www.salahumanitaria.co" target="_blank">Sala Humanitaria</a></li>
+                        <li><a id="lmh" href="#">¿Qué es <b>Monitor</b>?</a></li>
+                        <li><a href="http://www.salahumanitaria.co" target="_blank">http://SalaHumanitaria.co</a></li>
                         <li><a href="http://sidih.salahumanitaria.co" target="_blank">Sidih</a></li>
                         <li><a href="http://geonode.salahumanitaria.co" target="_blank">Geonode</a></li>
                         <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki</a></li>
@@ -44,13 +54,12 @@ $geonode = true;
                         <img src="<?php echo BASE ?>media/img/logo.png" />
                     </div>
                     <div id="qmm">
-                        Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
-                        humanitaria en Colombia para poder visualizar la situaci&oacute;n 
-                        humanitaria en el pa&iacute;s de manera georeferenciada. <br /><br />
-                        Permite la visualizaci&oacute;n de multiples fuentes de informaci&oacute;n 
-                        tanto de desastres naturales como de emergencia compleja.  
-                        OCHA Colombia provee esta plataforma como un servicio com&uacute;n humanitario 
-                        para el Equipo Humanitario del Pa&iacute;s (EHP) y los miembros de los respetivos Clusters
+<h3>&iquest;Qu&eacute; es y para qu&eacute; sirve <b>Monitor</b>?</h3>
+<b>MONITOR</b> es una herramienta administrada por OCHA que est&aacute; a disposici&oacute;n de la comunidad humanitaria en Colombia y del p&uacute;blico en general con el objetivo de recopilar, categorizar y georreferenciar eventos de violencia armada y de desastres naturales. 
+<b>MONITOR</b> se alimenta de m&uacute;ltiples fuentes como medios de comunicaci&oacute;n locales y nacionales, &nbsp;instituciones del Estado, organizaciones de la sociedad civil e informaci&oacute;n recopilada en terreno por socios humanitarios nacionales e internacionales, entre otros. No se trata de un instrumento de verificaci&oacute;n de cada uno de los eventos reportados y no pretende reflejar la totalidad de la afectaci&oacute;n humanitaria.&nbsp;
+<br><br>S&oacute;lo para categor&iacute;as espec&iacute;ficas de <b>MONITOR</b> como el desplazamiento masivo o el confinamiento, OCHA puede hacer seguimiento en profundidad en zonas con presencia de los Equipos Humanitarios Locales (conformados por agencias de Naciones Unidas y ONG internacionales) y otros socios en terreno. El Monitor se alimenta y revisa en tiempo real por varios alimentadores en Bogot&aacute; y las regiones, por tanto es posible que la informaci&oacute;n pueda variar, dependiendo del momento de consulta. 
+La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute;n del Equipo Humanitario de Pa&iacute;s o de Naciones Unidas.
+<br>
                     </div>
                 </div>
             </div>
@@ -460,7 +469,7 @@ $geonode = true;
                 </p>
                 <div class="left">
                     <input type="text" id="layers_search" name="" value="" placeholder="Buscar por palabra en nombre o descripci&oacute;n" />
-                    &nbsp;<a href="#" id="geonode_limpiar">Limpiar</a>
+<!--                    &nbsp;<a href="#" id="geonode_limpiar">Limpiar</a>-->
                 </div>
                 <div class="clear"></div>
                 <ul id="layers_ul">

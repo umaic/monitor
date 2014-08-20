@@ -13,9 +13,10 @@ class MonitorController {
     private $meses;
 
     function __construct() {
-        $this->root = dirname( __FILE__ ).'/../'; 
+        require dirname( __FILE__ ).'/../config.php';
+        $lib_dir = $config['libraries'];
         
-        require $this->root.'libraries/factory.php';
+        require "$lib_dir/factory.php";
         $this->db = Factory::create('mysql');
         $this->db_dn = 'desastres';    
         $this->dbs = array('', $this->db_dn.'.');

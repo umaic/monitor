@@ -20,27 +20,46 @@ session_start();
 
 // PHP >= 5.3
 //date_default_timezone_set('America/Bogota');
-if (in_array($_SERVER['SERVER_NAME'], array('localhost','190.66.6.168'))) {
-    define ('BASE', '/monitor/');  // Comienza con slash, se usa al incluir los assets
-} 
-else {
-    define ('BASE', '/');  // Comienza con slash, se usa al incluir los assets
+
+
+$base = '/';
+if (isset($_SERVER['SERVER_NAME'])) {
+    if (in_array($_SERVER['SERVER_NAME'], array('localhost','190.66.6.168'))) {
+        $base = '/monitor/';  // Comienza con slash, se usa al incluir los assets
+    } 
 }
+
+define ('BASE', $base);  // Comienza con slash, se usa al incluir los assets
+
 include "config.php";
 require 'controllers/monitor.php';
 $mc = new MonitorController;
 
-if (empty($_SESSION['mapa_tipo'])) {
-    $_SESSION['mapa_tipo'] = 'afectacion';
+if (isset($_SESSION)) {
+    if (empty($_SESSION['mapa_tipo'])) {
+        $_SESSION['mapa_tipo'] = 'afectacion';
+    }
+
+    if (empty($_SESSION['acceso'])) {
+        $_SESSION['acceso'] = 0;
+    }
 }
 
-if (empty($_SESSION['acceso'])) {
-    $_SESSION['acceso'] = 0;
-}
+// Get o CLI
+$m = '';
 
+if (isset($argv)) {
+    $m = $argv[1];
+}
+else {
+
+    if (!empty($_GET) && isset($_GET['m'])) {
+        $m = $_GET['m'];
+    }
+}
 // Clean URL
-if (!empty($_GET) && isset($_GET['m'])) {
-    switch($_GET['m']) {
+if (!empty($m)) {
+    switch($m) {
         case 'totalxd':
             
             if (!empty($_GET['ini']) && is_numeric($_GET['ini'])) {
