@@ -1063,7 +1063,6 @@ class MonitorController {
      * @return array $eventos
      */
     public function genCachePdfDiario() {
-        
         ini_set('max_execution_time', 0);
 
         $ch = curl_init();
@@ -1082,7 +1081,6 @@ class MonitorController {
             $u = $row->url;
             $id = $row->id;
             $w3hx = 1;
-            
             $vars = compact('w3hx','id','u');
 
             $h2pdf = "http://192.168.1.23/html2pdf/index.php?w3hx=1&id=$id&u=$u";
