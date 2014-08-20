@@ -1068,12 +1068,20 @@ class MonitorController {
         $ch = curl_init();
         
         // Violencia armada
-        $sql = "SELECT i.id, source_reference AS url
-                FROM incident AS i
+        $from = " FROM incident AS i
                 JOIN source_detail AS s 
                 ON i.id = s.incident_id
                 WHERE incident_dateadd >= NOW() - INTERVAL 1 DAY
                 AND source_reference LIKe 'http%'";
+        
+        $sql = "SELECT i.id, source_reference AS url $from";
+        $sqln = "SELECT COUNT(i.id) $from";
+ 
+        // Numero de urls
+        $rs = $this->db->open($sqln);
+        $row = $this->db->FO($rs);
+        
+        echo 'A Procesar: '.$row->n.'<br />';
 
         $rs = $this->db->open($sql);
         while ( $row = $this->db->FO($rs)) {
@@ -1082,6 +1090,8 @@ class MonitorController {
             $id = $row->id;
             $w3hx = 1;
             $vars = compact('w3hx','id','u');
+            
+            echo "Procesando $u <br />";
 
             $h2pdf = "http://192.168.1.23/html2pdf/index.php?w3hx=1&id=$id&u=$u";
 
@@ -1096,7 +1106,6 @@ class MonitorController {
 
             // Guarda pdf
             file_put_contents("ss/v/$id.pdf", $pdf);
-            die;
 
             sleep(10);
         }
