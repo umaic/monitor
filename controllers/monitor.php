@@ -1076,7 +1076,7 @@ class MonitorController {
                 AND source_reference LIKe 'http%'";
         
         $sql = "SELECT i.id, source_reference AS url $from";
-        $sqln = "SELECT COUNT(i.id) $from";
+        $sqln = "SELECT COUNT(i.id) AS n $from";
  
         // Numero de urls
         $rs = $this->db->open($sqln);

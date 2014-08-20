@@ -16,7 +16,11 @@
  * @link      http://monitor.colombiassh.org Monitor
 */
 
-session_start();
+$cli = (isset($argv)) ? true : false;
+
+if ($cli) {
+    session_start();
+}
 
 // PHP >= 5.3
 //date_default_timezone_set('America/Bogota');
@@ -48,7 +52,7 @@ if (isset($_SESSION)) {
 // Get o CLI
 $m = '';
 
-if (isset($argv)) {
+if ($cli) {
     $m = $argv[1];
 }
 else {
