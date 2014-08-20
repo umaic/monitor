@@ -18,7 +18,7 @@
 
 $cli = (isset($argv)) ? true : false;
 
-if ($cli !== false) {
+if ($cli === false) {
     session_start();
 }
 
