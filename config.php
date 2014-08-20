@@ -2,7 +2,7 @@
 
 // Se usa en libraries
 
-$config['base'] = 'monitor';
+$config['base'] = '';
 
 if (empty($_SERVER['DOCUMENT_ROOT'])) {
     $root = dirname(__FILE__);
