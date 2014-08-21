@@ -1068,7 +1068,7 @@ class MonitorController {
         ini_set('max_execution_time', 0);
         
         $ch = curl_init();
-        $cond_date = 'incident_dateadd >= NOW() - INTERVAL 1 DAY';
+        $cond_date = 'DATE(incident_dateadd) = DATE(NOW() - INTERVAL 1 DAY)';
 
         // Violencia armada
         $sql = "SELECT i.id, source_reference AS url 
