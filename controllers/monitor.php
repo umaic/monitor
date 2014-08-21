@@ -1102,12 +1102,13 @@ class MonitorController {
     /*
      * Crea conexion a servidor desarrollo y guarda pdf
      *
-     * @param int $id 
+     * @param object $ch 
+     * @param int $id
      * @param string $url
      * @param string f Nombre de la carpeta en /ss donde se guarda el pdf, 'v', 'd'
      *
      */
-    private function getPDF($id, $url, $f) {
+    private function getPDF($ch, $id, $url, $f) {
             
         $w3hx = 1;
         $vars = compact('w3hx','id','u');
