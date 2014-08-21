@@ -1064,54 +1064,67 @@ class MonitorController {
      * @return array $eventos
      */
     public function genCachePdfDiario() {
-        ini_set('max_execution_time', 0);
-
-        $ch = curl_init();
         
+        ini_set('max_execution_time', 0);
+        
+        $ch = curl_init();
+        $cond_date = 'incident_dateadd >= NOW() - INTERVAL 1 DAY';
+
         // Violencia armada
-        $from = " FROM incident AS i
+        $sql = "SELECT i.id, source_reference AS url FROM incident AS i
                 JOIN source_detail AS s 
                 ON i.id = s.incident_id
-                WHERE incident_dateadd >= NOW() - INTERVAL 1 DAY
-                AND source_reference LIKe 'http%'";
+                WHERE $cond_date
+                AND source_reference LIKE 'http:%'";
         
-        $sql = "SELECT i.id, source_reference AS url $from";
-        $sqln = "SELECT COUNT(i.id) AS n $from";
- 
-        // Numero de urls
-        $rs = $this->db->open($sqln);
-        $row = $this->db->FO($rs);
-        
-        echo 'A Procesar: '.$row->n.'<br />';
-
         $rs = $this->db->open($sql);
         while ( $row = $this->db->FO($rs)) {
-            
-            $u = $row->url;
-            $id = $row->id;
-            $w3hx = 1;
-            $vars = compact('w3hx','id','u');
-            
-            echo "Procesando $u <br />";
-
-            $h2pdf = "http://192.168.1.23/html2pdf/index.php?w3hx=1&id=$id&u=$u";
-
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
-            curl_setopt($ch, CURLOPT_URL, $h2pdf);
-
-            $pdf = curl_exec($ch);
-
-            if (False === $pdf)
-                continue;
-
-            // Guarda pdf
-            file_put_contents("ss/v/$id.pdf", $pdf);
-
+            $this->getPDF($row->id, $row->url, 'v');
             sleep(10);
         }
-        curl_close($ch);
 
+        // Desatres
+        $sql = "SELECT i.id, media_link AS url FROM incident AS i
+                JOIN media AS m 
+                ON i.id = m.incident_id
+                WHERE $cond_date
+                AND media_type = 4 AND media_link LIKE 'http:%'";
         
+        $rs = $this->db->open($sql);
+        while ( $row = $this->db->FO($rs)) {
+            $this->getPDF($row->id, $row->url, 'd');
+            sleep(10);
+        }
+        
+        curl_close($ch);
+    }
+    
+    /*
+     * Crea conexion a servidor desarrollo y guarda pdf
+     *
+     * @param int $id 
+     * @param string $url
+     * @param string f Nombre de la carpeta en /ss donde se guarda el pdf, 'v', 'd'
+     *
+     */
+    private function getPDF($id, $url, $f) {
+            
+        $w3hx = 1;
+        $vars = compact('w3hx','id','u');
+        
+        $h2pdf = "http://192.168.1.23/html2pdf/index.php?w3hx=1&id=$id&u=$url";
+
+        curl_setopt($ch, CURLOPT_HEADER, 0);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
+        curl_setopt($ch, CURLOPT_URL, $h2pdf);
+
+        $pdf = curl_exec($ch);
+
+        if (False === $pdf)
+            continue;
+
+        // Guarda pdf
+        file_put_contents("ss/$f/$id.pdf", $pdf);
+
     }
 }
