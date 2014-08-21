@@ -1071,7 +1071,8 @@ class MonitorController {
         $cond_date = 'incident_dateadd >= NOW() - INTERVAL 1 DAY';
 
         // Violencia armada
-        $sql = "SELECT i.id, source_reference AS url FROM incident AS i
+        $sql = "SELECT i.id, source_reference AS url 
+                FROM incident AS i
                 JOIN source_detail AS s 
                 ON i.id = s.incident_id
                 WHERE $cond_date
@@ -1082,10 +1083,12 @@ class MonitorController {
             $this->getPDF($ch, $row->id, $row->url, 'v');
             sleep(10);
         }
-
+        
         // Desatres
-        $sql = "SELECT i.id, media_link AS url FROM incident AS i
-                JOIN media AS m 
+        $db = $this->db_dn;
+        $sql = "SELECT i.id, media_link AS url 
+                FROM $db.incident AS i
+                JOIN $db.media AS m 
                 ON i.id = m.incident_id
                 WHERE $cond_date
                 AND media_type = 4 AND media_link LIKE 'http:%'";
