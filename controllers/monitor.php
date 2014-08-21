@@ -1079,7 +1079,7 @@ class MonitorController {
         
         $rs = $this->db->open($sql);
         while ( $row = $this->db->FO($rs)) {
-            $this->getPDF($row->id, $row->url, 'v');
+            $this->getPDF($ch, $row->id, $row->url, 'v');
             sleep(10);
         }
 
@@ -1092,7 +1092,7 @@ class MonitorController {
         
         $rs = $this->db->open($sql);
         while ( $row = $this->db->FO($rs)) {
-            $this->getPDF($row->id, $row->url, 'd');
+            $this->getPDF($ch, $row->id, $row->url, 'd');
             sleep(10);
         }
         
