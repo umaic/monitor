@@ -1131,4 +1131,15 @@ class MonitorController {
         file_put_contents("ss/$f/$id.pdf", $pdf);
 
     }
+
+    /*
+     * Coloca variable en sesión
+     * @param string $var
+     * @param string $valor
+     */
+    public function setSessionVar($var, $valor) {
+        
+        $_SESSION[$var] = $valor;
+
+    }
 }
