@@ -11,12 +11,17 @@ class MonitorController {
     private $db;
     private $dbs;
     private $meses;
+    private $config;
 
     function __construct() {
+        
         require dirname( __FILE__ ).'/../config.php';
+        
         $lib_dir = $config['libraries'];
         
         require "$lib_dir/factory.php";
+
+        $this->config = $config;
         $this->db = Factory::create('mysql');
         $this->db_dn = 'desastres';    
         $this->dbs = array('', $this->db_dn.'.');
@@ -97,12 +102,12 @@ class MonitorController {
         $fin = date('Y-m-d H:i:s', intval($fin));
 
         $_t = explode('|', $cats);
-        $cond_cats_ec = '';
+        $cond_cats_ec = '1=1';
         if (!empty($_t[0])) {
             $cond_cats_ec = ' category_id IN ('.$_t[0].')';
         }
         
-        $cond_cats_dn = '';
+        $cond_cats_dn = '1=1';
         if (!empty($_t[1])) {
             $cond_cats_dn = ' category_id IN ('.$_t[1].')';
         }
@@ -306,12 +311,20 @@ class MonitorController {
      * 
      * Genera el csv de incidentes
      *
+     * @param array $conds
+     *
      */ 
-    public function downloadIncidents() {
+    public function downloadIncidents($conds=array()) {
         $_db = $this->db_dn.'.';
-        $cond_csv = $_SESSION['cond_csv']; // Se crea en $this->totalxd, fila 152 
-        $cond_cats_ec = $_SESSION['cond_cats_ec'];
-        $cond_cats_dn = $_SESSION['cond_cats_dn'];
+
+        if (isset($_SESSION['cond_csv'])) {
+            $cond_csv = $_SESSION['cond_csv']; // Se crea en $this->totalxd, fila 152 
+            $cond_cats_ec = $_SESSION['cond_cats_ec'];
+            $cond_cats_dn = $_SESSION['cond_cats_dn'];
+        }
+        else {
+            extract($conds);
+        }
 
         $limi = '~';
         $nl = "\r\n";
@@ -492,7 +505,7 @@ class MonitorController {
 
         //echo $csv;
         $f = Factory::create('file');
-        $nomf = 'incidentes'; 
+        $nomf = $this->config['nombre_reporte_csv'];
 
         $fp = $f->open("data/$nomf.csv", 'w+');
         $f->write($fp, $csv);
@@ -1024,25 +1037,35 @@ class MonitorController {
      * @param string $t xls,pdf
      * @param string $csv Nombre del archivo csv
      * @param string $nom Nombre del archivo con el que se exporta
+     * @param string $output Output way
      */ 
-    public function export($t,$csv,$nom) {
-        require 'libraries/phpexcel/PHPExcel/IOFactory.php';
+    public function export($t,$csv,$nom,$output='web') {
+        
+        require_once 'libraries/phpexcel/PHPExcel/IOFactory.php';
 
         $objReader = PHPExcel_IOFactory::createReader('CSV');
 
         // If the files uses a delimiter other than a comma (e.g. a tab), then tell the reader
         $objReader->setDelimiter("~");
-        //$objReader->setEnclosure('""');
         $objReader->setLineEnding("\r\n");
         // If the files uses an encoding other than UTF-8 or ASCII, then tell the reader
         //$objReader->setInputEncoding('ISO-8859-1');
 
         $objPHPExcel = $objReader->load('data/'.$csv.'.csv');
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
-        header("Content-type: application/vnd.ms-excel");
-        header("Content-Disposition: attachment; filename=\"".$nom.".xls\"");
-        header("Cache-Control: max-age=0");
-        $objWriter->save('php://output');   
+
+        switch($output) {
+            case 'web':
+                header("Content-type: application/vnd.ms-excel");
+                header("Content-Disposition: attachment; filename=\"".$nom.".xls\"");
+                header("Cache-Control: max-age=0");
+                $objWriter->save('php://output');   
+            break;
+            case 'static':
+                $objWriter->save($this->config['cache_zip'].'/'.$nom);   
+            break;
+        }
+        
     }
     
     /**
@@ -1130,6 +1153,28 @@ class MonitorController {
         // Guarda pdf
         file_put_contents("ss/$f/$id.pdf", $pdf);
 
+    }
+    
+    /*
+     * Genera cache de reportes
+     *
+     */
+    public function genCacheReportesDiario() {
+        $yyyy = date('Y') - 1;
+        for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
+
+            $ini = mktime(0,0,0,1,1,$a);
+            $fin = mktime(0,0,0,12,31,$a);
+            $cats = '';
+            $states = '';
+
+            list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
+
+            $this->downloadIncidents(compact('cond_csv','cond_cats_dn','cond_cats_ec'));
+            $nomf = $this->config['nombre_reporte_csv'];
+            $this->export('xls',$nomf,"monitor-eventos-$a.xls",'static');
+            
+        }
     }
 
     /*

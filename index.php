@@ -132,6 +132,9 @@ if (!empty($m)) {
         case 'genCachePdfDiario':
             $mc->genCachePdfDiario();
         break;
+        case 'genCacheReportesDiario':
+            $mc->genCacheReportesDiario();
+        break;
     }
 }
 else {
@@ -152,7 +155,7 @@ else {
     // Se usaba este para mostrar el total por años
     //$totalxy = $mc->total($cats_hide);
     $yyyy = date('Y');
-    for ($a=$yyyy;$a>=2008;$a--) {
+    for ($a=$yyyy;$a>=$config['yyyy_ini'];$a--) {
         $totalxy[] = $a;
     }
     

@@ -171,6 +171,27 @@ div.tecdn div {
 #descargar .w {
     color: #fff;
 }
+#descargar .step {
+    background-color: #312A2A;
+    padding: 10px;
+    word-wrap: break-word;
+    width: 290px;
+    height: 290px;
+    border-right: 1px solid #564F4F;
+}
+#descargar #zips {
+    margin-right: 10px;
+}
+#descargar #zips ul {
+    list-style: none;
+}
+#descargar #zips li {
+    padding: 5px 0 5px 20px;
+    background: url(media/img/xls.png) no-repeat 0 0;
+}
+#descargar .radio {
+    padding: 5px;
+}
 
 .fcat a {
     color: #ffffff;

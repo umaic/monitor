@@ -15,6 +15,9 @@ $sala = 'salahumanitaria.co';
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 $url_violencia = "http://violenciaarmada.".$sala."/reports/submit";
 $url_desastres = "http://desastres.".$sala."/reports/submit";
+$ayer_time = strtotime('-1 Day');
+$ayer = date('d', $ayer_time).' de '.$meses[date('n', $ayer_time) - 1].' de '.date('Y', $ayer_time);
+echo $ayer;
 
 // Test geonode server
 $geonode = true;
@@ -402,21 +405,48 @@ La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute
         
         <!-- Descargar eventos -->
         <div id="descargar" class="filtro fcat" data-index="2">
-            <div class="left">
-                 <h2 class="dosis w">Descargar eventos</h2>
-            </div>
             <div class="right">
                 <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="clear"></div>
-            <div class="w"><br />
-                Esta opci&oacute;n le permite descargar el listado de eventos que est&aacute;
-                viendo en el mapa, es decir, los eventos con los filtros aplicados. <br /> <br /> El tiempo
-                de generaci&oacute;n del reporte depende del n&uacute;mero de eventos
+            <div id="zips" class="left w step">
+                <div>
+                    <h2 class="dosis">Descarga directa</h2>
+                    <p>Reportes con corte a: <?php echo $ayer ?></p>
+                </div>
+                <div>
+                    <ul>
+                        <?php 
+                        foreach($totalxy as $_a) {
+                            $file = "z/monitor_eventos_$_a.xls";
+                            $size = filesize($file);
+                            echo "<li val='$_a' q='ini' y='yyyy'><a href='$file'>Eventos del $_a [ $size Mb ]</a></li>"; 
+                        } 
+                        ?>
+                    </ul>
+                </div>
             </div>
-            <div>
-                <br /><br />
-                <div class="btn" id="download_incidents">Comenzar con la descarga....</div>
+            <div class="left step">
+                <div class="w">
+                    <h2 class="dosis">Generar reporte</h2>
+                </div>
+                <p class="w">
+                    Esta opci&oacute;n le permite descargar el listado de eventos que est&aacute;
+                    viendo en el mapa, es decir, los eventos con los filtros aplicados. <br /> <br /> El tiempo
+                    de generaci&oacute;n del reporte depende del n&uacute;mero de eventos
+                </p>
+                <div>
+                    <div class="radio">
+                        <input type="radio" value="v" name="descargar_v_d" checked />
+                        <label for="acumulado">Eventos de Violencia Armada</label>
+                    </div>
+                    <div class="radio">
+                        <input type="radio" value="d" name="descargar_v_d" />
+                        <label for="acumulado">Eventos de Desastres</label>
+                    </div>
+                    <br /><br />
+                    <div class="btn" id="download_incidents">Comenzar con la descarga....</div>
+                </div>
             </div>
         </div>
         <!-- Descargar eventos :: FIN-->
