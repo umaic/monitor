@@ -206,7 +206,7 @@ $(function(){
         $('#download_incidents').click(function() {
             $('#loading').show();
             $.ajax({
-                    url: 'download_incidents',
+                    url: 'download_incidents/' + $('input[name="descargar_v_d"]:checked').val(),
                     success: function() {
                         $('#loading').hide();
                         location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            

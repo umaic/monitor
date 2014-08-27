@@ -13,7 +13,7 @@ else {
 
 $config['base_path'] = $root;
 $config['libraries'] = $config['base_path'].'/libraries';
-$config['cache_zip'] = $config['base_path'].'/z';
+$config['cache_reportes'] = $config['base_path'].'/z';
 $config['yyyy_ini'] = 2008;
 $config['nombre_reporte_csv'] = 'incidentes'; 
 

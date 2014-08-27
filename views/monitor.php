@@ -418,9 +418,9 @@ La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute
                     <ul>
                         <?php 
                         foreach($totalxy as $_a) {
-                            $file = "z/monitor_eventos_$_a.xls";
-                            $size = filesize($file);
-                            echo "<li val='$_a' q='ini' y='yyyy'><a href='$file'>Eventos del $_a [ $size Mb ]</a></li>"; 
+                            $file = $config['cache_reportes']."/monitor-eventos-$_a.xls";
+                            $size = ceil(number_format(filesize($file) / 1000000, 0));
+                            echo "<li val='$_a' q='ini' y='yyyy'><a href='$file'>Eventos del $_a [ ~ $size Mb ]</a></li>"; 
                         } 
                         ?>
                     </ul>

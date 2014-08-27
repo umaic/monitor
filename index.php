@@ -122,7 +122,7 @@ if (!empty($m)) {
         break;
         
         case 'download_incidents':
-            $mc->downloadIncidents();
+            $mc->downloadIncidents($_GET['f']);
         break;
 
         case 'session_var':

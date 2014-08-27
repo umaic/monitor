@@ -311,10 +311,11 @@ class MonitorController {
      * 
      * Genera el csv de incidentes
      *
+     * @param string $tipo, v|d
      * @param array $conds
      *
      */ 
-    public function downloadIncidents($conds=array()) {
+    public function downloadIncidents($tipo, $conds=array()) {
         $_db = $this->db_dn.'.';
 
         if (isset($_SESSION['cond_csv'])) {
@@ -349,14 +350,16 @@ class MonitorController {
                  WHERE $cond_csv 
                  GROUP BY i.id
                  ";
-        
-        //$_sql_csv_ec = sprintf($_sql_csv,'','','', $cond_cats_ec);
-        //$_sql_csv_dn = sprintf($_sql_csv,$_db,$_db,$_db, $cond_cats_dn);
-
+        /*
         $ushas = array(array('t' => 'Violencia armada', 'db' => '', 'cc' => $cond_cats_ec),
-                      array( 't' => 'Desastres', 'db' => $_db, 'cc' => $cond_cats_dn));
+            array( 't' => 'Desastres', 'db' => $_db, 'cc' => $cond_cats_dn));
+*/
+        
+        $ushas = array('v' => array('t' => 'Violencia armada', 'db' => '', 'cc' => $cond_cats_ec),
+                       'd' => array( 't' => 'Desastres', 'db' => $_db, 'cc' => $cond_cats_dn));
 
-        foreach($ushas as $u => $usha) {
+        //foreach($ushas as $u => $usha) {
+        $usha = $ushas[$tipo];
 
             $_dbu = $usha['db'];
             $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu,$_dbu,$usha['cc']);
@@ -375,7 +378,7 @@ class MonitorController {
                 $acceso = '';
                 $res_1612 = '';
 
-                if ($u == 0) {
+                if ($tipo == 'v') {
                     
                     $title = $_r->title;
                     $des = $_r->des;
@@ -389,8 +392,10 @@ class MonitorController {
 
                     $_rss = $this->db->open($_sql_s);
                     $_row_s = $this->db->FO($_rss);
-                    
+
                     $desc = (empty($_row_s->descr)) ? '' : str_replace('"','',$_row_s->descr);
+                    $desc = preg_replace( "/\r|\n/", "", $desc);
+
                     $ref = (empty($_row_s->ref)) ? '' : $_row_s->ref;
                     $source = (empty($_row_s->source)) ? '' : $_row_s->source;
 
@@ -501,7 +506,7 @@ class MonitorController {
                 $csv .= $nl;
 
             }
-        }
+        //}
 
         //echo $csv;
         $f = Factory::create('file');
@@ -1062,7 +1067,7 @@ class MonitorController {
                 $objWriter->save('php://output');   
             break;
             case 'static':
-                $objWriter->save($this->config['cache_zip'].'/'.$nom);   
+                $objWriter->save($nom);   
             break;
         }
         
@@ -1160,19 +1165,35 @@ class MonitorController {
      *
      */
     public function genCacheReportesDiario() {
-        $yyyy = date('Y') - 1;
+
+        $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
+
+        $cond_date = "DATE(incident_datemodify) = $ayer OR DATE(incident_dateadd) = $ayer";
+
+        $yyyy = date('Y');
         for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
 
-            $ini = mktime(0,0,0,1,1,$a);
-            $fin = mktime(0,0,0,12,31,$a);
-            $cats = '';
-            $states = '';
+            // Check if there are modificated incidents at the year
+            $sql = "SELECT COUNT(id) AS n FROM incident WHERE $cond_date";
+            $rs = $this->db->open($sql);
+            $row = $this->db->FO($rs);
 
-            list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
+            $reporte = $this->config['cache_reportes'].'/'."monitor-eventos-$a.xls";
 
-            $this->downloadIncidents(compact('cond_csv','cond_cats_dn','cond_cats_ec'));
-            $nomf = $this->config['nombre_reporte_csv'];
-            $this->export('xls',$nomf,"monitor-eventos-$a.xls",'static');
+            if (!empty($row->n) || file_exists($reporte) === false) {
+
+                $ini = mktime(0,0,0,1,1,$a);
+                $fin = mktime(0,0,0,12,31,$a);
+                $cats = '';
+                $states = '';
+
+                list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
+
+                $this->downloadIncidents('v',compact('cond_csv','cond_cats_dn','cond_cats_ec'));
+                $this->downloadIncidents('d',compact('cond_csv','cond_cats_dn','cond_cats_ec'));
+                $nomf = $this->config['nombre_reporte_csv'];
+                $this->export('xls',$nomf, $reporte,'static');
+            }
             
         }
     }
