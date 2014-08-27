@@ -1156,7 +1156,7 @@ class MonitorController {
             continue;
 
         // Guarda pdf
-        file_put_contents("ss/$f/$id.pdf", $pdf);
+        file_put_contents($this->config['cache_pdf']."/$f/$id.pdf", $pdf);
 
     }
     
