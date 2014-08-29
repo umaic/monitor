@@ -16,6 +16,6 @@ $config['libraries'] = $config['base_path'].'/libraries';
 $config['cache_pdf'] = $config['base_path'].'/ss';
 $config['cache_reportes'] = $config['base_path'].'/z';
 $config['yyyy_ini'] = 2008;
-$config['nombre_reporte_csv'] = 'incidentes'; 
+$config['reporte_csv'] = $config['cache_reportes'].'/incidentes.csv'; 
 
 ?>

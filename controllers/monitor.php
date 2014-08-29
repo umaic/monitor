@@ -12,14 +12,15 @@ class MonitorController {
     private $dbs;
     private $meses;
     private $config;
+    private $lib_dir;
 
     function __construct() {
         
         require dirname( __FILE__ ).'/../config.php';
         
-        $lib_dir = $config['libraries'];
+        $this->lib_dir = $config['libraries'];
         
-        require "$lib_dir/factory.php";
+        require $this->lib_dir."/factory.php";
 
         $this->config = $config;
         $this->db = Factory::create('mysql');
@@ -510,9 +511,8 @@ class MonitorController {
 
         //echo $csv;
         $f = Factory::create('file');
-        $nomf = $this->config['nombre_reporte_csv'];
 
-        $fp = $f->open("data/$nomf.csv", 'w+');
+        $fp = $f->open($this->config['reporte_csv'], 'w+');
         $f->write($fp, $csv);
         $f->close($fp);
         
@@ -1040,13 +1040,13 @@ class MonitorController {
      * Export data
      *
      * @param string $t xls,pdf
-     * @param string $csv Nombre del archivo csv
+     * @param string $csv Path al archivo csv temporal
      * @param string $nom Nombre del archivo con el que se exporta
      * @param string $output Output way
      */ 
     public function export($t,$csv,$nom,$output='web') {
         
-        require_once 'libraries/phpexcel/PHPExcel/IOFactory.php';
+        require_once $this->lib_dir.'/phpexcel/PHPExcel/IOFactory.php';
 
         $objReader = PHPExcel_IOFactory::createReader('CSV');
 
@@ -1056,7 +1056,7 @@ class MonitorController {
         // If the files uses an encoding other than UTF-8 or ASCII, then tell the reader
         //$objReader->setInputEncoding('ISO-8859-1');
 
-        $objPHPExcel = $objReader->load('data/'.$csv.'.csv');
+        $objPHPExcel = $objReader->load($csv);
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 
         switch($output) {
@@ -1166,19 +1166,21 @@ class MonitorController {
      */
     public function genCacheReportesDiario() {
 
+        $reporte_tmp = $this->config['reporte_csv'];
         $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
-
         $cond_date = "DATE(incident_datemodify) = $ayer OR DATE(incident_dateadd) = $ayer";
-
         $yyyy = date('Y');
+        
         for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
 
             // Check if there are modificated incidents at the year
-            $sql = "SELECT COUNT(id) AS n FROM incident WHERE $cond_date";
+            $sql = "SELECT COUNT(id) AS n FROM incident WHERE YEAR(incident_date) = $a AND ($cond_date)";
             $rs = $this->db->open($sql);
             $row = $this->db->FO($rs);
 
-            $reporte = $this->config['cache_reportes'].'/'."monitor-eventos-$a.xls";
+            $reporte = $this->config['cache_reportes'].'/'."monitor-eventos-$a";
+            $reporte_v = $reporte.'-violencia.xls';
+            $reporte_d = $reporte.'-desastres.xls';
 
             if (!empty($row->n) || file_exists($reporte) === false) {
 
@@ -1190,9 +1192,10 @@ class MonitorController {
                 list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
 
                 $this->downloadIncidents('v',compact('cond_csv','cond_cats_dn','cond_cats_ec'));
+                $this->export('xls',$reporte_tmp, $reporte_v,'static');
+
                 $this->downloadIncidents('d',compact('cond_csv','cond_cats_dn','cond_cats_ec'));
-                $nomf = $this->config['nombre_reporte_csv'];
-                $this->export('xls',$nomf, $reporte,'static');
+                $this->export('xls',$reporte_tmp, $reporte_d,'static');
             }
             
         }
