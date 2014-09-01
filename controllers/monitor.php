@@ -1170,34 +1170,39 @@ class MonitorController {
         $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
         $cond_date = "DATE(incident_datemodify) = $ayer OR DATE(incident_dateadd) = $ayer";
         $yyyy = date('Y');
+
+        $dbs = array('violencia' => '', 'desastres' => $this->db_dn.'.');
         
         for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
 
-            // Check if there are modificated incidents at the year
-            $sql = "SELECT COUNT(id) AS n FROM incident WHERE YEAR(incident_date) = $a AND ($cond_date)";
-            $rs = $this->db->open($sql);
-            $row = $this->db->FO($rs);
+            foreach($dbs as $d => $db) {
 
-            $reporte = $this->config['cache_reportes'].'/'."monitor-eventos-$a";
-            $reporte_v = $reporte.'-violencia.xls';
-            $reporte_d = $reporte.'-desastres.xls';
+                // Check if there are modificated incidents at the year
+                $sql = "SELECT COUNT(id) AS n FROM ".$db."incident WHERE YEAR(incident_date) = $a AND incident_active = 1 AND ($cond_date)";
+                
+                //echo "$sql\n";
+                
+                $rs = $this->db->open($sql);
+                $row = $this->db->FO($rs);
 
-            if (!empty($row->n) || file_exists($reporte) === false) {
+                $reporte = $this->config['cache_reportes'].'/'."monitor-eventos-$a-$d.xls";
+                
+                if (!empty($row->n) || file_exists($reporte) === false) {
 
-                $ini = mktime(0,0,0,1,1,$a);
-                $fin = mktime(0,0,0,12,31,$a);
-                $cats = '';
-                $states = '';
+                    $ini = mktime(0,0,0,1,1,$a);
+                    $fin = mktime(0,0,0,12,31,$a);
+                    $cats = '';
+                    $states = '';
 
-                list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
+                    list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
 
-                $this->downloadIncidents('v',compact('cond_csv','cond_cats_dn','cond_cats_ec'));
-                $this->export('xls',$reporte_tmp, $reporte_v,'static');
+                    $this->downloadIncidents($d[0],compact('cond_csv','cond_cats_dn','cond_cats_ec'));
+                    $this->export('xls',$reporte_tmp, $reporte,'static');
 
-                $this->downloadIncidents('d',compact('cond_csv','cond_cats_dn','cond_cats_ec'));
-                $this->export('xls',$reporte_tmp, $reporte_d,'static');
+                    echo "Listo = $a - $d \n";
+
+                }
             }
-            
         }
     }
 
