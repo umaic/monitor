@@ -383,6 +383,8 @@ class MonitorController {
                     
                     $title = $_r->title;
                     $des = $_r->des;
+                    $des = (empty($_row_s->des)) ? '' : str_replace('"','',$_row_s->des);
+                    $des = preg_replace( "/\r\n|\r|\n/", "", $des);
 
                     // Fuentes
                     // Todo: Ojo, revisar el tema que no se pueden mostrar bitacoras
@@ -395,9 +397,11 @@ class MonitorController {
                     $_row_s = $this->db->FO($_rss);
 
                     $desc = (empty($_row_s->descr)) ? '' : str_replace('"','',$_row_s->descr);
-                    $desc = preg_replace( "/\r|\n/", "", $desc);
+                    $desc = preg_replace( "/\r\n|\r|\n/", "", $desc);
 
                     $ref = (empty($_row_s->ref)) ? '' : $_row_s->ref;
+                    $ref = preg_replace( "/\r\n|\r|\n/", ", ", $ref);
+
                     $source = (empty($_row_s->source)) ? '' : $_row_s->source;
 
                     // # victimas por condicion,age,gender,ethnic
@@ -431,10 +435,6 @@ class MonitorController {
                     WHERE form_field_id = %s AND incident_id = $iid AND restricting_access = 1";
 
                     $_sql_acc = sprintf($_sql_acc_1612,$form_field_id_acc);
-
-                    if ($iid == 71757) {
-                        //echo $_sql_acc.'<br />';
-                    } 
 
                     $_rsv = $this->db->open($_sql_acc);
                     $acceso = array();
@@ -1056,7 +1056,7 @@ class MonitorController {
         // If the files uses an encoding other than UTF-8 or ASCII, then tell the reader
         //$objReader->setInputEncoding('ISO-8859-1');
 
-        $objPHPExcel = $objReader->load($csv);
+        $objPHPExcel = $objReader->load($this->config['cache_reportes'].'/'.$csv.'.csv');
         $objWriter = PHPExcel_IOFactory::createWriter($objPHPExcel, 'Excel5');
 
         switch($output) {
@@ -1197,7 +1197,7 @@ class MonitorController {
                     list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
 
                     $this->downloadIncidents($d[0],compact('cond_csv','cond_cats_dn','cond_cats_ec'));
-                    $this->export('xls',$reporte_tmp, $reporte,'static');
+                    $this->export('xls','incidentes', $reporte,'static');
 
                     echo "Listo = $a - $d \n";
 

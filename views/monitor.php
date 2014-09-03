@@ -21,6 +21,15 @@ echo $ayer;
 
 // Test geonode server
 $geonode = true;
+
+function filesize_formatted($path)
+{
+    $size = filesize($path);
+    $units = array( 'B', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB');
+    $power = $size > 0 ? floor(log($size, 1024)) : 0;
+    return number_format($size / pow(1024, $power), 2, '.', ',') . ' ' . $units[$power];
+}
+
 ?>
 
 <body>
@@ -409,23 +418,6 @@ La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute
                 <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="clear"></div>
-            <div id="zips" class="left w step">
-                <div>
-                    <h2 class="dosis">Descarga directa</h2>
-                    <p>Reportes con corte a: <?php echo $ayer ?></p>
-                </div>
-                <div>
-                    <ul>
-                        <?php 
-                        foreach($totalxy as $_a) {
-                            $file = $config['cache_reportes']."/monitor-eventos-$_a.xls";
-                            $size = ceil(number_format(filesize($file) / 1000000, 0));
-                            echo "<li val='$_a' q='ini' y='yyyy'><a href='$file'>Eventos del $_a [ ~ $size Mb ]</a></li>"; 
-                        } 
-                        ?>
-                    </ul>
-                </div>
-            </div>
             <div class="left step">
                 <div class="w">
                     <h2 class="dosis">Generar reporte</h2>
@@ -447,6 +439,29 @@ La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute
                     <br /><br />
                     <div class="btn" id="download_incidents">Comenzar con la descarga....</div>
                 </div>
+            </div>
+            <div id="zips" class="left w step">
+                <div>
+                    <h2 class="dosis">Descarga directa</h2>
+                </div>
+                <div>
+                    <table>
+                        <tr><th></th><th align="center">Violencia</th><th align="center">Desastres</th></tr>
+                        <?php 
+                        foreach($totalxy as $_a) {
+                            echo "<tr><td>$_a</td>";
+                            foreach(array('violencia','desastres') as $b) {
+                                $file = "monitor-eventos-$_a-$b.xls";
+
+                                $size = filesize_formatted($config['cache_reportes'].'/'.$file);
+                                echo "<td><a href='z/".$file."'>Descargar ~ $size</a></td>"; 
+                            }
+                            echo "</tr>";
+                        } 
+                        ?>
+                    </table>
+                </div>
+                <p class="note">Reportes generados el: <b><?php echo $ayer ?></b></p>
             </div>
         </div>
         <!-- Descargar eventos :: FIN-->
