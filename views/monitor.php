@@ -17,7 +17,6 @@ $url_violencia = "http://violenciaarmada.".$sala."/reports/submit";
 $url_desastres = "http://desastres.".$sala."/reports/submit";
 $ayer_time = strtotime('-1 Day');
 $ayer = date('d', $ayer_time).' de '.$meses[date('n', $ayer_time) - 1].' de '.date('Y', $ayer_time);
-echo $ayer;
 
 // Test geonode server
 $geonode = true;
