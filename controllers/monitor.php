@@ -145,8 +145,6 @@ class MonitorController {
 
         list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
         
-        //echo $cond_tmp;
-
         $_SESSION['cond_csv'] = $cond_csv;
         $_SESSION['cond_cats_ec'] = $cond_cats_ec;
         $_SESSION['cond_cats_dn'] = $cond_cats_dn;
@@ -361,7 +359,6 @@ class MonitorController {
 
         //foreach($ushas as $u => $usha) {
         $usha = $ushas[$tipo];
-
             $_dbu = $usha['db'];
             $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu,$_dbu,$usha['cc']);
 
