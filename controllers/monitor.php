@@ -1149,11 +1149,10 @@ class MonitorController {
 
         $pdf = curl_exec($ch);
 
-        if (False === $pdf)
-            continue;
-
-        // Guarda pdf
-        file_put_contents($this->config['cache_pdf']."/$f/$id.pdf", $pdf);
+        if (False !== $pdf && !empty($pdf)) {
+            // Guarda pdf
+            file_put_contents($this->config['cache_pdf']."/$f/$id.pdf", $pdf);
+        }
 
     }
     
