@@ -287,6 +287,42 @@ $(function(){
 
         addWMSLayer($t.val(),$t.val(),v);
     });
+    
+    $('#depto').click(function() {
+        $('#depto_dropdown').toggle();
+    });
+    
+    $('#depto_dropdown').on('click','li', function() {
+
+        $li = $(this);
+        $chks = $('#table_totalxd').find(':checkbox');
+
+        // Colombia
+        if ($li.data('value') == 0) {
+            resetMap(); // map.js
+            $chks.prop('checked', true);
+        } 
+        else {
+            $chks.each(function(){
+                chk = ($(this).val() == $li.data('value')) ? true : false;
+                $(this).prop('checked', chk);
+
+            });
+            
+            selDepto($li.data('centroid'));   // in map.js
+        }
+        
+        addFeatures();
+        $('#depto_t').html($li.html());
+        
+        totalesxDepto();
+
+    });
+    
+    $('#collapse').click(function() {
+        $('.op').toggle();
+        $(this).toggleClass('expand');
+    });
 
     if (layout != 'monitor') {
         // Dropdown de periodos 
@@ -394,7 +430,6 @@ $(function(){
     mapRender();
     
     // Click en el departamento en la lista derecha
-    //
     var $table = $('#table_totalxd');
 
     $table.find(':checkbox').live('click', function() {
@@ -407,9 +442,8 @@ $(function(){
     });
                 
     // Row events
-    $table.find('tr:not(:first) td.n, tr:not(:last) td.n').live('click', function() {
-        selDepto($(this).closest('tr').find('td.centroid').html());   // in map.js
-    });
+    //$table.find('tr:not(:first) td.n, tr:not(:last) td.n').live('click', function() {
+    //});
 
     // Carga el listado de capas de geonode del archivo geonode_layers.html el
     // cual es creado por el script geonode_get_layers.sh
@@ -875,8 +909,10 @@ totalesxDepto = function(more) {
                 var no_e = true;
 
                 var $table = $('#table_totalxd tbody');
+                var $depto_dropdown = $('#depto_dropdown');
                 
                 var html = $table.html();
+                var dd_options = '<li data-value=0>Colombia</li>';
 
                 html += '<tr class="totalxd"><td></td><td class="left">Total</td><td class="ec">' + _t.ec + '</td><td class="dn">' + _t.dn + '</td></tr>';
 
@@ -887,7 +923,9 @@ totalesxDepto = function(more) {
                     if (no_e && (_i.ec > 0 || _i.dn > 0)) {
                         no_e = false;
                     } 
-                    html += '<tr class="f ' + _i.css + ' ' + _i.hide + '"><td><input type="checkbox" name="deptos[]" value="'+_i.state_id+'" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>';
+                    html += '<tr class="f ' + _i.css + ' ' + _i.hide + '"><td class="hide"><input type="checkbox" name="deptos[]" value="' + _i.state_id + '" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>';
+
+                    dd_options += '<li class="' + _i.hide + '" data-value="' + _i.state_id + '" data-centroid="' +_i.c + '"> ' +_i.d + '</li>';
                 }
                 
                 // Aviso de no eventos
@@ -897,6 +935,7 @@ totalesxDepto = function(more) {
                 }
 
                 $table.html(html);
+                $depto_dropdown.html(dd_options);
 
                 // Ordena tabla
                 //forceSortTable();

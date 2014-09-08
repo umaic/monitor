@@ -98,7 +98,7 @@ class MonitorController {
     public function getConditions($ini, $fin, $cats, $states) {
     
         date_default_timezone_set('UTC');  // Igual a emergencia compleja
-        
+
         $ini = date('Y-m-d H:i:s', intval($ini));  // Se usa intval para que quede igual que ushahidi/application/helper/reports/ :740
         $fin = date('Y-m-d H:i:s', intval($fin));
 
@@ -124,6 +124,7 @@ class MonitorController {
         if (!empty($states)) {
             $cond_csv .= ' AND state_id IN ('.$states.')';
         }
+        
 
         return array($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
     }
@@ -175,6 +176,7 @@ class MonitorController {
             
             $_sqliec = sprintf($_sqle,$cond_cats_ec);
             $_sqlidn = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
+
         }
         else {
             $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
@@ -774,21 +776,21 @@ class MonitorController {
         $_db = $this->db_dn.'.';
         
         //echo $cond_tmp;
-        
+        /* 
         if ($afectacion) {
             $_sqle = "SELECT SUM(victim_cant) AS n
                 FROM %svictim v
                 JOIN %sincident_category ic ON v.incident_category_id = ic.id
                 JOIN %sincident AS i ON ic.incident_id = i.id
                 JOIN %slocation AS l ON l.id = i.location_id
-                WHERE $cond_tmp";
+                WHERE $cond_csv";
             
             $_sqld = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
                 FROM %sform_response f
                 JOIN %sincident AS i ON f.incident_id = i.id
                 JOIN %slocation AS l ON l.id = i.location_id
                 JOIN %sincident_category ic USING(incident_id)
-                WHERE $cond_tmp AND form_field_id = 4";
+                WHERE $cond_csv AND form_field_id = 4";
             
             $_sqliec = sprintf($_sqle,'','','','',$cond_cats_ec);
             $_sqlidn = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
@@ -797,11 +799,12 @@ class MonitorController {
             $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
                  JOIN %sincident AS i ON l.id = i.location_id
                  JOIN %sincident_category AS ic ON i.id = ic.incident_id
-                 WHERE $cond_tmp";
+                 WHERE $cond_csv";
         
             $_sqliec = sprintf($_sql,'','','',$cond_cats_ec);
             $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
         }
+         */
         
         // Resumen violencia
         if ($afectacion) {
@@ -813,7 +816,8 @@ class MonitorController {
                 JOIN incident_category ic ON v.incident_category_id = ic.id
                 JOIN category c ON ic.category_id = c.id
                 JOIN incident i ON ic.incident_id = i.id
-                WHERE $cond_tmp";
+                JOIN location AS l ON l.id = i.location_id
+                WHERE $cond_csv";
 
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
@@ -828,6 +832,7 @@ class MonitorController {
                 FROM incident i
                 JOIN incident_category ic ON i.id = ic.incident_id
                 JOIN category c ON ic.category_id = c.id
+                JOIN location AS l ON l.id = i.location_id
                 WHERE $cond_tmp";
             
             $_sql = $_sqlr ." GROUP BY category_id

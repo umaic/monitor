@@ -75,8 +75,9 @@ if (!empty($m)) {
 
             $cats = (empty($_GET['c'])) ? array() : $_GET['c'];
             $states = (empty($_GET['states'])) ? array() : $_GET['states'];
-            $afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
-            $totalxd = $mc->totalxd($ini, $fin, $cats, $afectacion, $states);
+            //$afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
+
+            $totalxd = $mc->totalxd($ini, $fin, $cats, $states);
             
             header('Content-type: text/json');
             header('Content-type: application/json'); 

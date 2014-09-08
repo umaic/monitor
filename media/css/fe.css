@@ -47,10 +47,10 @@ label {
     cursor: pointer;
 }
 
-#header {
+#header, #brand {
     background-color: #e3dbdb;
     color: #280b0b;
-    font-family: dosis;
+    font-family: dosis !important;
 }
 
 #header #i {
@@ -63,20 +63,26 @@ label {
 }
 
 #header #b {
-    margin: 58px 0 0 0;
+    margin: 30px 0 0 0;
     color: #2b1100;
     font-size: 13px;
 }
-#header #b ul {
+#brand ul {
     list-style: none;
+    display: inline;
+    margin-left: 50px;
 }
-#header #b ul li {
+#brand ul li {
     display: inline;
 }
-#header #b ul li a {
+#brand ul li:before {
+    content: "\00BB"
+}
+#brand ul li a {
     font-size: 16px !important;
-    color:#2B1100;
+    color: #ffffff;
     padding: 0 5px;
+    font-weight: normal !important;
 }
 #header a {
     color: #0066ff;
@@ -287,7 +293,7 @@ div.tecdn div {
 #layers_div {
     left: 125px;
 }
-#submenu div {
+#submenu {
 }
 #submenu div.op {
     cursor: pointer;
@@ -310,6 +316,40 @@ div.tecdn div {
   
 #submenu #mapa_tipo {
     margin-left: 5px;
+    height: 67px;
+}
+#submenu #depto {
+    font-size: 24px !important;
+    padding: 10px 20px;
+}
+#submenu #depto .select {
+    background-color: #373D3F;
+    border-radius: 5px;
+    opacity: 0.7;
+    padding: 10px;
+    color: #ffffff;
+    width: 220px;
+}
+#submenu #depto ul {
+    background-color: #373D3F;
+    list-style: none;
+    position: absolute;
+    z-index: 1200;
+    top: 50px;
+    border-radius: 0 0 5px 5px;
+    max-height: 400px;
+    overflow: auto;
+    width: 180px;
+    padding: 10px;
+}
+#submenu #depto ul li {
+    color: #ffffff;
+    text-align: left !important;
+    font-size: 18px;
+    padding: 10px;
+}
+#submenu #depto ul li:hover {
+    background-color: #1a1a1a;
 }
 #submenu .op {
     text-align: center;
@@ -328,6 +368,16 @@ div.tecdn div {
 #submenu .op .activo {
     background-color: #FEFD60;
     border: 1px solid #DBC319;
+}
+#submenu .collapse {
+    background: url(../img/icon_sprite.png) no-repeat -3px -200px;
+    width: 20px;
+    height: 25px;
+    margin-top: 20px;
+    cursor: pointer;
+}
+#submenu .expand {
+    background: url(../img/icon_sprite.png) no-repeat -3px -180px !important;
 }
 #content {
     margin: 0;
@@ -878,15 +928,17 @@ div.report_list_map div.victim {
 }
 #titulo_general {
     color: #1a1a1a;
-    background-color: #fff;
+    background-color: #cfcccc;
     padding: 5px 10px;
+    width: 100%;
+    border-radius: 5px;
 }
 #titulo_general #tgt {
-    font-size: 24px; 
+    font-size: 32px; 
 }
 #titulo_general #tgc {
-    font-size: 12px; 
-    margin-top: 10px;
+    font-size: 16px; 
+    margin: 10px 0 0 20px;
 }
 #minmax_total {
     position: absolute;
@@ -987,14 +1039,6 @@ div#mase {
     background: url(../img/pdf.gif) no-repeat 0 3px;
     padding: 0 0 0 25px !important;
 }
-.arrow-down {
-	width: 0; 
-	height: 0; 
-	border-left: 5px solid transparent;
-	border-right: 5px solid transparent;
-	
-	border-top: 5px solid #333333;
-}
 
 .xls {
     background-image: url(../img/xls.png);
@@ -1031,4 +1075,25 @@ div#mase {
 }
 .note {
     font-size: 11px;
+}
+.arrow-down {
+	width: 0; 
+	height: 0; 
+	border-left: 10px solid transparent;
+	border-right: 10px solid transparent;
+	border-top: 10px solid #ffffff;
+}
+.arrow-right {
+	width: 0; 
+	height: 0; 
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-left: 10px solid #ffffff;
+}
+.arrow-left {
+	width: 0; 
+	height: 0; 
+	border-top: 10px solid transparent;
+	border-bottom: 10px solid transparent;
+	border-right: 10px solid #ffffff;
 }

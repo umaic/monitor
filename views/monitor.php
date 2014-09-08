@@ -35,42 +35,35 @@ function filesize_formatted($path)
     <div id="loading" class="alpha60">
         <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
     </div>
-    <a href="http://www.salahumanitaria.co" target="_blank" class="brand">
-        <div id="brand"></div>
-    </a>
-<!--
-                        Monitor es una herramienta puesta a disposici&oacute;n de la comunidad 
-                        humanitaria en Colombia para poder visualizar la situaci&oacute;n 
-                        humanitaria en el pa&iacute;s de manera georeferenciada. <br /><br />
-                        Permite la visualizaci&oacute;n de multiples fuentes de informaci&oacute;n 
-                        tanto de desastres naturales como de emergencia compleja.  
-                        OCHA Colombia provee esta plataforma como un servicio com&uacute;n humanitario 
-                        para el Equipo Humanitario del Pa&iacute;s (EHP) y los miembros de los respetivos Clusters
-
--->
+    <div id="brand">
+        <ul>
+            <li><a id="lmh" href="#">¿Qué es <b>Monitor</b>?</a></li>
+            <li><a href="http://www.salahumanitaria.co" target="_blank">http://SalaHumanitaria.co</a></li>
+            <li><a href="http://sidih.salahumanitaria.co" target="_blank">Sidih</a></li>
+            <li><a href="http://geonode.salahumanitaria.co" target="_blank">Geonode</a></li>
+            <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki</a></li>
+        </ul>
+    </div>
     <div id="header">
         <div id="i" class="left">
             <div id="logo" class="left"></div>
         </div>
             <div id="b" class="left">
-                    <ul>
-                        <li><a id="lmh" href="#">¿Qué es <b>Monitor</b>?</a></li>
-                        <li><a href="http://www.salahumanitaria.co" target="_blank">http://SalaHumanitaria.co</a></li>
-                        <li><a href="http://sidih.salahumanitaria.co" target="_blank">Sidih</a></li>
-                        <li><a href="http://geonode.salahumanitaria.co" target="_blank">Geonode</a></li>
-                        <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki</a></li>
-                    </ul>
+                    <div id="titulo_general" class="left">
+                        <div id="tgt" class="inline"></div>
+                        <div id="tgc" class="inline"></div>
+                    </div>
                 <div id="qlmh" class="hide">
                     <div id="lmm">
                         <img src="<?php echo BASE ?>media/img/logo.png" />
                     </div>
                     <div id="qmm">
-<h3>&iquest;Qu&eacute; es y para qu&eacute; sirve <b>Monitor</b>?</h3>
-<b>MONITOR</b> es una herramienta administrada por OCHA que est&aacute; a disposici&oacute;n de la comunidad humanitaria en Colombia y del p&uacute;blico en general con el objetivo de recopilar, categorizar y georreferenciar eventos de violencia armada y de desastres naturales. 
-<b>MONITOR</b> se alimenta de m&uacute;ltiples fuentes como medios de comunicaci&oacute;n locales y nacionales, &nbsp;instituciones del Estado, organizaciones de la sociedad civil e informaci&oacute;n recopilada en terreno por socios humanitarios nacionales e internacionales, entre otros. No se trata de un instrumento de verificaci&oacute;n de cada uno de los eventos reportados y no pretende reflejar la totalidad de la afectaci&oacute;n humanitaria.&nbsp;
-<br><br>S&oacute;lo para categor&iacute;as espec&iacute;ficas de <b>MONITOR</b> como el desplazamiento masivo o el confinamiento, OCHA puede hacer seguimiento en profundidad en zonas con presencia de los Equipos Humanitarios Locales (conformados por agencias de Naciones Unidas y ONG internacionales) y otros socios en terreno. El Monitor se alimenta y revisa en tiempo real por varios alimentadores en Bogot&aacute; y las regiones, por tanto es posible que la informaci&oacute;n pueda variar, dependiendo del momento de consulta. 
-La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute;n del Equipo Humanitario de Pa&iacute;s o de Naciones Unidas.
-<br>
+                        <h3>&iquest;Qu&eacute; es y para qu&eacute; sirve <b>Monitor</b>?</h3>
+                        <b>MONITOR</b> es una herramienta administrada por OCHA que est&aacute; a disposici&oacute;n de la comunidad humanitaria en Colombia y del p&uacute;blico en general con el objetivo de recopilar, categorizar y georreferenciar eventos de violencia armada y de desastres naturales. 
+                        <b>MONITOR</b> se alimenta de m&uacute;ltiples fuentes como medios de comunicaci&oacute;n locales y nacionales, &nbsp;instituciones del Estado, organizaciones de la sociedad civil e informaci&oacute;n recopilada en terreno por socios humanitarios nacionales e internacionales, entre otros. No se trata de un instrumento de verificaci&oacute;n de cada uno de los eventos reportados y no pretende reflejar la totalidad de la afectaci&oacute;n humanitaria.&nbsp;
+                        <br><br>S&oacute;lo para categor&iacute;as espec&iacute;ficas de <b>MONITOR</b> como el desplazamiento masivo o el confinamiento, OCHA puede hacer seguimiento en profundidad en zonas con presencia de los Equipos Humanitarios Locales (conformados por agencias de Naciones Unidas y ONG internacionales) y otros socios en terreno. El Monitor se alimenta y revisa en tiempo real por varios alimentadores en Bogot&aacute; y las regiones, por tanto es posible que la informaci&oacute;n pueda variar, dependiendo del momento de consulta. 
+                        La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute;n del Equipo Humanitario de Pa&iacute;s o de Naciones Unidas.
+                        <br>
                     </div>
                 </div>
             </div>
@@ -472,11 +465,8 @@ La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute
              
         </div>
         <div id="submenu">
-            <div id="titulo_general" class="left">
-                <div id="tgt" class="dosis"></div>
-                <div id="tgc"></div>
-            </div>
             <div id="mapa_tipo" class="left">
+                <div id="collapse" class="collapse left"></div>
                 <div class="mapa_tipo menu_activo left op" data-tipo="afectacion">
                     <span class="menu_victimas">Afectados</span>
                 </div>
@@ -489,6 +479,18 @@ La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute
                 <div id="layers" class="left op">
                     <span class="menu_layers">+ Capas</span>
                 </div>
+                <div id="depto" class="left op">
+                    <div class="select">
+                        <div class="inline">
+                            <div id="depto_t">Colombia</div>
+                        </div>
+                        <div class="inline arrow-down"></div>
+                    </div>
+                    <ul id="depto_dropdown" class="hide">
+                        <li>Colombia</li>
+                    </ul>
+                </div>
+                <div class="expand left"></div>
             </div>
         </div>
         <div id="layers_div" class="hide filtro">
@@ -591,7 +593,10 @@ La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute
                     </div>
                     <table id="table_totalxd">
                         <thead>
-                            <tr><th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th><th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th></tr>
+                            <tr>
+                                <!--<th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th>-->
+                                <th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th>
+                            </tr>
                         </thead>
                         <tbody>
                         </tbody>

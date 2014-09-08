@@ -19,7 +19,7 @@ var maximo = 0; // Maximo count en cluster
 var url_xd = '/json/cluster/?m=0&v=0';
 
 
-if (window.location.hostname == 'localhost') {
+if (window.location.hostname == 'monitor.local') {
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violencia_armada';
     var url_ec = 'http://localhost/violencia_armada';
@@ -115,7 +115,11 @@ function addWMSLayer(n,l,v) {
 
 function selDepto(centroide) {
     var _c = centroide.split(',');
-    map.setCenter(new OpenLayers.LonLat(_c[0], _c[1]), 2);
+    map.setCenter(new OpenLayers.LonLat(_c[0], _c[1]), 1);
+}
+    
+function resetMap() {
+    map.setCenter(map.maxExtent.getCenterLonLat(), 0);
 }
 
 function mapRender() {
