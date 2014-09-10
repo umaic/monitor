@@ -657,26 +657,6 @@ function mapMove(event)
     // Prevent this event from running on the first load
     if (mapLoad > 0)
     {
-        /*
-        // Get Current Category
-        currCat = $("#currentCat").val();
-
-        // Get Current Start Date
-        currStartDate = $("#startDate").val();
-
-        // Get Current End Date
-        currEndDate = $("#endDate").val();
-
-        // Get Current Zoom
-        currZoom = map.getZoom() + _zoomOffset;
-
-        // Get Current Center
-        currCenter = map.getCenter();
-        
-        // Refresh Map
-        addFeatures(currCat, currStartDate, currEndDate, currZoom, currCenter);
-        */
-        
         // Refresh Map
         addFeatures();
 
@@ -688,9 +668,6 @@ function mapMove(event)
             _vd = false;
             _vm = true;
         }
-        
-        //map.getLayersByName('Departamentos')[0].setVisibility(_vd);
-        //map.getLayersByName('Municipios')[0].setVisibility(_vm);
     }
 }
 

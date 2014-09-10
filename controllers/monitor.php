@@ -833,7 +833,7 @@ class MonitorController {
                 JOIN incident_category ic ON i.id = ic.incident_id
                 JOIN category c ON ic.category_id = c.id
                 JOIN location AS l ON l.id = i.location_id
-                WHERE $cond_tmp";
+                WHERE $cond_csv";
             
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
@@ -860,7 +860,8 @@ class MonitorController {
                 JOIN %sincident i ON f.incident_id = i.id
                 JOIN %sincident_category ic ON ic.incident_id = i.id
                 JOIN %scategory c ON ic.category_id = c.id
-                WHERE $cond_tmp AND form_field_id = 4";
+                JOIN %slocation AS l ON l.id = i.location_id
+                WHERE $cond_csv AND form_field_id = 4";
             
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
@@ -874,7 +875,8 @@ class MonitorController {
                 FROM %sincident i
                 JOIN %sincident_category ic ON i.id = ic.incident_id
                 JOIN %scategory c ON ic.category_id = c.id
-                WHERE $cond_tmp";
+                JOIN %slocation AS l ON l.id = i.location_id
+                WHERE $cond_csv";
             
             $_sql = $_sqlr ." GROUP BY category_id
                               ORDER BY sum DESC";
@@ -882,7 +884,7 @@ class MonitorController {
             $_sql_chart_dn = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
         }
         
-        $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
+        $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$_db,$cond_cats_dn);
 
         //echo $_sqlidn;
         
@@ -941,7 +943,7 @@ class MonitorController {
 
 
         // Desastres
-        $_sqlidnc = sprintf($_sql_chart_dn,$_db,$_db,$_db,$cond_cats_dn, $group_by);
+        $_sqlidnc = sprintf($_sql_chart_dn,$_db,$_db,$_db,$_db,$cond_cats_dn, $group_by);
         //echo $_sqlidnc;
 
         $data_lines = array();

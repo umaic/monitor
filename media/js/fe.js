@@ -297,23 +297,27 @@ $(function(){
         $li = $(this);
         $chks = $('#table_totalxd').find(':checkbox');
 
+        mapLoad = 0; // Variable para no recargar features en mapMove()
+
         // Colombia
         if ($li.data('value') == 0) {
-            resetMap(); // map.js
             $chks.prop('checked', true);
+            resetMap(); // map.js
         } 
         else {
             $chks.each(function(){
                 chk = ($(this).val() == $li.data('value')) ? true : false;
                 $(this).prop('checked', chk);
-
             });
             
             selDepto($li.data('centroid'));   // in map.js
         }
-        
+       
+        var html = ($li.html() != 'Todos') ? $li.html() : 'Colombia';
+
+        $('#depto_t').html(html);
+
         addFeatures();
-        $('#depto_t').html($li.html());
         
         totalesxDepto();
 
@@ -912,9 +916,9 @@ totalesxDepto = function(more) {
                 var $depto_dropdown = $('#depto_dropdown');
                 
                 var html = $table.html();
-                var dd_options = '<li data-value=0>Colombia</li>';
+                var dd_options = '<li data-value=0>Todos</li>';
 
-                html += '<tr class="totalxd"><td></td><td class="left">Total</td><td class="ec">' + _t.ec + '</td><td class="dn">' + _t.dn + '</td></tr>';
+                html += '<tr class="totalxd"><td class="left">Total</td><td class="ec">' + _t.ec + '</td><td class="dn">' + _t.dn + '</td></tr>';
 
                 for (var d in data.r) {
                     _i = data.r[d];
@@ -953,7 +957,6 @@ totalesxDepto = function(more) {
 
 resumenAfectacion = function(data) {
     
-    
     // Afectacion
     var titulo = (getMapaAfectacion() == 1) ? 'personas afectadas' : 'eventos';
     var total_ec = 0;
@@ -989,6 +992,9 @@ resumenAfectacion = function(data) {
         $('#resumen_total_ec_num').html(numberWithCommas(total_ec));
         $resumen_ec.show();
     }
+    else {
+        $resumen_ec.hide();
+    }
     
     $resumen_dn = $('#resumen_dn');
     var total_dn = 0;
@@ -1016,6 +1022,9 @@ resumenAfectacion = function(data) {
     if (total_dn > 0) {
         $('#resumen_total_dn_num').html(numberWithCommas(total_dn));
         $resumen_dn.show();
+    }
+    else {
+        $resumen_dn.hide();
     }
 
     if (total_ec > 0 && total_dn > 0) {
@@ -1056,7 +1065,18 @@ charts = function(data_charts) {
     });
     
     var title_style = { fontSize: '14px', margin: 0 }
-    
+
+    // No info
+    if (data_charts[0].data.length == 0 && 
+         data_charts[1].data.length == 0 && 
+         data_charts[2].data.length == 0
+        )
+    {
+        $('#tendencia').html('<h2>No hay información</h2>');
+
+        return;
+    }
+
     var s = data_charts[0];
     $('#chart_1').highcharts({
         chart: {
@@ -1264,13 +1284,17 @@ markIniFin = function(id,im,iy,fd,fm,fy) {
 getStatesChecked = function(){ 
 
     var _sts = [];
-    
-    $('#table_totalxd').find(':checked').each(function() {
+    var $t = $('#table_totalxd');
+
+        if ($t.find(':not(:checked)').length > 0) {
         
-        if ($(this).val() != 0) {
-            _sts.push($(this).val());
-        }
-    });
+        .find(':checked').each(function() {
+            
+            if ($(this).val() != 0) {
+                _sts.push($(this).val());
+            }
+        });
+    }
 
     return _sts.join(',');
 }
