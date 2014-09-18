@@ -163,7 +163,7 @@ function mapRender() {
                 "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png"
             ],
             {
-                attribution: "Ver mas detalles en &nbsp;<img src='http://monitor.colombiassh.org/favicon.ico'> <a href='http://monitor.salahumanitaria.co' target='_blank'>monitor.salahumanitaria.co</a>",
+                attribution: "Ver mas detalles en &nbsp;<img src='http://monitor.salahumanitaria.co/favicon.ico'> <a href='http://monitor.salahumanitaria.co' target='_blank'>monitor.salahumanitaria.co</a>",
                 transitionEffect: "resize",
                 zoomOffset: _zoomOffset,
                 sphericalMercator: true,
