@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="shortcut icon" href="favicon.ico" />
+<link rel="shortcut icon" href="http://monitor.salahumanitaria.co/favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.min.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css">
