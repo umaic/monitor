@@ -314,12 +314,17 @@ function addFeatures(inst) {
             map.addLayer(l_ft);
         }
         
-        // States filter
-        //_uft = addURLParameter(_uft, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
         var _uft_dn = addURLParameter(url_ft_dn, uparams_ft);
+        
+        // States filter
+        _uft_dn = addURLParameter(_uft_dn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+        
         ajaxFeatures(_uft_dn, l_ft);
         
         var _uft_ec = addURLParameter(url_ft_ec, uparams_ft);
+        
+        _uft_ec = addURLParameter(_uft_ec, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+        
         ajaxFeatures(_uft_ec, l_ft);
 
     }
