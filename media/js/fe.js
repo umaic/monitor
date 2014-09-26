@@ -1,5 +1,4 @@
-var _mes =
-['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
+var _mes = ['','Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre'];
 
 var base = '';
 var base_ol = '';
@@ -884,7 +883,7 @@ totalesxDepto = function(more) {
     else {
         
         // Afectacion
-        var titulo = (getMapaAfectacion() == 1) ? 'v&iacute;ctimas' : 'eventos';
+        var titulo = (getMapaAfectacion() == 1) ? 'afectaci&oacute;n' : 'eventos';
             
         // Acceso
         if (acceso) {
@@ -1286,9 +1285,9 @@ getStatesChecked = function(){
     var _sts = [];
     var $t = $('#table_totalxd');
 
-        if ($t.find(':not(:checked)').length > 0) {
+    if ($t.find(':not(:checked)').length > 0) {
         
-        .find(':checked').each(function() {
+        $t.find(':checked').each(function() {
             
             if ($(this).val() != 0) {
                 _sts.push($(this).val());
