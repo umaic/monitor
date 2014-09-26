@@ -883,7 +883,7 @@ totalesxDepto = function(more) {
     else {
         
         // Afectacion
-        var titulo = (getMapaAfectacion() == 1) ? 'afectaci&oacute;n' : 'eventos';
+        var titulo = (getMapaAfectacion() == 1) ? 'afectados' : 'eventos';
             
         // Acceso
         if (acceso) {
