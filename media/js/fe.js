@@ -1111,7 +1111,7 @@ charts = function(data_charts) {
         series: s.data
     });
     
-    if (typeof data_charts[1] !== "undefined") {
+    if (data_charts.length == 2) {
         
         $('#charts_pie').show();
         
