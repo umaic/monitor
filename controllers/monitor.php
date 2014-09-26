@@ -1019,11 +1019,11 @@ class MonitorController {
                 }
             }
             
-            $charts[1] = array('title' => utf8_encode('Víctimas por grupo poblacional'), 
+            $charts[1] = array('title' => 'Victimas por grupo poblacional', 
                 'data' => $data_pie_ethnic
                              );
             
-            $charts[2] = array('title' => utf8_encode('Víctimas por género'), 
+            $charts[2] = array('title' => 'Victimas por genero', 
                 'data' => $data_pie_gender
                              );
         }  
