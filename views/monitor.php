@@ -119,8 +119,8 @@ function filesize_formatted($path)
         <div id="menu" class="left">
             <ul>
                 <li class="sub" data-div="ini_fin"><span class="menu_fecha">Filtrar por fecha</span></li>
-                <li class="sub" data-div="fcat_ec"><span class="menu_violencia">Categorias violencia</span></li>
                 <li class="sub" data-div="fcat_dn"><span class="menu_desastres">Categorias desastres</span></li>
+                <li class="sub" data-div="fcat_ec"><span class="menu_violencia">Categorias violencia</span></li>
                 <li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>
                 <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
                 <li class="sub" data-div="descargar"><span class="menu_descargar">Descargar eventos</span></li>
