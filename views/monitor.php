@@ -127,7 +127,7 @@ function filesize_formatted($path)
             </ul>
         </div>
         <!-- Filtro categorias Violencia -->
-        <div id="fcat_ec" class="filtro fcat" data-index="1">
+        <div id="fcat_ec" class="filtro fcat" data-index="2">
             <div class="left">
                  <h2 class="dosis">Categorias Violencia Armada</h2>
                  <br />
@@ -181,7 +181,7 @@ function filesize_formatted($path)
         <!-- Filtro categorias Violencia :: Fin -->
         
         <!-- Filtro categorias Desastres -->
-        <div id="fcat_dn" class="filtro fcat" data-index="2">
+        <div id="fcat_dn" class="filtro fcat" data-index="1">
             <div class="left">
                  <h2 class="dosis">Categorias Desastres</h2>
                  <br />
