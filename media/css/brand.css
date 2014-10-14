@@ -2,7 +2,7 @@
   font-family: 'Open Sans';
   font-style: normal;
   font-weight: 400;
-  src: url(http://monitor.salahumanitaria.co/media/css/OpenSans.woff) format('woff');
+  src: url(OpenSans.woff) format('woff');
 }
 #brand {
     line-height: 25px;

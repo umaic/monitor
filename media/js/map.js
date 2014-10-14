@@ -56,26 +56,26 @@ var resolutions= [
                   9.554628534317017, 4.777314267158508, 2.388657133579254,
                  ];
 
+
+/*
+    var ly = new OpenLayers.Layer.OSM("Openstreetmap","",
+           {
+                zoomOffset: _zoomOffset,
+                resolutions: [
+                                //156543.03390625, 78271.516953125,
+                                //39135.7584765625, 19567.87923828125, 9783.939619140625,
+                              //4891.9698095703125,
+                              2445.9849047851562, 1222.9924523925781,
+                              611.4962261962891, 305.74811309814453, 152.87405654907226,
+                              76.43702827453613, 38.218514137268066, 19.109257068634033,
+                              9.554628534317017, 4.777314267158508, 2.388657133579254,
+                             ]
+            });
+*/
+
 var show = [];
 show['desc'] = false; // Descripcion del evento de sidih
 show['fuente'] = true;
-
-var wms = [];
-wms = [
-          {'n': 'Departamentos',
-          'u' : "http://geonode.openstreetmap.co/geoserver/wms",
-          'l' : 'geonode:division_departamental_de_colombia_sigot_igac',
-          'v' : false,
-          'op' : 1
-          },
-          {'n': 'Municipios',
-          'u' : "http://geonode.openstreetmap.co/geoserver/wms",
-          'l' : 'geonode:municipio_sigot',
-          'v': false,
-          'op': 1 
-           },
-];
-
 
 function addWMSLayer(n,l,v) {
     
@@ -95,7 +95,8 @@ function addWMSLayer(n,l,v) {
                                   },
                                   {
                                     opacity: 1,
-                                    visibility: true
+                                    visibility: true,
+                                    singleTile: true
                                   }
                               );
 
@@ -170,44 +171,11 @@ function mapRender() {
                 resolutions: resolutions
             }
         );
-/*
-    var ly = new OpenLayers.Layer.OSM("Openstreetmap","",
-           {
-                zoomOffset: _zoomOffset,
-                resolutions: [
-                                //156543.03390625, 78271.516953125,
-                                //39135.7584765625, 19567.87923828125, 9783.939619140625,
-                              //4891.9698095703125,
-                              2445.9849047851562, 1222.9924523925781,
-                              611.4962261962891, 305.74811309814453, 152.87405654907226,
-                              76.43702827453613, 38.218514137268066, 19.109257068634033,
-                              9.554628534317017, 4.777314267158508, 2.388657133579254,
-                             ]
-            });
-*/
     map.addLayer(ly);
     
-    // Limites muncipales
-    var ca;
-    for (var _w in wms) {
-        ca = wms[_w];
-        lytmp = new OpenLayers.Layer.WMS(ca.n, 
-                                      ca.u,
-                                      {
-                                      layers: ca.l,
-                                      transparent: true,
-                                      },
-                                      {
-                                        opacity: ca.op,
-                                        visibility: ca.v
-                                      }
-                                      );
-        map.addLayer(lytmp);
-
-    }
-
     //map.zoomTo(6);
     map.setCenter(map.maxExtent.getCenterLonLat(), 0);
+
     //map.zoomToMaxExtent();
 
     defStyle();
@@ -216,6 +184,9 @@ function mapRender() {
     var loadingpanel = new OpenLayers.Control.LoadingPanel();
     map.addControl(loadingpanel);
     */
+    
+    var sw = new OpenLayers.Control.LayerSwitcher();
+    map.addControl(sw);
 }
 
 function addFeaturesFirstTime() {
