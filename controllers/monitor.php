@@ -1147,8 +1147,10 @@ class MonitorController {
             
         $w3hx = 1;
         $vars = compact('w3hx','id','u');
-        
+
         $h2pdf = "http://192.168.1.23/html2pdf/index.php?w3hx=1&id=$id&u=$url";
+
+        echo $h2pdf;
 
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.

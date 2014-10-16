@@ -180,13 +180,6 @@ function mapRender() {
 
     defStyle();
     addFeaturesFirstTime();
-    /*
-    var loadingpanel = new OpenLayers.Control.LoadingPanel();
-    map.addControl(loadingpanel);
-    */
-    
-    var sw = new OpenLayers.Control.LayerSwitcher();
-    map.addControl(sw);
 }
 
 function addFeaturesFirstTime() {
@@ -385,8 +378,9 @@ function onFeatureSelect(attrs) {
                 
                 _js = json[i];
                 
+                // Click en el titulo: funcion fe.js:673
                 _html += '<div class="report_list_map from_map"> ' +
-                    '<div class="t"><a href="" onclick="return false;" title="' + _js.id + '">'+ _js.t +'</a></div> ' +
+                    '<div class="t"><a href="#" onclick="return false;" title="' + _js.id + '">'+ _js.t +'</a></div> ' +
                     '<div>' +
                         '<div class="date detail">'+ _js.d +'</div> ' +
                         '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
@@ -401,7 +395,7 @@ function onFeatureSelect(attrs) {
                              '</div>';
 
                     for (c in _js.c) {
-                        _html += '<div class="clear cat detail">'+ c;
+                        _html += '<div class="clear detail"> &raquo;' + c;
                         
                         if (_js.c[c].length > 0) {
                             _html += ': ';
@@ -531,26 +525,36 @@ function onFeatureSelect(attrs) {
 
                 if (show['fuente']) {
                     if (_js.f != '') {
-                        _html += '<div class="f hide">' +
-                        '<div class="ft">Fuente de noticia</div>'; 
+                        _html += '<div class="f">' +
+                        '<div class=""><b>Fuente de noticia</b></div>'; 
                         for(var k=0, l=_js.f.length; k< l; k += 1) {
                             _html += '<div class="fc">';
                             
                             // Source type :: source name
                             if (_js.f[k][0] != '' && _js.f[k][1] != '') {
-                                _html += '<div class="fct">'+_js.f[k][0]+' :: '+_js.f[k][1]+'</div>';
+                                _html += '<div class="detail">&raquo; '+_js.f[k][1]+' ( '+_js.f[k][0]+' )';
+                            
+                            
+                                // Source refer
+                                if (_js.f[k][2].indexOf('http') != -1) {
+                                    //_js.f[k][2] = url
+                                    _html += '&nbsp;<img src="media/img/pdf.gif" />&nbsp;<a href="ss/?x=#$EF$#&q=' + _js.q[0] + _js.id + '" target="_blank">Ver original</a>';
+                                         
+                                }
+
+                                // Source desc
+                                if (_js.f[k][3] != undefined && _js.f[k][3] != '') {
+                                    _html += ' | <a href="#" class="d" onclick="return false;">Leer descripci\u00f3n de la fuente</a>';
+                                }
+                                
+                                _html += '</div>';
+                                
+                                if (_js.f[k][3] != undefined && _js.f[k][3] != '') {
+                                    _html += '<div class="hide detail">' + _js.f[k][3] + '"</div>';
+                                }
+                                
                             }
                             
-                            // Source desc
-                            if (_js.f[k][3] != undefined && _js.f[k][3] != '') {
-                                _html += '<div class="fcc"><b>Descripci\u00f3n tomada de la fuente</b>: "' + _js.f[k][3] + '"</div>';
-                            }
-                            
-                            // Source refer
-                            if (_js.f[k][2].indexOf('http') != -1) {
-                                _html += '<div class="fcc"><a href="'+_js.f[k][2]+'" target="_blank">'+_js.f[k][2]+'</a></div>' + 
-                                     '</div> ';
-                            }
                         }
                         _html += '</div>';
                     }

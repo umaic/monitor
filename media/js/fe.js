@@ -675,8 +675,8 @@ listReportsEvents = function() {
         $(this).hover(function() { $(this).find('.opt').show(); },
             function() {$(this).find('.opt').hide();   } );
         });
-        $(this).find('.t').click(function() {
-            $(this).parent('div').find('.hide').slideToggle();
+        $(this).find('.d').click(function() {
+            $(this).closest('div.fc').find('.hide').slideToggle();
         });
 }
 
