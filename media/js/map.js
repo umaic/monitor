@@ -550,7 +550,9 @@ function onFeatureSelect(attrs) {
                                 _html += '</div>';
                                 
                                 if (_js.f[k][3] != undefined && _js.f[k][3] != '') {
-                                    _html += '<div class="hide detail">' + _js.f[k][3] + '"</div>';
+                                    _html += '<div class="hide detail">' + _js.f[k][3] + '"';
+
+                                    _html += '<br /><br />Tomado de: <a href="' + _js.f[k][2] + '" target="_blank">' + _js.f[k][2] + '</a></div>';
                                 }
                                 
                             }
