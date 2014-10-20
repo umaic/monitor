@@ -54,13 +54,17 @@ function filesize_formatted($path)
                         <div id="tgc" class="inline"></div>
                     </div>
                 <div id="qlmh" class="hide">
-                    <div id="lmm">
-                        <img src="<?php echo BASE ?>media/img/logo.png" />
-                    </div>
-                    <div id="qmm">
-                        <h3>&iquest;Qu&eacute; es y para qu&eacute; sirve <b>Monitor</b>?</h3>
+                    <div id="qmm" class="left">
+                        <h2>&iquest;Qu&eacute; es y para qu&eacute; sirve <b>Monitor</b>?</h2>
                         <b>MONITOR</b> es una herramienta administrada por OCHA que est&aacute; a disposici&oacute;n de la comunidad humanitaria en Colombia y del p&uacute;blico en general con el objetivo de recopilar, categorizar y georreferenciar eventos de violencia armada y de desastres naturales. 
+                        <br /><br />
                         <b>MONITOR</b> se alimenta de m&uacute;ltiples fuentes como medios de comunicaci&oacute;n locales y nacionales, &nbsp;instituciones del Estado, organizaciones de la sociedad civil e informaci&oacute;n recopilada en terreno por socios humanitarios nacionales e internacionales, entre otros. No se trata de un instrumento de verificaci&oacute;n de cada uno de los eventos reportados y no pretende reflejar la totalidad de la afectaci&oacute;n humanitaria.&nbsp;
+                    </div>
+                    <div class="left">
+                        <br /><br />
+                        <iframe width="400" height="225" src="//www.youtube.com/embed/MI1XWaq58os" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="left">
                         <br><br>S&oacute;lo para categor&iacute;as espec&iacute;ficas de <b>MONITOR</b> como el desplazamiento masivo o el confinamiento, OCHA puede hacer seguimiento en profundidad en zonas con presencia de los Equipos Humanitarios Locales (conformados por agencias de Naciones Unidas y ONG internacionales) y otros socios en terreno. El Monitor se alimenta y revisa en tiempo real por varios alimentadores en Bogot&aacute; y las regiones, por tanto es posible que la informaci&oacute;n pueda variar, dependiendo del momento de consulta. 
                         La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute;n del Equipo Humanitario de Pa&iacute;s o de Naciones Unidas.
                         <br>

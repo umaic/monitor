@@ -851,9 +851,10 @@ div.filtro_fecha ul li.selected {
 
 /* Modal que es monitor */
 #qmm {
-    font-size: 15px !important;
+    font-size: 13px !important;
     font-weight: normal !important;
-    margin: 10px 0;
+    margin: 10px 10px;
+    width: 380px;
 }
 #lmm {
     width: 250px;

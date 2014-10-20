@@ -726,6 +726,7 @@ function defStyle(){
 
                         var num = 10;
                         var intervalo = maximo / num;
+                        console.log(maximo);
                         for (var i=0;i<num;i++) {
                             //console.log(intervalo*i);
                             //console.log(feature_count);

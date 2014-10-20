@@ -83,7 +83,7 @@ $(function(){
         m({
             t: 'Monitor - ColombisSSH',
             hid: 'qlmh',
-            w: 600,
+            w: 850,
             h: 400
         });
 		
