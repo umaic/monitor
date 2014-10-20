@@ -677,23 +677,6 @@ function defStyle(){
             {
 				context:
 				{
-					count: function(feature)
-					{
-						if (feature.attributes.count < 2)
-						{
-							return 2 * markerRadius;
-						} 
-						else if (feature.attributes.count == 2)
-						{
-							return (Math.min(feature.attributes.count, 7) + 1) *
-							(markerRadius * 0.8);
-						}
-						else
-						{
-							return (Math.min(feature.attributes.count, 7) + 1) *
-							(markerRadius * 0.6);
-						}
-					},
 					fontsize: function(feature)
 					{
 						feature_icon = feature.attributes.icon;
@@ -726,75 +709,15 @@ function defStyle(){
 
                         var num = 10;
                         var intervalo = maximo / num;
-                        console.log(maximo);
-                        for (var i=0;i<num;i++) {
-                            //console.log(intervalo*i);
-                            //console.log(feature_count);
-                            if (feature_count < intervalo*i) {
+                        console.log('maximo=' + maximo);
+                        for (var i=1;i<=num;i++) {
+                            console.log('intervalo=' + intervalo*i);
+                            console.log('count=' + feature_count);
+                            if (feature_count <= intervalo*i) {
                                 return markerRadius * (i+1);
                             }
                         }
 
-						if (feature_count > 1000) {
-							return markerRadius * 7;
-						}
-						else if (feature_count > 900) {
-							return markerRadius * 6.8;
-						}
-						else if (feature_count > 800) {
-							return markerRadius * 6.6;
-						}
-						else if (feature_count > 700) {
-							return markerRadius * 6.4;
-						}
-						else if (feature_count > 600) {
-							return markerRadius * 6.2;
-						}
-						else if (feature_count > 500) {
-							return markerRadius * 6;
-						}
-						else if (feature_count > 400) {
-							return markerRadius * 5.7;
-						}
-						else if (feature_count > 300) {
-							return markerRadius * 5.2;
-						}
-						else if (feature_count > 200) {
-							return markerRadius * 4.7;
-						}
-						else if (feature_count > 100) {
-							return markerRadius * 4.2;
-						}
-						else if (feature_count > 90) {
-							return markerRadius * 4;
-						}
-						else if (feature_count > 80) {
-							return markerRadius * 3.8;
-						}
-						else if (feature_count > 70) {
-							return markerRadius * 3.6;
-						}
-						else if (feature_count > 60) {
-							return markerRadius * 3.4;
-						}
-						else if (feature_count > 50) {
-							return markerRadius * 3.2;
-						}
-						else if (feature_count > 40) {
-							return markerRadius * 3;
-						}
-						else if (feature_count > 30) {
-							return markerRadius * 2.8;
-						}
-						else if (feature_count > 20) {
-							return markerRadius * 2.6;
-						}
-						else if (feature_count > 10) {
-							return markerRadius * 2.4;
-						}
-						else {
-							return markerRadius * 2;
-						}
 					},
 					strokeWidth: function(feature)
 					{
