@@ -538,7 +538,7 @@ function onFeatureSelect(attrs) {
                                 // Source refer
                                 if (_js.f[k][2].indexOf('http') != -1) {
                                     //_js.f[k][2] = url
-                                    _html += '&nbsp;<img src="media/img/pdf.gif" />&nbsp;<a href="ss/?x=#$EF$#&q=' + _js.q[0] + _js.id + '" target="_blank">Ver original</a>';
+                                    _html += '&nbsp;<img src="media/img/pdf.gif" />&nbsp;<a href="ss/?x=232fdsfwwppo&q=' + _js.q[0] + _js.id + '" target="_blank">Ver noticia original</a>';
                                          
                                 }
 
