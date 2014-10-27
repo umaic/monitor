@@ -4,7 +4,7 @@ var fromProjection;
 var toProjection;
 var features_ec;
 var features_dn;
-var markerRadius = 5;
+var markerRadius = 3;
 var Style;
 var mtipo;
 var clear = true;
@@ -709,12 +709,17 @@ function defStyle(){
 
                         var num = 10;
                         var intervalo = maximo / num;
+                        var r;
                         console.log('maximo=' + maximo);
                         for (var i=1;i<=num;i++) {
-                            console.log('intervalo=' + intervalo*i);
-                            console.log('count=' + feature_count);
                             if (feature_count <= intervalo*i) {
-                                return markerRadius * (i+1);
+                                r = markerRadius * (i+1);
+
+                                if (r < 7) {
+                                    r = 6;
+                                }
+
+                                return r;
                             }
                         }
 
