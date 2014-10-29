@@ -333,7 +333,8 @@ class MonitorController {
 
         $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Título evento"'.$limi.'"Resumen evento"'.$limi.
                 '"Categorias (Subcategorias)"'.$limi.
-                '"Acceso"'.$limi.'"Resoluciones"'.$limi.
+                //'"Acceso"'.$limi.
+                '"Resoluciones"'.$limi.
                 '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.'"Referecia"'.$limi.
                 '"Departamento"'.$limi.'"Municipio"'.$limi.'"Lugar"'.$limi.
                 '"# Total Víctimas (Violencia armada) / Personas Afectadas (Desastres)"'.$limi.'"# Víctimas civiles"'.$limi.'"Víctimas militares"'.$limi.
@@ -426,6 +427,8 @@ class MonitorController {
                     }
 
                     // Acceso y 1612
+                    
+                    /*
                     $form_field_id_acc = 1; // Preguntas de acceso
 
                     $_sql_acc_1612 = "SELECT form_response AS r
@@ -442,6 +445,7 @@ class MonitorController {
                     }
 
                     $acceso = implode(',', $acceso);
+                    */
                     
                     $form_field_id_1612 = 2; // Preguntas de 1612
 
