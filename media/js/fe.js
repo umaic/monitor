@@ -160,13 +160,58 @@ $(function(){
         var td_ec = false;
         $('.tn_fcat').click(function() { 
             $(this).closest('.filtro').find('input:checkbox').each(function() {
-                $(this).iCheck('toggle');
+                
+                if (td_ec === false) {
+                    $(this).iCheck('uncheck');
+                }
+                else {
+                    $(this).iCheck('check');
+                }
+                
                 $(this).attr('checked', td_ec);
             });
             
             td_ec = !td_ec;
             
             return false;
+        });
+
+        // Categorias : Click en categoria papa
+        var cp_ecs = {}; 
+        $('input.cp:checkbox').on('ifClicked', function(){ 
+            var index = $(this).index();
+
+            if (!(index in cp_ecs)) {
+                cp_ecs[index] = false; 
+            }
+
+            console.log(cp_ecs[index]);
+
+            cp_ec = cp_ecs[index];
+
+            if (cp_ec) {
+                $(this).iCheck('check');
+            }
+            else {
+                $(this).iCheck('uncheck');
+            }
+            
+            $(this).attr('checked', cp_ec);
+           
+            $(this).closest('ul.cats').find('input.ch:checkbox').each(function(){ 
+                console.log('adentro' + cp_ec);
+                
+                if (cp_ec) {
+                    $(this).iCheck('check');
+                }
+                else {
+                    $(this).iCheck('uncheck');
+                }
+                
+                $(this).attr('checked', cp_ec);
+            });
+            
+            cp_ecs[index] = !cp_ec;
         });
         
         // Minimize - Maximize total
@@ -1214,14 +1259,14 @@ setCatsHidden = function() {
     
     var _ids = [];
     
-    $('#fcat_ec').find('input:checked').each(function() {
+    $('#fcat_ec').find('input.ch:checked').each(function() {
         _ids.push($(this).val());
     });
 
     $('#currentCatE').val(_ids);
     
     _ids = [];
-    $('#fcat_dn').find('input:checked').each(function() {
+    $('#fcat_dn').find('input.ch:checked').each(function() {
         _ids.push($(this).val());
     });
 

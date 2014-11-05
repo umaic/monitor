@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="http://monitor.salahumanitaria.co/favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.min.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
@@ -125,7 +125,7 @@ function filesize_formatted($path)
                 <li class="sub" data-div="ini_fin"><span class="menu_fecha">Filtrar por fecha</span></li>
                 <li class="sub" data-div="fcat_dn"><span class="menu_desastres">Categorias desastres</span></li>
                 <li class="sub" data-div="fcat_ec"><span class="menu_violencia">Categorias violencia</span></li>
-                <li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>
+                <!--<li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>-->
                 <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
                 <li class="sub" data-div="descargar"><span class="menu_descargar">Descargar eventos</span></li>
             </ul>
@@ -155,7 +155,15 @@ function filesize_formatted($path)
                     <div>
                         <ul class="cats">
                             <li class="p">
-                                <?php echo $_cp ?>
+                                <?php
+                                $chk = 'checked';
+                                if (strpos($_cp, 'Complementa')) {
+                                        $chk = '';
+                                }
+                                ?>
+                                
+                                <input type="checkbox" id="<?php echo $_cp ?>" value="" class="cp" <?php echo $chk ?> />
+                                <label for="<?php echo $_cp ?>"><?php echo $_cp ?></label>
                             </li>
                             <?php
                             //$_h = count($_ch);
@@ -164,11 +172,10 @@ function filesize_formatted($path)
                                 $chk = 'checked';
                                 if (!in_array($_idh, $cats_u) || in_array($_idh, $cats_hide['ec'])) {
                                         $chk = '';
-                                    
                                 }
                                 ?>
                                 <li class="h">
-                                    <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> />
+                                    <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> class="ch" />
                                     <label for="<?php echo $_id ?>"><?php echo $_ch ?></label>
                                 </li>
                             <?php
@@ -332,7 +339,7 @@ function filesize_formatted($path)
                             <label for="ayer-y-hoy">Ayer y hoy</label>
                         </div>
                         <div class="radio">
-                            <input type="radio" id="semana" value="s" name="rap" />
+                            <input type="radio" id="semana" value="s" name="rap" checked />
                             <label for="semana">Ultima semana</label>
                         </div>
                         <div class="radio">
@@ -340,7 +347,7 @@ function filesize_formatted($path)
                             <label for="mes">Ultimo mes</label>
                         </div>
                         <div class="radio">
-                            <input type="radio" id="acumulado" value="acum" name="rap" checked />
+                            <input type="radio" id="acumulado" value="acum" name="rap" />
                             <label for="acumulado">Acumulado del año</label>
                         </div>
                 </fieldset>
@@ -349,7 +356,7 @@ function filesize_formatted($path)
         </div>
         <!-- Filtro fecha :: FIN-->
         
-        <!-- Filtro categorias acceso -->
+        <!-- Filtro categorias acceso
         <div id="fcat_acceso" class="filtro fcat" data-index="2">
             <div class="left">
                  <h2 class="dosis">Posible restriccion al acceso humanitario</h2>
@@ -406,7 +413,7 @@ function filesize_formatted($path)
                         </ul>
             </div>
         </div>
-        <!-- Filtro Acceso :: Fin -->
+        Filtro Acceso :: Fin -->
         
         <!-- Descargar eventos -->
         <div id="descargar" class="filtro fcat" data-index="2">
@@ -619,8 +626,8 @@ function filesize_formatted($path)
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>

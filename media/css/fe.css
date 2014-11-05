@@ -159,12 +159,12 @@ div.tecdn div {
     margin: 0;
 }
 #fcat_ec h2,
-#fcat_ec ul li.p {
-    color: #d40000;
+#fcat_ec ul li.p label {
+    color: #d40000 !important;
 }
 #fcat_dn h2,
-#fcat_dn ul li.p {
-    color: #2ca02c;
+#fcat_dn ul li.p label {
+    color: #2ca02c !important;
 }
 #fcat_acceso h2 {
     color: #fff;
@@ -209,6 +209,7 @@ div.tecdn div {
     width: 600px;
     clear: both;
     display: inline-block;
+    border-bottom: 1px solid #ffffff;
 }
 .fcat div {
     font-family: Arial !important;
