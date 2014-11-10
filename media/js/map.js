@@ -4,7 +4,7 @@ var fromProjection;
 var toProjection;
 var features_ec;
 var features_dn;
-var markerRadius = 3;
+var markerRadius = 10;
 var Style;
 var mtipo;
 var clear = true;
@@ -15,6 +15,8 @@ var id_depto = '00';
 var rm_id_depto = false;
 var id_tema = id_org = 0;
 var maximo = 0; // Maximo count en cluster
+var jenks;
+var jenks_cl = 5; // Estratos
 
 var url_xd = '/json/cluster/?m=0&v=0';
 
@@ -607,10 +609,26 @@ function ajaxFeatures(u, l) {
 
                 // Calcula el numero máximo de features en un cluster
                 var fts = json.features;
+                var arr = [];
                 for(j in fts) {
-                    if (fts[j].properties.count > maximo) {
-                        maximo = fts[j].properties.count;
+                    c = fts[j].properties.count;
+
+                    if (c > maximo) {
+                        maximo = c;
                     } 
+
+                    arr[j] = c;
+                }
+
+                console.log(arr);
+
+                // calcula jenks
+                var len = arr.length
+                if (len > 0) {
+                    serie = new geostats(arr);
+
+                    cl = (len < jenks_cl) ? len -1 : jenks_cl;
+                    jenks = serie.getClassJenks(cl);
                 }
 
                 //map.addLayer(l);
@@ -707,19 +725,9 @@ function defStyle(){
 
 						feature_count = feature.attributes.count;
 
-                        var num = 10;
-                        var intervalo = maximo / num;
-                        var r;
-                        console.log('maximo=' + maximo);
-                        for (var i=1;i<=num;i++) {
-                            if (feature_count <= intervalo*i) {
-                                r = markerRadius * (i+1);
-
-                                if (r < 7) {
-                                    r = 6;
-                                }
-
-                                return r;
+                        for (var i=1;i<jenks.length;i++) {
+                            if (feature_count <= jenks[i]) {
+                                return markerRadius * i;
                             }
                         }
 

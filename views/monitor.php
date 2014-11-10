@@ -636,6 +636,7 @@ function filesize_formatted($path)
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
     <script type="text/javascript">
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
