@@ -11,6 +11,7 @@ var resetLimit = false;
 var acceso = false;
 var _year, _month, _day, _today;
 var ocultar = '';
+var cp_ecs = {}; 
 
 $(function(){
 
@@ -177,41 +178,28 @@ $(function(){
         });
 
         // Categorias : Click en categoria papa
-        var cp_ecs = {}; 
         $('input.cp:checkbox').on('ifClicked', function(){ 
-            var index = $(this).index();
 
-            if (!(index in cp_ecs)) {
-                cp_ecs[index] = false; 
-            }
-
-            console.log(cp_ecs[index]);
-
-            cp_ec = cp_ecs[index];
-
-            if (cp_ec) {
-                $(this).iCheck('check');
-            }
-            else {
+            var chkp = $(this).attr('checked');
+            
+            if (chkp) {
                 $(this).iCheck('uncheck');
             }
+            else {
+                $(this).iCheck('check');
+            }
             
-            $(this).attr('checked', cp_ec);
+            $(this).attr('checked', !$(this).attr('checked'));
            
             $(this).closest('ul.cats').find('input.ch:checkbox').each(function(){ 
-                console.log('adentro' + cp_ec);
                 
-                if (cp_ec) {
-                    $(this).iCheck('check');
-                }
-                else {
+                if (chkp) {
                     $(this).iCheck('uncheck');
                 }
-                
-                $(this).attr('checked', cp_ec);
+                else {
+                    $(this).iCheck('check');
+                }
             });
-            
-            cp_ecs[index] = !cp_ec;
         });
         
         // Minimize - Maximize total

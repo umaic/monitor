@@ -215,7 +215,12 @@ function filesize_formatted($path)
                 foreach($cats_f['dn'] as $_cp => $_cts) { ?>
                     <div>
                         <ul class="cats">
-                            <li class="p"><?php echo $_cp ?></li>
+                            
+                            <li class="p">
+                                <input type="checkbox" id="<?php echo $_cp ?>" value="" class="cp" checked />
+                                <label for="<?php echo $_cp ?>"><?php echo $_cp ?></label>
+                            </li>
+
                             <?php
                             //$_h = count($_ch);
                             foreach($_cts as $_idh => $_ch) { 
