@@ -620,8 +620,6 @@ function ajaxFeatures(u, l) {
                     arr[j] = c;
                 }
 
-                console.log(arr);
-
                 // calcula jenks
                 var len = arr.length
                 if (len > 0) {
