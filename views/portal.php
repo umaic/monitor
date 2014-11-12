@@ -232,6 +232,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/highcharts.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/geostats.min.js"></script>
     <script type="text/javascript">
         var portal = 1;
         var layout = 'portal';
