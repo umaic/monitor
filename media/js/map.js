@@ -4,7 +4,7 @@ var fromProjection;
 var toProjection;
 var features_ec;
 var features_dn;
-var markerRadius = 10;
+var markerRadius = 7;
 var Style;
 var mtipo;
 var clear = true;
