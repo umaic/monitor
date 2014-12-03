@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="http://monitor.salahumanitaria.co/favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.min.css">
+<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
@@ -560,6 +560,51 @@ function filesize_formatted($path)
                   </ul>
                   <div id="tendencia">
                     <div id="chart_1" class="chart"></div>
+                    <div id="chart_t_s">
+                        <div class="left" id="chart_total">
+                            <div class="ec ct">
+                                <div class="total_n" id="chart_total_v"></div>
+                                <div class="total_t">total violencia</div>
+                            </div>
+                            <div class="dn ct">
+                                <div class="total_n" id="chart_total_d"></div>
+                                <div class="total_t">total desastres</div>
+                            </div>
+                        </div>
+                        <div class="left ec" id="chart_subtotal">
+                            <div>
+                                <div class="left">
+                                    <div class="subtotal_n" id="civiles"></div>
+                                    <div class="subtotal_t">civiles</div>
+                                </div>
+                                <div class="left">
+                                    <div class="subtotal_n" id="indigenas"></div>
+                                    <div class="subtotal_t">indigenas</div>
+                                </div>
+                                <div class="left">
+                                    <div class="subtotal_n" id="afros"></div>
+                                    <div class="subtotal_t">afro </br>colombianos</div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                            <div>
+                                <div class="left">
+                                    <div class="subtotal_n" id="mujeres"></div>
+                                    <div class="subtotal_t">mujeres</div>
+                                </div>
+                                <div class="left">
+                                    <div class="subtotal_n" id="hombres"></div>
+                                    <div class="subtotal_t">hombres</div>
+                                </div>
+                                <div class="left">
+                                    <div class="subtotal_n" id="menores"></div>
+                                    <div class="subtotal_t">niños</div>
+                                </div>
+                                <div class="clear"></div>
+                            </div>
+                        </div>
+                        <div class="clear"></div>
+                    </div>
                     <div id="charts_pie">
                         <div class="ec"><h2>Violencia Armada</h2></div>
                         <div id="chart_2" class="chart "></div>
@@ -631,7 +676,7 @@ function filesize_formatted($path)
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/map.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>

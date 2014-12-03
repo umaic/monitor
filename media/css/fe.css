@@ -947,6 +947,40 @@ div.report_list_map div.victim {
     z-index: 1006;
 }
 
+.total_n {
+    font-size: 24px;
+    font-weight: bold;
+}
+.total_t {
+    font-size: 11px;
+    text-transform: uppercase;
+}
+.subtotal_n {
+    font-size: 12px;
+    font-weight: bold;
+}
+.subtotal_t {
+    font-size: 9px;
+    text-transform: uppercase;
+}
+#chart_total {
+    width: 130px;
+}
+#chart_total .ct {
+    padding: 5px;
+    height: 40px;
+}
+#chart_subtotal {
+    margin-left: 20px;
+}
+#chart_subtotal .left {
+    width: 50px;
+    height: 40px;
+    padding: 5px;
+}
+#chart_t_s {
+    margin: 20px 10px;
+}
 /* Link en modal window */
 .ui-dialog a {
     text-decoration: none;
@@ -1102,3 +1136,4 @@ div#mase {
     height: 20px;
     cursor: pointer;
 }
+

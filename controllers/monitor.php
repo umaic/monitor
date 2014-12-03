@@ -150,7 +150,7 @@ class MonitorController {
         $_SESSION['cond_cats_ec'] = $cond_cats_ec;
         $_SESSION['cond_cats_dn'] = $cond_cats_dn;
 
-        list($rsms_ec, $rsms_dn, $charts) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
+        list($rsms_ec, $rsms_dn, $charts, $subtotales) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
 
         $_db = $this->db_dn.'.';
 
@@ -248,7 +248,7 @@ class MonitorController {
                         );
         }
         
-        return compact('r', 't','rsms_ec', 'rsms_dn','charts');
+        return compact('r', 't','rsms_ec', 'rsms_dn','charts','subtotales');
     }
     
     /**
@@ -779,43 +779,12 @@ class MonitorController {
         
         $_db = $this->db_dn.'.';
         
-        //echo $cond_tmp;
-        /* 
-        if ($afectacion) {
-            $_sqle = "SELECT SUM(victim_cant) AS n
-                FROM %svictim v
-                JOIN %sincident_category ic ON v.incident_category_id = ic.id
-                JOIN %sincident AS i ON ic.incident_id = i.id
-                JOIN %slocation AS l ON l.id = i.location_id
-                WHERE $cond_csv";
-            
-            $_sqld = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
-                FROM %sform_response f
-                JOIN %sincident AS i ON f.incident_id = i.id
-                JOIN %slocation AS l ON l.id = i.location_id
-                JOIN %sincident_category ic USING(incident_id)
-                WHERE $cond_csv AND form_field_id = 4";
-            
-            $_sqliec = sprintf($_sqle,'','','','',$cond_cats_ec);
-            $_sqlidn = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
-        }
-        else {
-            $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
-                 JOIN %sincident AS i ON l.id = i.location_id
-                 JOIN %sincident_category AS ic ON i.id = ic.incident_id
-                 WHERE $cond_csv";
-        
-            $_sqliec = sprintf($_sql,'','','',$cond_cats_ec);
-            $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
-        }
-         */
-        
         // Resumen violencia
         if ($afectacion) {
             $_sqlr = "SELECT SUM(victim_cant) AS sum, 
                 category_title AS cat, category_color AS color, c.id AS cat_id,
                 DAY(incident_date) AS dia, MONTH(incident_date) AS mes, YEAR(incident_date) AS year,
-                victim_ethnic_group_id, victim_gender_id
+                victim_ethnic_group_id, victim_gender_id, victim_age_id, victim_condition_id
                 FROM victim v
                 JOIN incident_category ic ON v.incident_category_id = ic.id
                 JOIN category c ON ic.category_id = c.id
@@ -983,6 +952,9 @@ class MonitorController {
                          );
 
         if ($afectacion) {
+            
+            $subtotales = array();
+
             // Pie de grupo etnico
             $group_by = 'victim_ethnic_group_id';
             $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
@@ -1000,7 +972,15 @@ class MonitorController {
             $_rs = $this->db->open($_sqliecc);
             while($_row = $this->db->FO($_rs)) {
                 if (!empty($_row->victim_ethnic_group_id)) {
-                    $data_pie_ethnic[] = array($ethnic_groups[$_row->victim_ethnic_group_id],$_row->sum*1);
+                    $_num = $_row->sum*1;
+                    $data_pie_ethnic[] = array($ethnic_groups[$_row->victim_ethnic_group_id],$_num);
+
+                    if ($_row->victim_ethnic_group_id == 1) {
+                        $subtotales['indigenas'] = $_num;
+                    }
+                    else if ($_row->victim_ethnic_group_id == 2) {
+                        $subtotales['afros'] = $_num;
+                    }
                 }
             }
             
@@ -1019,7 +999,65 @@ class MonitorController {
             $_rs = $this->db->open($_sqliecc);
             while($_row = $this->db->FO($_rs)) {
                 if (!empty($_row->victim_gender_id)) {
-                    $data_pie_gender[] = array($genders[$_row->victim_gender_id],$_row->sum*1);
+                    
+                    $_num = $_row->sum*1;
+                    $data_pie_gender[] = array($genders[$_row->victim_gender_id],$_num);
+                    
+                    if ($_row->victim_gender_id == 1) {
+                        $subtotales['mujeres'] = $_num;
+                    }
+                    else if ($_row->victim_gender_id == 2) {
+                        $subtotales['hombres'] = $_num;
+                    }
+                }
+            }
+            
+            // Pie de edad
+            $group_by = 'victim_age_id';
+            $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
+
+            // Consulta age
+            $_sql = "SELECT * FROM victim_age";
+            $_rs = $this->db->open($_sql);
+            while($_row = $this->db->FO($_rs)) {
+                $ages[$_row->id] = $_row->age;
+            }
+            
+            $data_pie_age = array();
+            $_rs = $this->db->open($_sqliecc);
+            while($_row = $this->db->FO($_rs)) {
+                if (!empty($_row->victim_age_id)) {
+                    
+                    $_num = $_row->sum*1;
+                    $data_pie_age[] = array($ages[$_row->victim_age_id],$_num);
+                    
+                    if ($_row->victim_age_id == 3) {
+                        $subtotales['menores'] = $_num;
+                    }
+                }
+            }
+            
+            // Pie de condicion
+            $group_by = 'victim_condition_id';
+            $_sqliecc = sprintf($_sql_chart_ec,$cond_cats_ec, $group_by);
+
+            // Consulta conditions
+            $_sql = "SELECT * FROM victim_condition";
+            $_rs = $this->db->open($_sql);
+            while($_row = $this->db->FO($_rs)) {
+                $conditions[$_row->id] = $_row->condition;
+            }
+            
+            $data_pie_condition = array();
+            $_rs = $this->db->open($_sqliecc);
+            while($_row = $this->db->FO($_rs)) {
+                if (!empty($_row->victim_condition_id)) {
+                    $_num = $_row->sum*1;
+                    $data_pie_condition[] = array($conditions[$_row->victim_condition_id],$_num);
+                    
+                    if ($_row->victim_condition_id == 2) {
+                        $subtotales['civiles'] = $_num;
+                    }
                 }
             }
             
@@ -1030,9 +1068,18 @@ class MonitorController {
             $charts[2] = array('title' => 'Victimas por genero', 
                 'data' => $data_pie_gender
                              );
+            /*
+            $charts[3] = array('title' => 'Victimas por edad', 
+                'data' => $data_pie_age
+                                              );
+            
+            $charts[4] = array('title' => 'Victimas por condicion', 
+                'data' => $data_pie_condition
+            );
+             */
         }  
 
-        return array($rsms_ec,$rsms_dn,$charts);
+        return array($rsms_ec,$rsms_dn,$charts,$subtotales);
     }
 
     /*

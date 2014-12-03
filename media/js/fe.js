@@ -22,7 +22,7 @@ $(function(){
     
     // Este bloque cuando el periodo inicial era una semana
     var _ms = 2;  // Meses hacia atras
-    var _ds = 7; // Dias iniciales hacia atras
+    var _ds = 30; // Dias iniciales hacia atras
     var _ii = new Date(_year,_month,_day,0,0).getTime();
     var _iniObj = new Date(_ii - daysToMiliseconds(_ds));
     var _iniD = _iniObj.getDate();
@@ -1018,10 +1018,12 @@ resumenAfectacion = function(data) {
         
     // El total se toma de la lista de departamentos, porque este total
     // sumado no corresponde, dado que un evento puede tener varias categorias
-    total_ec = data.t.ec;
+    total_ec = numberWithCommas(data.t.ec);
+    
+    $('#chart_total_v').html(total_ec);
     
     if (total_ec > 0) {
-        $('#resumen_total_ec_num').html(numberWithCommas(total_ec));
+        $('#resumen_total_ec_num').html(total_ec);
         $resumen_ec.show();
     }
     else {
@@ -1049,10 +1051,12 @@ resumenAfectacion = function(data) {
     
     // El total se toma de la lista de departamentos, porque este total
     // sumado no corresponde, dado que un evento puede tener varias categorias
-    total_dn = data.t.dn;
+    total_dn = numberWithCommas(data.t.dn);
+    
+    $('#chart_total_d').html(total_dn);
     
     if (total_dn > 0) {
-        $('#resumen_total_dn_num').html(numberWithCommas(total_dn));
+        $('#resumen_total_dn_num').html(total_dn);
         $resumen_dn.show();
     }
     else {
@@ -1081,6 +1085,14 @@ resumenAfectacion = function(data) {
         }
     }
 
+    // Subtotales
+    $('#civiles').html(numberWithCommas(data.subtotales.civiles));
+    $('#hombres').html(numberWithCommas(data.subtotales.hombres));
+    $('#mujeres').html(numberWithCommas(data.subtotales.mujeres));
+    $('#menores').html(numberWithCommas(data.subtotales.menores));
+    $('#afros').html(numberWithCommas(data.subtotales.afros));
+    $('#indigenas').html(numberWithCommas(data.subtotales.indigenas));
+
 }
 
 charts = function(data_charts) {
@@ -1104,7 +1116,7 @@ charts = function(data_charts) {
          data_charts[2].data.length == 0
         )
     {
-        $('#tendencia').html('<h2>No hay información</h2>');
+        $('#chart_1').html('<h2>No hay información</h2>');
 
         return;
     }
@@ -1114,9 +1126,12 @@ charts = function(data_charts) {
         chart: {
             type: 'line',
             width: 350,
-            height: 250,
+            height: 200,
             style: {
             }
+        },
+        legend: {
+            enabled: false
         },
         plotOptions: {
             series: {
