@@ -146,8 +146,8 @@ function filesize_formatted($path)
                 <a class="close" href="#" data-div="fcat_ec"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="" class="ec btn btn_show_e">Ocultar eventos</div>
-                <div id="btn_fcat_ec" class="ec btn btn_fcat">Filtrar mapa</div>
+                <div id="" class="btn btn_show_e">Ocultar eventos</div>
+                <div id="btn_fcat_ec" class="btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="fcat_list">
                 <?php 
@@ -207,8 +207,8 @@ function filesize_formatted($path)
                 <a class="close" href="#" data-div="fcat_dn"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="btn_show_dn" class="dn btn btn_show_e">Ocultar eventos</div>
-                <div id="btn_fcat_dn" class="dn btn btn_fcat">Filtrar mapa</div>
+                <div id="btn_show_dn" class="btn btn_show_e">Ocultar eventos</div>
+                <div id="btn_fcat_dn" class="btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="fcat_list">
                 <?php 
@@ -257,7 +257,7 @@ function filesize_formatted($path)
                 <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="filter_states" class="dn btn btn_fcat">Filtrar mapa</div>
+                <div id="filter_states" class="btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="clear"></div>
             <div>
@@ -578,12 +578,12 @@ function filesize_formatted($path)
                                     <div class="subtotal_t">civiles</div>
                                 </div>
                                 <div class="left">
-                                    <div class="subtotal_n" id="indigenas"></div>
-                                    <div class="subtotal_t">indigenas</div>
-                                </div>
-                                <div class="left">
                                     <div class="subtotal_n" id="afros"></div>
                                     <div class="subtotal_t">afro </br>colombianos</div>
+                                </div>
+                                <div class="left">
+                                    <div class="subtotal_n" id="indigenas"></div>
+                                    <div class="subtotal_t">indígenas</div>
                                 </div>
                                 <div class="clear"></div>
                             </div>

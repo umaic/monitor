@@ -11,7 +11,8 @@ var resetLimit = false;
 var acceso = false;
 var _year, _month, _day, _today;
 var ocultar = '';
-var cp_ecs = {}; 
+var cp_ecs = {};
+var titulo;
 
 $(function(){
 
@@ -916,7 +917,7 @@ totalesxDepto = function(more) {
     else {
         
         // Afectacion
-        var titulo = (getMapaAfectacion() == 1) ? 'afectados' : 'eventos';
+        titulo = (getMapaAfectacion() == 1) ? 'afectados' : 'eventos';
             
         // Acceso
         if (acceso) {
@@ -1141,7 +1142,7 @@ charts = function(data_charts) {
             }
         },
         title: {
-            text: s.title,
+            text: titulo.toUpperCase(),
             style: title_style
         },
         //xAxis: s.xAxis,
