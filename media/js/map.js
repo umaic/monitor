@@ -15,7 +15,7 @@ var id_depto = '00';
 var rm_id_depto = false;
 var id_tema = id_org = 0;
 var maximo = 0; // Maximo count en cluster
-var jenks;
+var jenks = [];
 var jenks_cl = 5; // Estratos
 
 var url_xd = '/json/cluster/?m=0&v=0';
@@ -622,7 +622,11 @@ function ajaxFeatures(u, l) {
 
                 // calcula jenks
                 var len = arr.length
-                if (len > 0) {
+                if (len > 1) {
+                    if (len <= jenks_cl) {
+                        jenks_cl = len + 1;
+                    }
+
                     serie = new geostats(arr);
 
                     cl = (len < jenks_cl) ? len -1 : jenks_cl;
@@ -722,13 +726,17 @@ function defStyle(){
 					{
 
 						feature_count = feature.attributes.count;
+                        
+                        var r = markerRadius;
 
                         for (var i=1;i<jenks.length;i++) {
                             if (feature_count <= jenks[i]) {
-                                return markerRadius * i;
+                                r = markerRadius * i;
+                                return r;
                             }
                         }
 
+                        return r;
 					},
 					strokeWidth: function(feature)
 					{

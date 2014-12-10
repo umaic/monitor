@@ -146,7 +146,7 @@ function filesize_formatted($path)
                 <a class="close" href="#" data-div="fcat_ec"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="" class="btn btn_show_e">Ocultar eventos</div>
+                <div id="" class="btn btn_show_e" data-s="ec">Ocultar eventos</div>
                 <div id="btn_fcat_ec" class="btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="fcat_list">
@@ -207,7 +207,7 @@ function filesize_formatted($path)
                 <a class="close" href="#" data-div="fcat_dn"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="btn_show_dn" class="btn btn_show_e">Ocultar eventos</div>
+                <div id="btn_show_dn" class="btn btn_show_e" data-s="dn">Ocultar eventos</div>
                 <div id="btn_fcat_dn" class="btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="fcat_list">
@@ -671,17 +671,23 @@ function filesize_formatted($path)
     </div>
     <div id="footer">
     </div>
-    <!--<script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js,jquery-ui.min.js,openlayers/OpenLayers.min.js,fe.min.js,map.min.js,/url_tools.min.js"></script>-->
+    <?php 
+    $j =  BASE.'media/js';
+
+    echo "<script type=\"text/javascript\" src=\"$j/jquery.min.js,$j/jquery-ui.min.js,$j/openlayers/OpenLayers.min.js,$j/fe.js,$j/map.js,$j/url_tools.min.js,$j/highcharts.js,$j/icheck.min.js,$j/geostats.min.js?minify=true\"></script>";
+    ?>  
+    <!--            
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
+    -->
     <script type="text/javascript">
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

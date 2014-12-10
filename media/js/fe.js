@@ -149,9 +149,9 @@ $(function(){
         // Oculta eventos
         $('.btn_show_e').click(function() {
 
-            var cs = $(this).attr('class').split(' ');
+            var cs = $(this).data('s');
 
-            ocultarViolenciaDesastres(cs[0]);
+            ocultarViolenciaDesastres(cs);
             
             
             $(this).closest('.filtro').hide();
@@ -1087,12 +1087,12 @@ resumenAfectacion = function(data) {
     }
 
     // Subtotales
-    $('#civiles').html(numberWithCommas(data.subtotales.civiles));
-    $('#hombres').html(numberWithCommas(data.subtotales.hombres));
-    $('#mujeres').html(numberWithCommas(data.subtotales.mujeres));
-    $('#menores').html(numberWithCommas(data.subtotales.menores));
-    $('#afros').html(numberWithCommas(data.subtotales.afros));
-    $('#indigenas').html(numberWithCommas(data.subtotales.indigenas));
+    $('#civiles').html((data.subtotales.civiles === undefined ) ? '---' : numberWithCommas(data.subtotales.civiles));
+    $('#hombres').html((data.subtotales.hombres === undefined ) ? '---' : numberWithCommas(data.subtotales.hombres));
+    $('#mujeres').html((data.subtotales.mujeres === undefined ) ? '---' : numberWithCommas(data.subtotales.mujeres));
+    $('#menores').html((data.subtotales.menores === undefined ) ? '---' : numberWithCommas(data.subtotales.menores));
+    $('#afros').html((data.subtotales.afros === undefined ) ? '---' : numberWithCommas(data.subtotales.afros));
+    $('#indigenas').html((data.subtotales.indigenas === undefined ) ? '---' : numberWithCommas(data.subtotales.indigenas));
 
 }
 

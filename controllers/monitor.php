@@ -773,9 +773,10 @@ class MonitorController {
 
     }
 
-    private function getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv){
+    private function getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) {
 
         $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+        $subtotales = array();
         
         $_db = $this->db_dn.'.';
         
@@ -953,7 +954,6 @@ class MonitorController {
 
         if ($afectacion) {
             
-            $subtotales = array();
 
             // Pie de grupo etnico
             $group_by = 'victim_ethnic_group_id';
