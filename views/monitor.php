@@ -4,10 +4,11 @@
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="http://monitor.salahumanitaria.co/favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css">
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css">
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />
+
+<?php 
+$c =  BASE.'media/css';
+echo "<link type=\"text/css\" rel=\"stylesheet\" href=\"$c/fe.css,$c/brand.css,$c/orange.css,$c/jquery-ui-1.8.22.custom.css?minify=true\">";
+?>
 </head>
 
 <?php
@@ -649,9 +650,6 @@ function filesize_formatted($path)
               </div>
               <div id="departamentos">
                 <div id="div_table_totalxd" class="div_table_totalxd">
-                    <div class="data_title">
-                        <h2>Personas afectadas</h2>
-                    </div>
                     <table id="table_totalxd">
                         <thead>
                             <tr>
@@ -676,18 +674,6 @@ function filesize_formatted($path)
 
     echo "<script type=\"text/javascript\" src=\"$j/jquery.min.js,$j/jquery-ui.min.js,$j/openlayers/OpenLayers.min.js,$j/fe.js,$j/map.js,$j/url_tools.min.js,$j/highcharts.js,$j/icheck.min.js,$j/geostats.min.js?minify=true\"></script>";
     ?>  
-    <!--            
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/LoadingPanel.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
-    -->
     <script type="text/javascript">
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),

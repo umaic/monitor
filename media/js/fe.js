@@ -1023,7 +1023,7 @@ resumenAfectacion = function(data) {
     
     $('#chart_total_v').html(total_ec);
     
-    if (total_ec > 0) {
+    if (data.t.ec > 0) {
         $('#resumen_total_ec_num').html(total_ec);
         $resumen_ec.show();
     }
@@ -1056,7 +1056,7 @@ resumenAfectacion = function(data) {
     
     $('#chart_total_d').html(total_dn);
     
-    if (total_dn > 0) {
+    if (data.t.dn > 0) {
         $('#resumen_total_dn_num').html(total_dn);
         $resumen_dn.show();
     }
@@ -1064,7 +1064,7 @@ resumenAfectacion = function(data) {
         $resumen_dn.hide();
     }
 
-    if (total_ec > 0 && total_dn > 0) {
+    if (data.t.ec > 0 && data.t.dn > 0) {
         $('#resumen_ec, #resumen_dn').addClass('left half');
     }
     else {
