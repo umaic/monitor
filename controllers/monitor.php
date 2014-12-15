@@ -331,7 +331,7 @@ class MonitorController {
         $limi = '~';
         $nl = "\r\n";
 
-        $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Título evento"'.$limi.'"Resumen evento"'.$limi.
+        $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Fecha Fin Evento"'.$limi.'"# días evento"'.$limi.'"Título evento"'.$limi.'"Resumen evento"'.$limi.
                 '"Categorias (Subcategorias)"'.$limi.
                 //'"Acceso"'.$limi.
                 '"Resoluciones"'.$limi.
@@ -342,7 +342,8 @@ class MonitorController {
                 '"# Víctimas afro"'.$limi.'"Víctimas indígenas"'.$limi.'"Víctimas otros"'.$limi.
                 $nl;
 
-        $_sql_csv = "SELECT i.id AS id, i.incident_date AS date, i.incident_title AS title,
+        $_sql_csv = "SELECT i.id AS id, i.incident_date AS date, i.incident_date_end AS date_end, 
+                    DATEDIFF(i.incident_date_end, i.incident_date) AS dias, i.incident_title AS title,
                     i.incident_description AS des, GROUP_CONCAT(c.category_title) AS cats,
                     l.location_name AS ln, city_id, state_id, l.location_name AS loc
                     FROM %slocation AS l
@@ -428,13 +429,14 @@ class MonitorController {
 
                     // Acceso y 1612
                     
-                    /*
-                    $form_field_id_acc = 1; // Preguntas de acceso
 
                     $_sql_acc_1612 = "SELECT form_response AS r
                         FROM ".$_dbu."form_response AS fr
                         INNER JOIN incident AS i ON fr.incident_id = i.id
                     WHERE form_field_id = %s AND incident_id = $iid AND restricting_access = 1";
+                    
+                    /*
+                    $form_field_id_acc = 1; // Preguntas de acceso
 
                     $_sql_acc = sprintf($_sql_acc_1612,$form_field_id_acc);
 
@@ -496,9 +498,11 @@ class MonitorController {
                 $_row_s = $this->db->FO($_rss_s);
 
                 $state = (empty($_row_s->state)) ? '' : $_row_s->state;
-                $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
+                $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->date_end.'"'.$limi.'"'.$_r->dias.'"'.$limi.
+                        '"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
                         '"'.$_r->cats.'"'.$limi.
-                        '"'.$acceso.'"'.$limi.'"'.$res_1612.'"'.$limi.
+                        //'"'.$acceso.'"'.$limi.
+                        '"'.$res_1612.'"'.$limi.
                         '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
                         '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
 

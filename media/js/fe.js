@@ -23,7 +23,7 @@ $(function(){
     
     // Este bloque cuando el periodo inicial era una semana
     var _ms = 2;  // Meses hacia atras
-    var _ds = 30; // Dias iniciales hacia atras
+    var _ds = 7; // Dias iniciales hacia atras
     var _ii = new Date(_year,_month,_day,0,0).getTime();
     var _iniObj = new Date(_ii - daysToMiliseconds(_ds));
     var _iniD = _iniObj.getDate();
@@ -562,7 +562,7 @@ function ocultarViolenciaDesastres(cs) {
         $r_hide = $('#resumen_dn');
         $r_show = $('#resumen_ec');
 
-        $eventos_desastres = $('#report_list_map_desastres');
+        //$eventos_desastres = $('#report_list_map_desastres');
         
     }
     
@@ -573,7 +573,7 @@ function ocultarViolenciaDesastres(cs) {
 
         $r_hide.hide();
         $r_show.removeClass('left half');
-        $eventos_desastres.hide();
+        //$eventos_desastres.hide();
     
         ocultar = cs;
     }
