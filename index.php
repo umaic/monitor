@@ -11,9 +11,9 @@
  * @category  Script
  * @package   Monitor
  * @author    Ruben Rojas <rojasr@un.org>
- * @copyright 2012 OCHA Colombia (http://colombiassh.org)
+ * @copyright 2012 OCHA Colombia (http://salahumanitaria.co)
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
- * @link      http://monitor.colombiassh.org Monitor
+ * @link      http://monitor.salahumanitaria.co Monitor
 */
 
 $cli = (isset($argv)) ? true : false;
@@ -25,18 +25,11 @@ if ($cli === false) {
 // PHP >= 5.3
 //date_default_timezone_set('America/Bogota');
 
+define ('BASE', '/');  // Comienza con slash, se usa al incluir los assets
 
-$base = '/';
-if (isset($_SERVER['SERVER_NAME'])) {
-    if (in_array($_SERVER['SERVER_NAME'], array('localhost','190.66.6.168'))) {
-        $base = '/monitor/';  // Comienza con slash, se usa al incluir los assets
-    } 
-}
-
-define ('BASE', $base);  // Comienza con slash, se usa al incluir los assets
-
-include "config.php";
+require 'config.php';
 require 'controllers/monitor.php';
+
 $mc = new MonitorController;
 
 if (isset($_SESSION)) {
@@ -61,6 +54,7 @@ else {
         $m = $_GET['m'];
     }
 }
+
 // Clean URL
 if (!empty($m)) {
     switch($m) {
@@ -116,6 +110,7 @@ if (!empty($m)) {
             header('Content-type: text/json');
             header('Content-type: application/json');
             echo $_GET['callback'] . '('.json_encode($incidentes).');';
+
         break;
     
         case 'export':
@@ -133,8 +128,16 @@ if (!empty($m)) {
         case 'genCachePdfDiario':
             $mc->genCachePdfDiario();
         break;
+        
         case 'genCacheReportesDiario':
             $mc->genCacheReportesDiario();
+        break;
+
+        case 'geojson':
+            header('Content-type: text/json');
+            header('Content-type: application/json');
+            echo $mc->genJson($n);
+
         break;
     }
 }

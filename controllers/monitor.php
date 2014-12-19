@@ -1276,4 +1276,29 @@ class MonitorController {
         $_SESSION[$var] = $valor;
 
     }
+    
+    /*
+     * Retorna un json de cache o de fuente original
+     * @param string $n Nombre construido desde los parametros url
+     *
+     * @return string $json
+     */
+    public function getJson($n) {
+        if ($this->checkGenJson($n)) {
+             
+        }
+        else {
+            return file_get_contents($this->config['cache_json']['path'].'/'.$n);
+        }
+    }
+    
+    /*
+     * Comprueba si se debe generar el json
+     * @param string $n Nombre construido desde los parametros url
+     *
+     * @return boolean $g
+     */
+    public function checkGenJson($n) {
+
+    }
 }
