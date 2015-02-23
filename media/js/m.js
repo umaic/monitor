@@ -1982,7 +1982,10 @@ function onFeatureSelect(attrs) {
                             
                             // Source type :: source name
                             if ((_js.f[k][0] != '' && _js.f[k][1] != '') || _js.f[k][2] != '') {
-                                _html += '<div class="detail">&raquo; '+_js.f[k][1]+' ( '+_js.f[k][0]+' )';
+
+                                if ((_js.f[k][0] != '' && _js.f[k][1] != '')) {
+                                    _html += '<div class="detail">&raquo; '+_js.f[k][1]+' ( '+_js.f[k][0]+' )';
+                                }
                             
                             
                                 // Source refer
