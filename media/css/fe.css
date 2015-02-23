@@ -715,6 +715,10 @@ div.filtro_fecha .close {
     margin-right: 10px;
     height: 300px;
     width: 180px;
+}    
+#ini_fin fieldset > div {
+    height: 270px;
+    overflow: auto;
 }
 #ini_fin fieldset legend{
     font-size: 18px;
