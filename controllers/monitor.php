@@ -433,7 +433,7 @@ class MonitorController {
                     $_sql_acc_1612 = "SELECT form_response AS r
                         FROM ".$_dbu."form_response AS fr
                         INNER JOIN incident AS i ON fr.incident_id = i.id
-                    WHERE form_field_id = %s AND incident_id = $iid AND restricting_access = 1";
+                    WHERE form_field_id = %s AND incident_id = $iid";
                     
                     /*
                     $form_field_id_acc = 1; // Preguntas de acceso
