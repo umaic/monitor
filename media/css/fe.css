@@ -716,7 +716,7 @@ div.filtro_fecha .close {
     height: 300px;
     width: 180px;
 }    
-#ini_fin fieldset > div {
+#ini_fin fieldset > div:not(.r) {
     height: 270px;
     overflow: auto;
 }
