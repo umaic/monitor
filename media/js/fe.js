@@ -416,10 +416,10 @@ $(function(){
                 if ($div.find('li.selected').length == 3) {
 
                     var _ini = new
-                    Date($('li.selected[q=ini][y=yyyy]').attr('val'),$('li.selected[q=ini][y=mes]').attr('val')-1,$('li.selected[q=ini][y=dia]').attr('val')).getTime();
+                    Date($('li.selected[q=ini][y=yyyy]').attr('val'),$('li.selected[q=ini][y=mes]').attr('val')-1,$('li.selected[q=ini][y=dia]').attr('val'),23,59).getTime();
 
                     var _fin = new
-                    Date($('li.selected[q=fin][y=yyyy]').attr('val'),$('li.selected[q=fin][y=mes]').attr('val')-1,$('li.selected[q=fin][y=dia]').attr('val')).getTime();
+                    Date($('li.selected[q=fin][y=yyyy]').attr('val'),$('li.selected[q=fin][y=mes]').attr('val')-1,$('li.selected[q=fin][y=dia]').attr('val'),23,59).getTime();
                     
                     if (_ini > _fin) {
                         alert('Desde debe ser menor que Hasta');
