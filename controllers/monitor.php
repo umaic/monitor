@@ -378,7 +378,7 @@ class MonitorController {
                 }
 
                 $acceso = '';
-                $res_1612 = '';
+                $resoluciones = array();
 
                 if ($tipo == 'v') {
                     
@@ -428,8 +428,6 @@ class MonitorController {
                     }
 
                     // Acceso y 1612
-                    
-
                     $_sql_acc_1612 = "SELECT form_response AS r
                         FROM ".$_dbu."form_response AS fr
                         INNER JOIN incident AS i ON fr.incident_id = i.id
@@ -454,14 +452,20 @@ class MonitorController {
                     $_sql_1612 = sprintf($_sql_acc_1612,$form_field_id_1612);
 
                     $_rsv = $this->db->open($_sql_1612);
-                    $res_1612 = array();
                     while ($_row_a = $this->db->FO($_rsv)) {
-                        //$res_1612[] = $_row_a->r;
-                        $res_1612[] = 'NAN';
+                        
+                        $r = $_row_a->r;
+
+                        if (strpos($r,'res_1612') !== false) {
+                            $resoluciones[] = 'NAN';
+                        }
+                        
+                        if (strpos($r,'res_1820')) {
+                            $resoluciones[] = 'VSBG';
+                        }
                     }
 
-                    $res_1612 = implode(',', $res_1612);
-
+                    $resoluciones = implode(',', $resoluciones);
                 }
                 else {
                     $title = $_r->title;
@@ -502,7 +506,7 @@ class MonitorController {
                         '"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
                         '"'.$_r->cats.'"'.$limi.
                         //'"'.$acceso.'"'.$limi.
-                        '"'.$res_1612.'"'.$limi.
+                        '"'.$resoluciones.'"'.$limi.
                         '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
                         '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
 
