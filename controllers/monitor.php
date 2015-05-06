@@ -340,11 +340,12 @@ class MonitorController {
                 '"# Total Víctimas (Violencia armada) / Personas Afectadas (Desastres)"'.$limi.'"# Víctimas civiles"'.$limi.'"Víctimas militares"'.$limi.
                 '"# Víctimas menores 18 años"'.$limi.'"Víctimas mujeres"'.$limi.
                 '"# Víctimas afro"'.$limi.'"Víctimas indígenas"'.$limi.'"Víctimas otros"'.$limi.
+                '"Incidente o Accidente MAP/MUSE"'.
                 $nl;
 
         $_sql_csv = "SELECT i.id AS id, i.incident_date AS date, i.incident_date_end AS date_end, 
                     DATEDIFF(i.incident_date_end, i.incident_date) AS dias, i.incident_title AS title,
-                    i.incident_description AS des, GROUP_CONCAT(c.category_title) AS cats,
+                    i.incident_description AS des, GROUP_CONCAT(c.category_title) AS cats,GROUP_CONCAT(DISTINCT c.parent_id) AS parents_id,
                     l.location_name AS ln, city_id, state_id, l.location_name AS loc
                     FROM %slocation AS l
                  INNER JOIN %sincident AS i ON l.id = i.location_id
@@ -501,6 +502,13 @@ class MonitorController {
                 $_rss_s = $this->db->open($_sql_s);
                 $_row_s = $this->db->FO($_rss_s);
 
+                // Incidente o Accidente con Uso de explosivos remanentes de guerra ?
+                $_cat_uerg = "35";
+                $inc_acc = '';
+                if (strpos($_r->parents_id, $_cat_uerg) !== false) {
+                    $inc_acc = ($num_v[0] > 0) ? 'Accidente' : 'Incidente';
+                }
+
                 $state = (empty($_row_s->state)) ? '' : $_row_s->state;
                 $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->date_end.'"'.$limi.'"'.$_r->dias.'"'.$limi.
                         '"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
@@ -515,7 +523,7 @@ class MonitorController {
                     $csv .= $nv.$limi;
                 }
 
-                $csv .= $nl;
+                $csv .= '"'.$inc_acc.'"'.$nl;
 
             }
         //}
