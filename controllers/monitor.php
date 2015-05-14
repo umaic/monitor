@@ -1271,11 +1271,128 @@ class MonitorController {
                     $this->downloadIncidents($d[0],compact('cond_csv','cond_cats_dn','cond_cats_ec'));
                     $this->export('xls','incidentes', $reporte,'static');
 
+                    //echo "Listo = $a - $d \n";
+
+                }
+            }
+        }
+    }
+    
+    /*
+     * Genera cache de totales por año-categoria
+     *
+     */
+    public function genCacheTotalesDiario() {
+
+        $totales_csv = $config['cache_reportes'].'/totales.csv';
+        $totales_json = $config['cache_reportes'].'/totales.json';
+
+        $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
+        $cond_date = "DATE(incident_datemodify) = $ayer OR DATE(incident_dateadd) = $ayer";
+        $yyyy = date('Y');
+        $limi = '~';
+        $nl = "\r\n";
+
+        $dbs = array('violencia' => '', 'desastres' => $this->db_dn.'.');
+
+        // Resumen violencia
+        // Afectacion
+        $_sql['violencia']['af'] = "SELECT SUM(victim_cant) AS sum, category_title AS cat,
+            FROM %svictim v
+            JOIN %sincident_category ic ON v.incident_category_id = ic.id
+            JOIN %scategory c ON ic.category_id = c.id
+            JOIN %sincident i ON ic.incident_id = i.id
+            WHERE %s";
+        
+        // Incidentes
+        $_sql['violencia']['e'] = "SELECT COUNT(i.id) AS sum, category_title AS cat,
+            FROM %sincident i
+            JOIN %sincident_category ic ON i.id = ic.incident_id
+            JOIN %scategory c ON ic.category_id = c.id
+            JOIN %slocation AS l ON l.id = i.location_id
+            WHERE %s";
+
+        //echo $_sqliec;
+
+        // Resumen desastres
+        // Afectacion
+        // Form id = 4, # personas
+        $_sql['desastres']['af'] = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, category_title AS cat
+            FROM ".$_db."form_response f
+            JOIN %sincident i ON f.incident_id = i.id
+            JOIN %sincident_category ic ON ic.incident_id = i.id
+            JOIN %scategory c ON ic.category_id = c.id
+            JOIN %slocation AS l ON l.id = i.location_id
+            WHERE form_field_id = 4 AND %s";
+
+        $_sql['desastres']['e'] = "SELECT COUNT(i.id) AS sum, category_title AS cat
+            FROM %sincident i
+            JOIN %sincident_category ic ON i.id = ic.incident_id
+            JOIN %scategory c ON ic.category_id = c.id
+            JOIN %slocation AS l ON l.id = i.location_id
+            WHERE %s";
+
+        //echo $_sqlidn;
+        
+        for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
+            foreach($dbs as $d => $db) {
+                
+                $csv = "$limiAfectados$limiEventos$nl";
+
+                // Check if there are modificated incidents at the year
+                $sql = "SELECT COUNT(id) AS n FROM ".$db."incident WHERE YEAR(incident_date) = $a AND incident_active = 1 AND ($cond_date)";
+                
+                $rs = $this->db->open($sql);
+                $row = $this->db->FO($rs);
+
+                $reporte = $this->config['cache_reportes'].'/'."monitor-totales-$a-$d.xls";
+                
+                if (!empty($row->n) || file_exists($reporte) === false) {
+
+                    $ini = date('Y-m-d', mktime(0,0,0,1,1,$a));
+                    $fin = date('Y-m-d', mktime(0,0,0,12,31,$a));
+
+                    $csv .= "Totales$limi$a$nl";
+                    $cond_if = "incident_date >= '2015-01-01 05:00:00' AND incident_date <= '$fin'";
+
+                    foreach(array('af','e') as $afv) {
+                        
+                        $_sqlafv = $_sql[$d][$afv];
+
+                        // Total
+                        $_sqlv = sprintf($_sqlafv,$db,$db,$db,$db,$cond_if);
+                        $_rs = $this->db->open($_sqlv);
+                        $_row = $this->db->FO($_rs);
+                        
+                        $json[$a][$d]['total'][$afv] = $_row->sum;
+
+                        // Total por categoria
+                        $_sqlv = sprintf($_sqlafv,$d,$d,$d,$d,$cond_if." GROUP BY category_id ORDER BY sum DESC");
+
+                        $_rs = $this->db->open($_sqlv);
+                        while($_row = $this->db->FO($_rs)) {
+                            $json[$a][$d]['categorias'][$_row->cat][$avf] = $_row->sum;
+                        }
+                    }
+                    
+                    // Popula csv
+                    $csv . = $limi.$json[$a][$d]['total']['af'].$limi.$limi,$json[$a][$d]['total']['af'].$nl;
+                    
+                    foreach($json[$a][$d]['categorias'] as $cat => $v) {
+                        $csv .= $cat.$limit.$v['af'].$limit.$v['e'].$nl;
+                    }
+
+                    file_put_contents($totales_csv, $csv);
+                    
+                    $this->export('xls','totales', $reporte,'static');
+
                     echo "Listo = $a - $d \n";
 
                 }
             }
         }
+        
+        file_put_contents($totales_json, $json);
     }
 
     /*

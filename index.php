@@ -132,6 +132,10 @@ if (!empty($m)) {
         case 'genCacheReportesDiario':
             $mc->genCacheReportesDiario();
         break;
+        
+        case 'genCacheTotalesDiario':
+            $mc->genCacheTotalesDiario();
+        break;
 
         case 'geojson':
             header('Content-type: text/json');
