@@ -5,7 +5,20 @@
 <link rel="shortcut icon" href="http://monitor.salahumanitaria.co/favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
 
-<link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/m.css" />
+
+<?php
+$dev = true;
+
+if ($dev) { ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
+<?php
+}
+else { ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
+<?php
+}
+?>
 </head>
 
 <?php
@@ -74,12 +87,6 @@ function filesize_formatted($path)
                 <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
-            <!--
-            <div class="cat it">
-                <div class="inline">Filtrar categor&iacute;as</div>
-                <div class="inline arrow-down"></div>
-            </div>
-            -->
             <div class="new_event nev">
                 <a href="<?php echo $url_violencia ?>" target="_blank">
                     Reportar un evento
@@ -91,12 +98,6 @@ function filesize_formatted($path)
                 <img src="<?php echo BASE ?>media/img/logo_dn.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
-            <!--
-            <div class="it cat">
-                <div class="inline">Filtrar categor&iacute;as</div>
-                <div class="inline arrow-down"></div>
-            </div>
-            -->
             <div class="new_event ned">
                 <a href="<?php echo $url_desastres ?>" target="_blank">
                     Reportar un evento
@@ -125,6 +126,7 @@ function filesize_formatted($path)
                 <li class="sub" data-div="fcat_ec"><span class="menu_violencia">Categorias violencia</span></li>
                 <!--<li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>-->
                 <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
+                <li class="sub" data-div="totales"><span class="menu_totales">Totales por año</span></li>
                 <li class="sub" data-div="descargar"><span class="menu_descargar">Descargar eventos</span></li>
             </ul>
         </div>
@@ -419,9 +421,9 @@ function filesize_formatted($path)
         Filtro Acceso :: Fin -->
         
         <!-- Descargar eventos -->
-        <div id="descargar" class="filtro fcat" data-index="2">
+        <div id="descargar" class="filtro fcat" data-index="4">
             <div class="right">
-                <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+                <a class="close" href="#" data-div="descargar"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="clear"></div>
             <div class="left step">
@@ -446,7 +448,7 @@ function filesize_formatted($path)
                     <div class="btn" id="download_incidents">Comenzar con la descarga....</div>
                 </div>
             </div>
-            <div id="zips" class="left w step">
+            <div class="left w step zips">
                 <div>
                     <h2 class="dosis">Descarga directa</h2>
                 </div>
@@ -458,6 +460,48 @@ function filesize_formatted($path)
                             echo "<tr><td>$_a</td>";
                             foreach(array('violencia','desastres') as $b) {
                                 $file = "monitor-eventos-$_a-$b.xls";
+
+                                $size = filesize_formatted($config['cache_reportes'].'/'.$file);
+                                echo "<td><a href='z/".$file."'>Descargar ~ $size</a></td>"; 
+                            }
+                            echo "</tr>";
+                        } 
+                        ?>
+                    </table>
+                </div>
+                <p class="note">Reportes generados el: <b><?php echo $ayer ?></b></p>
+            </div>
+        </div>
+        <!-- Descargar eventos :: FIN-->
+        
+        <!-- Totales por año -->
+        <div id="totales" class="filtro fcat" data-index="3">
+            <div class="right">
+                <a class="close" href="#" data-div="totales"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+            </div>
+            <div class="clear"></div>
+            <div class="left step">
+                <div class="w">
+                    <h2 class="dosis">Totales</h2>
+                </div>
+                <div>
+                    <table>
+                        <tr><th></th><th align="center">Violencia</th><th align="center">Desastres</th></tr>
+                    </table>
+                </div>
+            </div>
+            <div class="left w step zips">
+                <div>
+                    <h2 class="dosis">Descarga directa</h2>
+                </div>
+                <div>
+                    <table>
+                        <tr><th></th><th align="center">Violencia</th><th align="center">Desastres</th></tr>
+                        <?php 
+                        foreach($totalxy as $_a) {
+                            echo "<tr><td>$_a</td>";
+                            foreach(array('violencia','desastres') as $b) {
+                                $file = "monitor-totales-$_a-$b.xls";
 
                                 $size = filesize_formatted($config['cache_reportes'].'/'.$file);
                                 echo "<td><a href='z/".$file."'>Descargar ~ $size</a></td>"; 
@@ -666,7 +710,25 @@ function filesize_formatted($path)
     </div>
     <div id="footer">
     </div>
+    <?php
+    if ($dev) { ?>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
+    <?php
+    }
+    else {
+    ?>
     <script type="text/javascript" src="<?php echo BASE ?>media/js/m.js"></script>
+    <?php
+    }
+    ?>
 
     <script type="text/javascript">
      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

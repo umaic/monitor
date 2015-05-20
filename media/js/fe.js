@@ -247,6 +247,9 @@ $(function(){
                 });
         });
 
+        // Total por años
+        totalPeriodo();
+
         // Cerrar filtro
         $('a.close').click(function() { 
             $(this).closest('.filtro').hide();

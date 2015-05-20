@@ -1284,20 +1284,22 @@ class MonitorController {
      */
     public function genCacheTotalesDiario() {
 
-        $totales_csv = $config['cache_reportes'].'/totales.csv';
-        $totales_json = $config['cache_reportes'].'/totales.json';
+        $totales_csv = $this->config['cache_reportes'].'/totales.csv';
+        $totales_json = $this->config['cache_reportes'].'/totales.json';
+
 
         $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
         $cond_date = "DATE(incident_datemodify) = $ayer OR DATE(incident_dateadd) = $ayer";
         $yyyy = date('Y');
         $limi = '~';
         $nl = "\r\n";
+        $json = '';
 
         $dbs = array('violencia' => '', 'desastres' => $this->db_dn.'.');
 
         // Resumen violencia
         // Afectacion
-        $_sql['violencia']['af'] = "SELECT SUM(victim_cant) AS sum, category_title AS cat,
+        $_sql['violencia']['af'] = "SELECT SUM(victim_cant) AS sum, category_title AS cat
             FROM %svictim v
             JOIN %sincident_category ic ON v.incident_category_id = ic.id
             JOIN %scategory c ON ic.category_id = c.id
@@ -1305,10 +1307,10 @@ class MonitorController {
             WHERE %s";
         
         // Incidentes
-        $_sql['violencia']['e'] = "SELECT COUNT(i.id) AS sum, category_title AS cat,
+        $_sql['violencia']['e'] = "SELECT COUNT(i.id) AS sum, category_title AS cat
             FROM %sincident i
             JOIN %sincident_category ic ON i.id = ic.incident_id
-            JOIN %scategory c ON ic.category_id = c.id
+            JOIN %s.category c ON ic.category_id = c.id
             JOIN %slocation AS l ON l.id = i.location_id
             WHERE %s";
 
@@ -1318,18 +1320,17 @@ class MonitorController {
         // Afectacion
         // Form id = 4, # personas
         $_sql['desastres']['af'] = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, category_title AS cat
-            FROM ".$_db."form_response f
-            JOIN %sincident i ON f.incident_id = i.id
-            JOIN %sincident_category ic ON ic.incident_id = i.id
-            JOIN %scategory c ON ic.category_id = c.id
-            JOIN %slocation AS l ON l.id = i.location_id
+            FROM %s.form_response f
+            JOIN %s.incident i ON f.incident_id = i.id
+            JOIN %s.incident_category ic ON ic.incident_id = i.id
+            JOIN %s.category c ON ic.category_id = c.id
             WHERE form_field_id = 4 AND %s";
 
         $_sql['desastres']['e'] = "SELECT COUNT(i.id) AS sum, category_title AS cat
-            FROM %sincident i
-            JOIN %sincident_category ic ON i.id = ic.incident_id
-            JOIN %scategory c ON ic.category_id = c.id
-            JOIN %slocation AS l ON l.id = i.location_id
+            FROM %s.incident i
+            JOIN %s.incident_category ic ON i.id = ic.incident_id
+            JOIN %s.category c ON ic.category_id = c.id
+            JOIN %s.location AS l ON l.id = i.location_id
             WHERE %s";
 
         //echo $_sqlidn;
@@ -1337,7 +1338,7 @@ class MonitorController {
         for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
             foreach($dbs as $d => $db) {
                 
-                $csv = "$limiAfectados$limiEventos$nl";
+                $csv = $limi."Afectados".$limi."Eventos".$nl;
 
                 // Check if there are modificated incidents at the year
                 $sql = "SELECT COUNT(id) AS n FROM ".$db."incident WHERE YEAR(incident_date) = $a AND incident_active = 1 AND ($cond_date)";
@@ -1347,13 +1348,16 @@ class MonitorController {
 
                 $reporte = $this->config['cache_reportes'].'/'."monitor-totales-$a-$d.xls";
                 
+                // Borrar al terminar el desarrollo
+                unlink($reporte);
+                
                 if (!empty($row->n) || file_exists($reporte) === false) {
 
                     $ini = date('Y-m-d', mktime(0,0,0,1,1,$a));
                     $fin = date('Y-m-d', mktime(0,0,0,12,31,$a));
 
                     $csv .= "Totales$limi$a$nl";
-                    $cond_if = "incident_date >= '2015-01-01 05:00:00' AND incident_date <= '$fin'";
+                    $cond_if = "incident_date >= '$ini' AND incident_date <= '$fin' AND parent_id = 0";
 
                     foreach(array('af','e') as $afv) {
                         
@@ -1361,25 +1365,33 @@ class MonitorController {
 
                         // Total
                         $_sqlv = sprintf($_sqlafv,$db,$db,$db,$db,$cond_if);
+                        //echo $_sqlv;
                         $_rs = $this->db->open($_sqlv);
                         $_row = $this->db->FO($_rs);
-                        
-                        $json[$a][$d]['total'][$afv] = $_row->sum;
+
+                        $json[$a][$d]['total'][$afv] = (isset($_row->sum)) ? $_row->sum : '';
 
                         // Total por categoria
                         $_sqlv = sprintf($_sqlafv,$d,$d,$d,$d,$cond_if." GROUP BY category_id ORDER BY sum DESC");
+                        //echo $_sqlv;
 
                         $_rs = $this->db->open($_sqlv);
+                        
                         while($_row = $this->db->FO($_rs)) {
-                            $json[$a][$d]['categorias'][$_row->cat][$avf] = $_row->sum;
+                            $json[$a][$d]['categorias'][$_row->cat][$afv] = $_row->sum;
                         }
                     }
                     
                     // Popula csv
-                    $csv . = $limi.$json[$a][$d]['total']['af'].$limi.$limi,$json[$a][$d]['total']['af'].$nl;
-                    
-                    foreach($json[$a][$d]['categorias'] as $cat => $v) {
-                        $csv .= $cat.$limit.$v['af'].$limit.$v['e'].$nl;
+                    $csv .= $limi.$json[$a][$d]['total']['af'].$limi.$json[$a][$d]['total']['af'].$nl;
+
+                    if (isset($json[$a][$d]['categorias'])) {
+                        foreach($json[$a][$d]['categorias'] as $cat => $v) {
+                            $af = (isset($v['af'])) ? $v['af'] : '';
+                            $e = (isset($v['e'])) ? $v['e'] : '';
+                            
+                            $csv .= $cat.$limi.$af.$limi.$e.$nl;
+                        }
                     }
 
                     file_put_contents($totales_csv, $csv);
@@ -1392,7 +1404,7 @@ class MonitorController {
             }
         }
         
-        file_put_contents($totales_json, $json);
+        file_put_contents($totales_json, json_encode($json));
     }
 
     /*

@@ -174,10 +174,12 @@ div.tecdn div {
 }
 #fcat_acceso ul li {
 }
-#descargar .w {
+#descargar .w,
+#totales .w {
     color: #fff;
 }
-#descargar .step {
+#descargar .step,
+#totales .step {
     background-color: #312A2A;
     padding: 10px;
     word-wrap: break-word;
@@ -185,13 +187,16 @@ div.tecdn div {
     height: 340px;
     border-right: 1px solid #564F4F;
 }
-#descargar #zips {
+#descargar .zips,
+#totales .zips {
     margin-right: 10px;
 }
-#descargar #zips table {
+#descargar .zips table,
+#totales .zips table {
     margin-top: 10px;
 }
-#descargar #zips table td {
+#descargar .zips table td,
+#totales .zips table td {
     font-size: 11px;
     background-color: #4E4E4E;
     padding: 5px;
@@ -289,6 +294,9 @@ div.tecdn div {
 }
 #menu .menu_descargar {
     background-position: center -635px;
+}
+#menu .menu_totales {
+    background-position: center -785px;
 }
 #submenu,
 #layers_div {
