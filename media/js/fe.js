@@ -102,7 +102,7 @@ $(function(){
         
         // Top del filtro
         var $div = $('#' + $(this).data('div'));
-        var topx = 100*$div.data('index') + 'px';
+        var topx = 50*$div.data('index') + 'px';
 
         $div.css('top', topx);
         $div.fadeIn(100);
@@ -271,10 +271,17 @@ $(function(){
         $('.filtro_fecha').find('div.close').click(function() { 
             $(this).closest('.filtro_fecha').hide();
         });
-    
 
         $('input[name=rap]').on('ifClicked', function(event){
             applyPeriod($(this).val());
+        });
+        
+        // Total por años
+        $('li.menu_totales').click(function() { 
+            if (totales_inicio) {
+                totalPeriodo(_year);
+                totales_inicio = false;
+            } 
         });
     }
     
@@ -1434,4 +1441,11 @@ totalPeriodo = function(periodo, valor) {
             $o.append(html); 
         }
     });
+
+    // Link descarga
+    var path = 'z/monitor-totales';
+
+    $('#total_descarga_v').attr('href', path + '-' + valor + '-violencia.xls');
+    
+    $('#total_descarga_d').attr('href', path + '-' + valor + '-desastres.xls');
 }

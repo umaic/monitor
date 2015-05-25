@@ -11,11 +11,12 @@ $dev = true;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fa/css/font-awesome.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
 <?php
 }
 else { ?>
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/m.css" />
 <?php
 }
 ?>
@@ -477,17 +478,24 @@ function filesize_formatted($path)
         <!-- Totales por año -->
         <?php $t1 = '<tr><th></th><th align="center">Afectados</th><th align="center">Eventos</th></tr>'; ?>
         <div id="totales" class="filtro fcat" data-index="3">
+            <div class="left">
+                 <h2 class="dosis inline w">Totales</h2>
+                 <select id="total_periodo_yyyy">
+                     <?php foreach($totalxy as $_a) {echo "<option val='$_a'>$_a</<option>"; } ?>
+                 </select>
+            </div>
             <div class="right">
-                <a class="close" href="#" data-div="totales"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+                <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
-            <div>
-                <h1 class="dosis inline w">Totales</h1>
-                <select id="total_periodo_yyyy">
-                    <?php foreach($totalxy as $_a) {echo "<option val='$_a'>$_a</<option>"; } ?>
-                </select>
-            </div>
+            <div class="clear"><br /></div>
             <div class="left w step zips">
-                <h2 class="dosis w">Violencia</h2>
+                <div class="left">
+                    <h2 class="dosis w">Violencia</h2>
+                </div>
+                <div class="right">
+                    <i class="fa fa-download"></i> <a href=#'' id="total_descarga_v">Descargar info</a>
+                </div>
+                <div class="clear"></div>
                 <div class="of">
                     <table id="totales_data_violencia">
                         <?php echo $t1; ?>
@@ -495,7 +503,13 @@ function filesize_formatted($path)
                 </div>
             </div>
             <div class="left w step zips">
-                <h2 class="dosis w">Desastres</h2>
+                <div class="left">
+                    <h2 class="dosis w">Desastres</h2>
+                </div>
+                <div class="right">
+                    <i class="fa fa-download"></i> <a href='z/monitor-totales-' id="total_descarga_d">Descargar info</a>
+                </div>
+                <div class="clear"></div>
                 <div class="of">
                     <table id="totales_data_desastres">
                         <?php echo $t1; ?>

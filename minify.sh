@@ -9,7 +9,7 @@ java -jar yuicompressor-2.4.8.jar media/js/fe.js -o media/js/fe.min.js
 
 cd media/css
 
-cat fe.min.css brand.min.css orange.min.css jquery-ui-1.8.22.custom.min.css > m.css
+cat fe.min.css brand.min.css orange.min.css jquery-ui-1.8.22.custom.min.css fa/css/font-awesome.min.css > m.css
 
 cd ../js
 

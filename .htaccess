@@ -32,9 +32,3 @@
 	order allow,deny
 	deny from all
 </Files>
-
-# Don't show directory listings for URLs which map to a directory.
-Options -Indexes
-
-#Follow symlinks
-Options +FollowSymlinks

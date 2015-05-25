@@ -145,7 +145,6 @@ if (!empty($m)) {
             header('Content-type: text/json');
             header('Content-type: application/json');
             echo $mc->genJson($n);
-
         break;
     }
 }

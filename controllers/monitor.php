@@ -1355,7 +1355,7 @@ class MonitorController {
                     $ini = date('Y-m-d', mktime(0,0,0,1,1,$a));
                     $fin = date('Y-m-d', mktime(0,0,0,12,31,$a));
 
-                    $csv = "Totales$limi$a$nl";
+                    $csv = "$a$nl";
                     $csv .= $limi."Afectados".$limi."Eventos".$nl;
 
                     $cond_if = "incident_date >= '$ini' AND incident_date <= '$fin' AND category_visible = 1";
@@ -1429,7 +1429,7 @@ class MonitorController {
 
         echo file_get_contents($totales_html);
     }
-
+    
     /*
      * Coloca variable en sesión
      * @param string $var
