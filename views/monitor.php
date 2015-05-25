@@ -452,7 +452,7 @@ function filesize_formatted($path)
                 <div>
                     <h2 class="dosis">Descarga directa</h2>
                 </div>
-                <div>
+                <div class="of">
                     <table>
                         <tr><th></th><th align="center">Violencia</th><th align="center">Desastres</th></tr>
                         <?php 
@@ -475,46 +475,35 @@ function filesize_formatted($path)
         <!-- Descargar eventos :: FIN-->
         
         <!-- Totales por año -->
+        <?php $t1 = '<tr><th></th><th align="center">Afectados</th><th align="center">Eventos</th></tr>'; ?>
         <div id="totales" class="filtro fcat" data-index="3">
             <div class="right">
                 <a class="close" href="#" data-div="totales"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
-            <div class="clear"></div>
-            <div class="left step">
-                <div class="w">
-                    <h2 class="dosis">Totales</h2>
-                </div>
-                <div>
-                    <table>
-                        <tr><th></th><th align="center">Violencia</th><th align="center">Desastres</th></tr>
+            <div>
+                <h1 class="dosis inline w">Totales</h1>
+                <select id="total_periodo_yyyy">
+                    <?php foreach($totalxy as $_a) {echo "<option val='$_a'>$_a</<option>"; } ?>
+                </select>
+            </div>
+            <div class="left w step zips">
+                <h2 class="dosis w">Violencia</h2>
+                <div class="of">
+                    <table id="totales_data_violencia">
+                        <?php echo $t1; ?>
                     </table>
                 </div>
             </div>
             <div class="left w step zips">
-                <div>
-                    <h2 class="dosis">Descarga directa</h2>
-                </div>
-                <div>
-                    <table>
-                        <tr><th></th><th align="center">Violencia</th><th align="center">Desastres</th></tr>
-                        <?php 
-                        foreach($totalxy as $_a) {
-                            echo "<tr><td>$_a</td>";
-                            foreach(array('violencia','desastres') as $b) {
-                                $file = "monitor-totales-$_a-$b.xls";
-
-                                $size = filesize_formatted($config['cache_reportes'].'/'.$file);
-                                echo "<td><a href='z/".$file."'>Descargar ~ $size</a></td>"; 
-                            }
-                            echo "</tr>";
-                        } 
-                        ?>
+                <h2 class="dosis w">Desastres</h2>
+                <div class="of">
+                    <table id="totales_data_desastres">
+                        <?php echo $t1; ?>
                     </table>
                 </div>
-                <p class="note">Reportes generados el: <b><?php echo $ayer ?></b></p>
             </div>
         </div>
-        <!-- Descargar eventos :: FIN-->
+        <!-- Totales por año :: FIN-->
         
         <div id="map" class="map_monitor left"></div>
         <div id="featured" class="hide">

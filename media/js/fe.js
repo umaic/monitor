@@ -13,6 +13,7 @@ var _year, _month, _day, _today;
 var ocultar = '';
 var cp_ecs = {};
 var titulo;
+var totales_ini = true;
 
 $(function(){
 
@@ -247,8 +248,18 @@ $(function(){
                 });
         });
 
-        // Total por años
-        totalPeriodo();
+        // Total por años inicio
+        $('.menu_totales').click(function(){ 
+            if (totales_ini) {
+                totalPeriodo('y', _year);
+                totales_ini = false;
+            }
+        });
+        
+        // Total por años select
+        $('#total_periodo_yyyy').change(function(){ 
+            totalPeriodo('y', $(this).val());
+        });
 
         // Cerrar filtro
         $('a.close').click(function() { 
@@ -520,8 +531,6 @@ $(function(){
         else
           $(this).data('timer', setTimeout(search, 500));
     });
-
-    // Reset de buscar layers
 
 });
 
@@ -1395,4 +1404,34 @@ set100Height = function(){
 setMapWidth = function(){ 
     //$('#map').css('width', $(document).width() - $('#menu').css('width'));
     $('.map_monitor').css('width', $(document).width());
+}
+
+/* Retorna el contenido html de total en el periodo
+ *
+ * var vd violencia o desastres
+ * var periodo y=Año, s=Semestre, t=Trimestre
+ * var valor 
+*/
+totalPeriodo = function(periodo, valor) {
+    $.ajax({
+        url: 'totalPeriodo/violencia/' + periodo + '/' + valor,
+        success: function(html){ 
+
+            $o = $('#totales_data_violencia');
+            
+            $o.find('tr:not(:first)').remove(); 
+            $o.append(html); 
+        }
+    });
+    
+    $.ajax({
+        url: 'totalPeriodo/desastres/' + periodo + '/' + valor,
+        success: function(html){ 
+            
+            $o = $('#totales_data_desastres');
+            
+            $o.find('tr:not(:first)').remove(); 
+            $o.append(html); 
+        }
+    });
 }

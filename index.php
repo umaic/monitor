@@ -136,6 +136,10 @@ if (!empty($m)) {
         case 'genCacheTotalesDiario':
             $mc->genCacheTotalesDiario();
         break;
+        
+        case 'totalPeriodo':
+            $mc->totalPeriodo($_GET['vd'],$_GET['p'],$_GET['v']);
+        break;
 
         case 'geojson':
             header('Content-type: text/json');

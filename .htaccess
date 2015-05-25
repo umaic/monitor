@@ -21,6 +21,7 @@
     RewriteRule ^([0-9a-z]+)/([0-9]+)$ index.php?m=$1&f=$2 [L]
     RewriteRule ^([0-9a-zA-Z]+)$ index.php?m=$1 [L]
     RewriteRule ^([0-9a-z_]+)/([0-9a-zA-Z]+)$ index.php?m=$1&f=$2 [L]
+    RewriteRule ^(totalPeriodo)/([a-z]+)/([yst]+)/([0-9]+)$ index.php?m=$1&vd=$2&p=$3&v=$4 [L]
     RewriteRule ^export/(xls|pdf)/([a-z]+)/([a-zA-Z-]+) index.php?m=export&t=$1&csv=$2&nom=$3 [L]
     RewriteRule ^session_var/(mapa_tipo|acceso)/(afectacion|eventos|1|0) index.php?m=session_var&var=$1&valor=$2 [L]
     #RewriteRule .* index.php?m=$0 [PT,L]

@@ -195,6 +195,11 @@ div.tecdn div {
 #totales .zips table {
     margin-top: 10px;
 }
+#descargar .zips div.of,
+#totales .zips div.of {
+    max-height: 270px;
+    overflow: auto;
+}
 #descargar .zips table td,
 #totales .zips table td {
     font-size: 11px;

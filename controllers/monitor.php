@@ -1285,7 +1285,6 @@ class MonitorController {
     public function genCacheTotalesDiario() {
 
         $totales_csv = $this->config['cache_reportes'].'/totales.csv';
-        $totales_json = $this->config['cache_reportes'].'/totales.json';
 
 
         $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
@@ -1293,7 +1292,6 @@ class MonitorController {
         $yyyy = date('Y');
         $limi = '~';
         $nl = "\r\n";
-        $json = '';
 
         $dbs = array('violencia' => '', 'desastres' => $this->db_dn.'.');
 
@@ -1320,17 +1318,17 @@ class MonitorController {
         // Afectacion
         // Form id = 4, # personas
         $_sql['desastres']['af'] = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, category_title AS cat
-            FROM %s.form_response f
-            JOIN %s.incident i ON f.incident_id = i.id
-            JOIN %s.incident_category ic ON ic.incident_id = i.id
-            JOIN %s.category c ON ic.category_id = c.id
+            FROM %sform_response f
+            JOIN %sincident i ON f.incident_id = i.id
+            JOIN %sincident_category ic ON ic.incident_id = i.id
+            JOIN %scategory c ON ic.category_id = c.id
             WHERE form_field_id = 4 AND %s";
 
         $_sql['desastres']['e'] = "SELECT COUNT(i.id) AS sum, category_title AS cat
-            FROM %s.incident i
-            JOIN %s.incident_category ic ON i.id = ic.incident_id
-            JOIN %s.category c ON ic.category_id = c.id
-            JOIN %s.location AS l ON l.id = i.location_id
+            FROM %sincident i
+            JOIN %sincident_category ic ON i.id = ic.incident_id
+            JOIN %scategory c ON ic.category_id = c.id
+            JOIN %slocation AS l ON l.id = i.location_id
             WHERE %s";
 
         //echo $_sqlidn;
@@ -1338,14 +1336,15 @@ class MonitorController {
         for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
             foreach($dbs as $d => $db) {
                 
-                $csv = $limi."Afectados".$limi."Eventos".$nl;
-
+                $json = array();
+                
                 // Check if there are modificated incidents at the year
                 $sql = "SELECT COUNT(id) AS n FROM ".$db."incident WHERE YEAR(incident_date) = $a AND incident_active = 1 AND ($cond_date)";
                 
                 $rs = $this->db->open($sql);
                 $row = $this->db->FO($rs);
 
+                $totales_html = $this->config['cache_reportes']."/totales-$a-$d.html";
                 $reporte = $this->config['cache_reportes'].'/'."monitor-totales-$a-$d.xls";
                 
                 // Borrar al terminar el desarrollo
@@ -1356,8 +1355,10 @@ class MonitorController {
                     $ini = date('Y-m-d', mktime(0,0,0,1,1,$a));
                     $fin = date('Y-m-d', mktime(0,0,0,12,31,$a));
 
-                    $csv .= "Totales$limi$a$nl";
-                    $cond_if = "incident_date >= '$ini' AND incident_date <= '$fin' AND parent_id = 0";
+                    $csv = "Totales$limi$a$nl";
+                    $csv .= $limi."Afectados".$limi."Eventos".$nl;
+
+                    $cond_if = "incident_date >= '$ini' AND incident_date <= '$fin' AND category_visible = 1";
 
                     foreach(array('af','e') as $afv) {
                         
@@ -1369,42 +1370,64 @@ class MonitorController {
                         $_rs = $this->db->open($_sqlv);
                         $_row = $this->db->FO($_rs);
 
-                        $json[$a][$d]['total'][$afv] = (isset($_row->sum)) ? $_row->sum : '';
+                        $json['total'][$afv] = (isset($_row->sum)) ? number_format($_row->sum,0,'',',') : '';
 
                         // Total por categoria
-                        $_sqlv = sprintf($_sqlafv,$d,$d,$d,$d,$cond_if." GROUP BY category_id ORDER BY sum DESC");
+                        $_sqlv = sprintf($_sqlafv,$db,$db,$db,$db,$cond_if." GROUP BY category_id ORDER BY sum DESC");
                         //echo $_sqlv;
 
                         $_rs = $this->db->open($_sqlv);
                         
                         while($_row = $this->db->FO($_rs)) {
-                            $json[$a][$d]['categorias'][$_row->cat][$afv] = $_row->sum;
+                            $json['categorias'][$_row->cat][$afv] = number_format($_row->sum,0,'',',');
                         }
                     }
                     
-                    // Popula csv
-                    $csv .= $limi.$json[$a][$d]['total']['af'].$limi.$json[$a][$d]['total']['af'].$nl;
+                    $total_af = $json['total']['af'];
+                    $total_e = $json['total']['e'];
 
-                    if (isset($json[$a][$d]['categorias'])) {
-                        foreach($json[$a][$d]['categorias'] as $cat => $v) {
+                    // Popula csv
+                    $csv .= "Total".$limi.$total_af.$limi.$total_e.$nl;
+                    $html = "<tr><td><b>Total</b></td><td><b>".$total_af."</b></td><td><b>".$total_e."</b></td></tr>";
+
+                    if (isset($json['categorias'])) {
+                        foreach($json['categorias'] as $cat => $v) {
                             $af = (isset($v['af'])) ? $v['af'] : '';
                             $e = (isset($v['e'])) ? $v['e'] : '';
-                            
+
                             $csv .= $cat.$limi.$af.$limi.$e.$nl;
+                            $html .= "<tr><td>$cat</td><td>$af</td><td>$e</td></tr>";
+
                         }
                     }
 
+                    file_put_contents($totales_html, $html);
                     file_put_contents($totales_csv, $csv);
-                    
+
                     $this->export('xls','totales', $reporte,'static');
 
                     echo "Listo = $a - $d \n";
-
+                    
                 }
+
             }
+            
         }
+    }
+    
+    /*
+     * Consulta totales por periodo
+     *
+     * @param string $vd violecia o desatres
+     * @param string $periodo y=año, s=semestre, t=trimestre
+     * @param int $valor
+     *
+     */
+    public function totalPeriodo($vd, $periodo, $valor) {
         
-        file_put_contents($totales_json, json_encode($json));
+        $totales_html = $this->config['cache_reportes']."/totales-$valor-$vd.html";
+
+        echo file_get_contents($totales_html);
     }
 
     /*
