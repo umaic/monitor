@@ -1348,7 +1348,7 @@ class MonitorController {
                 $reporte = $this->config['cache_reportes'].'/'."monitor-totales-$a-$d.xls";
                 
                 // Borrar al terminar el desarrollo
-                unlink($reporte);
+                //unlink($reporte);
                 
                 if (!empty($row->n) || file_exists($reporte) === false) {
 
