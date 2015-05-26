@@ -7,7 +7,7 @@
 
 
 <?php
-$dev = true;
+$dev = false;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
