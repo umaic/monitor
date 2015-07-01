@@ -18,31 +18,31 @@ var maximo = 0; // Maximo count en cluster
 var jenks = [];
 var jenks_cl = 5; // Estratos
 
-var url_xd = '/json/cluster/?m=0&v=0';
-
-
 if (window.location.hostname == 'monitor.local') {
     var subdomain_dn = 'desastres';
-    var subdomain_ec = 'violencia_armada';
-    var url_ec = 'http://localhost/violencia_armada';
-    var url_dn = 'http://localhost/desastres';
+    var subdomain_ec = 'violencia';
+
+    var domain = '.local';
 }
 else {
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violenciaarmada';
-    var url_ec = 'http://'+subdomain_ec + '.salahumanitaria.co';
-
-    var url_dn = 'http://'+subdomain_dn+'.salahumanitaria.co';
-
+    var domain = '.salahumanitaria.co';
 }
 
+var url_ec = '&server=' + subdomain_ec + domain;
+var url_dn = '&server=' + subdomain_dn + domain;
+
 // Verificados se usan como destacados
-var url_ft_ec = url_ec + '/json/index/?m=0';
-var url_ft_dn = url_dn + '/json/index/?m=0';
+var _u = '/json/index/?m=0';
 
-url_ec += url_xd;
-url_dn += url_xd;
+var url_ft_ec = _u + url_ec;
+var url_ft_dn = _u + url_dn;
 
+var url_xd = '/json/cluster/?m=0&v=0';
+
+url_ec = url_xd + url_ec;
+url_dn = url_xd + url_dn;
 
 var markerOpacity = 0.8;
 var selectCtrl;

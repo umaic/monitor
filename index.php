@@ -43,21 +43,20 @@ if (isset($_SESSION)) {
 }
 
 // Get o CLI
-$m = '';
+$mod = '';
 
 if ($cli) {
-    $m = $argv[1];
+    $mod = $argv[1];
 }
 else {
-
-    if (!empty($_GET) && isset($_GET['m'])) {
-        $m = $_GET['m'];
+    if (!empty($_GET) && isset($_GET['mod'])) {
+        $mod = $_GET['mod'];
     }
 }
 
 // Clean URL
-if (!empty($m)) {
-    switch($m) {
+if (!empty($mod)) {
+    switch($mod) {
         case 'totalxd':
             
             if (!empty($_GET['ini']) && is_numeric($_GET['ini'])) {
@@ -142,9 +141,19 @@ if (!empty($m)) {
         break;
 
         case 'geojson':
+            
             header('Content-type: text/json');
             header('Content-type: application/json');
-            echo $mc->genJson($n);
+            
+            $qs = $_GET;
+            unset($qs['mod']);
+            unset($qs['cluster']);
+            unset($qs['server']);
+
+            $server = $_GET['server'];
+            
+            echo $mc->genJson($server.'/json/'.$_GET['cluster'].'/?'.http_build_query($qs));
+
         break;
     }
 }

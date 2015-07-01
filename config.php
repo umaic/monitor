@@ -18,6 +18,5 @@ $config['cache_reportes'] = $config['base_path'].'/z';
 $config['yyyy_ini'] = 2008;
 $config['reporte_csv'] = $config['cache_reportes'].'/incidentes.csv'; 
 $config['cache_json']['path'] = $config['base_path'].'/static';
-$config['cache_json']['dias'] = 5; // Minutos cache json y geojson
 
 ?>

@@ -5,9 +5,8 @@
 <link rel="shortcut icon" href="http://monitor.salahumanitaria.co/favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
 
-
 <?php
-$dev = false;
+$dev = true;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />

@@ -27,7 +27,6 @@ class MonitorController {
         $this->db_dn = 'desastres';    
         $this->dbs = array('', $this->db_dn.'.');
         $this->meses = array('','Ene','Feb','Mar','Abr','May','Jun','Jul','Ago','Sep','Oct','Nov','Dic');
-
     }
 
     /**
@@ -1217,7 +1216,7 @@ class MonitorController {
 
         $h2pdf = "http://192.168.1.23/html2pdf/index.php?w3hx=1&id=$id&u=$url";
 
-        echo $h2pdf;
+        //echo $h2pdf;
 
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
@@ -1443,26 +1442,58 @@ class MonitorController {
     
     /*
      * Retorna un json de cache o de fuente original
-     * @param string $n Nombre construido desde los parametros url
+     * @param string $url Url para json en ushahidi
      *
      * @return string $json
      */
-    public function getJson($n) {
-        if ($this->checkGenJson($n)) {
-             
+    public function genJson($url) {
+        
+        $n = md5(str_replace('/','-',$url));
+        $file = $this->config['cache_json']['path'].'/'.$n;
+
+        if ($this->checkGenJson()) {
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_HEADER, 0);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
+            curl_setopt($ch, CURLOPT_URL, 'http://'.$url);
+            echo 'http://'.$url;
+
+            $json = curl_exec($ch);
+            curl_close($ch);
+
+            file_put_contents($file, $json);
+
+            // Coloca en 0 el flag en las 2 dbs
+            $this->db->Execute("UPDATE settings SET `value` = 0 WHERE `key` = 'monitor_cache_json'");
+            $this->db->Execute("UPDATE ".$this->db_dn.".settings SET `value` = 0 WHERE `key` = 'monitor_cache_json'");
+            
+            // Borra archivos estaticos
+            array_map('unlink', glob($this->config['cache_json']['path'].'/*'));
+
+            return $json;
         }
         else {
-            return file_get_contents($this->config['cache_json']['path'].'/'.$n);
+            return file_get_contents($file);
         }
     }
     
     /*
      * Comprueba si se debe generar el json
-     * @param string $n Nombre construido desde los parametros url
      *
-     * @return boolean $g
+     * @return boolean
      */
-    public function checkGenJson($n) {
+    public function checkGenJson() {
+        
+        $rsv = $this->db->open("SELECT `value` AS v FROM settings WHERE `key` = 'monitor_cache_json'");
+        $rsd = $this->db->open("SELECT `value` AS v FROM ".$this->db_dn.".settings WHERE `key` = 'monitor_cache_json'");
 
+        $rowv = $this->db->FO($rsv);
+        $rowd = $this->db->FO($rsd);
+        
+        if ($rowv->v == 1 || $rowd->v == 1) {
+            return true;
+        }
+        else return false;
     }
 }

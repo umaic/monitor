@@ -84,7 +84,7 @@ $(function(){
     // Intro text
     $('#lmh').click(function() {
         m({
-            t: 'Monitor - ColombisSSH',
+            t: 'Monitor - SalaHumanitaria',
             hid: 'qlmh',
             w: 850,
             h: 400
