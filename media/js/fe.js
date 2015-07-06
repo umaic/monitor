@@ -40,7 +40,7 @@ $(function(){
     */
 
     var _ini = _iniObj.getTime(); // milisecs
-    var _fin = new Date().getTime();
+    var _fin = new Date(_year,_month,_day,11,59).getTime();
 
     // Para ushahidi va en segundos
     $('#startDate').val(_ini/1000);
@@ -141,7 +141,7 @@ $(function(){
             }
             
             addFeatures(inst);
-            totalesxDepto();
+            //totalesxDepto();
             
             $(this).closest('.filtro').hide();
 
@@ -482,7 +482,10 @@ $(function(){
         
         });
     }
-
+    
+    // Check settings.monitor_cache_json para ver si borra
+    // archivos
+    checkCacheJson();
     totalesxDepto();
 
     mapRender();
@@ -1448,4 +1451,13 @@ totalPeriodo = function(periodo, valor) {
     $('#total_descarga_v').attr('href', path + '-' + valor + '-violencia.xls');
     
     $('#total_descarga_d').attr('href', path + '-' + valor + '-desastres.xls');
+}
+
+/* Realiza check de settings.monitor_cache_json
+*/
+checkCacheJson = function() {
+$.ajax({
+    url: 'checkCacheJson'
+});
+
 }

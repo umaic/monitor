@@ -24,6 +24,7 @@
     RewriteRule ^(totalPeriodo)/([a-z]+)/([yst]+)/([0-9]+)$ index.php?mod=$1&vd=$2&p=$3&v=$4 [L]
     RewriteRule ^export/(xls|pdf)/([a-z]+)/([a-zA-Z-]+) index.php?mod=export&t=$1&csv=$2&nomod=$3 [L]
     RewriteRule ^session_var/(mapa_tipo|acceso)/(afectacion|eventos|1|0) index.php?mod=session_var&var=$1&valor=$2 [L]
+    RewriteRule ^(checkCacheJson)$ index.php?mod=$1 [L]
     RewriteRule ^json/(cluster|index)/$ index.php?mod=geojson&cluster=$1 [L,QSA]
     #RewriteRule .* index.php?mod=$0 [PT,L]
 </IfModule>

@@ -138,116 +138,128 @@ class MonitorController {
      */ 
     public function totalxd($ini, $fin, $cats, $states='') {
         
-        $r = array();
-        $t = array('ec' => 0, 'dn' => 0);
-        $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
-        $acceso = ($_SESSION['acceso'] == 1) ? true : false;
+        $n = md5(str_replace(array('/',','),array('-','-'),$ini.'-'.$fin.'-'.$cats.'-'.$stateches));
+        $file = $this->config['cache_json']['path'].'/'.$n;
 
-        list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
-        
-        $_SESSION['cond_csv'] = $cond_csv;
-        $_SESSION['cond_cats_ec'] = $cond_cats_ec;
-        $_SESSION['cond_cats_dn'] = $cond_cats_dn;
+        if (!file_exists($file)) {
+            $r = array();
+            $t = array('ec' => 0, 'dn' => 0);
+            $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+            $acceso = ($_SESSION['acceso'] == 1) ? true : false;
 
-        list($rsms_ec, $rsms_dn, $charts, $subtotales) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
+            list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
+            
+            $_SESSION['cond_csv'] = $cond_csv;
+            $_SESSION['cond_cats_ec'] = $cond_cats_ec;
+            $_SESSION['cond_cats_dn'] = $cond_cats_dn;
 
-        $_db = $this->db_dn.'.';
+            list($rsms_ec, $rsms_dn, $charts, $subtotales) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
 
-        if ($afectacion) {
-            $_sqle = "SELECT SUM(victim_cant) AS n
-                FROM victim v
-                JOIN incident_category ic ON v.incident_category_id = ic.id
-                JOIN incident AS i ON ic.incident_id = i.id
-                JOIN location AS l ON l.id = i.location_id";
+            $_db = $this->db_dn.'.';
 
-            if ($acceso) {
-                $_sqle .= ' JOIN form_response '; 
+            if ($afectacion) {
+                $_sqle = "SELECT SUM(victim_cant) AS n
+                    FROM victim v
+                    JOIN incident_category ic ON v.incident_category_id = ic.id
+                    JOIN incident AS i ON ic.incident_id = i.id
+                    JOIN location AS l ON l.id = i.location_id";
+
+                if ($acceso) {
+                    $_sqle .= ' JOIN form_response '; 
+                }
+
+                $_sqle .= " WHERE $cond_tmp";
+                
+                $_sqld = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
+                    FROM %sform_response f
+                    JOIN %sincident AS i ON f.incident_id = i.id
+                    JOIN %slocation AS l ON l.id = i.location_id
+                    JOIN %sincident_category ic USING(incident_id)
+                    WHERE $cond_tmp AND form_field_id = 4";
+                
+                $_sqliec = sprintf($_sqle,$cond_cats_ec);
+                $_sqlidn = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
+
+            }
+            else {
+                $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
+                     JOIN %sincident AS i ON l.id = i.location_id
+                     JOIN %sincident_category AS ic ON i.id = ic.incident_id
+                     WHERE $cond_tmp";
+            
+                $_sqliec = sprintf($_sql,'','','',$cond_cats_ec);
+                $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
             }
 
-            $_sqle .= " WHERE $cond_tmp";
+            //echo $_sqliec;
+            //echo $_sqlidn;
             
-            $_sqld = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
-                FROM %sform_response f
-                JOIN %sincident AS i ON f.incident_id = i.id
-                JOIN %slocation AS l ON l.id = i.location_id
-                JOIN %sincident_category ic USING(incident_id)
-                WHERE $cond_tmp AND form_field_id = 4";
-            
-            $_sqliec = sprintf($_sqle,$cond_cats_ec);
-            $_sqlidn = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
+            $_ss = " AND state_id = '%s' LIMIT 1";
+            $_sqliec .= $_ss;
+            $_sqlidn .= $_ss;
 
-        }
-        else {
-            $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
-                 JOIN %sincident AS i ON l.id = i.location_id
-                 JOIN %sincident_category AS ic ON i.id = ic.incident_id
-                 WHERE $cond_tmp";
-        
-            $_sqliec = sprintf($_sql,'','','',$cond_cats_ec);
-            $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
-        }
-
-        //echo $_sqliec;
-        //echo $_sqlidn;
-        
-        $_ss = " AND state_id = '%s' LIMIT 1";
-        $_sqliec .= $_ss;
-        $_sqlidn .= $_ss;
-
-        $cond_states = false;
-        if (!empty($states)) {
-            $cond_states = true;
-            $cond_csv = $cond_tmp." AND l.state_id IN ($states)";
-            $states = explode(',', $states);
-        }
-
-        $sql_states = "SELECT id,state,centroid FROM state ORDER BY state";
-        $_rs = $this->db->open($sql_states);
-        while($_row = $this->db->FO($_rs)) {
-            
-            $_sqlec = sprintf($_sqliec,$_row->id);
-            //echo $_sqlec;
-            $_rse = $this->db->open($_sqlec);
-            $_ec = $this->db->FO($_rse);
-            $_nec = (empty($_ec->n)) ? '' : $_ec->n;
-
-            if (!$acceso) {
-                $_sqldn = sprintf($_sqlidn,$_row->id);
-                $_rsd = $this->db->open($_sqldn);
-                //echo $_sqldn;
-                $_dn = $this->db->FO($_rsd);
+            $cond_states = false;
+            if (!empty($states)) {
+                $cond_states = true;
+                $cond_csv = $cond_tmp." AND l.state_id IN ($states)";
+                $states = explode(',', $states);
             }
-            
-            $_ndn = (empty($_dn->n)) ? '' : $_dn->n;
 
-            $class = 'unselected';
-            if ($cond_states) {
-                if (in_array($_row->id,$states)) {
+            $sql_states = "SELECT id,state,centroid FROM state ORDER BY state";
+            $_rs = $this->db->open($sql_states);
+            while($_row = $this->db->FO($_rs)) {
+                
+                $_sqlec = sprintf($_sqliec,$_row->id);
+                //echo $_sqlec;
+                $_rse = $this->db->open($_sqlec);
+                $_ec = $this->db->FO($_rse);
+                $_nec = (empty($_ec->n)) ? '' : $_ec->n;
+
+                if (!$acceso) {
+                    $_sqldn = sprintf($_sqlidn,$_row->id);
+                    $_rsd = $this->db->open($_sqldn);
+                    //echo $_sqldn;
+                    $_dn = $this->db->FO($_rsd);
+                }
+                
+                $_ndn = (empty($_dn->n)) ? '' : $_dn->n;
+
+                $class = 'unselected';
+                if ($cond_states) {
+                    if (in_array($_row->id,$states)) {
+                        $t['ec'] += $_ec->n;
+                        $t['dn'] += $_dn->n;
+                        $class = '';
+                    }
+                }
+                else {
                     $t['ec'] += $_ec->n;
                     $t['dn'] += $_dn->n;
                     $class = '';
+
                 }
-            }
-            else {
-                $t['ec'] += $_ec->n;
-                $t['dn'] += $_dn->n;
-                $class = '';
 
+                $hide = (empty($_nec) && empty($_ndn)) ? 'hide' : '';
+                 
+                $r[] = array('d' => $_row->state,
+                             'ec' => $_nec,
+                             'dn' => $_ndn,
+                             'c' => $_row->centroid,
+                             'state_id' => $_row->id,
+                             'css' => $class,
+                             'hide' => $hide
+                            );
             }
+            
+            $json = json_encode(compact('r', 't','rsms_ec', 'rsms_dn','charts','subtotales'));
 
-            $hide = (empty($_nec) && empty($_ndn)) ? 'hide' : '';
-             
-            $r[] = array('d' => $_row->state,
-                         'ec' => $_nec,
-                         'dn' => $_ndn,
-                         'c' => $_row->centroid,
-                         'state_id' => $_row->id,
-                         'css' => $class,
-                         'hide' => $hide
-                        );
+            file_put_contents($file, $json);
+
+            return $json;
         }
-        
-        return compact('r', 't','rsms_ec', 'rsms_dn','charts','subtotales');
+        else {
+            return file_get_contents($file);
+        }
     }
     
     /**
@@ -1442,48 +1454,53 @@ class MonitorController {
     
     /*
      * Retorna un json de cache o de fuente original
-     * @param string $url Url para json en ushahidi
+     * @param string $url_base Url para json en ushahidi
+     * @param array $qs Querystring
      *
      * @return string $json
      */
-    public function genJson($url) {
-        
-        $n = md5(str_replace('/','-',$url));
-        $file = $this->config['cache_json']['path'].'/'.$n;
+    public function genJson($url_base, $qs) {
 
-        if ($this->checkGenJson()) {
+        $url = $url_base.http_build_query($qs);
+
+        // Para archivo se eliminan el callback
+        // para que el archivo no cambie de nombre
+        unset($qs['callback']);
+        unset($qs['_']);
+        
+        $file = $url_base.http_build_query($qs);
+        $n = md5(str_replace('/','-',$file));
+        $path2file = $this->config['cache_json']['path'].'/'.$n;
+
+        if (!file_exists($path2file)) {
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
             curl_setopt($ch, CURLOPT_URL, 'http://'.$url);
-            echo 'http://'.$url;
+            
+            //echo 'http://'.$url;
 
             $json = curl_exec($ch);
             curl_close($ch);
 
-            file_put_contents($file, $json);
-
-            // Coloca en 0 el flag en las 2 dbs
-            $this->db->Execute("UPDATE settings SET `value` = 0 WHERE `key` = 'monitor_cache_json'");
-            $this->db->Execute("UPDATE ".$this->db_dn.".settings SET `value` = 0 WHERE `key` = 'monitor_cache_json'");
-            
-            // Borra archivos estaticos
-            array_map('unlink', glob($this->config['cache_json']['path'].'/*'));
+            file_put_contents($path2file, $json);
 
             return $json;
         }
         else {
-            return file_get_contents($file);
+            return file_get_contents($path2file);
         }
     }
     
     /*
      * Comprueba si se debe generar el json
      *
+     * @param string $file absolute path to cached file
+     *
      * @return boolean
      */
-    public function checkGenJson() {
+    public function checkCacheJson($file) {
         
         $rsv = $this->db->open("SELECT `value` AS v FROM settings WHERE `key` = 'monitor_cache_json'");
         $rsd = $this->db->open("SELECT `value` AS v FROM ".$this->db_dn.".settings WHERE `key` = 'monitor_cache_json'");
@@ -1491,9 +1508,14 @@ class MonitorController {
         $rowv = $this->db->FO($rsv);
         $rowd = $this->db->FO($rsd);
         
-        if ($rowv->v == 1 || $rowd->v == 1) {
-            return true;
+        if ($rowv->v == '1' || $rowd->v == '1') {
+
+            // Borra archivos estaticos
+            array_map('unlink', glob($this->config['cache_json']['path'].'/*'));
+            
+            // Coloca en 0 el flag en las 2 dbs
+            $this->db->Execute("UPDATE settings SET `value` = 0 WHERE `key` = 'monitor_cache_json'");
+            $this->db->Execute("UPDATE ".$this->db_dn.".settings SET `value` = 0 WHERE `key` = 'monitor_cache_json'");
         }
-        else return false;
     }
 }

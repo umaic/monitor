@@ -74,7 +74,7 @@ if (!empty($mod)) {
             
             header('Content-type: text/json');
             header('Content-type: application/json'); 
-            echo json_encode($totalxd);
+            echo $totalxd;
         break;
         
         case 'getIncidentesPortal':
@@ -139,6 +139,10 @@ if (!empty($mod)) {
         case 'totalPeriodo':
             $mc->totalPeriodo($_GET['vd'],$_GET['p'],$_GET['v']);
         break;
+        
+        case 'checkCacheJson':
+            $mc->checkCacheJson();
+        break;
 
         case 'geojson':
             
@@ -152,7 +156,7 @@ if (!empty($mod)) {
 
             $server = $_GET['server'];
             
-            echo $mc->genJson($server.'/json/'.$_GET['cluster'].'/?'.http_build_query($qs));
+            echo $mc->genJson($server.'/json/'.$_GET['cluster'].'/?', $qs);
 
         break;
     }

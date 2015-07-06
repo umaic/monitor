@@ -54,7 +54,8 @@ class Mysql {
 	public function FetchAssoc($Result) {
 	}
 
-	public function Execute($query,$db_name='') {
+	public function Execute($query) {
+        $this->conn->exec($query);
 	}
 
 	public function GetGeneratedID() {
