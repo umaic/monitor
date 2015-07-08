@@ -1,0 +1,32 @@
+1. Habilitar uso de htaccess
+2. Correr el siguiente SQL en las bases de datos de violencia y desastres
+
+# En violencia y desastres
+
+INSERT INTO `settings`(`key`, `value`) VALUES ('monitor_cache_json',0);
+
+delimiter |
+
+CREATE TRIGGER monitor_cache_json_insert AFTER INSERT ON incident 
+  FOR EACH ROW
+  BEGIN
+    UPDATE settings SET `value` = 1 WHERE `key` = 'monitor_cache_json';
+  END;
+|
+
+delimiter |
+CREATE TRIGGER monitor_cache_json_update AFTER UPDATE ON incident 
+  FOR EACH ROW
+  BEGIN
+    UPDATE settings SET `value` = 1 WHERE `key` = 'monitor_cache_json';
+  END;
+|
+
+delimiter |
+CREATE TRIGGER monitor_cache_json_delete AFTER DELETE ON incident 
+  FOR EACH ROW
+  BEGIN
+    UPDATE settings SET `value` = 1 WHERE `key` = 'monitor_cache_json';
+  END;
+|
+
