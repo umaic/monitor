@@ -1461,12 +1461,14 @@ class MonitorController {
      */
     public function genJson($url_base, $qs) {
 
-        $url = $url_base.http_build_query($qs);
+        $callback = $qs['callback'];
 
         // Para archivo se eliminan el callback
         // para que el archivo no cambie de nombre
         unset($qs['callback']);
         unset($qs['_']);
+        
+        $url = $url_base.http_build_query($qs);
         
         $file = $url_base.http_build_query($qs);
         $n = md5(str_replace('/','-',$file));
@@ -1486,11 +1488,13 @@ class MonitorController {
 
             file_put_contents($path2file, $json);
 
-            return $json;
         }
         else {
-            return file_get_contents($path2file);
+            $json = file_get_contents($path2file);
         }
+
+        // El callback
+        return $callback. '(' . $json . ');';
     }
     
     /*
