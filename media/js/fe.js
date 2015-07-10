@@ -129,7 +129,8 @@ $(function(){
 
             setCatsHidden();
 
-            var inst = $(this).attr("class").split(' ')[0];
+            var inst = $(this).data('inst');
+            console.log(inst);
             
             // Si es filtrar mapa desde acceso, cambia el texto de ocultar
             // eventos en desastres
@@ -606,7 +607,7 @@ function ocultarViolenciaDesastres(cs) {
         
         $r_hide.show();
         $r_show.addClass('left half');
-        $eventos_desastres.show();
+        //$eventos_desastres.show();
 
         ocultar = '';
     }

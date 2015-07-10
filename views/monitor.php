@@ -10,6 +10,7 @@ $dev = false;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fa/css/font-awesome.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
 <?php
@@ -147,7 +148,7 @@ function filesize_formatted($path)
             </div>
             <div class="right">
                 <div id="" class="btn btn_show_e" data-s="ec">Ocultar eventos</div>
-                <div id="btn_fcat_ec" class="btn btn_fcat">Filtrar mapa</div>
+                <div id="btn_fcat_ec" class="btn btn_fcat" data-inst="ec">Filtrar mapa</div>
             </div>
             <div class="fcat_list">
                 <?php 
@@ -208,7 +209,7 @@ function filesize_formatted($path)
             </div>
             <div class="right">
                 <div id="btn_show_dn" class="btn btn_show_e" data-s="dn">Ocultar eventos</div>
-                <div id="btn_fcat_dn" class="btn btn_fcat">Filtrar mapa</div>
+                <div id="btn_fcat_dn" class="btn btn_fcat" data-inst="dn">Filtrar mapa</div>
             </div>
             <div class="fcat_list">
                 <?php 
