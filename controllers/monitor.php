@@ -138,14 +138,15 @@ class MonitorController {
      */ 
     public function totalxd($ini, $fin, $cats, $states='') {
         
-        $n = md5(str_replace(array('/',','),array('-','-'),$ini.'-'.$fin.'-'.$cats.'-'.$states));
+        $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+        $acceso = ($_SESSION['acceso'] == 1) ? true : false;
+        
+        $n = md5(str_replace(array('/',','),array('-','-'),$ini.'-'.$fin.'-'.$cats.'-'.$states.'-'.$afectacion.'-'.$acceso));
         $file = $this->config['cache_json']['path'].'/'.$n;
 
         if (!file_exists($file)) {
             $r = array();
             $t = array('ec' => 0, 'dn' => 0);
-            $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
-            $acceso = ($_SESSION['acceso'] == 1) ? true : false;
 
             list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
             
