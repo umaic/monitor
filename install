@@ -1,5 +1,9 @@
 1. Habilitar uso de htaccess
-2. Correr el siguiente SQL en las bases de datos de violencia y desastres
+2. Crear las siguientes carpetas con permisos 757
+
+/static
+
+3. Correr el siguiente SQL en las bases de datos de violencia y desastres
 
 INSERT INTO `settings`(`key`, `value`) VALUES ('monitor_cache_json',0);
 
