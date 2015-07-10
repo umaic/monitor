@@ -138,7 +138,7 @@ class MonitorController {
      */ 
     public function totalxd($ini, $fin, $cats, $states='') {
         
-        $n = md5(str_replace(array('/',','),array('-','-'),$ini.'-'.$fin.'-'.$cats.'-'.$stateches));
+        $n = md5(str_replace(array('/',','),array('-','-'),$ini.'-'.$fin.'-'.$cats.'-'.$states));
         $file = $this->config['cache_json']['path'].'/'.$n;
 
         if (!file_exists($file)) {
