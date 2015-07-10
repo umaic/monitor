@@ -1505,7 +1505,7 @@ class MonitorController {
      *
      * @return boolean
      */
-    public function checkCacheJson($file) {
+    public function checkCacheJson() {
         
         $rsv = $this->db->open("SELECT `value` AS v FROM settings WHERE `key` = 'monitor_cache_json'");
         $rsd = $this->db->open("SELECT `value` AS v FROM ".$this->db_dn.".settings WHERE `key` = 'monitor_cache_json'");
