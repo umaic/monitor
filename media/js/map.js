@@ -60,7 +60,7 @@ var resolutions= [
 
 
 /*
-    var ly = new OpenLayers.Layer.OSM("Openstreetmap","",
+    var ly = new ol.Layer.OSM("Openstreetmap","",
            {
                 zoomOffset: _zoomOffset,
                 resolutions: [
@@ -89,7 +89,7 @@ function addWMSLayer(n,l,v) {
         ly.setVisibility(v);
     }
     else {
-        ly = new OpenLayers.Layer.WMS(n, 
+        ly = new ol.Layer.WMS(n, 
                                   u,
                                   {
                                   layers: l,
@@ -118,7 +118,7 @@ function addWMSLayer(n,l,v) {
 
 function selDepto(centroide) {
     var _c = centroide.split(',');
-    map.setCenter(new OpenLayers.LonLat(_c[0], _c[1]), 1);
+    map.setCenter(new ol.LonLat(_c[0], _c[1]), 1);
 }
     
 function resetMap() {
@@ -127,6 +127,34 @@ function resetMap() {
 
 function mapRender() {
    
+    var map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            }),
+            new ol.layer.Tile({
+                source: new ol.source.TileDebug({
+                    projection: 'EPSG:3857',
+                    tileGrid: ol.tilegrid.createXYZ({maxZoom: 22})
+                })
+            })
+        ],
+        target: 'map',
+        controls: ol.control.defaults({
+            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
+                collapsible: false
+            })
+        }),
+        view: new ol.View({
+            center: ol.proj.transform(
+                            [-0.1275, 51.507222], 'EPSG:4326', 'EPSG:3857'),
+            zoom: 10
+        })
+    });
+
+    return false;
+    
+    
     // Portal
     if (is_portal) {
         _zoomOffset = 5;
@@ -134,15 +162,15 @@ function mapRender() {
         resolutions = r1.concat(resolutions);
     }
     
-    fromProjection = new OpenLayers.Projection('EPSG:4326'); // World Geodetic System 1984 projection (lon/lat) 
-    toProjection = new OpenLayers.Projection('EPSG:900913'); // WGS84 OSM/Google Mercator projection (meters) 
-    OpenLayers.ImgPath = base_ol + "/media/js/openlayers/img/";
+    fromProjection = new ol.Projection('EPSG:4326'); // World Geodetic System 1984 projection (lon/lat) 
+    toProjection = new ol.Projection('EPSG:900913'); // WGS84 OSM/Google Mercator projection (meters) 
+    ol.ImgPath = base_ol + "/media/js/openlayers/img/";
     
-    var maxE = new OpenLayers.Bounds(
+    var maxE = new ol.Bounds(
 			-8599122, -471155, -7441396, 1505171  // Colombia con San Andrés
     );
     
-    map = new OpenLayers.Map({
+    map = new ol.Map({
         div: "map",
         displayProjection: toProjection, 
         theme: base_ol + '/media/js/openlayers/theme/default/style.min.css',
@@ -153,11 +181,25 @@ function mapRender() {
         },
         /*
         controls: [
-            new OpenLayers.Control.PanZoomBar()
+            new ol.Control.PanZoomBar()
         ]*/
     });
 
-    var ly = new OpenLayers.Layer.XYZ(
+    var map = new ol.Map({
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.OSM()
+            })
+        ],
+        controls: ol.control.defaults({ attribution: false }).extend([attribution]),
+        target: 'map',
+        view: new ol.View({
+            center: [0, 0],
+            zoom: 2
+        })
+    });
+
+    var ly = new ol.Layer.XYZ(
             "OpenStreetMap", 
             [
                 "http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png",
@@ -174,6 +216,19 @@ function mapRender() {
             }
         );
     map.addLayer(ly);
+
+    var vector = new ol.Layer.Vector({
+        source: new ol.Source.Vector({
+            url: 'data/topo.json',
+            format: new ol.format.TopoJSON()
+        }),
+        style: function(feature, resolution) {
+            // don't want to render the full world polygon, which repeats all countries
+            return feature.getId() !== undefined ? styleArray : null;
+        }
+    });
+    
+    map.addLayer(vector);
     
     //map.zoomTo(6);
     map.setCenter(map.maxExtent.getCenterLonLat(), 0);
@@ -220,7 +275,7 @@ function addFeatures(inst) {
             l_dn.removeFeatures(l_dn.features);
         }
         else {
-            l_dn = new OpenLayers.Layer.Vector('Desastres Naturales', 
+            l_dn = new ol.Layer.Vector('Desastres Naturales', 
                 { styleMap: Styles });
 
             map.addLayer(l_dn);
@@ -246,7 +301,7 @@ function addFeatures(inst) {
             l_ec.removeFeatures(l_ec.features);
         }
         else {
-            l_ec = new OpenLayers.Layer.Vector('Emergencia Compleja', 
+            l_ec = new ol.Layer.Vector('Emergencia Compleja', 
                 { styleMap: Styles 
                 });
             //l_ec.styleMap.styles.default.defaultStyle.fillColor = '#cc0000';
@@ -274,7 +329,7 @@ function addFeatures(inst) {
             l_ft.removeFeatures(l_ft.features);
         }
         else {
-            l_ft = new OpenLayers.Layer.Vector('Destacados', 
+            l_ft = new ol.Layer.Vector('Destacados', 
                 { styleMap: Styles });
 
             map.addLayer(l_ft);
@@ -307,7 +362,7 @@ function addFeatures(inst) {
             l_ec.removeFeatures(l_ec.features);
         }
         else {
-            l_ec = new OpenLayers.Layer.Vector('Emergencia Compleja', 
+            l_ec = new ol.Layer.Vector('Emergencia Compleja', 
                 { styleMap: Styles });
 
             map.addLayer(l_ec);
@@ -329,7 +384,7 @@ function addFeatures(inst) {
 
     }
 
-    selectCtrl = new OpenLayers.Control.SelectFeature([l_ec, l_dn, l_ft],
+    selectCtrl = new ol.Control.SelectFeature([l_ec, l_dn, l_ft],
         { 
             clickout: true,
             onSelect: function(feature) { onFeatureSelect(feature.attributes)  }
@@ -601,7 +656,7 @@ function onFeatureSelect(attrs) {
 
 function ajaxFeatures(u, l) {
     
-    var geojson = new OpenLayers.Format.GeoJSON({
+    var geojson = new ol.Format.GeoJSON({
         'internalProjection': toProjection,
         'externalProjection': fromProjection});
     $.ajax({
@@ -678,7 +733,7 @@ function mapMove(event)
 
 function defStyle(){
                 
-	var	style = new OpenLayers.Style({
+	var	style = new ol.Style({
 				'externalGraphic': "${icon}",
 				'graphicTitle': "${cluster_count}",
                 graphicWidth: 24,
@@ -866,7 +921,7 @@ function defStyle(){
 			}
     );
     
-    Styles = new OpenLayers.StyleMap({
+    Styles = new ol.StyleMap({
         "default": style,
         "select":{
             fillColor: "#86ABD9",

@@ -6,7 +6,7 @@
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
-$dev = false;
+$dev = true;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
@@ -717,13 +717,14 @@ function filesize_formatted($path)
     if ($dev) { ?>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
+        <!--<script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>-->
         <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script>
     <?php
     }
     else {
