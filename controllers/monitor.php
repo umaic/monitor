@@ -1479,7 +1479,7 @@ class MonitorController {
 
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //Set curl to return the data instead of printing it to the browser.
             curl_setopt($ch, CURLOPT_URL, 'http://'.$url);
             
             //echo 'http://'.$url;
