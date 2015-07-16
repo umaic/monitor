@@ -141,7 +141,7 @@ $(function(){
             }
             
             addFeatures(inst);
-            //totalesxDepto();
+            totalesxDepto();
             
             $(this).closest('.filtro').hide();
 
