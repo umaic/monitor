@@ -13,4 +13,4 @@ cat fe.min.css brand.min.css orange.min.css jquery-ui-1.8.22.custom.min.css fa/c
 
 cd ../js
 
-cat jquery.min.js jquery-ui.min.js openlayers/OpenLayers.min.js fe.min.js map.js url_tools.min.js highcharts.js icheck.min.js geostats.min.js > m.js
+cat jquery.min.js jquery-ui.min.js openlayers/OpenLayers.min.js fe.min.js map.min.js url_tools.min.js highcharts.js icheck.min.js geostats.min.js > m.js

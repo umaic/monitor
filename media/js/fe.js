@@ -130,7 +130,6 @@ $(function(){
             setCatsHidden();
 
             var inst = $(this).data('inst');
-            console.log(inst);
             
             // Si es filtrar mapa desde acceso, cambia el texto de ocultar
             // eventos en desastres
@@ -142,7 +141,7 @@ $(function(){
             }
             
             addFeatures(inst);
-            totalesxDepto();
+            //totalesxDepto();
             
             $(this).closest('.filtro').hide();
 

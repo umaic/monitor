@@ -6,7 +6,7 @@
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
-$dev = true;
+$dev = false;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
@@ -258,7 +258,7 @@ function filesize_formatted($path)
                 <a class="close" href="#" data-div="ini_fin"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
             </div>
             <div class="right">
-                <div id="filter_states" class="btn btn_fcat">Filtrar mapa</div>
+                <div id="filter_period" class="btn btn_fcat">Filtrar mapa</div>
             </div>
             <div class="clear"></div>
             <div>
@@ -717,14 +717,14 @@ function filesize_formatted($path)
     if ($dev) { ?>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
-        <!--<script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>-->
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script>
+        <!--script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script>-->
     <?php
     }
     else {
