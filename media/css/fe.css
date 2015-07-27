@@ -174,8 +174,7 @@ div.tecdn div {
 }
 #fcat_acceso ul li {
 }
-#descargar .w,
-#totales .w {
+.fcat .w {
     color: #fff;
 }
 #descargar .step,
@@ -206,7 +205,15 @@ div.tecdn div {
     background-color: #4E4E4E;
     padding: 5px;
 }
-#descargar .radio {
+#variacion .step {
+    background-color: #312A2A;
+    padding: 10px;
+    word-wrap: break-word;
+    width: 200px;
+    height: 340px;
+    border-right: 1px solid #564F4F;
+}
+.fcat .radio {
     padding: 5px;
 }
 
@@ -275,33 +282,8 @@ div.tecdn div {
     background-color: #1a1a1a;
     color: #F7941E;
 }
-#menu li span {
-    height: 70px;
-    vertical-align: bottom;
-    display: table-cell;
-    background-image: url(../img/menu_sprite.png);
-    background-repeat: no-repeat;
-}
-#menu .menu_fecha {
-    background-position: center -240px;
-}
-#menu .menu_violencia {
-    background-position: center -315px;
-}
-#menu .menu_desastres {
-    background-position: center -395px;
-}
-#menu .menu_acceso {
-    background-position: center -475px;
-}
-#menu .menu_1612 {
-    background-position: center -555px;
-}
-#menu .menu_descargar {
-    background-position: center -635px;
-}
-#menu .menu_totales {
-    background-position: center -785px;
+#menu li div {
+    margin: 5px 0;
 }
 #submenu,
 #layers_div {
@@ -679,7 +661,8 @@ div.tecdn div {
     color: #ffffff;
     text-transform: uppercase;
 }
-div#ini_fin input.fecha {
+div#ini_fin input.fecha,
+div#variacion input.fecha {
     width:140px;
     background: url(../img/gray_arrow.png) no-repeat right center, #efefef !important; 
     border-radius: 4px;
@@ -712,18 +695,22 @@ div.filtro_fecha .close {
     height: 22px;
     cursor: pointer;
 }
-#ini_fin h2 {
+#ini_fin h2,
+#variacion h2 {
     color: #fff;
     margin-bottom: 30px !important;
 }
-#ini_fin label {
+#ini_fin label,
+#variacion label {
     display: block;
 }
-#ini_fin .r {
+#ini_fin .r,
+#variacion .r {
     margin-bottom: 20px;
     margin-top: 10px;
 }
-#ini_fin fieldset {
+#ini_fin fieldset,
+#variacion fieldset {
     border: 1px solid #cccccc;
     margin-right: 10px;
     height: 300px;
@@ -733,11 +720,13 @@ div.filtro_fecha .close {
     height: 270px;
     overflow: auto;
 }
-#ini_fin fieldset legend{
+#ini_fin fieldset legend,
+#variacion fieldset legend {
     font-size: 18px;
     color: #fff;
 }
-#ini_fin div.radio label {
+#ini_fin div.radio label,
+#variacion div.radio label {
     display: inline-block;
 }
 #ini_fin div.radio {

@@ -14,6 +14,8 @@ var ocultar = '';
 var cp_ecs = {};
 var titulo;
 var totales_ini = true;
+var id_start_date = 'ini_date';
+var id_end_date = 'fin_date';
 
 $(function(){
 
@@ -43,8 +45,8 @@ $(function(){
     var _fin = new Date(_year,_month,_day,11,59).getTime();
 
     // Para ushahidi va en segundos
-    $('#startDate').val(_ini/1000);
-    $('#endDate').val(_fin/1000);
+    $('#' + id_start_date).val(_ini/1000);
+    $('#' + id_end_date).val(_fin/1000);
 
     markIniFin(_iniD,_iniM,_iniY,_day,_month,_year);
 
@@ -283,6 +285,24 @@ $(function(){
                 totales_inicio = false;
             } 
         });
+        
+        // Variacion
+        $('#btn_variacion').click(function() {
+            
+            if ($('#variacion_p1_ini_text').val() == '' || $('#variacion_p1_fin_text').val() == ''
+                || $('#variacion_p2_ini_text').val() == '' || $('#variacion_p2_fin_text').val() == ''   
+                    ) {
+
+                alert('Todas las fechas son obligatorias');
+
+                return false;
+            } 
+
+            variacion();
+            
+            $(this).closest('.filtro').hide();
+
+        });
     }
     
     // Tipo de mapa
@@ -415,8 +435,10 @@ $(function(){
     
         // Fecha inicio - Fecha fin
         $('.fecha').click(function (){
-            $('div.filtro_fecha:not(#' + $(this).attr('dv') + ')').hide();
-            $('#' + $(this).attr('dv')).slideToggle();
+            var div = $(this).data('div');
+
+            $('div.filtro_fecha:not(#' + div + ')').hide();
+            $('#' + div).slideToggle();
         });
     
         $('div.filtro_fecha').each(function() {
@@ -427,20 +449,22 @@ $(function(){
                 
                 $(this).closest('div').find('li').removeClass('selected');
                 $(this).addClass('selected');
-                var q = $(this).attr('q');
-                var y = $(this).attr('y');
-
-                var $input = $('#' + $(this).attr('q') + '_text');
+                
+                var q = $(this).data('q');
                 var $div = $('#' + q + '_div');
-
                 
                 if ($div.find('li.selected').length == 3) {
+                
+                    var $div_ini = $(this).closest('fieldset').find('div.filtro_fecha[data-if="ini"]');
+                    var $div_fin = $(this).closest('fieldset').find('div.filtro_fecha[data-if="fin"]');
+
+                    var $input = $('#' + q + '_text');
 
                     var _ini = new
-                    Date($('li.selected[q=ini][y=yyyy]').attr('val'),$('li.selected[q=ini][y=mes]').attr('val')-1,$('li.selected[q=ini][y=dia]').attr('val'),23,59).getTime();
+                    Date($div_ini.find('ul.yyyy > li.selected').data('val'),$div_ini.find('ul.mes > li.selected').data('val')-1,$div_ini.find('ul.dia > li.selected').data('val'),23,59).getTime();
 
                     var _fin = new
-                    Date($('li.selected[q=fin][y=yyyy]').attr('val'),$('li.selected[q=fin][y=mes]').attr('val')-1,$('li.selected[q=fin][y=dia]').attr('val'),23,59).getTime();
+                    Date($div_fin.find('ul.yyyy > li.selected').data('val'),$div_fin.find('ul.mes > li.selected').data('val')-1,$div_fin.find('ul.dia > li.selected').data('val'),23,59).getTime();
                     
                     if (_ini > _fin) {
                         alert('Desde debe ser menor que Hasta');
@@ -449,14 +473,11 @@ $(function(){
                         //$('stime').val(0);
                     }
                     else {
-                    
-                        $input.val($('li.selected[q='+q+'][y=dia]').text() + ' de ' +
-                        $('li.selected[q='+q+'][y=mes]').text()+' '+ $('li.selected[q='+q+'][y=yyyy]').text());
+                        $input.val($div.find('ul.dia > li.selected').text() + ' de ' +
+                        $div.find('ul.mes > li.selected').text() + ' ' + $div.find('ul.yyyy > li.selected').text());
                         
-                        $('#startDate').val(_ini / 1000);
-                        
-                        $('#endDate').val(_fin / 1000);
-
+                        $div_ini.find('input:hidden').val(_ini / 1000);
+                        $div_fin.find('input:hidden').val(_fin / 1000);
                         //$('#stime').val(0);
                     }
                 }
@@ -668,8 +689,8 @@ function applyPeriod(val) {
         }
 
         //$('#dslider').dateRangeSlider('values', _ini,_fin);
-        $('#startDate').val(_ini/1000); // Segundos para ushahidi
-        $('#endDate').val(_fin/1000); // Segundos para ushahidi
+        $('#' + id_start_date).val(_ini/1000); // Segundos para ushahidi
+        $('#' + id_end_date).val(_fin/1000); // Segundos para ushahidi
         
         var _iniY = _ini.getFullYear();
         var _finY = _fin.getFullYear();
@@ -1307,8 +1328,8 @@ daysToMiliseconds = function(d) {
 getStartEnd = function(c) {
     var v = [];
 
-    v['ini'] = $('#startDate').val();
-    v['fin'] = $('#endDate').val();
+    v['ini'] = $('#' + id_start_date).val();
+    v['fin'] = $('#' + id_end_date).val();
 
     return v[c];
 }
@@ -1456,8 +1477,64 @@ totalPeriodo = function(periodo, valor) {
 /* Realiza check de settings.monitor_cache_json
 */
 checkCacheJson = function() {
-$.ajax({
-    url: 'checkCacheJson'
-});
-
+    $.ajax({
+        url: 'checkCacheJson'
+    });
 }
+
+variacion = function() {
+
+    var p1_ini = $('#variacion_p1_ini_date').val();
+    var p1_fin = $('#variacion_p1_fin_date').val();
+    
+    var p2_ini = $('#variacion_p2_ini_date').val();
+    var p2_fin = $('#variacion_p1_fin_date').val();
+    
+    var ecdn = $('input[name="variacion_v_d"]:checked').val();
+
+    if (ecdn == 'v') {
+        var _cats = $('#currentCatE').val();
+    }
+    else {
+        var _cats = $("#currentCatD").val();
+    }
+
+    var _states = getStatesChecked();
+
+    $('#loading').show();
+    $.ajax({
+            url: 'variacion/' + p1_ini + '|' + p1_fin + '/' + p2_ini + '|' + p2_fin + '/' + ecdn + '/' + _cats + '/' + _states,
+            success: function() {
+                $('#loading').hide();
+                layerVariacion();
+            }
+        });
+}
+/*
+serie7 = new geostats(dataJson);
+serie7.setPrecision(6);
+var a = serie7.getClassQuantile(5);
+//var a = serie7.getClassEqInterval(5);
+//var a = serie7.getClassJenks(3);
+
+var ranges = serie7.ranges;
+
+var color_x  = new Array('#e2dee6', '#c2abdd', '#9d87b6', '#735a8f', '#3d2e4e');
+
+serie7.setColors(color_x);
+   			
+var class_x = ranges;
+var content = serie7.getHtmlLegend();
+   			serie7.legendSeparator = ' ⇔ ';
+   			serie7.setPrecision(2);
+   			var content_flare = serie7.getHtmlLegend(null, 'Customized legend, callback function (<em>here, values wrapped by strong tags<\/em>) and feature count', true, callback_sample, 'distinct');
+
+   			var content_legend3 = serie7.getHtmlLegend(null, 'Legend (real values, breaking continuous serie)', true, null, 'discontinuous', 'DESC');
+
+   			jQuery('#method').html('<p><strong>Classification Method : <\/strong>' + serie7.method + '<\/p>');
+   			jQuery('#legend p').before(content);
+   			
+   			jQuery('#legend2 p').before(content_flare);
+   			jQuery('#legend3 p').before(content_legend3);
+   			init(color_x, class_x);
+*/

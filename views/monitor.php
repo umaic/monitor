@@ -111,8 +111,6 @@ function filesize_formatted($path)
         <div id="aaaa">
             <input type="hidden" id="currentCatE" value="0">
             <input type="hidden" id="currentCatD" value="0">
-            <input type="hidden" id="startDate" value="">
-            <input type="hidden" id="endDate" value="">
             <input type="hidden" id="yyyy_ini" value="">
             <input type="hidden" id="yyyy_fin" value="">
             <?php 
@@ -122,13 +120,35 @@ function filesize_formatted($path)
     <div id="content">
         <div id="menu" class="left">
             <ul>
-                <li class="sub" data-div="ini_fin"><span class="menu_fecha">Filtrar por fecha</span></li>
-                <li class="sub" data-div="fcat_dn"><span class="menu_desastres">Categorias desastres</span></li>
-                <li class="sub" data-div="fcat_ec"><span class="menu_violencia">Categorias violencia</span></li>
+                <li class="sub" data-div="ini_fin">
+                    <div>Filtrar por</div>
+                    <div><i class="fa fa-2x fa-calendar"></i></div>
+                    <div>Fecha</div>
+                </li>
+                <li class="sub" data-div="fcat_dn">
+                    <div>Filtrar por</div>
+                    <div><i class="fa fa-2x fa-fire"></i></div>
+                    <div>Categorias desastres</div>
+                </li>
+                <li class="sub" data-div="fcat_ec">
+                    <div>Filtrar por</div>
+                    <div><i class="fa fa-2x fa-bullseye"></i></div>
+                    <div>Categorias violencia</div>
+                </li>
+                <li class="sub" data-div="variacion">
+                    <div><i class="fa fa-2x fa-line-chart"></i></div>
+                    <div>Calcular variación</div>
+                </li>
+                <li class="sub" data-div="totales">
+                    <div><i class="fa fa-2x fa-table"></i></div>
+                    <div>Totales por año</div>
+                </li>
+                <li class="sub" data-div="descargar">
+                    <div><i class="fa fa-2x fa-download"></i></div>
+                    <div>Descargar eventos</div>
+                </li>
                 <!--<li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>-->
                 <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
-                <li class="sub" data-div="totales"><span class="menu_totales">Totales por año</span></li>
-                <li class="sub" data-div="descargar"><span class="menu_descargar">Descargar eventos</span></li>
             </ul>
         </div>
         <!-- Filtro categorias Violencia -->
@@ -265,73 +285,67 @@ function filesize_formatted($path)
                 <fieldset class="left">
                     <legend>Periodo</legend>
                     <div class="r">
-                        <label>Desde</label><input type="text" id="ini_text" class="fecha select" dv="ini_div" readonly />
-                        <div class="filtro_fecha" id="ini_div">
+                        <label>Desde</label>
+                        <?php 
+                        $fecha_html = '<input type="text" id="q_val_text" class="fecha select" data-div="q_val_div" readonly />
+                            <div class="filtro_fecha" id="q_val_div" data-if="if_val">
                             <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
                             <div class="right close"></div>
                             <div class="clear"></div>
                             <div class="inline yyyy l">
                                 <p><b>A&ntilde;o</b></p>
-                                <ul>
-                                    <?php foreach($totalxy as $_a) {echo "<li val='$_a' q='ini' y='yyyy'>$_a</li>"; } ?>
+                                <ul class="yyyy">';
+                            foreach($totalxy as $_a) {
+                                $fecha_html .= "<li data-val='$_a' data-if='' data-q='q_val'>$_a</li>";
+                            }
+                            $fecha_html .= '
                                 </ul>
                             </div>
                             <div class="inline mes l">
                                 <p><b>Mes</b></p>
-                                <ul>
-                                    <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='ini' y='mes'>$mes</li>"; } ?>
+                                <ul class="mes">';
+                            foreach ($meses as $m => $mes) { 
+                                $fecha_html .= "<li data-val='".($m+1)."' data-q='q_val'>$mes</li>"; 
+                            }
+                            
+                            $fecha_html .= '
                                 </ul>
                             </div>
                             <div class="inline dia l">
                                 <p><b>D&iacute;a</b></p>
-                                <ul>
-                                    <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='ini' y='dia'>$i</li>"; } ?>
+                                <ul class="dia">';
+                                for ($i=1;$i<32;$i++) { 
+                                    $fecha_html .= "<li data-val='$i' data-q='q_val'>$i</li>";
+                                }
+                            $fecha_html .= '
                                 </ul>
                             </div>
-                        </div>
+                            <input type="hidden" id="id_hidden_date" value="">
+                        </div>';
+                            
+                        echo str_replace(array('q_val','if_val','id_hidden'),array('ini','ini','ini'),$fecha_html);
+                        ?>
                     </div>
                     <div class="r">
-                        <label>Hasta</label><input type="text" id="fin_text" class="fecha select" dv="fin_div" readonly />
-                        <div class="filtro_fecha" id="fin_div">
-                            <div class="left">Seleccione a&ntilde;o, mes y d&iacute;a</div>
-                            <div class="right close"></div>
-                            <div class="clear"></div>
-                            <div class="inline yyyy l">
-                                <p><b>A&ntilde;o</b></p>
-                                <ul>
-                                    <?php foreach($totalxy as $_a) {echo "<li val='$_a' q='fin' y='yyyy'>$_a</li>"; } ?>
-                                </ul>
-                            </div>
-                            <div class="inline mes l">
-                                <p><b>Mes</b></p>
-                                <ul>
-                                    <?php foreach ($meses as $m => $mes) { echo "<li val='".($m+1)."' q='fin' y='mes'>$mes</li>"; } ?>
-                                </ul>
-                            </div>
-                            <div class="inline dia l">
-                                <p><b>D&iacute;a</b></p>
-                                <ul>
-                                    <?php for ($i=1;$i<32;$i++) { echo "<li val='$i' q='fin' y='dia'>$i</li>"; } ?>
-                                </ul>
-                            </div>
-                        </div>
+                        <label>Hasta</label>
+                        <?php
+                        echo str_replace(array('q_val','if_val','id_hidden'),array('fin','fin','fin'),$fecha_html);
+                        ?>
                     </div>
                 </fieldset>
-                
                 <fieldset class="left">
                     <legend>A&ntilde;os</legend>
-                        <div>
-                            <?php
-                            foreach($totalxy as $_a) { ?>
-                                <div class="radio">
-                                    <input type="radio" id="a_<?php echo $_a ?>" value="<?php echo $_a ?>" name="rap" />
-                                    <label for="a_<?php echo $_a ?>"><?php echo $_a ?></label>
-                                </div>
-                            <?php
-                            }
-                            ?> 
-
-                        </div>
+                    <div>
+                        <?php
+                        foreach($totalxy as $_a) { ?>
+                            <div class="radio">
+                                <input type="radio" id="a_<?php echo $_a ?>" value="<?php echo $_a ?>" name="rap" />
+                                <label for="a_<?php echo $_a ?>"><?php echo $_a ?></label>
+                            </div>
+                        <?php
+                        }
+                        ?> 
+                    </div>
                 </fieldset>
                 <fieldset class="left">
                     <legend>Otros</legend>
@@ -357,7 +371,6 @@ function filesize_formatted($path)
                             <label for="acumulado">Acumulado del año</label>
                         </div>
                 </fieldset>
-                
             </div>
         </div>
         <!-- Filtro fecha :: FIN-->
@@ -518,6 +531,68 @@ function filesize_formatted($path)
             </div>
         </div>
         <!-- Totales por año :: FIN-->
+        
+        <!-- Variación -->
+        <div id="variacion" class="filtro fcat" data-index="4">
+            <div class="left">
+                <h2 class="dosis w">Calcular variación</h2>
+            </div>
+            <div class="right">
+                <a class="close" href="#" data-div="variacion"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
+            </div>
+            <div class="right">
+                <div id="btn_variacion" class="btn">Calcular variación</div>
+            </div>
+            <div class="clear"></div>
+            <div class="clear"></div>
+            <div>
+                <fieldset class="left">
+                    <legend>Consultar para</legend>
+                        <div>
+                        <div class="radio">
+                            <input type="radio" value="v" name="variacion_v_d" checked />
+                            <label for="acumulado">Violencia Armada</label>
+                        </div>
+                        <div class="radio">
+                            <input type="radio" value="d" name="variacion_v_d" />
+                            <label for="acumulado">Desastres</label>
+                        </div>
+                </fieldset>
+                <fieldset class="left">
+                    <legend>Periodo 1</legend>
+                    <div class="r">
+                        <?php $pre = "variacion_p1_"; ?>
+                        <label>Desde</label>
+                        <?php
+                        echo str_replace(array('q_val','if_val','id_hidden'),array($pre.'ini','ini',$pre.'ini'),$fecha_html);
+                        ?>
+                    </div>
+                    <div class="r">
+                        <label>Hasta</label>
+                        <?php
+                        echo str_replace(array('q_val','if_val','id_hidden'),array($pre.'fin','fin',$pre.'fin'),$fecha_html);
+                        ?>
+                    </div>
+                </fieldset>
+                <fieldset class="left">
+                    <legend>Periodo 2</legend>
+                    <div class="r">
+                        <?php $pre = "variacion_p2_"; ?>
+                        <label>Desde</label>
+                        <?php
+                        echo str_replace(array('q_val','if_val','id_hidden'),array($pre.'ini','ini',$pre.'ini'),$fecha_html);
+                        ?>
+                    </div>
+                    <div class="r">
+                        <label>Hasta</label>
+                        <?php
+                        echo str_replace(array('q_val','if_val','id_hidden'),array($pre.'fin','fin',$pre.'fin'),$fecha_html);
+                        ?>
+                    </div>
+                </fieldset>
+            </div>
+        </div>
+        <!-- Variación :: FIN-->
         
         <div id="map" class="map_monitor left"></div>
         <div id="featured" class="hide">

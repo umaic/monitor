@@ -143,6 +143,19 @@ if (!empty($mod)) {
         case 'checkCacheJson':
             $mc->checkCacheJson();
         break;
+        
+        case 'variacion':
+            $p1 = $_GET['p1'];
+            $p2 = $_GET['p2'];
+            $ecdn = $_GET['ecdn'];
+
+            $cats = (empty($_GET['c'])) ? array() : $_GET['c'];
+            $states = (empty($_GET['states'])) ? array() : $_GET['states'];
+
+            //$afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
+
+            $mc->variacion($p1,$p2,$ecdn,$cats,$states);
+        break;
 
         case 'geojson':
             

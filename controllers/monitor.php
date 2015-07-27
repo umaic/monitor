@@ -264,6 +264,127 @@ class MonitorController {
     }
     
     /**
+     * Variacion
+     *
+     * @param string $periodo_1  f_ini|f_fin yyyy-mm-dd H:i:s
+     * @param string $periodo_2  f_ini|f_fin yyyy-mm-dd H:i:s
+     * @param string $ecdn Violencia (v) o Desastres (d)
+     * @param string $cats Categorias separadas por ',' filtradas para ec y dn formato ec1,ec2|dn1,dn2
+     * @param string $states States separados por ','
+     */ 
+    public function variacion($periodo_1, $periodo_2, $ecdn, $cats, $states='') {
+        
+        $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+        $acceso = ($_SESSION['acceso'] == 1) ? true : false;
+        $violencia = ($ecdn == 'v') ? true : false;
+
+        $r = array();
+        $t = array('ec' => 0, 'dn' => 0);
+
+        $p1 = explode('|', $periodo_1);
+        $p2 = explode('|', $periodo_2);
+
+        foreach (array($p1,$p2) as $p12 => $d) {
+            $ini = $d[0];
+            $fin = $d[1];
+
+            list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
+
+            
+            $_SESSION['cond_csv'] = $cond_csv;
+            $_SESSION['cond_cats_ec'] = $cond_cats_ec;
+            $_SESSION['cond_cats_dn'] = $cond_cats_dn;
+
+            //list($rsms_ec, $rsms_dn, $charts, $subtotales) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
+
+            $_db = $this->db_dn.'.';
+
+            if ($afectacion) {
+
+                if ($violencia) {
+                    $_sql = "SELECT SUM(victim_cant) AS n
+                        FROM victim v
+                        JOIN incident_category ic ON v.incident_category_id = ic.id
+                        JOIN incident AS i ON ic.incident_id = i.id
+                        JOIN location AS l ON l.id = i.location_id";
+
+                    $_sql .= " WHERE $cond_tmp";
+                    $_sqli = sprintf($_sql,$cond_cats_ec);
+                }
+                else {
+                    $_sql = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
+                        FROM %sform_response f
+                        JOIN %sincident AS i ON f.incident_id = i.id
+                        JOIN %slocation AS l ON l.id = i.location_id
+                        JOIN %sincident_category ic USING(incident_id)
+                        WHERE $cond_tmp AND form_field_id = 4";
+                    
+                    $_sqli = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
+                }
+
+            }
+            else {
+                $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
+                     JOIN %sincident AS i ON l.id = i.location_id
+                     JOIN %sincident_category AS ic ON i.id = ic.incident_id
+                     WHERE $cond_tmp";
+
+                if ($violencia) {
+                    $_sqli = sprintf($_sql,'','','',$cond_cats_ec);
+                }
+                else {
+                    $_sqli = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
+                }
+            }
+
+            $_ss = " AND city_id = %s LIMIT 1";
+
+            $_sqli .= $_ss;
+
+            $cond_states = false;
+            if (!empty($states)) {
+                $cond_states = true;
+                $cond_csv = $cond_tmp." AND l.state_id IN ($states)";
+                $states = explode(',', $states);
+            }
+
+            $sql_cities = "SELECT id,divipola FROM city";
+            $_rs = $this->db->open($sql_cities);
+            while($_row = $this->db->FO($_rs)) {
+                
+                if ($violencia) {
+                    $_sqln = sprintf($_sqli,$_row->id);
+                    $_rsn = $this->db->open($_sqln);
+                    $_ec = $this->db->FO($_rsn);
+                    $num = (empty($_ec->n)) ? 0 : $_ec->n;
+                }
+                else {
+                    $_sqln = sprintf($_sqli,$_row->id);
+                    $_rsn = $this->db->open($_sqln);
+                    //echo $_sqldn;
+                    $_dn = $this->db->FO($_rsn);
+                    $num = (empty($_dn->n)) ? 0 : $_dn->n;
+                }
+                
+                //echo $_sql;
+
+                $r[$_row->divipola][$p12] = $num;
+            }
+        }
+
+        // Calcula variacion
+        foreach($r as $div => $v) {
+            //echo "$div - ".$v[0]." <br />";
+            $values[$div] = (($v[1] - $v[0]) / $v[0]) * 100;
+        }
+
+        //$json = json_encode(compact('r', 't','rsms_ec', 'rsms_dn','charts','subtotales'));
+
+        //return $json;
+
+    }
+    
+    /**
      * Total Ec y Dn
      *
      */ 
