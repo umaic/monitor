@@ -277,110 +277,138 @@ class MonitorController {
         $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
         $acceso = ($_SESSION['acceso'] == 1) ? true : false;
         $violencia = ($ecdn == 'v') ? true : false;
+        $temporal = 'static/variacion_desarrollo.json';
+        
 
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
 
-        $p1 = explode('|', $periodo_1);
-        $p2 = explode('|', $periodo_2);
+        if (!file_exists($temporal)) {
+            $p1 = explode('|', $periodo_1);
+            $p2 = explode('|', $periodo_2);
 
-        foreach (array($p1,$p2) as $p12 => $d) {
-            $ini = $d[0];
-            $fin = $d[1];
+            foreach (array($p1,$p2) as $p12 => $d) {
+                $ini = $d[0];
+                $fin = $d[1];
 
-            list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
+                list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
 
-            
-            $_SESSION['cond_csv'] = $cond_csv;
-            $_SESSION['cond_cats_ec'] = $cond_cats_ec;
-            $_SESSION['cond_cats_dn'] = $cond_cats_dn;
+                $_SESSION['cond_csv'] = $cond_csv;
+                $_SESSION['cond_cats_ec'] = $cond_cats_ec;
+                $_SESSION['cond_cats_dn'] = $cond_cats_dn;
 
-            //list($rsms_ec, $rsms_dn, $charts, $subtotales) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
+                //list($rsms_ec, $rsms_dn, $charts, $subtotales) = $this->getAfeEveChart($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
 
-            $_db = $this->db_dn.'.';
+                $_db = $this->db_dn.'.';
 
-            if ($afectacion) {
+                if ($afectacion) {
 
-                if ($violencia) {
-                    $_sql = "SELECT SUM(victim_cant) AS n
-                        FROM victim v
-                        JOIN incident_category ic ON v.incident_category_id = ic.id
-                        JOIN incident AS i ON ic.incident_id = i.id
-                        JOIN location AS l ON l.id = i.location_id";
+                    if ($violencia) {
+                        $_sql = "SELECT SUM(victim_cant) AS n
+                            FROM victim v
+                            JOIN incident_category ic ON v.incident_category_id = ic.id
+                            JOIN incident AS i ON ic.incident_id = i.id
+                            JOIN location AS l ON l.id = i.location_id";
 
-                    $_sql .= " WHERE $cond_tmp";
-                    $_sqli = sprintf($_sql,$cond_cats_ec);
+                        $_sql .= " WHERE $cond_tmp";
+                        $_sqli = sprintf($_sql,$cond_cats_ec);
+                    }
+                    else {
+                        $_sql = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
+                            FROM %sform_response f
+                            JOIN %sincident AS i ON f.incident_id = i.id
+                            JOIN %slocation AS l ON l.id = i.location_id
+                            JOIN %sincident_category ic USING(incident_id)
+                            WHERE $cond_tmp AND form_field_id = 4";
+                        
+                        $_sqli = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
+                    }
+
                 }
                 else {
-                    $_sql = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
-                        FROM %sform_response f
-                        JOIN %sincident AS i ON f.incident_id = i.id
-                        JOIN %slocation AS l ON l.id = i.location_id
-                        JOIN %sincident_category ic USING(incident_id)
-                        WHERE $cond_tmp AND form_field_id = 4";
+                    $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
+                         JOIN %sincident AS i ON l.id = i.location_id
+                         JOIN %sincident_category AS ic ON i.id = ic.incident_id
+                         WHERE $cond_tmp";
+
+                    if ($violencia) {
+                        $_sqli = sprintf($_sql,'','','',$cond_cats_ec);
+                    }
+                    else {
+                        $_sqli = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
+                    }
+                }
+
+                $_ss = " AND city_id = %s LIMIT 1";
+
+                $_sqli .= $_ss;
+
+                $cond_states = false;
+                if (!empty($states)) {
+                    $cond_states = true;
+                    $cond_csv = $cond_tmp." AND l.state_id IN ($states)";
+                    //$states = explode(',', $states);
+                }
+
+                $sql_cities = "SELECT id,divipola FROM city";
+                $_rs = $this->db->open($sql_cities);
+                while($_row = $this->db->FO($_rs)) {
+
+                    if ($violencia) {
+                        $_sqln = sprintf($_sqli,$_row->id);
+                        $_rsn = $this->db->open($_sqln);
+                        $_ec = $this->db->FO($_rsn);
+
+                        $num = (empty($_ec->n)) ? 0 : $_ec->n;
+                    }
+                    else {
+                        $_sqln = sprintf($_sqli,$_row->id);
+                        $_rsn = $this->db->open($_sqln);
+                        //echo $_sqldn;
+                        $_dn = $this->db->FO($_rsn);
+                        $num = (empty($_dn->n)) ? 0 : $_dn->n;
+                    }
                     
-                    $_sqli = sprintf($_sqld,$_db,$_db,$_db,$_db,$cond_cats_dn);
-                }
+                    //echo $_sql;
 
-            }
-            else {
-                $_sql = "SELECT COUNT(DISTINCT(l.id)) AS n FROM %slocation AS l
-                     JOIN %sincident AS i ON l.id = i.location_id
-                     JOIN %sincident_category AS ic ON i.id = ic.incident_id
-                     WHERE $cond_tmp";
-
-                if ($violencia) {
-                    $_sqli = sprintf($_sql,'','','',$cond_cats_ec);
-                }
-                else {
-                    $_sqli = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
+                    $r[$_row->id][$p12] = $num;
                 }
             }
 
-            $_ss = " AND city_id = %s LIMIT 1";
-
-            $_sqli .= $_ss;
-
-            $cond_states = false;
-            if (!empty($states)) {
-                $cond_states = true;
-                $cond_csv = $cond_tmp." AND l.state_id IN ($states)";
-                $states = explode(',', $states);
+            // Calcula variacion
+            foreach($r as $divipola => $v) {
+                //echo "$div - ".$v[0]." <br />";
+                if ($v[0] > 0) {
+                    $values[$divipola] = (($v[1] - $v[0]) / $v[0]) * 100;
+                } 
             }
 
-            $sql_cities = "SELECT id,divipola FROM city";
-            $_rs = $this->db->open($sql_cities);
-            while($_row = $this->db->FO($_rs)) {
-                
-                if ($violencia) {
-                    $_sqln = sprintf($_sqli,$_row->id);
-                    $_rsn = $this->db->open($_sqln);
-                    $_ec = $this->db->FO($_rsn);
-                    $num = (empty($_ec->n)) ? 0 : $_ec->n;
-                }
-                else {
-                    $_sqln = sprintf($_sqli,$_row->id);
-                    $_rsn = $this->db->open($_sqln);
-                    //echo $_sqldn;
-                    $_dn = $this->db->FO($_rsn);
-                    $num = (empty($_dn->n)) ? 0 : $_dn->n;
-                }
-                
-                //echo $_sql;
+            file_put_contents($temporal,json_encode($values));
 
-                $r[$_row->divipola][$p12] = $num;
-            }
+        }
+        else {
+            $values = json_decode(file_get_contents($temporal),true);
+        }
+        
+        $topojson = json_decode(file_get_contents('data/mpios_topo.json'), true);
+
+        $geometries = $topojson['objects']['mpios_geonode']['geometries'];
+
+        // Agrega propiedad a la capa topoJSON
+        foreach($geometries as $g => $geom) {
+            $divipola = $geom['id'];
+            $geom['variacion'] = (isset($values[$divipola])) ? $values[$divipola] : 0;
+            $geometries[$g] = $geom;
         }
 
-        // Calcula variacion
-        foreach($r as $div => $v) {
-            //echo "$div - ".$v[0]." <br />";
-            $values[$div] = (($v[1] - $v[0]) / $v[0]) * 100;
-        }
+        $topojson['objects']['mpios_geonode']['geometries'] = $geometries;
 
-        //$json = json_encode(compact('r', 't','rsms_ec', 'rsms_dn','charts','subtotales'));
+        file_put_contents('static/variacion-topo.json',json_encode($topojson));
 
-        //return $json;
+        // Serie de datos para Jenks
+        $json = json_encode(array_values(array_unique($values)));
+
+        return $json;
 
     }
     

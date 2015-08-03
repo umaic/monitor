@@ -119,7 +119,7 @@ function mapRender() {
 
     });
 
-    var map = new ol.Map({
+    map = new ol.Map({
         layers: [
             new ol.layer.Tile({
                 source: new ol.source.OSM()
@@ -144,18 +144,6 @@ function mapRender() {
         })
     })];
 
-    var ly = new ol.layer.Vector({
-        source: new ol.source.Vector({
-            url: 'data/topo.json',
-            format: new ol.format.TopoJSON()
-        }),
-        style: function(feature, resolution) {
-            // don't want to render the full world polygon, which repeats all countries
-            return feature.getId() !== undefined ? styleVariacion : null;
-        }
-    });
-    
-    map.addLayer(ly);
 }
 
 function addFeaturesFirstTime() {

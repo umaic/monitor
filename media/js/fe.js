@@ -289,6 +289,7 @@ $(function(){
         // Variacion
         $('#btn_variacion').click(function() {
             
+            /*
             if ($('#variacion_p1_ini_text').val() == '' || $('#variacion_p1_fin_text').val() == ''
                 || $('#variacion_p2_ini_text').val() == '' || $('#variacion_p2_fin_text').val() == ''   
                     ) {
@@ -297,6 +298,7 @@ $(function(){
 
                 return false;
             } 
+            */
 
             variacion();
             
@@ -1488,7 +1490,7 @@ variacion = function() {
     var p1_fin = $('#variacion_p1_fin_date').val();
     
     var p2_ini = $('#variacion_p2_ini_date').val();
-    var p2_fin = $('#variacion_p1_fin_date').val();
+    var p2_fin = $('#variacion_p2_fin_date').val();
     
     var ecdn = $('input[name="variacion_v_d"]:checked').val();
 
@@ -1504,37 +1506,68 @@ variacion = function() {
     $('#loading').show();
     $.ajax({
             url: 'variacion/' + p1_ini + '|' + p1_fin + '/' + p2_ini + '|' + p2_fin + '/' + ecdn + '/' + _cats + '/' + _states,
-            success: function() {
+            success: function(data) {
                 $('#loading').hide();
-                layerVariacion();
+                addLayerVariacion(data);
             }
         });
 }
-/*
-serie7 = new geostats(dataJson);
-serie7.setPrecision(6);
-var a = serie7.getClassQuantile(5);
-//var a = serie7.getClassEqInterval(5);
-//var a = serie7.getClassJenks(3);
 
-var ranges = serie7.ranges;
 
-var color_x  = new Array('#e2dee6', '#c2abdd', '#9d87b6', '#735a8f', '#3d2e4e');
+function addLayerVariacion(dataJson) {
 
-serie7.setColors(color_x);
-   			
-var class_x = ranges;
-var content = serie7.getHtmlLegend();
-   			serie7.legendSeparator = ' ⇔ ';
-   			serie7.setPrecision(2);
-   			var content_flare = serie7.getHtmlLegend(null, 'Customized legend, callback function (<em>here, values wrapped by strong tags<\/em>) and feature count', true, callback_sample, 'distinct');
+    /****** Temporal desarrollo
+     $('#variacion_p1_ini_date').val(1388638740);
+     $('#variacion_p1_fin_date').val(1404277140);
+     
+     $('#variacion_p2_ini_date').val(1420174740);
+     $('#variacion_p2_fin_date').val(1435813140);
+     *////
 
-   			var content_legend3 = serie7.getHtmlLegend(null, 'Legend (real values, breaking continuous serie)', true, null, 'discontinuous', 'DESC');
+    var serie7 = new geostats(dataJson);
+    serie7.setPrecision(6);
+    //var a = serie7.getClassQuantile(5);
+    //var a = serie7.getClassEqInterval(5);
+    var a = serie7.getClassJenks(5);
 
-   			jQuery('#method').html('<p><strong>Classification Method : <\/strong>' + serie7.method + '<\/p>');
-   			jQuery('#legend p').before(content);
-   			
-   			jQuery('#legend2 p').before(content_flare);
-   			jQuery('#legend3 p').before(content_legend3);
-   			init(color_x, class_x);
-*/
+    var ranges = serie7.ranges;
+
+    var color_x  = new Array('#e2dee6', '#c2abdd', '#9d87b6', '#735a8f', '#3d2e4e');
+
+    serie7.setColors(color_x);
+                
+    var class_x = ranges;
+    var content = serie7.getHtmlLegend();
+    serie7.legendSeparator = ' ⇔ ';
+    serie7.setPrecision(2);
+    //var content_flare = serie7.getHtmlLegend(null, 'Customized legend, callback function (<em>here, values wrapped by strong tags<\/em>) and feature count', true, callback_sample, 'distinct');
+
+    //var content_legend3 = serie7.getHtmlLegend(null, 'Legend (real values, breaking continuous serie)', true, null, 'discontinuous', 'DESC');
+
+    /*
+    jQuery('#method').html('<p><strong>Classification Method : <\/strong>' + serie7.method + '<\/p>');
+    jQuery('#legend p').before(content);
+    
+    jQuery('#legend2 p').before(content_flare);
+    jQuery('#legend3 p').before(content_legend3);
+    */
+    var ly = new ol.layer.Vector({
+        source: new ol.source.Vector({
+            url: 'static/variacion-topo.json',
+            format: new ol.format.TopoJSON()
+        }),
+        style: (function() {
+          return function(feature, resolution) {
+              console.log(feature.get('variacion'));
+            return [new ol.style.Style({
+                fill: new ol.style.Fill({color: color_x[serie7.getClass(feature.get('variacion'))]}),
+                //stroke: new ol.style.Stroke({color: 'black', width: 1})
+            })]
+          };
+        })()
+
+    });
+
+    map.addLayer(ly);
+
+}

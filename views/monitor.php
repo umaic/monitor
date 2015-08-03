@@ -815,7 +815,7 @@ function filesize_formatted($path)
       m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
       })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-      ga('create', 'UA-48294292-4', 'salahumanitaria.co');
+      ga('create', 'UA-48294292-6', 'salahumanitaria.co');
       ga('send', 'pageview');
 
     </script>

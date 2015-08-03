@@ -74,6 +74,7 @@ if (!empty($mod)) {
             
             header('Content-type: text/json');
             header('Content-type: application/json'); 
+
             echo $totalxd;
         break;
         
@@ -153,8 +154,11 @@ if (!empty($mod)) {
             $states = (empty($_GET['states'])) ? array() : $_GET['states'];
 
             //$afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
+            
+            header('Content-type: text/json');
+            header('Content-type: application/json'); 
 
-            $mc->variacion($p1,$p2,$ecdn,$cats,$states);
+            echo $mc->variacion($p1,$p2,$ecdn,$cats,$states);
         break;
 
         case 'geojson':
