@@ -371,7 +371,7 @@ class MonitorController {
                     
                     //echo $_sql;
 
-                    $r[$_row->id][$p12] = $num;
+                    $r[$_row->divipola][$p12] = $num;
                 }
             }
 
@@ -397,7 +397,11 @@ class MonitorController {
         // Agrega propiedad a la capa topoJSON
         foreach($geometries as $g => $geom) {
             $divipola = $geom['id'];
-            $geom['variacion'] = (isset($values[$divipola])) ? $values[$divipola] : 0;
+            
+            if (isset($values[$divipola])) {
+                $geom['properties']['variacion'] = $values[$divipola];
+            }
+
             $geometries[$g] = $geom;
         }
 

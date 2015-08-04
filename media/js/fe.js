@@ -1522,6 +1522,8 @@ function addLayerVariacion(dataJson) {
      
      $('#variacion_p2_ini_date').val(1420174740);
      $('#variacion_p2_fin_date').val(1435813140);
+
+     variacion();
      *////
 
     var serie7 = new geostats(dataJson);
@@ -1531,6 +1533,7 @@ function addLayerVariacion(dataJson) {
     var a = serie7.getClassJenks(5);
 
     var ranges = serie7.ranges;
+    console.log(ranges);
 
     var color_x  = new Array('#e2dee6', '#c2abdd', '#9d87b6', '#735a8f', '#3d2e4e');
 
@@ -1556,16 +1559,21 @@ function addLayerVariacion(dataJson) {
             url: 'static/variacion-topo.json',
             format: new ol.format.TopoJSON()
         }),
-        style: (function() {
-          return function(feature, resolution) {
-              console.log(feature.get('variacion'));
-            return [new ol.style.Style({
-                fill: new ol.style.Fill({color: color_x[serie7.getClass(feature.get('variacion'))]}),
-                //stroke: new ol.style.Stroke({color: 'black', width: 1})
-            })]
-          };
-        })()
+        style: function(feature, resolution) {
 
+            if (feature.get('variacion') !== undefined) {
+                styleObj = {
+                    fill: new ol.style.Fill({color: color_x[serie7.getClass(feature.get('variacion'))]}),
+                    stroke: new ol.style.Stroke({color: 'gray', width: 1})
+                }
+            }
+            else {
+                styleObj = {
+                    stroke: new ol.style.Stroke({color: 'gray', width: 1})
+                }
+            }
+            return [new ol.style.Style(styleObj)]
+          }
     });
 
     map.addLayer(ly);
