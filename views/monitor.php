@@ -13,6 +13,7 @@ if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fa/css/font-awesome.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery.dataTables.min.css" />
 <?php
 }
 else { ?>
@@ -670,124 +671,136 @@ function filesize_formatted($path)
                 <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
                     &nbsp;Cargando datos....
             </div>
+            <!-- Data right -->
             <div id="data">
                 <div id="minmax_total" class="minimize"></div>
+                <!-- Tabs -->
                 <div id="tabs">
-                  <ul>
-                    <li><a href="#tendencia">Tendencia</a></li>
-                    <li><a href="#resumen">Resumen</a></li>
-                    <li><a href="#departamentos">Departamentos</a></li>
-                  </ul>
-                  <div id="tendencia">
-                    <div id="chart_1" class="chart"></div>
-                    <div id="chart_t_s">
-                        <div class="left" id="chart_total">
-                            <div class="ec ct">
-                                <div class="total_n" id="chart_total_v"></div>
-                                <div class="total_t">total violencia</div>
+                    <ul>
+                        <li><a href="#tendencia">Tendencia</a></li>
+                        <li><a href="#resumen">Resumen</a></li>
+                        <li><a href="#departamentos">Departamentos</a></li>
+                    </ul>
+                    <div id="tendencia">
+                        <div id="chart_1" class="chart"></div>
+                        <div id="chart_t_s">
+                            <div class="left" id="chart_total">
+                                <div class="ec ct">
+                                    <div class="total_n" id="chart_total_v"></div>
+                                    <div class="total_t">total violencia</div>
+                                </div>
+                                <div class="dn ct">
+                                    <div class="total_n" id="chart_total_d"></div>
+                                    <div class="total_t">total desastres</div>
+                                </div>
                             </div>
-                            <div class="dn ct">
-                                <div class="total_n" id="chart_total_d"></div>
-                                <div class="total_t">total desastres</div>
+                            <div class="left ec" id="chart_subtotal">
+                                <div>
+                                    <div class="left">
+                                        <div class="subtotal_n" id="civiles"></div>
+                                        <div class="subtotal_t">civiles</div>
+                                    </div>
+                                    <div class="left">
+                                        <div class="subtotal_n" id="afros"></div>
+                                        <div class="subtotal_t">afro </br>colombianos</div>
+                                    </div>
+                                    <div class="left">
+                                        <div class="subtotal_n" id="indigenas"></div>
+                                        <div class="subtotal_t">indígenas</div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
+                                <div>
+                                    <div class="left">
+                                        <div class="subtotal_n" id="mujeres"></div>
+                                        <div class="subtotal_t">mujeres</div>
+                                    </div>
+                                    <div class="left">
+                                        <div class="subtotal_n" id="hombres"></div>
+                                        <div class="subtotal_t">hombres</div>
+                                    </div>
+                                    <div class="left">
+                                        <div class="subtotal_n" id="menores"></div>
+                                        <div class="subtotal_t">niños</div>
+                                    </div>
+                                    <div class="clear"></div>
+                                </div>
                             </div>
+                            <div class="clear"></div>
                         </div>
-                        <div class="left ec" id="chart_subtotal">
-                            <div>
-                                <div class="left">
-                                    <div class="subtotal_n" id="civiles"></div>
-                                    <div class="subtotal_t">civiles</div>
-                                </div>
-                                <div class="left">
-                                    <div class="subtotal_n" id="afros"></div>
-                                    <div class="subtotal_t">afro </br>colombianos</div>
-                                </div>
-                                <div class="left">
-                                    <div class="subtotal_n" id="indigenas"></div>
-                                    <div class="subtotal_t">indígenas</div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
-                            <div>
-                                <div class="left">
-                                    <div class="subtotal_n" id="mujeres"></div>
-                                    <div class="subtotal_t">mujeres</div>
-                                </div>
-                                <div class="left">
-                                    <div class="subtotal_n" id="hombres"></div>
-                                    <div class="subtotal_t">hombres</div>
-                                </div>
-                                <div class="left">
-                                    <div class="subtotal_n" id="menores"></div>
-                                    <div class="subtotal_t">niños</div>
-                                </div>
-                                <div class="clear"></div>
-                            </div>
+                        <div id="charts_pie">
+                            <div class="ec"><h2>Violencia Armada</h2></div>
+                            <div id="chart_2" class="chart "></div>
+                            <div id="chart_3" class="chart "></div>
+                            <div id="chart_4" class="chart hide"></div>
+                            <div id="chart_5" class="chart hide"></div>
                         </div>
-                        <div class="clear"></div>
                     </div>
-                    <div id="charts_pie">
-                        <div class="ec"><h2>Violencia Armada</h2></div>
-                        <div id="chart_2" class="chart "></div>
-                        <div id="chart_3" class="chart "></div>
-                        <div id="chart_4" class="chart hide"></div>
-                        <div id="chart_5" class="chart hide"></div>
+                    <div id="resumen">
+                        <div class="div_table_totalxd">
+                            <div id="resumen_ec" class="hide">
+                                <div id="resumen_total_ec" class="ec resumen_total">
+                                    <div id="resumen_total_ec_num" class="num"></div>
+                                    <div class="cat bold">Total de
+                                        <span class="data_title">
+                                            Personas afectadas
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="hide resumen_row">
+                                    <div class="cat_color hide">&nbsp;</div>
+                                    <div class="num"></div>
+                                    <div class="cat"></div>
+                                </div>
+                            </div>
+                            <div id="resumen_dn" class="hide">
+                                <div id="resumen_total_dn" class="dn resumen_total">
+                                    <div id="resumen_total_dn_num" class="num"></div>
+                                    <div class="cat">Total de
+                                        <span class="data_title">
+                                            Personas afectadas
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="hide resumen_row">
+                                    <div class="num"></div>
+                                    <div class="cat"></div>
+                                </div>
+                            </div>
+                            <div class="clear"></div>
+                        </div>
                     </div>
-                  </div>
-                  <div id="resumen">
-                    <div class="div_table_totalxd">
-                        <div id="resumen_ec" class="hide">
-                            <div id="resumen_total_ec" class="ec resumen_total">
-                                <div id="resumen_total_ec_num" class="num"></div>
-                                <div class="cat bold">Total de
-                                    <span class="data_title">
-                                        Personas afectadas
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="hide resumen_row">
-                                <div class="cat_color hide">&nbsp;</div>
-                                <div class="num"></div>
-                                <div class="cat"></div>
-                            </div>
+                    <div id="departamentos">
+                        <div id="div_table_totalxd" class="div_table_totalxd">
+                            <table id="table_totalxd">
+                                <thead>
+                                    <tr>
+                                        <!--<th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th>-->
+                                        <th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                </tbody>
+                            </table>
                         </div>
-                        <div id="resumen_dn" class="hide">
-                            <div id="resumen_total_dn" class="dn resumen_total">
-                                <div id="resumen_total_dn_num" class="num"></div>
-                                <div class="cat">Total de
-                                    <span class="data_title">
-                                        Personas afectadas
-                                    </span>
-                                </div>
-                            </div>
-                            <div class="hide resumen_row">
-                                <div class="num"></div>
-                                <div class="cat"></div>
-                            </div>
-                        </div>
-                        <div class="clear"></div>
-                  </div>
-              </div>
-              <div id="departamentos">
-                <div id="div_table_totalxd" class="div_table_totalxd">
-                    <table id="table_totalxd">
-                        <thead>
-                            <tr>
-                                <!--<th><input type="checkbox" id="totalxd_all_chk" value="0" checked></th>-->
-                                <th class="d"></th><th class="ec">Violencia</th><th class="dn">Desastres</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        </tbody>
-                    </table>
+                    </div>
                 </div>
-              </div>
+                <!-- /Tabs -->
+                
+                <!-- Tabla variacion -->
+                <div id="variacion_data" class="hide">
+                </div>
+                <!-- /Tabla variacion -->
+            </div>
+            <!--/ Data right -->
+            
             <div class="clear"></div>
             </div>
         </div>
         <div class="clear"></div>
     </div>
-    <div id="footer">
-    </div>
+    <div id="footer"></div>
+
     <?php
     if ($dev) { ?>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
@@ -798,6 +811,7 @@ function filesize_formatted($path)
         <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/map_ol3.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.dataTables.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script>
         <!--<script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>-->
     <?php

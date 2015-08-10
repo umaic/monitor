@@ -1508,7 +1508,23 @@ variacion = function() {
             url: 'variacion/' + p1_ini + '|' + p1_fin + '/' + p2_ini + '|' + p2_fin + '/' + ecdn + '/' + _cats + '/' + _states,
             success: function(data) {
                 $('#loading').hide();
-                addLayerVariacion(data);
+                addLayerVariacion(data.values);
+                
+                var $vd = $('#variacion_data');
+
+                $vd.html(data.html);
+                $vd.find('table').DataTable({
+                 "order": [[ 2, 'desc']]   ,
+                 "pageLength": 30,
+                 "scrollY": "400px",
+                 "lengthChange" : false,
+                 "language": {
+                     "search": "Buscar municipio:"
+                 }
+                });
+                $vd.show();
+
+                $('#tabs').hide();
             }
         });
 }

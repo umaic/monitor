@@ -350,7 +350,7 @@ class MonitorController {
                     //$states = explode(',', $states);
                 }
 
-                $sql_cities = "SELECT id,divipola FROM city";
+                $sql_cities = "SELECT id,divipola,city FROM city";
                 $_rs = $this->db->open($sql_cities);
                 while($_row = $this->db->FO($_rs)) {
 
@@ -371,25 +371,36 @@ class MonitorController {
                     
                     //echo $_sql;
 
-                    $r[$_row->divipola][$p12] = $num;
+                    $r[$_row->divipola.'|'.$_row->city][$p12] = number_format($num,2);
                 }
             }
 
             // Calcula variacion
-            foreach($r as $divipola => $v) {
+            $html = '<table class="display"><thead><tr><th>Divipola</th><th>Municipio</th><th>Variación</th><th>Per. 1</th><th>Per. 2</th></tr></thead><tbody>';
+            foreach($r as $mun => $v) {
+
+                list($divipola,$name) = explode('|', $mun);
+
+                $p1 = $v[0];
+                $p2 = $v[1];
+
                 //echo "$div - ".$v[0]." <br />";
-                if ($v[0] > 0) {
-                    $values[$divipola] = (($v[1] - $v[0]) / $v[0]) * 100;
+                if ($p1 > 0) {
+                    $val = (($p2 - $p1) / $p1) * 100;
+                    $values[$divipola] = $val;
+                    $html .= "<tr><td>$divipola</td><td>$name</td><td>$val</td><td>$p1</td><td>$p2</td></tr>";
                 } 
             }
 
-            file_put_contents($temporal,json_encode($values));
+            $html .= '</tbody></table>';
+
+            file_put_contents($temporal,json_encode(compact('values','html')));
 
         }
         else {
-            $values = json_decode(file_get_contents($temporal),true);
+            extract(json_decode(file_get_contents($temporal),true));
         }
-        
+
         $topojson = json_decode(file_get_contents('data/mpios_topo.json'), true);
 
         $geometries = $topojson['objects']['mpios_geonode']['geometries'];
@@ -410,9 +421,9 @@ class MonitorController {
         file_put_contents('static/variacion-topo.json',json_encode($topojson));
 
         // Serie de datos para Jenks
-        $json = json_encode(array_values(array_unique($values)));
+        $values = array_values(array_unique($values));
 
-        return $json;
+        return json_encode(compact('values','html'));
 
     }
     
