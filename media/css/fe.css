@@ -1009,6 +1009,19 @@ div#mase {
     background-color: #fff;
     padding: 10px;
 }
+#variacion_data input[type="search"] {
+    border: 1px solid #cccccc;
+    width: 150px;
+}
+
+/* Overwrite DataTables CSS */
+.dataTables_filter {
+    float: none !important;
+    text-align: left !important;
+}
+.dataTables_filter i {
+    margin-left: 20px;
+}
 
 /* Generales */
 .ec {

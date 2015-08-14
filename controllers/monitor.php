@@ -343,14 +343,13 @@ class MonitorController {
 
                 $_sqli .= $_ss;
 
-                $cond_states = false;
-                if (!empty($states)) {
-                    $cond_states = true;
-                    $cond_csv = $cond_tmp." AND l.state_id IN ($states)";
-                    //$states = explode(',', $states);
-                }
 
                 $sql_cities = "SELECT id,divipola,city FROM city";
+                
+                if (!empty($states)) {
+                    $sql_cities .= " WHERE state_id IN ($states)";
+                }
+
                 $_rs = $this->db->open($sql_cities);
                 while($_row = $this->db->FO($_rs)) {
 
@@ -371,12 +370,20 @@ class MonitorController {
                     
                     //echo $_sql;
 
-                    $r[$_row->divipola.'|'.$_row->city][$p12] = number_format($num,2);
+                    $r[$_row->divipola.'|'.$_row->city][$p12] = $num;
                 }
             }
 
             // Calcula variacion
-            $html = '<table class="display"><thead><tr><th>Divipola</th><th>Municipio</th><th>Variación</th><th>Per. 1</th><th>Per. 2</th></tr></thead><tbody>';
+            $headers = array('Divipola','Municipio','Variación','P1','P2');
+            $html = '<table class="display"><thead><tr>';
+            $csv = implode('~',$headers)."\n";
+
+            foreach($headers as $h) {
+                $html .= "<th>$h</th>"; 
+            }
+            $html .= '</tr></thead><tbody>';
+            
             foreach($r as $mun => $v) {
 
                 list($divipola,$name) = explode('|', $mun);
@@ -386,15 +393,23 @@ class MonitorController {
 
                 //echo "$div - ".$v[0]." <br />";
                 if ($p1 > 0) {
+
                     $val = (($p2 - $p1) / $p1) * 100;
-                    $values[$divipola] = $val;
-                    $html .= "<tr><td>$divipola</td><td>$name</td><td>$val</td><td>$p1</td><td>$p2</td></tr>";
+                    
+                    $values[$divipola] = 1*number_format($val,2,".","");
+                    $p1s[$divipola] = number_format($p1,2,".","");
+                    $p2s[$divipola] = number_format($p2,2,".","");
+                    
+                    $val_html = number_format($val,2);
+
+                    $html .= "<tr><td>$divipola</td><td>$name</td><td>$val_html%</td><td>$p1</td><td>$p2</td></tr>";
+                    $csv .= "$divipola~$name~$val~$p1~$p2\n";
                 } 
             }
 
             $html .= '</tbody></table>';
 
-            file_put_contents($temporal,json_encode(compact('values','html')));
+            file_put_contents($temporal,json_encode(compact('values','p1s','p2s','html','csv')));
 
         }
         else {
@@ -405,12 +420,14 @@ class MonitorController {
 
         $geometries = $topojson['objects']['mpios_geonode']['geometries'];
 
-        // Agrega propiedad a la capa topoJSON
+        // Agrega propiedad variacion a la capa topoJSON
         foreach($geometries as $g => $geom) {
             $divipola = $geom['id'];
             
             if (isset($values[$divipola])) {
                 $geom['properties']['variacion'] = $values[$divipola];
+                $geom['properties']['p1'] = $p1s[$divipola];
+                $geom['properties']['p2'] = $p2s[$divipola];
             }
 
             $geometries[$g] = $geom;
@@ -419,8 +436,16 @@ class MonitorController {
         $topojson['objects']['mpios_geonode']['geometries'] = $geometries;
 
         file_put_contents('static/variacion-topo.json',json_encode($topojson));
+        
+        // Excel file
+        $nom = 'monitor-variacion';
+        $csv_path = $this->config['cache_reportes']."/$nom.csv";
+        $xls_path = $this->config['cache_reportes']."/$nom.xls";
 
-        // Serie de datos para Jenks
+        file_put_contents($csv_path,$csv);
+        $this->export('xls',$nom, $xls_path ,'static');
+            
+            // Serie de datos para Jenks
         $values = array_values(array_unique($values));
 
         return json_encode(compact('values','html'));

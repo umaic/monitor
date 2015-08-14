@@ -14,6 +14,7 @@ if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fa/css/font-awesome.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery.dataTables.min.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/popover.css" />
 <?php
 }
 else { ?>
@@ -595,7 +596,9 @@ function filesize_formatted($path)
         </div>
         <!-- Variación :: FIN-->
         
-        <div id="map" class="map_monitor left"></div>
+        <div id="map" class="map_monitor left">
+            <div id="popup"></div>
+        </div>
         <div id="featured" class="hide">
             <div><b>Eventos destacados por:</b></div>
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
@@ -673,9 +676,9 @@ function filesize_formatted($path)
             </div>
             <!-- Data right -->
             <div id="data">
-                <div id="minmax_total" class="minimize"></div>
                 <!-- Tabs -->
                 <div id="tabs">
+                    <div id="minmax_total" class="minimize"></div>
                     <ul>
                         <li><a href="#tendencia">Tendencia</a></li>
                         <li><a href="#resumen">Resumen</a></li>
@@ -812,6 +815,8 @@ function filesize_formatted($path)
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/map_ol3.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/tooltip.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/popover.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script>
         <!--<script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>-->
     <?php

@@ -1520,11 +1520,24 @@ variacion = function() {
                  "lengthChange" : false,
                  "language": {
                      "search": "Buscar municipio:"
-                 }
+                 },
+                 "columnDefs": [
+                    {
+                        "targets": [ 0 ],
+                        "visible": false,
+                    },
+                ]
                 });
+                
                 $vd.show();
 
                 $('#tabs').hide();
+
+                var $filter = $('#DataTables_Table_0_filter');
+
+                $filter.html($filter.html() + 
+                        '<i class="fa fa-download"></i> <a href="z/monitor-variacion.xls">Excel</a>');
+                 
             }
         });
 }
@@ -1549,9 +1562,8 @@ function addLayerVariacion(dataJson) {
     var a = serie7.getClassJenks(5);
 
     var ranges = serie7.ranges;
-    console.log(ranges);
 
-    var color_x  = new Array('#e2dee6', '#c2abdd', '#9d87b6', '#735a8f', '#3d2e4e');
+    var color_x  = new Array('#36B446', '#F0E62C', '#E59322', '#EF3326', '#700909');
 
     serie7.setColors(color_x);
                 
@@ -1594,4 +1606,38 @@ function addLayerVariacion(dataJson) {
 
     map.addLayer(ly);
 
+    var element = document.getElementById('popup');
+
+    var popup = new ol.Overlay({
+      element: element,
+      positioning: 'bottom-center',
+      stopEvent: false
+    });
+    map.addOverlay(popup);
+
+    // display popup on click
+    map.on('click', function(evt) {
+      var feature = map.forEachFeatureAtPixel(evt.pixel,
+          function(feature, layer) {
+            return feature;
+          });
+          
+        $(element).popover('destroy');
+      if (feature) {
+        var geometry = feature.getGeometry();
+        //var coord = geometry.getCoordinates();
+        var coord = geometry.getFirstCoordinate();
+        console.log(coord);
+        popup.setPosition(coord);
+        $(element).popover({
+          'placement': 'top',
+          'html': true,
+          'title': feature.get('MUNNAME'),
+          'content': '<div><b>Variación:</b> ' + feature.get('variacion') + 
+                      '% <br /><b>Periodo 1:</b> ' + feature.get('p1') + 
+                      '<br /><b>Periodo 2:</b> ' + feature.get('p2') + '</div>'
+        });
+        $(element).popover('show');
+      } 
+    });
 }
