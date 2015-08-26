@@ -91,8 +91,8 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe-ol2.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map-ol2.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/geostats.min.js"></script>
     <script type="text/javascript">
         var portal = 1;
