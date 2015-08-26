@@ -15,6 +15,7 @@ if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery.dataTables.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/popover.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/geostats.css" />
 <?php
 }
 else { ?>
@@ -537,7 +538,7 @@ function filesize_formatted($path)
         <!-- Variación -->
         <div id="variacion" class="filtro fcat" data-index="4">
             <div class="left">
-                <h2 class="dosis w">Calcular variación</h2>
+                <h2 class="dosis w">Nueva funcionalidad: Calculo de variación</h2>
             </div>
             <div class="right">
                 <a class="close" href="#" data-div="variacion"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
@@ -546,6 +547,11 @@ function filesize_formatted($path)
                 <div id="btn_variacion" class="btn">Calcular variación</div>
             </div>
             <div class="clear"></div>
+            <div class="w">
+                Esta nueva funcionalidad le permite realizar análisis temporal através de la comparación del <b>NUMERO DE EVENTOS</b>
+                en 2 periodos de tiempo. Obtendrá una visualización rápida de si existe un aumento o una disminución
+                de valores. Recuerde seleccionar las categorias correspondientes<br />&nbsp;
+            </div>
             <div class="clear"></div>
             <div>
                 <fieldset class="left">
@@ -553,7 +559,7 @@ function filesize_formatted($path)
                         <div>
                         <div class="radio">
                             <input type="radio" value="v" name="variacion_v_d" checked />
-                            <label for="acumulado">Violencia Armada</label>
+                            <label for="acumulado">Violencia armada</label>
                         </div>
                         <div class="radio">
                             <input type="radio" value="d" name="variacion_v_d" />
@@ -602,7 +608,8 @@ function filesize_formatted($path)
         <div id="featured" class="hide">
             <div><b>Eventos destacados por:</b></div>
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
-             
+        </div>
+        <div id="variacion_legend">
         </div>
         <div id="submenu">
             <div id="mapa_tipo" class="left">
@@ -812,13 +819,14 @@ function filesize_formatted($path)
         <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/map_ol3.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/tooltip.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/popover.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script>
-        <!--<script type="text/javascript" src="<?php echo BASE ?>media/js/openlayers/OpenLayers.min.js"></script>-->
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/focus-element-overlay.js"></script>
+
     <?php
     }
     else {

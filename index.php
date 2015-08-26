@@ -66,8 +66,8 @@ if (!empty($mod)) {
                 $fin = $_GET['fin'];
             }
 
-            $cats = (empty($_GET['c'])) ? array() : $_GET['c'];
-            $states = (empty($_GET['states'])) ? array() : $_GET['states'];
+            $cats = (empty($_GET['c'])) ? '' : $_GET['c'];
+            $states = (empty($_GET['states'])) ? '' : $_GET['states'];
             //$afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
 
             $totalxd = $mc->totalxd($ini, $fin, $cats, $states);
@@ -153,8 +153,6 @@ if (!empty($mod)) {
             $cats = (empty($_GET['c'])) ? array() : $_GET['c'];
             $states = (empty($_GET['states'])) ? array() : $_GET['states'];
 
-            //$afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
-            
             header('Content-type: text/json');
             header('Content-type: application/json'); 
 

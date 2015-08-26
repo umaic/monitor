@@ -14,27 +14,8 @@ var ocultar = '';
 var cp_ecs = {};
 var titulo;
 var totales_ini = true;
-var id_start_date = 'ini_date';
-var id_end_date = 'fin_date';
 
 $(function(){
-
-    // Promocionar variacion
-    
-
-    // Resalta funcionalidad
-    var options = {
-        fadeDuration: 700,
-        hideOnClick: true,
-        hideOnESC: true,
-        findOnResize: true
-    };
-    
-    setTimeout(function(){$('li[data-div="variacion"]').click(); Focusable.setFocus($('div#variacion'), options) }, 1000);
-    
-    setTimeout(function(){ Focusable.hide(); $('div#variacion').hide(); }, 10000);
-    
-    // /Promocionar variacion
 
     _today = new Date();
     _year = _today.getFullYear();
@@ -62,8 +43,8 @@ $(function(){
     var _fin = new Date(_year,_month,_day,11,59).getTime();
 
     // Para ushahidi va en segundos
-    $('#' + id_start_date).val(_ini/1000);
-    $('#' + id_end_date).val(_fin/1000);
+    $('#startDate').val(_ini/1000);
+    $('#endDate').val(_fin/1000);
 
     markIniFin(_iniD,_iniM,_iniY,_day,_month,_year);
 
@@ -302,26 +283,6 @@ $(function(){
                 totales_inicio = false;
             } 
         });
-        
-        // Variacion
-        $('#btn_variacion').click(function() {
-            
-            /*
-            if ($('#variacion_p1_ini_text').val() == '' || $('#variacion_p1_fin_text').val() == ''
-                || $('#variacion_p2_ini_text').val() == '' || $('#variacion_p2_fin_text').val() == ''   
-                    ) {
-
-                alert('Todas las fechas son obligatorias');
-
-                return false;
-            } 
-            */
-
-            variacion();
-            
-            $(this).closest('.filtro').hide();
-
-        });
     }
     
     // Tipo de mapa
@@ -454,10 +415,8 @@ $(function(){
     
         // Fecha inicio - Fecha fin
         $('.fecha').click(function (){
-            var div = $(this).data('div');
-
-            $('div.filtro_fecha:not(#' + div + ')').hide();
-            $('#' + div).slideToggle();
+            $('div.filtro_fecha:not(#' + $(this).attr('dv') + ')').hide();
+            $('#' + $(this).attr('dv')).slideToggle();
         });
     
         $('div.filtro_fecha').each(function() {
@@ -468,22 +427,20 @@ $(function(){
                 
                 $(this).closest('div').find('li').removeClass('selected');
                 $(this).addClass('selected');
-                
-                var q = $(this).data('q');
+                var q = $(this).attr('q');
+                var y = $(this).attr('y');
+
+                var $input = $('#' + $(this).attr('q') + '_text');
                 var $div = $('#' + q + '_div');
+
                 
                 if ($div.find('li.selected').length == 3) {
-                
-                    var $div_ini = $(this).closest('fieldset').find('div.filtro_fecha[data-if="ini"]');
-                    var $div_fin = $(this).closest('fieldset').find('div.filtro_fecha[data-if="fin"]');
-
-                    var $input = $('#' + q + '_text');
 
                     var _ini = new
-                    Date($div_ini.find('ul.yyyy > li.selected').data('val'),$div_ini.find('ul.mes > li.selected').data('val')-1,$div_ini.find('ul.dia > li.selected').data('val'),23,59).getTime();
+                    Date($('li.selected[q=ini][y=yyyy]').attr('val'),$('li.selected[q=ini][y=mes]').attr('val')-1,$('li.selected[q=ini][y=dia]').attr('val'),23,59).getTime();
 
                     var _fin = new
-                    Date($div_fin.find('ul.yyyy > li.selected').data('val'),$div_fin.find('ul.mes > li.selected').data('val')-1,$div_fin.find('ul.dia > li.selected').data('val'),23,59).getTime();
+                    Date($('li.selected[q=fin][y=yyyy]').attr('val'),$('li.selected[q=fin][y=mes]').attr('val')-1,$('li.selected[q=fin][y=dia]').attr('val'),23,59).getTime();
                     
                     if (_ini > _fin) {
                         alert('Desde debe ser menor que Hasta');
@@ -492,11 +449,14 @@ $(function(){
                         //$('stime').val(0);
                     }
                     else {
-                        $input.val($div.find('ul.dia > li.selected').text() + ' de ' +
-                        $div.find('ul.mes > li.selected').text() + ' ' + $div.find('ul.yyyy > li.selected').text());
+                    
+                        $input.val($('li.selected[q='+q+'][y=dia]').text() + ' de ' +
+                        $('li.selected[q='+q+'][y=mes]').text()+' '+ $('li.selected[q='+q+'][y=yyyy]').text());
                         
-                        $div_ini.find('input:hidden').val(_ini / 1000);
-                        $div_fin.find('input:hidden').val(_fin / 1000);
+                        $('#startDate').val(_ini / 1000);
+                        
+                        $('#endDate').val(_fin / 1000);
+
                         //$('#stime').val(0);
                     }
                 }
@@ -613,29 +573,24 @@ function ocultarViolenciaDesastres(cs) {
     var v_chart_serie;
 
     if (cs == 'ec') {
-        ly = l_ec;
+        var ly = map.getLayersByName('Emergencia Compleja')[0];
 
         $r_hide = $('#resumen_ec');
         $r_show = $('#resumen_dn');
-
     }
     else {
-        
-        ly = l_dn;
+        var ly = map.getLayersByName('Desastres Naturales')[0];
         
         $r_hide = $('#resumen_dn');
         $r_show = $('#resumen_ec');
 
         //$eventos_desastres = $('#report_list_map_desastres');
         
-        
     }
-
-    var $btn = $('div[data-s="' + cs + '"]');
     
-    if (ly.getVisible()) {
-        $btn.html('Mostrar eventos'); 
-        ly.setVisible(false);
+    if (ly.getVisibility()) {
+        $(this).html('Mostrar eventos'); 
+        ly.setVisibility(false);
         v_chart_serie = false;
 
         $r_hide.hide();
@@ -645,8 +600,8 @@ function ocultarViolenciaDesastres(cs) {
         ocultar = cs;
     }
     else {
-        $btn.html('Ocultar eventos'); 
-        ly.setVisible(true);
+        $(this).html('Ocultar eventos'); 
+        ly.setVisibility(true);
         v_chart_serie = true;
         
         $r_hide.show();
@@ -656,7 +611,8 @@ function ocultarViolenciaDesastres(cs) {
         ocultar = '';
     }
 
-    l_ft.setVisible(!l_ft.getVisible());
+    var ly_ft = map.getLayersByName('Destacados')[0];
+    ly_ft.setVisibility(!ly_ft.getVisibility());
     
     $('#chart_1').highcharts().get(cs).setVisible(v_chart_serie,true); 
     
@@ -712,8 +668,8 @@ function applyPeriod(val) {
         }
 
         //$('#dslider').dateRangeSlider('values', _ini,_fin);
-        $('#' + id_start_date).val(_ini/1000); // Segundos para ushahidi
-        $('#' + id_end_date).val(_fin/1000); // Segundos para ushahidi
+        $('#startDate').val(_ini/1000); // Segundos para ushahidi
+        $('#endDate').val(_fin/1000); // Segundos para ushahidi
         
         var _iniY = _ini.getFullYear();
         var _finY = _fin.getFullYear();
@@ -1351,8 +1307,8 @@ daysToMiliseconds = function(d) {
 getStartEnd = function(c) {
     var v = [];
 
-    v['ini'] = $('#' + id_start_date).val();
-    v['fin'] = $('#' + id_end_date).val();
+    v['ini'] = $('#startDate').val();
+    v['fin'] = $('#endDate').val();
 
     return v[c];
 }
@@ -1500,158 +1456,8 @@ totalPeriodo = function(periodo, valor) {
 /* Realiza check de settings.monitor_cache_json
 */
 checkCacheJson = function() {
-    $.ajax({
-        url: 'checkCacheJson'
-    });
-}
-
-variacion = function() {
-
-    var p1_ini = $('#variacion_p1_ini_date').val();
-    var p1_fin = $('#variacion_p1_fin_date').val();
-    
-    var p2_ini = $('#variacion_p2_ini_date').val();
-    var p2_fin = $('#variacion_p2_fin_date').val();
-    
-    var ecdn = $('input[name="variacion_v_d"]:checked').val();
-
-    if (ecdn == 'v') {
-        var _cats = $('#currentCatE').val();
-    }
-    else {
-        var _cats = $("#currentCatD").val();
-    }
-
-    var _states = getStatesChecked();
-
-    $('#loading').show();
-    $.ajax({
-            url: 'variacion/' + p1_ini + '|' + p1_fin + '/' + p2_ini + '|' + p2_fin + '/' + ecdn + '/' + _cats + '/' + _states,
-            success: function(data) {
-                
-                $('#loading').hide();
-
-                addLayerVariacion(data.values);
-                
-                var $vd = $('#variacion_data');
-                var ecdn = ($('input[name="variacion_v_d"]:checked').val() == 'v') ? 'violencia armada' : 'vesastres';
-                
-                var html = '<h2 class="ac">Variación ' + ecdn + '</h2> ' +
-                           '<div class="variacion_periodo"><b>Periodo 1</b><br /> ' + 
-                            $('#variacion_p1_ini_text').val() + 
-                            ' - ' + $('#variacion_p1_fin_text').val() +
-                            '</div>' +
-                            '<div class="variacion_periodo"><b>Periodo 2</b><br /> ' + 
-                             $('#variacion_p2_ini_text').val() + 
-                             ' - ' + $('#variacion_p2_fin_text').val() +
-                             '</div>' +
-                             '<div class="clear"></div>' + 
-                             '<h2 class="ac">Datos municipales</h2><div class="ac">La variación se calcula sobre el # de eventos<br />&nbsp;</div>'
-                            ;
-
-                html += data.html;
-
-                $vd.html(html);
-
-                // Titulo variacion
-                
-                // Datatables
-                $vd.find('table').DataTable({
-                 "order": [[ 2, 'desc']]   ,
-                 "pageLength": 30,
-                 "scrollY": "400px",
-                 "lengthChange" : false,
-                 "language": {
-                     "searchPlaceholder": "Buscar municipio",
-                     "search": ""
-                 },
-                 "columnDefs": [
-                    {
-                        "targets": [ 0 ],
-                        "visible": false,
-                    },
-                ]
-                });
-                
-                var $filter = $('div.dataTables_filter');
-
-                $filter.append('<i class="fa fa-download"></i> <a href="z/monitor-variacion.xls">Descargar a excel</a>');
-                 
-            }
-        });
-}
-
-
-function addLayerVariacion(dataJson) {
-
-    /****** Temporal desarrollo
-     console.log($('#variacion_p1_ini_date').val());
-     console.log($('#variacion_p1_fin_date').val());
-     console.log($('#variacion_p2_ini_date').val());
-     console.log($('#variacion_p2_fin_date').val());
-
-     $('#variacion_p1_ini_date').val(1437454740);
-     $('#variacion_p1_fin_date').val(1440046740);
-     
-     $('#variacion_p2_ini_date').val(1434862740);
-     $('#variacion_p2_fin_date').val(1437454740);
-
-     variacion();
-     *////
-
-    var serie7 = new geostats(dataJson);
-    serie7.setPrecision(6);
-    //var a = serie7.getClassQuantile(5);
-    //var a = serie7.getClassEqInterval(5);
-    var a = serie7.getClassJenks(5);
-
-    var ranges = serie7.ranges;
-
-    var color_x  = new Array('#36B446', '#F0E62C', '#E59322', '#EF3326', '#700909');
-
-    serie7.setColors(color_x);
-                
-    var class_x = ranges;
-    
-    serie7.setPrecision(2);
-    serie7.legendSeparator = ' ⇔ ';
-    
-    var content = serie7.getHtmlLegend(null, 'Variación %');
-    $('#variacion_legend').html(content + '<p>Mapa: puede consultar la información de un municipio haciendo click sobre él</p>');
-    
-    if (!layer_variacion_exists) {
-
-        l_variacion = new ol.layer.Vector({
-            source: new ol.source.Vector({
-                url: 'static/variacion-topo.json',
-                format: new ol.format.TopoJSON()
-            }),
-            style: function(feature, resolution) {
-
-                if (feature.get('variacion') !== undefined) {
-                    styleObj = {
-                        fill: new ol.style.Fill({color: color_x[serie7.getClass(feature.get('variacion'))]}),
-                        stroke: new ol.style.Stroke({color: 'gray', width: 1})
-                    }
-                }
-                else {
-                    styleObj = {
-                        stroke: new ol.style.Stroke({color: 'gray', width: 1})
-                    }
-                }
-                return [new ol.style.Style(styleObj)]
-              }
-        });
-        
-        map.addLayer(l_variacion);
-        
-        layer_variacion_exists = true;
-    }
-    else {
-        l_variacion.getSource().changed();
-    }
-
-    showHideLayers('variacion');
-    
+$.ajax({
+    url: 'checkCacheJson'
+});
 
 }

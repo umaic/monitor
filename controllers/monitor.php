@@ -274,16 +274,21 @@ class MonitorController {
      */ 
     public function variacion($periodo_1, $periodo_2, $ecdn, $cats, $states='') {
         
-        $afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+        //$afectacion = ($_SESSION['mapa_tipo'] == 'afectacion') ? true : false;
+        // Variacion solo para # eventos
+        $afectacion = false;
         $acceso = ($_SESSION['acceso'] == 1) ? true : false;
         $violencia = ($ecdn == 'v') ? true : false;
-        $temporal = 'static/variacion_desarrollo.json';
+        $usar_temporal = true;
         
+        $n = md5($periodo_1.'-'.$periodo_2.'-'.$ecdn.'-'.$cats.'-'.$states);
+
+        $path2file = $this->config['cache_json']['path'].'/'.$n;
 
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
 
-        if (!file_exists($temporal)) {
+        if (!$usar_temporal && !file_exists($path2file)) {
             $p1 = explode('|', $periodo_1);
             $p2 = explode('|', $periodo_2);
 
@@ -343,6 +348,7 @@ class MonitorController {
 
                 $_sqli .= $_ss;
 
+                //echo $_sqli;
 
                 $sql_cities = "SELECT id,divipola,city FROM city";
                 
@@ -409,11 +415,11 @@ class MonitorController {
 
             $html .= '</tbody></table>';
 
-            file_put_contents($temporal,json_encode(compact('values','p1s','p2s','html','csv')));
+            file_put_contents($path2file,json_encode(compact('values','p1s','p2s','html','csv')));
 
         }
         else {
-            extract(json_decode(file_get_contents($temporal),true));
+            extract(json_decode(file_get_contents($path2file),true));
         }
 
         $topojson = json_decode(file_get_contents('data/mpios_topo.json'), true);
@@ -1661,6 +1667,7 @@ class MonitorController {
         $url = $url_base.http_build_query($qs);
         
         $file = $url_base.http_build_query($qs);
+
         $n = md5(str_replace('/','-',$file));
         $path2file = $this->config['cache_json']['path'].'/'.$n;
 

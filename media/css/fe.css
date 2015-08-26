@@ -205,6 +205,10 @@ div.tecdn div {
     background-color: #4E4E4E;
     padding: 5px;
 }
+#descargar .radio,
+#variacion .radio {
+    padding: 5px;
+}
 #variacion .step {
     background-color: #312A2A;
     padding: 10px;
@@ -212,9 +216,6 @@ div.tecdn div {
     width: 200px;
     height: 340px;
     border-right: 1px solid #564F4F;
-}
-.fcat .radio {
-    padding: 5px;
 }
 
 .fcat a {
@@ -713,8 +714,13 @@ div.filtro_fecha .close {
 #variacion fieldset {
     border: 1px solid #cccccc;
     margin-right: 10px;
-    height: 300px;
     width: 180px;
+}    
+#ini_fin fieldset {
+    height: 300px;
+}    
+#variacion fieldset {
+    height: 200px;
 }    
 #ini_fin fieldset > div:not(.r) {
     height: 270px;
@@ -771,6 +777,10 @@ div.filtro_fecha ul li.selected {
 }
 #totalxd_y {
     font-size: 28px;
+}
+#totalxd h2 {
+    margin: 0;
+    text-align: center;
 }
 
 #resumen_ec ,
@@ -1012,6 +1022,38 @@ div#mase {
 #variacion_data input[type="search"] {
     border: 1px solid #cccccc;
     width: 150px;
+}
+
+#variacion_data .ac {
+    text-align: center;
+}
+#variacion_data .variacion_periodo {
+    background-color: #f1f1f1;
+    margin: 5px;
+    text-align: center;
+    float: left;
+    width: 40%;
+    padding: 10px;
+}
+
+#variacion_legend {
+    right: 370px;
+    padding: 10px;
+    font-size: 12px;
+    border-radius: 3px;
+    background-color: #f1f1f1;
+    top: 200px !important;
+    position: absolute;
+    display: none;
+    width: 180px;
+    border: 1px solid #cccccc;
+}
+
+#variacion_legend p {
+    border-top: 1px dotted #ccc;
+    color: #555;
+    text-align: justify;
+    padding: 5px 0;
 }
 
 /* Overwrite DataTables CSS */

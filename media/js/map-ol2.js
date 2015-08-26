@@ -4,7 +4,7 @@ var fromProjection;
 var toProjection;
 var features_ec;
 var features_dn;
-var markerRadius = 10;
+var markerRadius = 7;
 var Style;
 var mtipo;
 var clear = true;
@@ -17,15 +17,6 @@ var id_tema = id_org = 0;
 var maximo = 0; // Maximo count en cluster
 var jenks = [];
 var jenks_cl = 5; // Estratos
-var zoom = 6;
-var layer_dn_exists = false;
-var layer_ec_exists = false;
-var layer_ft_exists = false;
-var layer_variacion_exists = false;
-var l_dn;
-var l_ec;
-var l_ft;
-var l_variacion;
 
 if (window.location.hostname == 'monitor.local') {
     var subdomain_dn = 'desastres';
@@ -64,52 +55,40 @@ var resolutions= [
                   2445.9849047851562, 1222.9924523925781,
                   611.4962261962891, 305.74811309814453, 152.87405654907226,
                   76.43702827453613, 38.218514137268066, 19.109257068634033,
+                  9.554628534317017, 4.777314267158508, 2.388657133579254,
                  ];
+
+
+/*
+    var ly = new OpenLayers.Layer.OSM("Openstreetmap","",
+           {
+                zoomOffset: _zoomOffset,
+                resolutions: [
+                                //156543.03390625, 78271.516953125,
+                                //39135.7584765625, 19567.87923828125, 9783.939619140625,
+                              //4891.9698095703125,
+                              2445.9849047851562, 1222.9924523925781,
+                              611.4962261962891, 305.74811309814453, 152.87405654907226,
+                              76.43702827453613, 38.218514137268066, 19.109257068634033,
+                              9.554628534317017, 4.777314267158508, 2.388657133579254,
+                             ]
+            });
+*/
 
 var show = [];
 show['desc'] = false; // Descripcion del evento de sidih
 show['fuente'] = true;
 
-
-function getLayerByName(n) {
-
-    var lys = [];
-
-    map.getLayers().forEach(function(layer, i){ 
-        if (layer.get('title') == n) {
-            lys = [layer];
-        }
-    });
-
-    return lys;
-}
-
 function addWMSLayer(n,l,v) {
     
     var u = 'http://geonode.salahumanitaria.co/geoserver/wms';
+        
+    if (map.getLayersByName(n).length > 0) {
+        var ly = map.getLayersByName(n)[0];
 
-    var lys = getLayerByName(n);
-    
-    if (lys.length > 0) {
-        var ly = lys[0];
-
-        ly.setVisible(v);
+        ly.setVisibility(v);
     }
     else {
-
-        var source = new ol.source.TileWMS({
-                    url: u,
-                    params: {'LAYERS': l, 'TILED': true, 'TRANSPARENT': true},
-                    serverType: 'geoserver',
-                });
-
-        
-        ly = new ol.layer.Tile({
-                title: n,
-                source: source,
-        });
-
-        /*
         ly = new OpenLayers.Layer.WMS(n, 
                                   u,
                                   {
@@ -122,20 +101,18 @@ function addWMSLayer(n,l,v) {
                                     singleTile: true
                                   }
                               );
-        */
 
         var $lo = $('#layers_loading');
 
-        source.on('tileloadstart', function(event) {
+        ly.events.register("loadstart", ly, function() {
             $lo.show();
         });
-
-        source.on('tileloadend', function(event) {
+        
+        ly.events.register("loadend", ly, function() {
             $lo.hide();
         });
 
         map.addLayer(ly);
-        
     }
 }
 
@@ -150,104 +127,61 @@ function resetMap() {
 
 function mapRender() {
    
-    var view = new ol.View({
-        center: ol.proj.transform(
-                        [-72.963384, 3.370786], 'EPSG:4326', 'EPSG:3857'),
-        zoom: 0,
-        resolutions: resolutions,
-        //extent: [-8599122, -471155, -7441396, 1505171]
-
-    });
-
-    map = new ol.Map({
-        layers: [
-            new ol.layer.Tile({
-                title: 'OSM',
-                source: new ol.source.OSM()
-            }),
-        ],
-        target: document.getElementById('map'),
-        controls: ol.control.defaults({
-            attributionOptions: /** @type {olx.control.AttributionOptions} */ ({
-                collapsible: false
-            })
-        }),
-        view: view
-    });
-
+    // Portal
+    if (is_portal) {
+        _zoomOffset = 5;
+        var r1 = [4891.9698095703125];
+        resolutions = r1.concat(resolutions);
+    }
     
-    var styleVariacion = [new ol.style.Style({
-        fill: new ol.style.Fill({
-            color: 'rgba(255, 255, 255, 0.6)'
-        }),
-        stroke: new ol.style.Stroke({
-            color: '#319FD3',
-            width: 1
-        })
-    })];
+    fromProjection = new OpenLayers.Projection('EPSG:4326'); // World Geodetic System 1984 projection (lon/lat) 
+    toProjection = new OpenLayers.Projection('EPSG:900913'); // WGS84 OSM/Google Mercator projection (meters) 
+    OpenLayers.ImgPath = base_ol + "/media/js/openlayers/img/";
     
-    var element = document.getElementById('popup');
-
-    var popup = new ol.Overlay({
-      element: element,
-      positioning: 'bottom-center',
-      stopEvent: false
-    });
-    map.addOverlay(popup);
+    var maxE = new OpenLayers.Bounds(
+			-8599122, -471155, -7441396, 1505171  // Colombia con San Andrés
+    );
     
-    // Eventos
-    map.getView().on('change:resolution', mapMove);
-
-    map.on('click', function(evt) {
-        
-        var feature = map.forEachFeatureAtPixel(evt.pixel,
-                function(feature, layer) {
-                    return feature;
-                });
-
-        $(element).popover('destroy');
-        
-        if (feature !== undefined && feature.get('variacion') !== undefined) {
-            
-            var geometry = feature.getGeometry();
-            var coord = geometry.getFirstCoordinate();
-            
-            popup.setPosition(coord);
-            
-            $(element).popover({
-                'placement': 'top',
-                'html': true,
-                'title': feature.get('MUNNAME'),
-                'content': '<div><b>Variación:</b> ' + feature.get('variacion') + 
-                    '% <br /><b>Periodo 1:</b> ' + feature.get('p1') + 
-                    '<br /><b>Periodo 2:</b> ' + feature.get('p2') + '</div>'
-            });
-            
-            $(element).popover('show');
-        } 
-        else {
-            onFeatureSelect(feature.getProperties());
-        }
+    map = new OpenLayers.Map({
+        div: "map",
+        displayProjection: toProjection, 
+        theme: base_ol + '/media/js/openlayers/theme/default/style.min.css',
+        maxExtent: maxE,
+        //restrictedExtent: maxE,
+        eventListeners: {
+            "zoomend": mapMove
+        },
+        /*
+        controls: [
+            new OpenLayers.Control.PanZoomBar()
+        ]*/
     });
 
-    // change mouse cursor when over marker
-    $(map.getViewport()).on('mousemove', function(e) {
-        var pixel = map.getEventPixel(e.originalEvent);
-        var hit = map.forEachFeatureAtPixel(pixel, function(feature, layer) {
-            return true;
-        });
-
-        if (hit) {
-            map.getTarget().style.cursor = 'pointer';
-        } else {
-            map.getTarget().style.cursor = '';
-        }
-    });
-
-    // /Eventos
+    var ly = new OpenLayers.Layer.XYZ(
+            "OpenStreetMap", 
+            [
+                "http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png",
+                "http://otile2.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png",
+                "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png",
+                "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png"
+            ],
+            {
+                attribution: "Ver mas detalles en &nbsp;<img src='http://monitor.salahumanitaria.co/favicon.ico'> <a href='http://monitor.salahumanitaria.co' target='_blank'>monitor.salahumanitaria.co</a>",
+                transitionEffect: "resize",
+                zoomOffset: _zoomOffset,
+                sphericalMercator: true,
+                resolutions: resolutions
+            }
+        );
+    map.addLayer(ly);
     
+    //map.zoomTo(6);
+    map.setCenter(map.maxExtent.getCenterLonLat(), 0);
+
+    //map.zoomToMaxExtent();
+
+    defStyle();
     addFeaturesFirstTime();
-
 }
 
 function addFeaturesFirstTime() {
@@ -272,29 +206,24 @@ function addFeatures(inst) {
         url_dn = url_dn.replace('index','cluster');
     }
    
-    var start = $("#ini_date").val();
-    var end = $("#fin_date").val();
-    var zoom = map.getView().getZoom() + _zoomOffset;
+    var start = $("#startDate").val();
+    var end = $("#endDate").val();
+    var zoom = map.getZoom() + _zoomOffset;
+    var center = map.getCenter();
+
     var uparams = [['s', start], ['e', end], ['z', zoom]];
-    
+
     if (inst == 'ecdn' || inst == 'dn') {
         var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
-        var l_dn_source = new ol.source.Vector({});
-        
-        if (!layer_dn_exists) {
-            l_dn = new ol.layer.Vector({
-                title: 'Desastres Naturales',
-                style: styleFunction,
-                source: l_dn_source
-                });
-
-            map.addLayer(l_dn);
-
-            layer_dn_exists = true;
+        if (map.getLayersByName('Desastres Naturales').length > 0) {
+            l_dn = map.getLayersByName('Desastres Naturales')[0];
+            l_dn.removeFeatures(l_dn.features);
         }
         else {
-            l_dn.getSource().clear();
-            showHideLayers('dn');
+            l_dn = new OpenLayers.Layer.Vector('Desastres Naturales', 
+                { styleMap: Styles });
+
+            map.addLayer(l_dn);
         }
         
         var _udn = addURLParameter(url_dn, uparams_dn);
@@ -311,24 +240,19 @@ function addFeatures(inst) {
     if (inst == 'ecdn' || inst == 'ec') {
     
         var uparams_ec = uparams.concat([['c', $('#currentCatE').val()]]);
-        var l_ec_source = new ol.source.Vector();
-        
-        if (!layer_ec_exists) {
-            l_ec = new ol.layer.Vector({
-                title: 'Violencia',
-                source: l_ec_source,
-                style: styleFunction
-                });
 
-            map.addLayer(l_ec);
-
-            layer_ec_exists = true;
+        if (map.getLayersByName('Emergencia Compleja').length > 0) {
+            l_ec = map.getLayersByName('Emergencia Compleja')[0];
+            l_ec.removeFeatures(l_ec.features);
         }
         else {
-            l_ec.getSource().clear();
-            showHideLayers('ec');
+            l_ec = new OpenLayers.Layer.Vector('Emergencia Compleja', 
+                { styleMap: Styles 
+                });
+            //l_ec.styleMap.styles.default.defaultStyle.fillColor = '#cc0000';
+            map.addLayer(l_ec);
         }
-
+    
         var _uec = addURLParameter(url_ec, uparams_ec);
         
         // States filter
@@ -344,22 +268,16 @@ function addFeatures(inst) {
     if (inst == 'ecdn' || inst == 'ft') {
         
         var uparams_ft = uparams.concat([['v', 1]]);
-        var l_ft_source = new ol.source.Vector();
 
-        if (!layer_ft_exists) {
-            l_ft = new ol.layer.Vector({
-                title: 'Destacados',
-                source: l_ft_source,
-                style: styleFtFunction
-            });
-
-            map.addLayer(l_ft);
-
-            layer_ft_exists = true;
+        if (map.getLayersByName('Destacados').length > 0) {
+            l_ft = map.getLayersByName('Destacados')[0];
+            l_ft.removeFeatures(l_ft.features);
         }
         else {
-            l_ft.getSource().clear();
-            showHideLayers('ft');
+            l_ft = new OpenLayers.Layer.Vector('Destacados', 
+                { styleMap: Styles });
+
+            map.addLayer(l_ft);
         }
         
         var _uft_dn = addURLParameter(url_ft_dn, uparams_ft);
@@ -411,7 +329,6 @@ function addFeatures(inst) {
 
     }
 
-    /*
     selectCtrl = new OpenLayers.Control.SelectFeature([l_ec, l_dn, l_ft],
         { 
             clickout: true,
@@ -421,7 +338,6 @@ function addFeatures(inst) {
 
     map.addControl(selectCtrl);
     selectCtrl.activate();
-    */
 }
 
 /**
@@ -684,16 +600,17 @@ function onFeatureSelect(attrs) {
 }
 
 function ajaxFeatures(u, l) {
-
+    
+    var geojson = new OpenLayers.Format.GeoJSON({
+        'internalProjection': toProjection,
+        'externalProjection': fromProjection});
     $.ajax({
         url: u,
         dataType: 'jsonp',
         success: function(json){
 
             if (json.features.length > 0) {
-                    
-                var _f = (new ol.format.GeoJSON()).readFeatures(json,{ dataProjection: 'EPSG:4326',
-                                                                      featureProjection: 'EPSG:3857'});
+                var _f = geojson.read(json);
 
                 // Calcula el numero máximo de features en un cluster
                 var fts = json.features;
@@ -720,8 +637,9 @@ function ajaxFeatures(u, l) {
                     cl = (len < jenks_cl) ? len -1 : jenks_cl;
                     jenks = serie.getClassJenks(cl);
                 }
-                
-                l.getSource().addFeatures(_f);
+
+                //map.addLayer(l);
+                l.addFeatures(_f);
                 $('#loading').hide();
 	
                 // Show/Hide icono de destacados
@@ -734,7 +652,7 @@ function ajaxFeatures(u, l) {
 
 function showHideFeaturedIcon() {
     var $f = $('#featured');
-    if (layer_ft_exists){
+    if (map.getLayersByName('Destacados')[0].features.length > 0){
         $f.show();
     }
     else {
@@ -745,7 +663,7 @@ function showHideFeaturedIcon() {
 function mapMove(event)
 {
     // Prevent this event from running on the first load
-    if (mapLoad > 0 && !l_variacion.getVisible())
+    if (mapLoad > 0)
     {
         // Refresh Map
         addFeatures();
@@ -754,109 +672,229 @@ function mapMove(event)
         var _vd = true;
         var _vm = false;
 
-        if (map.getView().getZoom() >= 2) {
+        if (map.getZoom() >= 2) {
             _vd = false;
             _vm = true;
         }
     }
 }
 
+function defStyle(){
+                
+	var	style = new OpenLayers.Style({
+				'externalGraphic': "${icon}",
+				'graphicTitle': "${cluster_count}",
+                graphicWidth: 24,
+                graphicHeight: 24,
+                cursor: 'pointer',
+				pointRadius: "${radius}",
+				fillColor: "${color}",
+				fillOpacity: "${opacity}",
+				strokeColor: "${strokeColor}",
+				strokeWidth: 4,
+				strokeOpacity: "${strokeOpacity}",
+				label:"${clusterCount}",
+				title:"${clusterCount}",
+				//labelAlign: "${labelalign}", // IE doesn't like this for some reason
+				fontWeight: "${fontweight}",
+				fontColor: "${fontColor}",
+				fontSize: "${fontsize}"
+			},
+            {
+				context:
+				{
+					fontsize: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!=="")
+						{
+							return "9px";
+						}
+						else
+						{
 
-function styleFunction(feature, resolution) {
-    var size = feature.getProperties().count;
+                            return "11px";
+						}
+					},
+					fontweight: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!=="")
+						{
+							return "normal";
+						}
+						else
+						{
+							return "normal";
+						}
+					},
+					radius: function(feature)
+					{
 
-        if (String(feature.getProperties().link).indexOf(subdomain_ec) == -1) {
-            colorFill = 'rgba(44,160,44,0.6)';
-            colorStroke = 'rgba(44,160,44,0.2)';
-        }
-        else {
-            colorFill = 'rgba(204,0,0,0.6)';
-            colorStroke = 'rgba(204,0,0,0.2)';
-        }
-        
-        var r = markerRadius;
+						feature_count = feature.attributes.count;
+                        
+                        var r = markerRadius;
 
-        for (var i=1;i<jenks.length;i++) {
-            if (size <= jenks[i]) {
-                r = markerRadius * i;
-                break;
-            }
-        }
+                        for (var i=1;i<jenks.length;i++) {
+                            if (feature_count <= jenks[i]) {
+                                r = markerRadius * i;
+                                return r;
+                            }
+                        }
 
-        var textFill = new ol.style.Fill({
-            color: '#fff'
-        });
-        var textStroke = new ol.style.Stroke({
-            color: 'rgba(0, 0, 0, 0.6)',
-            width: 2
-        });
+                        return r;
+					},
+					strokeWidth: function(feature)
+					{
+						if ( typeof(feature.attributes.strokewidth) != 'undefined' && 
+							feature.attributes.strokewidth != '')
+						{
+							return feature.attributes.strokewidth;
+						}
+						else
+						{
+							feature_count = feature.attributes.count;
+							if (feature_count > 10000)
+							{
+								return 18;
+							}
+							else if (feature_count > 5000)
+							{
+								return 16;
+							}
+							else if (feature_count > 1000)
+							{
+								return 14;
+							}
+							else if (feature_count > 100)
+							{
+								return 12;
+							}
+							else if (feature_count > 10)
+							{
+								return 10;
+							}
+							else if (feature_count >= 2)
+							{
+								return 5;
+							}
+							else
+							{
+								return 1;
+							}
+						}
+					},
+					color: function(feature)
+					{
+                        // Se coloca color fijo pq json/cluster devuelve color de categoria en cada feature
+                        if (_cluster) {
+                            if (String(feature.attributes.link).indexOf(subdomain_ec) == -1) {
+                                return '#2ca02c';
+                            }
+                            else {
+                                return '#cc0000';
+                            }
+                        }
+                        else {
+                            return '#ffffff';
+                            return '#' + feature.attributes.color;
+                        }
+					},
+					strokeColor: function(feature)
+					{
+                        // Se coloca color fijo pq json/cluster devuelve color de categoria en cada feature
+                        if (_cluster) {
+                            if (String(feature.attributes.link).indexOf(subdomain_ec) == -1) {
+                                return '#2ca02c';
+                            }
+                            else {
+                                return '#cc0000';
+                            }
+                        }
+                        else {
+                            return '#' + feature.attributes.color;
+                        }
+					},
+					fontColor: function(feature)
+					{
+                        return (_cluster) ? '#ffffff' : '#000000';
+					},
+					strokeOpacity: function(feature)
+					{
+                        return (_cluster) ? '0.5' : '1';
+					},
+					clusterCount: function(feature)
+					{
+						if (feature.attributes.count > 1)
+						{
+							if($.browser.msie && $.browser.version=="6.0")
+							{ // IE6 Bug with Labels
+								return "";
+							}
+							
+							return feature.attributes.count;
+						}
+						else
+						{
+							return "1";
+						}
+					},
+					opacity: function(feature)
+					{
 
-    style = [new ol.style.Style({
-      image: new ol.style.Circle({
-        radius: r,
-        fill: new ol.style.Fill({
-          color: colorFill
-        }),
-        stroke: new ol.style.Stroke({
-            color: colorStroke,
-            width: 2
-          }),
-      }),
-      text: new ol.style.Text({
-        text: size.toString(),
-        fill: textFill,
-        stroke: textStroke
-      })
-    })];
-  return style;
-}
-
-function styleFtFunction(feature, resolution) {
-    return [new ol.style.Style({
-        image: new ol.style.Icon(({
-            src: feature.get('icon'),
-            size: [24,24]
-        }))
-    })]
-}
-
-function showHideLayers(c) {
+						feature_icon = feature.attributes.icon;
+						
+                        if (feature_icon!=="")
+						{
+							return 1;
+						}
+						else
+						{
+							return markerOpacity;
+						}
+					},
+					labelalign: function(feature)
+					{
+						feature_icon = feature.attributes.icon;
+						if (feature_icon!=="")
+						{
+							return "c";
+						}
+						else
+						{
+							return "c";
+						}
+					}
+				}
+			}
+    );
     
-    var $vd = $('#variacion_data');
-    var $vdl = $('#variacion_legend');
-    var $tabs = $('#tabs');
-    
-    if (c == 'variacion') {
-        l_ec.setVisible(false);
-        l_dn.setVisible(false);
-        l_ft.setVisible(false);
-        
-        l_variacion.setVisible(true);
+    Styles = new OpenLayers.StyleMap({
+        "default": style,
+        "select":{
+            fillColor: "#86ABD9",
+            strokeColor: "#32a8a9"
+           } 
+    });
+}
 
-        $vd.show();
-        $vdl.show();
-        $tabs.hide();
-    }
-    else {
-        
-        if (l_variacion !== undefined) {
-            l_variacion.setVisible(false);
-        }
-        
-        $vd.hide();
-        $vdl.hide();
-        $tabs.show();
-        
-        switch(c) {
-            case 'ec':
-                l_ec.setVisible(true);
-            break;
-            case 'dn':
-                l_dn.setVisible(true);
-            break;
-            case 'ft':
-                l_ft.setVisible(true);
-            break;
-        } 
+
+
+function onFeatureUnselect(event) {
+    // Safety check
+    if (event.feature.popup != null)
+    {
+      map.removePopup(event.feature.popup);
+      event.feature.popup.destroy();
+      event.feature.popup = null;
     }
 }
+/**
+ * Close Popup
+ */
+function onPopupClose(event)
+{
+    selectCtrl.unselect(selectedFeature);
+    selectedFeature = null;
+};
+
