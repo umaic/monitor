@@ -6,7 +6,7 @@
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
-$dev = true;
+$dev = false;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
@@ -124,19 +124,16 @@ function filesize_formatted($path)
         <div id="menu" class="left">
             <ul>
                 <li class="sub" data-div="ini_fin">
-                    <div>Filtrar por</div>
                     <div><i class="fa fa-2x fa-calendar"></i></div>
-                    <div>Fecha</div>
+                    <div>Filtrar por <br />Fecha</div>
                 </li>
                 <li class="sub" data-div="fcat_dn">
-                    <div>Filtrar por</div>
                     <div><i class="fa fa-2x fa-fire"></i></div>
-                    <div>Categorias desastres</div>
+                    <div>Filtrar por <br />Categorias desastres</div>
                 </li>
                 <li class="sub" data-div="fcat_ec">
-                    <div>Filtrar por</div>
                     <div><i class="fa fa-2x fa-bullseye"></i></div>
-                    <div>Categorias violencia</div>
+                    <div>Filtrar por <br />Categorias violencia</div>
                 </li>
                 <li class="sub" data-div="variacion">
                     <div><i class="fa fa-2x fa-line-chart"></i></div>
@@ -822,10 +819,10 @@ function filesize_formatted($path)
         <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/tooltip.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/popover.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/ol.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/ol3/3.6.0/ol.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/focus-element-overlay.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/focus-element-overlay.min.js"></script>
 
     <?php
     }

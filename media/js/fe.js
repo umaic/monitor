@@ -1539,14 +1539,14 @@ variacion = function() {
                 var html = '<h2 class="ac">Variación ' + ecdn + '</h2> ' +
                            '<div class="variacion_periodo"><b>Periodo 1</b><br /> ' + 
                             $('#variacion_p1_ini_text').val() + 
-                            ' - ' + $('#variacion_p1_fin_text').val() +
+                            ' al <br /> ' + $('#variacion_p1_fin_text').val() +
                             '</div>' +
                             '<div class="variacion_periodo"><b>Periodo 2</b><br /> ' + 
                              $('#variacion_p2_ini_text').val() + 
-                             ' - ' + $('#variacion_p2_fin_text').val() +
+                             ' al <br /> ' + $('#variacion_p2_fin_text').val() +
                              '</div>' +
                              '<div class="clear"></div>' + 
-                             '<h2 class="ac">Datos municipales</h2><div class="ac">La variación se calcula sobre el # de eventos<br />&nbsp;</div>'
+                             '<h2 class="ac"><br />Datos municipales</h2><div class="ac">La variación se calcula sobre el # de eventos<br />&nbsp;</div>'
                             ;
 
                 html += data.html;
@@ -1590,11 +1590,11 @@ function addLayerVariacion(dataJson) {
      console.log($('#variacion_p2_ini_date').val());
      console.log($('#variacion_p2_fin_date').val());
 
-     $('#variacion_p1_ini_date').val(1437454740);
-     $('#variacion_p1_fin_date').val(1440046740);
+     $('#variacion_p1_ini_date').val(1430542740);
+     $('#variacion_p1_fin_date').val(1433134740);
      
-     $('#variacion_p2_ini_date').val(1434862740);
-     $('#variacion_p2_fin_date').val(1437454740);
+     $('#variacion_p2_ini_date').val(1433221140);
+     $('#variacion_p2_fin_date').val(1435813140);
 
      variacion();
      *////

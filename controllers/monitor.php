@@ -288,7 +288,7 @@ class MonitorController {
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
 
-        if (!$usar_temporal && !file_exists($path2file)) {
+        if (!$usar_temporal || !file_exists($path2file)) {
             $p1 = explode('|', $periodo_1);
             $p2 = explode('|', $periodo_2);
 
