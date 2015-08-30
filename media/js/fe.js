@@ -19,22 +19,6 @@ var id_end_date = 'fin_date';
 
 $(function(){
 
-    // Promocionar variacion
-    
-
-    // Resalta funcionalidad
-    var options = {
-        fadeDuration: 700,
-        hideOnClick: true,
-        hideOnESC: true,
-        findOnResize: true
-    };
-    
-    setTimeout(function(){$('li[data-div="variacion"]').click(); Focusable.setFocus($('div#variacion'), options) }, 1000);
-    
-    setTimeout(function(){ Focusable.hide(); $('div#variacion').hide(); }, 10000);
-    
-    // /Promocionar variacion
 
     _today = new Date();
     _year = _today.getFullYear();
@@ -138,6 +122,22 @@ $(function(){
     */
     
     if (layout == 'monitor') {
+        
+        // Promocionar variacion
+        // Resalta funcionalidad
+        var options = {
+            fadeDuration: 700,
+            hideOnClick: true,
+            hideOnESC: true,
+            findOnResize: true
+        };
+        
+        setTimeout(function(){$('li[data-div="variacion"]').click(); Focusable.setFocus($('div#variacion'), options) }, 1000);
+        
+        setTimeout(function(){ Focusable.hide(); $('div#variacion').hide(); }, 7000);
+        
+        // /Promocionar variacion
+
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-orange',
             radioClass: 'iradio_square-orange'

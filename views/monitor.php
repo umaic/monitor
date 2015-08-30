@@ -139,7 +139,7 @@ function filesize_formatted($path)
                     <div><i class="fa fa-2x fa-line-chart"></i></div>
                     <div>Calcular variación</div>
                 </li>
-                <li class="sub" data-div="totales">
+                <li class="sub menu_totales" data-div="totales">
                     <div><i class="fa fa-2x fa-table"></i></div>
                     <div>Totales por año</div>
                 </li>
