@@ -1037,12 +1037,12 @@ div#mase {
 }
 
 #variacion_legend {
-    right: 370px;
+    left: 130px;
     padding: 10px;
     font-size: 12px;
     border-radius: 3px;
     background-color: #f1f1f1;
-    top: 200px !important;
+    top: 100px !important;
     position: absolute;
     display: none;
     width: 180px;
