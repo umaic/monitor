@@ -123,8 +123,9 @@ $(function(){
     
     if (layout == 'monitor') {
         
-        // Promocionar variacion
+        // [ INICIO Promocionar variacion ]
         // Resalta funcionalidad
+        /*
         var options = {
             fadeDuration: 700,
             hideOnClick: true,
@@ -135,8 +136,9 @@ $(function(){
         setTimeout(function(){$('li[data-div="variacion"]').click(); Focusable.setFocus($('div#variacion'), options) }, 1000);
         
         setTimeout(function(){ Focusable.hide(); $('div#variacion').hide(); }, 7000);
+        */
         
-        // /Promocionar variacion
+        // [FIN Promocionar variacion]
 
         $('input').iCheck({
             checkboxClass: 'icheckbox_square-orange',
