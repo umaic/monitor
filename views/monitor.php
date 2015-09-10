@@ -253,7 +253,7 @@ function filesize_formatted($path)
                                 }
                                 ?>
                                 <li class="h">
-                                    <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> />
+                                    <input type="checkbox" id="<?php echo $_id ?>" name="<?php echo $_id ?>" value="<?php echo $_idh; ?>" <?php echo $chk ?> class="ch" />
                                     <label for="<?php echo $_id ?>"><?php echo $_ch ?></label>
                                 </li>
                             <?php
