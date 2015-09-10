@@ -49,6 +49,7 @@ $(function(){
     $('#' + id_start_date).val(_ini/1000);
     $('#' + id_end_date).val(_fin/1000);
 
+    // Textos de fechas iniciales
     markIniFin(_iniD,_iniM,_iniY,_day,_month,_year);
 
     setYear('ini',_iniY);
@@ -1383,18 +1384,22 @@ markIniFin = function(id,im,iy,fd,fm,fy) {
     im = im + 1;
     fm = fm + 1;
 
-    $('#ini_fin').find('li').removeClass('selected');
+    $('#ini_div,#fin_div').find('li').removeClass('selected');
 
-    $('li[y=dia][q=ini][val='+id+']').addClass(c);
-    $('li[y=mes][q=ini][val='+im+']').addClass(c);
-    $('li[y=yyyy][q=ini][val='+iy+']').addClass(c);
+    var $div_ini = $('#ini_div');
+    var $div_fin = $('#fin_div');
+
+    $div_ini.find('ul.dia > li[data-val='+id+']').addClass(c);
+    $div_ini.find('ul.mes > li[data-val='+im+']').addClass(c);
+    $div_ini.find('ul.yyyy > li[data-val='+iy+']').addClass(c);
     
-    $('li[y=dia][q=fin][val='+fd+']').addClass(c);
-    $('li[y=mes][q=fin][val='+fm+']').addClass(c);
-    $('li[y=yyyy][q=fin][val='+fy+']').addClass(c);
+    $div_fin.find('ul.dia > li[data-val='+fd+']').addClass(c);
+    $div_fin.find('ul.mes > li[data-val='+fm+']').addClass(c);
+    $div_fin.find('ul.yyyy > li[data-val='+fy+']').addClass(c);
     
     $('#ini_text').val( id + ' de ' + _mes[im] + ' ' + iy);
     $('#fin_text').val( fd + ' de ' + _mes[fm] + ' ' + fy);
+    
 }
 
 getStatesChecked = function(){ 

@@ -6,7 +6,7 @@
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
-$dev = false;
+$dev = true;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
@@ -296,7 +296,7 @@ function filesize_formatted($path)
                                 <p><b>A&ntilde;o</b></p>
                                 <ul class="yyyy">';
                             foreach($totalxy as $_a) {
-                                $fecha_html .= "<li data-val='$_a' data-if='' data-q='q_val'>$_a</li>";
+                                $fecha_html .= "<li data-val='$_a' data-q='q_val'>$_a</li>";
                             }
                             $fecha_html .= '
                                 </ul>
