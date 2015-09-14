@@ -27,6 +27,9 @@ var l_ec;
 var l_ft;
 var l_variacion;
 
+var centroColombia = ol.proj.transform(
+[-72.963384, 3.370786], 'EPSG:4326', 'EPSG:3857');
+
 if (window.location.hostname == 'monitor.local') {
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violencia';
@@ -141,18 +144,22 @@ function addWMSLayer(n,l,v) {
 
 function selDepto(centroide) {
     var _c = centroide.split(',');
-    map.setCenter(new OpenLayers.LonLat(_c[0], _c[1]), 1);
+    var v = map.getView();
+    
+    v.setZoom(3);
+    v.setCenter([_c[0], _c[1]]);
+
+    console.log(map.getView().getZoom());
 }
     
 function resetMap() {
-    map.setCenter(map.maxExtent.getCenterLonLat(), 0);
+    map.getView().setCenter(centroColombia);
 }
 
 function mapRender() {
    
     var view = new ol.View({
-        center: ol.proj.transform(
-                        [-72.963384, 3.370786], 'EPSG:4326', 'EPSG:3857'),
+        center: centroColombia,
         zoom: 0,
         resolutions: resolutions,
         //extent: [-8599122, -471155, -7441396, 1505171]
