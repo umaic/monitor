@@ -146,14 +146,16 @@ function selDepto(centroide) {
     var _c = centroide.split(',');
     var v = map.getView();
     
+    v.setCenter([_c[0]*1, _c[1]*1]);
     v.setZoom(3);
-    v.setCenter([_c[0], _c[1]]);
 
-    console.log(map.getView().getZoom());
 }
     
 function resetMap() {
-    map.getView().setCenter(centroColombia);
+    var v = map.getView();
+    
+    v.setCenter(centroColombia);
+    v.setZoom(0);
 }
 
 function mapRender() {
@@ -282,6 +284,7 @@ function addFeatures(inst) {
     var start = $("#ini_date").val();
     var end = $("#fin_date").val();
     var zoom = map.getView().getZoom() + _zoomOffset;
+    console.log(zoom);
     var uparams = [['s', start], ['e', end], ['z', zoom]];
     
     if (inst == 'ecdn' || inst == 'dn') {
