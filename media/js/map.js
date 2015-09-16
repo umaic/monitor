@@ -284,7 +284,6 @@ function addFeatures(inst) {
     var start = $("#ini_date").val();
     var end = $("#fin_date").val();
     var zoom = map.getView().getZoom() + _zoomOffset;
-    console.log(zoom);
     var uparams = [['s', start], ['e', end], ['z', zoom]];
     
     if (inst == 'ecdn' || inst == 'dn') {
@@ -755,7 +754,7 @@ function showHideFeaturedIcon() {
 function mapMove(event)
 {
     // Prevent this event from running on the first load
-    if (mapLoad > 0 && !l_variacion.getVisible())
+    if (mapLoad > 0 && l_variacion && !l_variacion.getVisible())
     {
         // Refresh Map
         addFeatures();
