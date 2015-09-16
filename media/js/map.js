@@ -4,7 +4,7 @@ var fromProjection;
 var toProjection;
 var features_ec;
 var features_dn;
-var markerRadius = 10;
+var markerRadius = 5;
 var Style;
 var mtipo;
 var clear = true;
@@ -787,7 +787,7 @@ function styleFunction(feature, resolution) {
 
         for (var i=1;i<jenks.length;i++) {
             if (size <= jenks[i]) {
-                r = markerRadius * i;
+                r = (i==1) ? 7 : markerRadius * i;
                 break;
             }
         }
