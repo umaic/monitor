@@ -56,16 +56,6 @@ $(function(){
     setYear('fin',_year);
 
 
-    if (window.location.hostname == 'localhost'
-        || window.location.hostname == '190.66.6.168') {
-        base = '/monitor';
-        base_ol = '/monitor';
-    }
-    else {
-        base = 'http://' + window.location.hostname;
-        base_ol = '';
-    }
-
     if (typeof portal !== "undefined") {
         is_portal = true;
     }
