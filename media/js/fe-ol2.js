@@ -481,6 +481,54 @@ $(function(){
             return false;
         
         });
+        
+        // Carga el listado de capas de geonode del archivo geonode_layers.html el
+        // cual es creado por el script geonode_get_layers.sh
+        $.ajax({
+            url: 'geonode_layers.html',
+            success: function(html){
+
+                $ul = $('#layers_ul');
+            
+                $ul.append(html);
+                    
+                // Ordena por nombre
+                $ul.append($ul.find('li').sort(function(a, b) { 
+
+                    aa = $(a).find('h3').text();
+                    bb = $(b).find('h3').text();
+
+                    return aa == bb ? 0 : aa < bb ? -1 : 1
+                 }));
+                
+                $ul.find('input').iCheck({
+                    checkboxClass: 'icheckbox_square-orange',
+                    radioClass: 'iradio_square-orange'
+                });
+            }
+        });
+        
+        // Click en el departamento en la lista derecha
+        var $table = $('#table_totalxd');
+
+        $table.find(':checkbox').live('click', function() {
+            if ($(this).is(':checked')) {
+                $(this).closest('tr').removeClass('unselected');
+            }
+            else {
+                $(this).closest('tr').addClass('unselected');
+            }
+        });
+
+        // Busca layers en el listado de geonode
+        $('#layers_search').keyup(function(e) {
+            clearTimeout($.data(this, 'timer'));
+
+            if (e.keyCode == 13)
+              search(true);
+            else
+              $(this).data('timer', setTimeout(search, 500));
+        });
     }
     
     // Check settings.monitor_cache_json para ver si borra
@@ -490,57 +538,10 @@ $(function(){
 
     mapRender();
     
-    // Click en el departamento en la lista derecha
-    var $table = $('#table_totalxd');
-
-    $table.find(':checkbox').live('click', function() {
-        if ($(this).is(':checked')) {
-            $(this).closest('tr').removeClass('unselected');
-        }
-        else {
-            $(this).closest('tr').addClass('unselected');
-        }
-    });
                 
     // Row events
     //$table.find('tr:not(:first) td.n, tr:not(:last) td.n').live('click', function() {
     //});
-
-    // Carga el listado de capas de geonode del archivo geonode_layers.html el
-    // cual es creado por el script geonode_get_layers.sh
-    $.ajax({
-        url: 'geonode_layers.html',
-        success: function(html){
-
-            $ul = $('#layers_ul');
-        
-            $ul.append(html);
-                
-            // Ordena por nombre
-            $ul.append($ul.find('li').sort(function(a, b) { 
-
-                aa = $(a).find('h3').text();
-                bb = $(b).find('h3').text();
-
-                return aa == bb ? 0 : aa < bb ? -1 : 1
-             }));
-            
-            $ul.find('input').iCheck({
-                checkboxClass: 'icheckbox_square-orange',
-                radioClass: 'iradio_square-orange'
-            });
-        }
-    });
-            
-    // Busca layers en el listado de geonode
-    $('#layers_search').keyup(function(e) {
-        clearTimeout($.data(this, 'timer'));
-
-        if (e.keyCode == 13)
-          search(true);
-        else
-          $(this).data('timer', setTimeout(search, 500));
-    });
 
 });
 
