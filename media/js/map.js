@@ -774,6 +774,7 @@ function mapMove(event)
 function styleFunction(feature, resolution) {
     var size = feature.getProperties().count;
 
+    if (_cluster) {
         if (String(feature.getProperties().link).indexOf(subdomain_ec) == -1) {
             colorFill = 'rgba(44,160,44,0.6)';
             colorStroke = 'rgba(44,160,44,0.2)';
@@ -782,6 +783,11 @@ function styleFunction(feature, resolution) {
             colorFill = 'rgba(204,0,0,0.6)';
             colorStroke = 'rgba(204,0,0,0.2)';
         }
+    }
+    else {
+        colorFill = '#FFFFFF';
+        colorStroke = '#' + feature.getProperties().color;
+    }
         
         var r = markerRadius;
 
