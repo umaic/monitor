@@ -315,6 +315,21 @@ $(function(){
             $(this).closest('.filtro').hide();
 
         });
+
+
+        // Nivel de agrupamiento cluster
+
+        var slider = document.getElementById('slide_cluster_bar');
+
+        noUiSlider.create(slider, {
+            start: [ 3 ], // Handle start position
+            step: 1, // Slider moves in increments of '10'
+            connect: 'lower',
+            range: { // Slider can select '0' to '100'
+                'min': 1,
+                'max': 5
+            },
+        })
     }
     
     // Tipo de mapa
@@ -986,8 +1001,8 @@ totalesxDepto = function(more) {
         var t_ini = $('#ini_text').val();
         var t_fin = $('#fin_text').val();
 
-        $('#titulo_general > #tgt').html('Mapa de ' + titulo);
-        $('#titulo_general > #tgc').html(t_ini + ' - ' + t_fin);
+        $('#titulo_general').find('#tgt').html('Mapa de ' + titulo);
+        $('#titulo_general').find('#tgc').html(t_ini + ' - ' + t_fin);
         
         $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
         

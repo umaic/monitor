@@ -1,3 +1,17 @@
+SERVIDOR
+__________________________________________________________________________
+
+PHP 
+- Habilitar la extension pdo_mysql.so
+
+APACHE
+- Modulo rewrite habilitado: en httpd.conf
+  - Descomantada la linea de mod_rewrite.so
+  - AllowOverride All
+
+ARCHIVOS
+___________________________________________________________________________
+
 1. Habilitar uso de htaccess
 2. Crear las siguientes carpetas con permisos 757
 

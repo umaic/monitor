@@ -9,6 +9,7 @@
 $dev = true;
 
 if ($dev) { ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/ol.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fa/css/font-awesome.min.css" />
@@ -16,6 +17,7 @@ if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery.dataTables.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/popover.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/geostats.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/nouislider.css" />
 <?php
 }
 else { ?>
@@ -64,9 +66,27 @@ function filesize_formatted($path)
             <div id="logo" class="left"></div>
         </div>
             <div id="b" class="left">
-                    <div id="titulo_general" class="left">
-                        <div id="tgt" class="inline"></div>
-                        <div id="tgc" class="inline"></div>
+                    <div class="left">
+                        <div id="titulo_general" class="left">
+                            <div id="tgt" class=""></div>
+                            <div id="tgc" class=""></div>
+                        </div>
+                        <div id="submenu" class="left">
+                            <!--<div id="collapse" class="collapse left"></div>-->
+                            <div class="mapa_tipo menu_activo left op" data-tipo="afectacion">
+                                <i class="fa fa-users fa-2x"></i><br />Afectados
+                            </div>
+                            <div class="mapa_tipo left op" data-tipo="eventos">
+                                 <i class="fa fa-map-marker fa-2x"></i><br />Eventos
+                            </div>
+                            <div id="group_fts" class="mapa_tipo left op">
+                                <i class="fa fa-bullseye fa-2x"></i><br /> Desagrupar</span>
+                            </div>
+                            <div id="layers" class="left op">
+                                 <i class="fa fa-map fa-2x"></i><br />+ Capas
+                            </div>
+                            <!--<div class="expand left"></div>-->
+                        </div>
                     </div>
                 <div id="qlmh" class="hide">
                     <div id="qmm" class="left">
@@ -608,34 +628,16 @@ function filesize_formatted($path)
         </div>
         <div id="variacion_legend">
         </div>
-        <div id="submenu">
-            <div id="mapa_tipo" class="left">
-                <div id="collapse" class="collapse left"></div>
-                <div class="mapa_tipo menu_activo left op" data-tipo="afectacion">
-                    <span class="menu_victimas">Afectados</span>
+        <div id="depto">
+            <div class="select">
+                <div class="inline">
+                    <div id="depto_t">Colombia</div>
                 </div>
-                <div class="mapa_tipo left op" data-tipo="eventos">
-                    <span class="menu_eventos">Eventos</span>
-                </div>
-                <div id="group_fts" class="mapa_tipo left op">
-                    <span class="menu_desagrupar">Desagrupar</span>
-                </div>
-                <div id="layers" class="left op">
-                    <span class="menu_layers">+ Capas</span>
-                </div>
-                <div id="depto" class="left op">
-                    <div class="select">
-                        <div class="inline">
-                            <div id="depto_t">Colombia</div>
-                        </div>
-                        <div class="inline dropdown"></div>
-                    </div>
-                    <ul id="depto_dropdown" class="hide">
-                        <li>Colombia</li>
-                    </ul>
-                </div>
-                <div class="expand left"></div>
+                <div class="inline dropdown"></div>
             </div>
+            <ul id="depto_dropdown" class="hide">
+                <li>Colombia</li>
+            </ul>
         </div>
         <div id="layers_div" class="hide filtro">
             <div class="left">
@@ -807,6 +809,12 @@ function filesize_formatted($path)
         <div class="clear"></div>
     </div>
     <div id="footer"></div>
+    <div id="slide_cluster">
+        <div id="slide_cluster_text"></div>
+        <div id="slide_cluster_bar">
+
+        </div>
+    </div>
 
     <?php
     if ($dev) { ?>
@@ -823,6 +831,7 @@ function filesize_formatted($path)
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/focus-element-overlay.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/nouislider.min.js"></script>
 
     <?php
     }

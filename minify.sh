@@ -13,7 +13,7 @@ java -jar yuicompressor-2.4.8.jar media/js/map.js -o media/js/map.min.js
 
 cd media/css
 
-cat fe.min.css brand.min.css orange.min.css jquery-ui-1.8.22.custom.min.css fa/css/font-awesome.min.css jquery.dataTables.min.css popover.min.css geostats.min.css > m.css
+cat ol.css fe.min.css brand.min.css orange.min.css jquery-ui-1.8.22.custom.min.css fa/css/font-awesome.min.css jquery.dataTables.min.css popover.min.css geostats.min.css > m.css
 
 cd ../js
 

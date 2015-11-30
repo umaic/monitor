@@ -28,7 +28,7 @@ var l_ft;
 var l_variacion;
 
 var centroColombia = ol.proj.transform(
-[-72.963384, 3.370786], 'EPSG:4326', 'EPSG:3857');
+[-70.963384, 3.370786], 'EPSG:4326', 'EPSG:3857');
 
 if (window.location.hostname == 'monitor.local') {
     var subdomain_dn = 'desastres';
@@ -64,6 +64,7 @@ var _zoomOffset = 6;
 var lym;
 var lytmp;
 var resolutions= [
+                  4891.9698095703125,
                   2445.9849047851562, 1222.9924523925781,
                   611.4962261962891, 305.74811309814453, 152.87405654907226,
                   76.43702827453613, 38.218514137268066, 19.109257068634033,
@@ -162,7 +163,7 @@ function mapRender() {
    
     var view = new ol.View({
         center: centroColombia,
-        zoom: 0,
+        zoom: 1,
         resolutions: resolutions,
         //extent: [-8599122, -471155, -7441396, 1505171]
 
