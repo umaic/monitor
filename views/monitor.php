@@ -586,10 +586,10 @@ function filesize_formatted($path)
                          <i class="fa fa-map-marker fa-2x"></i><br />Eventos
                     </div>
                     <div id="group_fts" class="mapa_tipo left op">
-                        <i class="fa fa-bullseye fa-2x"></i><br /> Desagrupar</span>
+                        <i class="fa fa-spinner fa-2x"></i><br /> Desagrupar</span>
                     </div>
                     <div id="layers" class="left op">
-                         <i class="fa fa-map fa-2x"></i><br />+ Capas
+                         <i class="fa fa-bars fa-2x"></i><br />+ Capas
                     </div>
                     <div id="depto" class="left op">
                         <div class="select">

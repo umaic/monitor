@@ -65,7 +65,6 @@ label {
 #header #b {
     color: #2b1100;
     font-size: 13px;
-    margin-top: 10px;
 }
 #brand ul {
     list-style: none;
@@ -946,7 +945,7 @@ div.report_list_map div.victim {
 }
 #titulo_general {
     color: #1a1a1a;
-    padding: 0 20px;
+    padding: 5px 20px;
 }
 #titulo_general #tgt {
     font-size: 30px; 
