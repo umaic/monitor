@@ -250,7 +250,6 @@ function filesize_formatted($path)
                             <li><a href="#departamentos">Departamentos</a></li>
                         </ul>
                         <div id="tendencia">
-                            <div id="chart_1" class="chart"></div>
                             <div id="chart_t_s">
                                 <div class="left" id="chart_total">
                                     <div class="ec ct">
@@ -296,6 +295,7 @@ function filesize_formatted($path)
                                 </div>
                                 <div class="clear"></div>
                             </div>
+                            <div id="chart_1" class="chart"></div>
                             <div id="charts_pie">
                                 <div class="ec"><h2>Violencia Armada</h2></div>
                                 <div id="chart_2" class="chart "></div>
