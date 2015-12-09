@@ -845,6 +845,7 @@ function showHideLayers(c) {
     var $vd = $('#variacion_data');
     var $vdl = $('#variacion_legend');
     var $tabs = $('#tabs');
+    var $slide_cluster = $('#slide_cluster');
     
     if (c == 'variacion') {
         l_ec.setVisible(false);
@@ -856,6 +857,7 @@ function showHideLayers(c) {
         $vd.show();
         $vdl.show();
         $tabs.hide();
+        $slide_cluster.hide();
     }
     else {
         
@@ -866,6 +868,7 @@ function showHideLayers(c) {
         $vd.hide();
         $vdl.hide();
         $tabs.show();
+        $slide_cluster.show();
         
         switch(c) {
             case 'ec':

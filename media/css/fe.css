@@ -1036,13 +1036,13 @@ div#mase {
 }
 
 #variacion_legend {
-    right: 400px;
+    right: 370px;
     padding: 10px;
     font-size: 12px;
     border-radius: 3px;
     background-color: #f1f1f1;
     display: none;
-    width: 180px;
+    width: 200px;
     border: 1px solid #cccccc;
 }
 
