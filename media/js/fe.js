@@ -96,7 +96,7 @@ $(function(){
         
         // Top del filtro
         var $div = $('#' + $(this).data('div'));
-        var topx = 50*$div.data('index') + 'px';
+        var topx = 30*$div.data('index') + 'px';
 
         $div.css('top', topx);
         $div.fadeIn(100);

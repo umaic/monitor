@@ -132,7 +132,7 @@ div.tecdn div {
     display: none;
     background-color: #1a1a1a;
     position: absolute;
-    left: 80px;
+    left: 0;
     width: 650px;
     text-align: left;
     padding: 20px 30px;
@@ -252,12 +252,17 @@ div.tecdn div {
     background: url(../img/bg_item.png) no-repeat;
     z-index: 900;
 }
-#menu {
+#menu_div {
     font-size: 13px;
     margin: 0;
     width: 190px;
 }
-#menu,
+#content_div {
+    width: -moz-calc(100% - 190px);
+    width: -webkit-calc(100% - 190px);
+    width: calc(100% - 190px);
+}
+#menu_div,
 #submenu {
     background-color: #25292b;
     color: #b3b3b3;
@@ -375,9 +380,6 @@ div.tecdn div {
 #content {
     margin: 0;
     position: relative;
-    width: -moz-calc(100% - 190px);
-    width: -webkit-calc(100% - 190px);
-    width: calc(100% - 190px);
 }
 #filtros {
     background-color: #0f6bb6;
@@ -418,11 +420,12 @@ div.tecdn div {
     font-size: 13px;
 }
 /*#map, */
+#variacion_legend,
 #slide_cluster,
 #totalxd,
 #mapas_tipos,
 #featured {
-    top: 80px;
+    top: 10px;
     position: absolute;
     z-index: 1000;
 }
@@ -532,7 +535,6 @@ div.tecdn div {
     margin-left: 5px;
 }
 #totalxd {
-    top: 90px;
     right: 0px;
     width: 360px;
     max-height: 750px;
@@ -1035,13 +1037,11 @@ div#mase {
 }
 
 #variacion_legend {
-    left: 130px;
+    right: 400px;
     padding: 10px;
     font-size: 12px;
     border-radius: 3px;
     background-color: #f1f1f1;
-    top: 100px !important;
-    position: absolute;
     display: none;
     width: 180px;
     border: 1px solid #cccccc;
