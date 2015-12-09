@@ -6,7 +6,7 @@
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
-$dev = false;
+$dev = true;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/ol.css" />
@@ -86,6 +86,7 @@ function filesize_formatted($path)
                     <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
                     -->
                 </li>
+                <li>OPCIONES</li>
                 <li class="sub" data-div="ini_fin">
                     <i class="fa fa-2x fa-calendar fa-pull-left"></i>Filtrar por fecha
                 </li>
@@ -227,7 +228,7 @@ function filesize_formatted($path)
             </div>
             <div id="slide_cluster">
                 <div id="slide_cluster_text">
-                    Agrupación
+                    Deslice la barra para cambiar el agrupamiento
                 </div>
                 <div id="slide_cluster_bar">
                 </div>

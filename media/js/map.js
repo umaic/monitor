@@ -28,7 +28,7 @@ var l_ft;
 var l_variacion;
 
 var centroColombia = ol.proj.transform(
-[-70.963384, 5.370786], 'EPSG:4326', 'EPSG:3857');
+[-70.963384, 3.370786], 'EPSG:4326', 'EPSG:3857');
 
 if (window.location.hostname == 'monitor.local') {
     var subdomain_dn = 'desastres';
@@ -173,8 +173,11 @@ function mapRender() {
         layers: [
             new ol.layer.Tile({
                 title: 'OSM',
-                source: new ol.source.OSM()
-            }),
+                //source: new ol.source.OSM()
+                source: new ol.source.XYZ({
+                    url: 'http://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
+                })
+            })
         ],
         target: document.getElementById('map'),
         controls: ol.control.defaults({
@@ -778,12 +781,12 @@ function styleFunction(feature, resolution) {
 
     if (_cluster) {
         if (String(feature.getProperties().link).indexOf(subdomain_ec) == -1) {
-            colorFill = 'rgba(44,160,44,0.6)';
-            colorStroke = 'rgba(44,160,44,0.2)';
+            colorFill = 'rgba(44,160,44,1)';
+            colorStroke = 'rgba(44,170,54,0.5)';
         }
         else {
-            colorFill = 'rgba(204,0,0,0.6)';
-            colorStroke = 'rgba(204,0,0,0.2)';
+            colorFill = 'rgba(204,0,0,1)';
+            colorStroke = 'rgba(204,10,10,0.5)';
         }
     }
     else {
@@ -816,7 +819,7 @@ function styleFunction(feature, resolution) {
         }),
         stroke: new ol.style.Stroke({
             color: colorStroke,
-            width: 2
+            width: 3
           }),
       }),
       text: new ol.style.Text({
