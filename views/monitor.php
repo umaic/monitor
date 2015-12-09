@@ -6,7 +6,7 @@
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
-$dev = true;
+$dev = false;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/ol.css" />
@@ -61,111 +61,52 @@ function filesize_formatted($path)
             <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki</a></li>
         </ul>
     </div>
-    <div id="header">
-        <div id="i" class="left">
-            <div id="logo" class="left"></div>
+    <div id="menu" class="left">
+        <div id="logo_div" class="">
+            <div id="logo" class=""></div>
         </div>
-            <div id="b" class="left">
-                    <div class="left">
-                        <div id="titulo_general" class="left">
-                            <div id="tgt" class=""></div>
-                            <div id="tgc" class=""></div>
-                        </div>
-                        <div id="submenu" class="left">
-                            <!--<div id="collapse" class="collapse left"></div>-->
-                            <div class="mapa_tipo menu_activo left op" data-tipo="afectacion">
-                                <i class="fa fa-users fa-2x"></i><br />Afectados
-                            </div>
-                            <div class="mapa_tipo left op" data-tipo="eventos">
-                                 <i class="fa fa-map-marker fa-2x"></i><br />Eventos
-                            </div>
-                            <div id="group_fts" class="mapa_tipo left op">
-                                <i class="fa fa-bullseye fa-2x"></i><br /> Desagrupar</span>
-                            </div>
-                            <div id="layers" class="left op">
-                                 <i class="fa fa-map fa-2x"></i><br />+ Capas
-                            </div>
-                            <!--<div class="expand left"></div>-->
-                        </div>
-                    </div>
-                <div id="qlmh" class="hide">
-                    <div id="qmm" class="left">
-                        <h2>&iquest;Qu&eacute; es y para qu&eacute; sirve <b>Monitor</b>?</h2>
-                        <b>MONITOR</b> es una herramienta administrada por OCHA que est&aacute; a disposici&oacute;n de la comunidad humanitaria en Colombia y del p&uacute;blico en general con el objetivo de recopilar, categorizar y georreferenciar eventos de violencia armada y de desastres naturales. 
-                        <br /><br />
-                        <b>MONITOR</b> se alimenta de m&uacute;ltiples fuentes como medios de comunicaci&oacute;n locales y nacionales, &nbsp;instituciones del Estado, organizaciones de la sociedad civil e informaci&oacute;n recopilada en terreno por socios humanitarios nacionales e internacionales, entre otros. No se trata de un instrumento de verificaci&oacute;n de cada uno de los eventos reportados y no pretende reflejar la totalidad de la afectaci&oacute;n humanitaria.&nbsp;
-                    </div>
-                    <div class="left">
-                        <br /><br />
-                        <iframe width="400" height="225" src="//www.youtube.com/embed/MI1XWaq58os" frameborder="0" allowfullscreen></iframe>
-                    </div>
-                    <div class="left">
-                        <br><br>S&oacute;lo para categor&iacute;as espec&iacute;ficas de <b>MONITOR</b> como el desplazamiento masivo o el confinamiento, OCHA puede hacer seguimiento en profundidad en zonas con presencia de los Equipos Humanitarios Locales (conformados por agencias de Naciones Unidas y ONG internacionales) y otros socios en terreno. El Monitor se alimenta y revisa en tiempo real por varios alimentadores en Bogot&aacute; y las regiones, por tanto es posible que la informaci&oacute;n pueda variar, dependiendo del momento de consulta. 
-                        La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute;n del Equipo Humanitario de Pa&iacute;s o de Naciones Unidas.
-                        <br>
-                    </div>
-                </div>
-            </div>
-        <div id="tec" class="tecdn right">
-            <a href="<?php echo $url_violencia ?>" target="_blank">
-                <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
-            </a>
-            <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
-            <div class="new_event nev">
-                <a href="<?php echo $url_violencia ?>" target="_blank">
-                    Reportar un evento
-                </a>
-            </div>
-        </div>
-        <div id="tdn" class="tecdn right">
-            <a href="<?php echo $url_desastres ?>" target="_blank">
-                <img src="<?php echo BASE ?>media/img/logo_dn.png" border="0" />
-            </a>
-            <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
-            <div class="new_event ned">
-                <a href="<?php echo $url_desastres ?>" target="_blank">
-                    Reportar un evento
-                </a>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <div id="menua" class="hide">
-        <div id="aaaa">
-            <input type="hidden" id="currentCatE" value="0">
-            <input type="hidden" id="currentCatD" value="0">
-            <input type="hidden" id="yyyy_ini" value="">
-            <input type="hidden" id="yyyy_fin" value="">
-            <?php 
-            ?>
-        </div>
-    </div>
-    <div id="content">
-        <div id="menu" class="left">
+        <div id="" class="">
             <ul>
+                <li id="tec">
+                    <img src="<?php echo BASE ?>media/img/logo_ec_compact.png" border="0" class="left" />
+                    <a href="<?php echo $url_violencia ?>" target="_blank">
+                        Reportar un evento de violencia
+                    </a>
+                    <!--
+                    <div class="it tot">
+                        [ Total Eventos: <b><?php echo number_format($tec) ?></b> ]
+                    </div>-->
+                </li>
+                <li id="tdn">
+                    <img src="<?php echo BASE ?>media/img/logo_dn_compact.png" border="0" class="left" />
+                    <a href="<?php echo $url_desastres ?>" target="_blank">
+                        Reportar un evento de desastres
+                    </a>
+                    <!--
+                    <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
+                    -->
+                </li>
                 <li class="sub" data-div="ini_fin">
-                    <div><i class="fa fa-2x fa-calendar"></i></div>
-                    <div>Filtrar por <br />Fecha</div>
+                    <i class="fa fa-2x fa-calendar fa-pull-left"></i>Filtrar por fecha
                 </li>
                 <li class="sub" data-div="fcat_dn">
-                    <div><i class="fa fa-2x fa-fire"></i></div>
-                    <div>Filtrar por <br />Categorias desastres</div>
+                    <i class="fa fa-2x fa-fire fa-pull-left"></i>Categorias de desastres
                 </li>
                 <li class="sub" data-div="fcat_ec">
-                    <div><i class="fa fa-2x fa-bullseye"></i></div>
-                    <div>Filtrar por <br />Categorias violencia</div>
+                    <i class="fa fa-2x fa-bullseye fa-pull-left"></i>
+                    Categorias de violencia
                 </li>
                 <li class="sub" data-div="variacion">
-                    <div><i class="fa fa-2x fa-line-chart"></i></div>
-                    <div>Calcular variación</div>
+                    <i class="fa fa-2x fa-line-chart fa-pull-left"></i>
+                    Calcular variación
                 </li>
                 <li class="sub menu_totales" data-div="totales">
-                    <div><i class="fa fa-2x fa-table"></i></div>
-                    <div>Totales por año</div>
+                    <i class="fa fa-2x fa-table fa-pull-left"></i>
+                    Totales por año
                 </li>
                 <li class="sub" data-div="descargar">
-                    <div><i class="fa fa-2x fa-download"></i></div>
-                    <div>Descargar eventos</div>
+                    <i class="fa fa-2x fa-download fa-pull-left"></i>
+                    Descargar eventos
                 </li>
                 <!--<li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>-->
                 <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
@@ -231,7 +172,7 @@ function filesize_formatted($path)
             </div>
         </div>
         <!-- Filtro categorias Violencia :: Fin -->
-        
+
         <!-- Filtro categorias Desastres -->
         <div id="fcat_dn" class="filtro fcat" data-index="1">
             <div class="left">
@@ -288,7 +229,7 @@ function filesize_formatted($path)
             </div>
         </div>
         <!-- Filtro categorias Desastres :: Fin -->
-        
+
         <!-- Filtro fecha -->
         <div id="ini_fin" class="filtro fcat" data-index="0">
             <div class="left">
@@ -394,7 +335,7 @@ function filesize_formatted($path)
             </div>
         </div>
         <!-- Filtro fecha :: FIN-->
-        
+
         <!-- Filtro categorias acceso
         <div id="fcat_acceso" class="filtro fcat" data-index="2">
             <div class="left">
@@ -453,7 +394,7 @@ function filesize_formatted($path)
             </div>
         </div>
         Filtro Acceso :: Fin -->
-        
+
         <!-- Descargar eventos -->
         <div id="descargar" class="filtro fcat" data-index="4">
             <div class="right">
@@ -507,7 +448,7 @@ function filesize_formatted($path)
             </div>
         </div>
         <!-- Descargar eventos :: FIN-->
-        
+
         <!-- Totales por año -->
         <?php $t1 = '<tr><th></th><th align="center">Afectados</th><th align="center">Eventos</th></tr>'; ?>
         <div id="totales" class="filtro fcat" data-index="3">
@@ -551,7 +492,7 @@ function filesize_formatted($path)
             </div>
         </div>
         <!-- Totales por año :: FIN-->
-        
+
         <!-- Variación -->
         <div id="variacion" class="filtro fcat" data-index="4">
             <div class="left">
@@ -618,8 +559,72 @@ function filesize_formatted($path)
             </div>
         </div>
         <!-- Variación :: FIN-->
-        
-        <div id="map" class="map_monitor left">
+    </div>
+    <div id="menua" class="hide">
+        <div id="aaaa">
+            <input type="hidden" id="currentCatE" value="0">
+            <input type="hidden" id="currentCatD" value="0">
+            <input type="hidden" id="yyyy_ini" value="">
+            <input type="hidden" id="yyyy_fin" value="">
+            <?php 
+            ?>
+        </div>
+    </div>
+    <div id="content" class="left">
+        <div id="header">
+            <div id="b" class="">
+                <div id="titulo_general" class="left">
+                    <div id="tgt" class=""></div>
+                    <div id="tgc" class=""></div>
+                </div>
+                <div id="submenu" class="right">
+                    <!--<div id="collapse" class="collapse left"></div>-->
+                    <div class="mapa_tipo menu_activo left op" data-tipo="afectacion">
+                        <i class="fa fa-users fa-2x"></i><br />Afectados
+                    </div>
+                    <div class="mapa_tipo left op" data-tipo="eventos">
+                         <i class="fa fa-map-marker fa-2x"></i><br />Eventos
+                    </div>
+                    <div id="group_fts" class="mapa_tipo left op">
+                        <i class="fa fa-bullseye fa-2x"></i><br /> Desagrupar</span>
+                    </div>
+                    <div id="layers" class="left op">
+                         <i class="fa fa-map fa-2x"></i><br />+ Capas
+                    </div>
+                    <div id="depto" class="left op">
+                        <div class="select">
+                            <div class="inline">
+                                <div id="depto_t">Colombia</div>
+                            </div>
+                            <div class="inline dropdown"></div>
+                        </div>
+                        <ul id="depto_dropdown" class="hide">
+                            <li>Colombia</li>
+                        </ul>
+                    </div>
+                    <!--<div class="expand left"></div>-->
+                </div>
+                <div id="qlmh" class="hide">
+                    <div id="qmm" class="left">
+                        <h2>&iquest;Qu&eacute; es y para qu&eacute; sirve <b>Monitor</b>?</h2>
+                        <b>MONITOR</b> es una herramienta administrada por OCHA que est&aacute; a disposici&oacute;n de la comunidad humanitaria en Colombia y del p&uacute;blico en general con el objetivo de recopilar, categorizar y georreferenciar eventos de violencia armada y de desastres naturales. 
+                        <br /><br />
+                        <b>MONITOR</b> se alimenta de m&uacute;ltiples fuentes como medios de comunicaci&oacute;n locales y nacionales, &nbsp;instituciones del Estado, organizaciones de la sociedad civil e informaci&oacute;n recopilada en terreno por socios humanitarios nacionales e internacionales, entre otros. No se trata de un instrumento de verificaci&oacute;n de cada uno de los eventos reportados y no pretende reflejar la totalidad de la afectaci&oacute;n humanitaria.&nbsp;
+                    </div>
+                    <div class="left">
+                        <br /><br />
+                        <iframe width="400" height="225" src="//www.youtube.com/embed/MI1XWaq58os" frameborder="0" allowfullscreen></iframe>
+                    </div>
+                    <div class="left">
+                        <br><br>S&oacute;lo para categor&iacute;as espec&iacute;ficas de <b>MONITOR</b> como el desplazamiento masivo o el confinamiento, OCHA puede hacer seguimiento en profundidad en zonas con presencia de los Equipos Humanitarios Locales (conformados por agencias de Naciones Unidas y ONG internacionales) y otros socios en terreno. El Monitor se alimenta y revisa en tiempo real por varios alimentadores en Bogot&aacute; y las regiones, por tanto es posible que la informaci&oacute;n pueda variar, dependiendo del momento de consulta. 
+                        La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute;n del Equipo Humanitario de Pa&iacute;s o de Naciones Unidas.
+                        <br>
+                    </div>
+                </div>
+            </div>
+            <div class="clear"></div>
+        </div>
+        <div id="map" class="map_monitor">
             <div id="popup"></div>
         </div>
         <div id="featured" class="hide">
@@ -627,17 +632,6 @@ function filesize_formatted($path)
             <div id="t">- Movilizaci&oacute;n social <br />- Paro</div>
         </div>
         <div id="variacion_legend">
-        </div>
-        <div id="depto">
-            <div class="select">
-                <div class="inline">
-                    <div id="depto_t">Colombia</div>
-                </div>
-                <div class="inline dropdown"></div>
-            </div>
-            <ul id="depto_dropdown" class="hide">
-                <li>Colombia</li>
-            </ul>
         </div>
         <div id="layers_div" class="hide filtro">
             <div class="left">
@@ -675,7 +669,15 @@ function filesize_formatted($path)
             }
             ?>
         </div>
-        <div id="totalxd" class="relative">
+        <div id="slide_cluster">
+            <div id="slide_cluster_text">
+                Agrupación
+            </div>
+            <div id="slide_cluster_bar">
+            </div>
+            <input type="hidden" id="group_level" value="0" />
+        </div>
+        <div id="totalxd" class="">
             <div id="loading_data" class="alpha60">
                 <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
                     &nbsp;Cargando datos....
@@ -804,17 +806,10 @@ function filesize_formatted($path)
             <!--/ Data right -->
             
             <div class="clear"></div>
-            </div>
         </div>
-        <div class="clear"></div>
     </div>
+    <div class="clear"></div>
     <div id="footer"></div>
-    <div id="slide_cluster">
-        <div id="slide_cluster_text"></div>
-        <div id="slide_cluster_bar">
-
-        </div>
-    </div>
 
     <?php
     if ($dev) { ?>

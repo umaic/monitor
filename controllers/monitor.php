@@ -1669,6 +1669,7 @@ class MonitorController {
         $file = $url_base.http_build_query($qs);
 
         $n = md5(str_replace('/','-',$file));
+        //echo $n;
         $path2file = $this->config['cache_json']['path'].'/'.$n;
 
         if (!file_exists($path2file)) {

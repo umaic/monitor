@@ -320,16 +320,25 @@ $(function(){
         // Nivel de agrupamiento cluster
 
         var slider = document.getElementById('slide_cluster_bar');
+        var slider_max = 4;
 
         noUiSlider.create(slider, {
-            start: [ 3 ], // Handle start position
+            start: [ slider_max/2 ], // Handle start position
             step: 1, // Slider moves in increments of '10'
             connect: 'lower',
             range: { // Slider can select '0' to '100'
-                'min': 1,
-                'max': 5
+                'min': 0,
+                'max': slider_max
             },
-        })
+        });
+
+        slider.noUiSlider.on('change', function(values, handle){ 
+
+            $('#group_level').val(Math.round(values[handle]) - (slider_max/2));
+            
+            // Refresh Map
+            addFeatures();
+        });
     }
     
     // Tipo de mapa

@@ -47,19 +47,19 @@ label {
     cursor: pointer;
 }
 
-#header, #brand {
-    background-color: #e3dbdb;
+#header {
+    background-color: #ffffff;
     color: #280b0b;
-    font-family: dosis !important;
+    border-bottom: 5px solid #cccccc;
 }
 
-#header #i {
-    padding: 20px 10px 0 20px;
+#logo_div {
+    padding: 20px 5px;
 }
-#header #logo {
-    background: url(../img/logo.png) 0 0 no-repeat;
-    width: 235px;
-    height: 58px;
+#logo {
+    background: url(../img/logo_compact.png) 0 0 no-repeat;
+    width: 172px;
+    height: 34px;
 }
 
 #header #b {
@@ -88,16 +88,17 @@ label {
     color: #0066ff;
     font-size: 14px;
 }
-#tec {
-    /*background: #FFE7E7 url(../img/logo_ec.png) no-repeat 15px 15px;*/
-    /*background: #FFE7E7;*/
-    background: #F9f9f9;
-    color: #d40000;
+#tec, #tec a {
+    color: #ffffff !important;
+    background-color: #d40000 !important;
 }
-#tdn {
+#tec img ,#tdn img {
+    margin-right: 10px;
+}
+#tdn, #tdn a {
     /*background: #e3f4d7 url(../img/logo_dn.png) no-repeat 10px 15px;*/
-    background: #c6e9af;
-    color: #2ca02c;
+    background-color: #c6e9af !important;
+    color: #2ca02c !important;
 }
 div.tecdn {
     width: 170px;
@@ -253,18 +254,14 @@ div.tecdn div {
     z-index: 900;
 }
 #menu {
-    height: auto;
-    width: 80px;
-    font-size: 12px;
-    text-align: center;
+    font-size: 13px;
     margin: 0;
-    box-shadow: 1px 0 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
+    width: 190px;
 }
 #menu,
 #submenu {
     background-color: #25292b;
     color: #b3b3b3;
-    border-radius: 0 5px 5px 0;
 }
 #submenu #titulo_general,
 #submenu #mapa_tipo,
@@ -272,7 +269,7 @@ div.tecdn div {
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.3), 0 1px 0 rgba(255, 255, 255, 0.08) inset;
 }
 #menu li {
-    padding: 12px;
+    padding: 20px 12px;
     cursor: pointer;
     border-bottom: 1px solid #191c1d;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
@@ -287,9 +284,6 @@ div.tecdn div {
 #menu li div {
     margin: 5px 0;
 }
-#layers_div {
-    left: 125px;
-}
 #submenu {
 }
 #submenu div.op {
@@ -298,7 +292,7 @@ div.tecdn div {
     box-shadow: 1px 0 rgba(255, 255, 255, 0.04);
     padding: 10px;
     font-size: 14px;
-    width: 60px;
+    width: 80px;
 }
 #submenu .menu_victimas {
     background-position: center 1px;
@@ -320,6 +314,7 @@ div.tecdn div {
 #depto {
     font-size: 24px !important;
     padding: 15px 20px;
+    width: 250px !important;
 }
 #depto .select {
     background-color: #373D3F;
@@ -353,7 +348,6 @@ div.tecdn div {
 #submenu .op {
     text-align: center;
     padding: 5px 0;
-    border-bottom: 1px solid #191c1d;
     box-shadow: 0 1px 0 rgba(255, 255, 255, 0.1);
 }
 #submenu .op span {
@@ -362,7 +356,6 @@ div.tecdn div {
     /*background-image: url(../img/menu_sprite.png);
     background-repeat: no-repeat;*/
     width: 70px;
-    height: 55px;
     margin: 0 auto;
     font-size: 11px;
 }
@@ -383,6 +376,9 @@ div.tecdn div {
 #content {
     margin: 0;
     position: relative;
+    width: -moz-calc(100% - 190px);
+    width: -webkit-calc(100% - 190px);
+    width: calc(100% - 190px);
 }
 #filtros {
     background-color: #0f6bb6;
@@ -423,9 +419,8 @@ div.tecdn div {
     font-size: 13px;
 }
 /*#map, */
-#depto,
+#totalxd,
 #mapas_tipos,
-#layers_div,
 #featured {
     top: 10px;
     position: absolute;
@@ -433,9 +428,7 @@ div.tecdn div {
 }
 #map {
     margin: 0;
-    width: -moz-calc(100% - 80px);
-    width: -webkit-calc(100% - 80px);
-    width: calc(100% - 80px);
+    width: 100%;
 }
 #mapas_tipos {
     margin: 10px 20px;
@@ -479,10 +472,12 @@ div.tecdn div {
 #layers_div {
     position: absolute;
     top: 80px;
-    background-color: rgba(255,255,255,0.8);
+    right: 0;
+    background-color: #ffffff;
     color: #333333;
     padding: 10px;
-    width: 500px;
+    width: 600px;
+    z-index: 1010;
 }
 #layers_div p {
     color: #666666;
@@ -491,7 +486,7 @@ div.tecdn div {
 }
 #layers_div ul {
     list-style: none;
-    height: 300px;
+    height: 400px;
     overflow: auto;
     display: block;
 }
@@ -537,7 +532,7 @@ div.tecdn div {
     margin-left: 5px;
 }
 #totalxd {
-    top: 100px;
+    top: 90px;
     right: 0px;
     width: 360px;
     max-height: 750px;
@@ -949,15 +944,9 @@ div.report_list_map div.victim {
     background-color: #FFF2F0;
     margin: 2px 10px;
 }
-#titulo_general,
-#submenu {
-    height: 70px;
-}
 #titulo_general {
     color: #1a1a1a;
-    background-color: #cfcccc;
     padding: 0 20px;
-    border-radius: 5px 0 0 5px;
 }
 #titulo_general #tgt {
     font-size: 30px; 
@@ -1215,12 +1204,17 @@ div#mase {
 }
 
 #slide_cluster {
-    bottom: 5px;
+    top: 90px;
     position: absolute;
-    left: 100px;
+    left: 50px;
+    width: 300px;
+    background-color: rgb(255,255,255);
+    border-radius: 3px;
+    padding: 10px 20px;
 }
 
 #slide_cluster_text {
     font-size: 16px;
     color: #333333;
+    margin: 0 0 5px 0;
 }

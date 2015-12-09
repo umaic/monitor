@@ -28,7 +28,7 @@ var l_ft;
 var l_variacion;
 
 var centroColombia = ol.proj.transform(
-[-70.963384, 3.370786], 'EPSG:4326', 'EPSG:3857');
+[-70.963384, 5.370786], 'EPSG:4326', 'EPSG:3857');
 
 if (window.location.hostname == 'monitor.local') {
     var subdomain_dn = 'desastres';
@@ -285,7 +285,9 @@ function addFeatures(inst) {
     var start = $("#ini_date").val();
     var end = $("#fin_date").val();
     var zoom = map.getView().getZoom() + _zoomOffset;
-    var uparams = [['s', start], ['e', end], ['z', zoom]];
+    var group_level = $('#group_level').val();
+    
+    var uparams = [['s', start], ['e', end], ['z', zoom], ['gl', group_level]];
     
     if (inst == 'ecdn' || inst == 'dn') {
         var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
@@ -432,6 +434,55 @@ function addFeatures(inst) {
     map.addControl(selectCtrl);
     selectCtrl.activate();
     */
+}
+
+function ajaxFeatures(u, l) {
+
+    $.ajax({
+        url: u,
+        dataType: 'jsonp',
+        success: function(json){
+
+            if (json.features.length > 0) {
+                    
+                var _f = (new ol.format.GeoJSON()).readFeatures(json,{ dataProjection: 'EPSG:4326',
+                                                                      featureProjection: 'EPSG:3857'});
+
+                // Calcula el numero máximo de features en un cluster
+                var fts = json.features;
+                var arr = [];
+                for(j in fts) {
+                    c = fts[j].properties.count;
+
+                    if (c > maximo) {
+                        maximo = c;
+                    } 
+
+                    arr[j] = c;
+                }
+
+                // calcula jenks
+                var len = arr.length
+                if (len > 1) {
+                    if (len <= jenks_cl) {
+                        jenks_cl = len + 1;
+                    }
+
+                    serie = new geostats(arr);
+
+                    cl = (len < jenks_cl) ? len -1 : jenks_cl;
+                    jenks = serie.getClassJenks(cl);
+                }
+                
+                l.getSource().addFeatures(_f);
+                $('#loading').hide();
+	
+                // Show/Hide icono de destacados
+                showHideFeaturedIcon(); // funcion en este archivo
+            }
+        },
+        beforeSend: function(){ $('#loading').show() }
+    });
 }
 
 /**
@@ -689,56 +740,6 @@ function onFeatureSelect(attrs) {
                 });
             }
         },
-    });
-    
-}
-
-function ajaxFeatures(u, l) {
-
-    $.ajax({
-        url: u,
-        dataType: 'jsonp',
-        success: function(json){
-
-            if (json.features.length > 0) {
-                    
-                var _f = (new ol.format.GeoJSON()).readFeatures(json,{ dataProjection: 'EPSG:4326',
-                                                                      featureProjection: 'EPSG:3857'});
-
-                // Calcula el numero máximo de features en un cluster
-                var fts = json.features;
-                var arr = [];
-                for(j in fts) {
-                    c = fts[j].properties.count;
-
-                    if (c > maximo) {
-                        maximo = c;
-                    } 
-
-                    arr[j] = c;
-                }
-
-                // calcula jenks
-                var len = arr.length
-                if (len > 1) {
-                    if (len <= jenks_cl) {
-                        jenks_cl = len + 1;
-                    }
-
-                    serie = new geostats(arr);
-
-                    cl = (len < jenks_cl) ? len -1 : jenks_cl;
-                    jenks = serie.getClassJenks(cl);
-                }
-                
-                l.getSource().addFeatures(_f);
-                $('#loading').hide();
-	
-                // Show/Hide icono de destacados
-                showHideFeaturedIcon(); // funcion en este archivo
-            }
-        },
-        beforeSend: function(){ $('#loading').show() }
     });
 }
 
