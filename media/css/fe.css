@@ -1205,9 +1205,7 @@ div#mase {
 #slide_cluster {
     left: 50px;
     width: 300px;
-    background-color: rgb(255,255,255);
     border-radius: 3px;
-    padding: 20px;
 }
 
 #slide_cluster_text {
