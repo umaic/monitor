@@ -1474,7 +1474,11 @@ String.prototype.capitalize = function() {
 }
 
 set100Height = function(){ 
-    $('.map_monitor, #menu').css('height', $(document).height());
+    
+    var h = $(document).height() - $('#brand').height() - 20;
+
+    $('.map_monitor').css('height', h - 5 - $('#header').height());
+    $('#menu').css('height', h);
 }
 setMapWidth = function(){ 
     //$('#map').css('width', $(document).width() - $('#menu').css('width'));
