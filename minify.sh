@@ -5,7 +5,7 @@ java -jar yuicompressor-2.4.8.jar media/css/nouislider.css -o media/css/nouislid
 #java -jar yuicompressor-2.4.8.jar media/css/geostats.css -o media/css/geostats.min.css
 #java -jar yuicompressor-2.4.8.jar media/css/popover.css -o media/css/popover.min.css
 #java -jar yuicompressor-2.4.8.jar media/css/orange.css -o media/css/orange.min.css
-#java -jar yuicompressor-2.4.8.jar media/css/brand.css -o media/css/brand.min.css
+java -jar yuicompressor-2.4.8.jar media/css/brand.css -o media/css/brand.min.css
 
 java -jar yuicompressor-2.4.8.jar media/js/fe.js -o media/js/fe.min.js
 java -jar yuicompressor-2.4.8.jar media/js/map.js -o media/js/map.min.js

@@ -5,18 +5,13 @@
   src: url(OpenSans.woff) format('woff');
 }
 #brand {
-    line-height: 25px;
-    background-color: #BC2227;
     color: #ffffff;
     font-family: 'Open Sans';
     font-size: 18px;
-    padding: 3px 15px;
+    padding: 10px 10px;
     text-align: left;
     font-weight: bold;
-}
-
-#brand:before {
-    content: "SalaHumanitaria.co"
+    background-color: #cccccc;
 }
 
 a.brand, a.brand {

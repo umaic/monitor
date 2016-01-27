@@ -54,7 +54,6 @@ label {
 }
 
 #logo_div {
-    padding: 20px 5px;
 }
 #logo {
     background: url(../img/logo_compact.png) 0 0 no-repeat;
@@ -68,8 +67,8 @@ label {
 }
 #brand ul {
     list-style: none;
-    display: inline;
-    margin-left: 100px;
+    display: inline-block;
+    margin: 5px 30px 0 0;
 }
 #brand ul li {
     display: inline;

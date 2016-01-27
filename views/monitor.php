@@ -9,6 +9,7 @@
 $dev = false;
 
 if ($dev) { ?>
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/ol.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css" />
@@ -53,18 +54,26 @@ function filesize_formatted($path)
         <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
     </div>
     <div id="brand">
-        <ul>
-            <li><a id="lmh" href="#">¿Qué es <b>Monitor</b>?</a></li>
-            <li><a href="http://www.salahumanitaria.co" target="_blank">http://SalaHumanitaria.co</a></li>
-            <li><a href="http://sidih.salahumanitaria.co" target="_blank">Sidih</a></li>
-            <li><a href="http://geonode.salahumanitaria.co" target="_blank">Geonode</a></li>
-            <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki</a></li>
-        </ul>
-    </div>
-    <div id="menu_div" class="left">
-        <div id="logo_div" class="">
+        <div id="logo_div" class="left">
             <div id="logo" class=""></div>
         </div>
+        <div class="right">
+            <a href="http://umaic.org" target="_blank">
+                <img src="media/img/logo_UMAIC.png" />
+            </a>
+        </div>
+        <div class="right">
+            <ul>
+                <li><a id="lmh" href="#">¿Qué es <b>Monitor</b>?</a></li>
+                <li><a href="http://www.salahumanitaria.co" target="_blank">http://SalaHumanitaria.co</a></li>
+                <li><a href="http://sidih.salahumanitaria.co" target="_blank">Sidih</a></li>
+                <li><a href="http://geonode.salahumanitaria.co" target="_blank">Geonode</a></li>
+                <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki</a></li>
+            </ul>
+        </div>
+        <div class="clear"></div>
+    </div>
+    <div id="menu_div" class="left">
         <div id="menu" class="">
             <ul>
                 <li id="tec">
@@ -112,6 +121,13 @@ function filesize_formatted($path)
                 <!--<li class="sub" data-div="fcat_acceso"><span class="menu_acceso">Restricci&oacute;n al acceso</span></li>-->
                 <li class="sub hide" data-div="fcat_1612"><span class="menu_1612">Menores en conflicto</span></li>
             </ul>
+            <div>
+                <br /><br />
+                &nbsp;&nbsp;
+                <img src="media/img/logo_OCHA.png" />
+                &nbsp;
+                <img src="media/img/logo_PNUD.jpg" />
+            </div>
         </div>
     </div>
     <div id="menua" class="hide">
