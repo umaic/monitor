@@ -19,7 +19,6 @@ var id_end_date = 'fin_date';
 
 $(function(){
 
-
     _today = new Date();
     _year = _today.getFullYear();
     _month = _today.getMonth();
@@ -54,8 +53,29 @@ $(function(){
 
     setYear('ini',_iniY);
     setYear('fin',_year);
+    
+    // ******** Fenomeno del niño
+    $('#fen_nino').click(function(){ 
+    
+        filterByPeriod(1,2,2015,_day,_month,_year);
+        
+        // Desmarca todas las categorias de desastres
+        $('#fcat_dn').find('.tn_fcat').click();
+        
+        $.each([1,3,8], function(index, value) {
+            
+            var $o = $('#cat_dn_' + value);
 
-
+            $o.iCheck('check');
+            $o.attr('checked', td_ec);
+        });
+        
+        addFeatures('dn');
+        totalesxDepto();
+        ocultarViolenciaDesastres('ec');
+    });
+    // ******** Fenomeno del niño
+    
     if (typeof portal !== "undefined") {
         is_portal = true;
     }
@@ -1679,4 +1699,15 @@ function addLayerVariacion(dataJson) {
     showHideLayers('variacion');
     
 
+}
+
+function filterByPeriod(id,im,iy,fd,fm,fy) {
+
+    _ini = new Date(iy,im,id);
+    _fin = new Date(fy,fm,fd);
+
+    $('#' + id_start_date).val(_ini/1000); // Segundos para ushahidi
+    $('#' + id_end_date).val(_fin/1000); // Segundos para ushahidi
+    
+    markIniFin(id,im,iy,fd,fm,fy);
 }

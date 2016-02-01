@@ -6,7 +6,7 @@
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
-$dev = false;
+$dev = true;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css" />
@@ -76,6 +76,17 @@ function filesize_formatted($path)
     <div id="menu_div" class="left">
         <div id="menu" class="">
             <ul>
+                <li id="fen_nino" class="featured">
+                    <h3 style="font-size: 13px !important;margin:3px !important;">
+                    Fenomeno del niño
+                    </h3>
+                    <div class="note">
+                        Sequías, incendios forestales e inundaciones desde Marzo 2015
+                        <br /><br />
+                        <u>Ver Eventos</u>
+                    </div>
+
+                </li>
                 <li id="tec">
                     <img src="<?php echo BASE ?>media/img/logo_ec_compact.png" border="0" class="left" />
                     <a href="<?php echo $url_violencia ?>" target="_blank">
