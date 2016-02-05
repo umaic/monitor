@@ -174,6 +174,10 @@ if (!empty($mod)) {
             echo $mc->genJson($server.'/json/'.$_GET['cluster'].'/?', $qs);
 
         break;
+
+        default:
+            echo "<img src='media/img/logo.png'>";
+        break;
     }
 }
 else {
