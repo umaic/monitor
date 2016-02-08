@@ -16,6 +16,7 @@ var titulo;
 var totales_ini = true;
 var id_start_date = 'ini_date';
 var id_end_date = 'fin_date';
+var subtotales;
 
 $(function(){
 
@@ -69,10 +70,49 @@ $(function(){
             $o.iCheck('check');
             $o.attr('checked', td_ec);
         });
+
+        setCatsHidden();
         
         addFeatures('dn');
         totalesxDepto();
-        ocultarViolenciaDesastres('ec');
+
+        setTimeout(function(){ 
+            // Titulo y fechas
+            $('#tgt').html('Fenómeno del niño');
+            $('#chart_total').find('.ec').hide();
+            
+            $t = $('#chart_total');
+
+            $t.css('width', '100%');
+            
+            $('#chart_total').find('.dn').find('.total_t').html('total fenómeno del niño');
+            
+            $bt = $('#chart_subtotal');
+            $bt.removeClass('left').removeClass('ec');
+            
+            // Datos de afectación desagregado sigpad, almacenado en subtotales cuando se hace totalesxd
+            var sub = subtotales.dn;
+            
+            var html = '';
+            for (s in sub) {
+                var n = sub[s];
+
+                if (n > 0) {
+                    html += '<div style="background-color: #f2f2f2;margin:1px;padding: 3px">' +
+                            '<div style="float:left">' + s + '</div>' + 
+                            '<div id="hectareas" class="right">'+numberWithCommas(sub[s]) + '</div>' +
+                            '<div class="clear"></div>' + 
+                            '</div>';
+                }
+            }
+
+            $bt.html(html);
+
+            $('#chart_1').hide();
+                    
+            ocultarViolenciaDesastres('ec');
+        }, 100);
+
     });
     // ******** Fenomeno del niño
     
@@ -693,9 +733,20 @@ function ocultarViolenciaDesastres(cs) {
         ocultar = '';
     }
 
+    // Capa destacados
     l_ft.setVisible(!l_ft.getVisible());
     
-    $('#chart_1').highcharts().get(cs).setVisible(v_chart_serie,true); 
+    // Gráfica de linea de tiempos
+    if ($('#chart_1').highcharts() !== undefined) {
+        $('#chart_1').highcharts().get(cs).setVisible(v_chart_serie,true); 
+    }
+
+    if (cs == 'ec') {
+        $('#charts_pie').toggle();
+    } 
+
+    // En tabla por departamentos
+    $('#table_totalxd').find('.' + cs).hide();
     
 
 }
@@ -1083,6 +1134,9 @@ totalesxDepto = function(more) {
                 resumenAfectacion(data);
                 
                 charts(data.charts);
+
+                // Almacena subotales en variable
+                subtotales = data.subtotales;
                 
                 $('#loading_data').hide();
             }
@@ -1189,13 +1243,18 @@ resumenAfectacion = function(data) {
         }
     }
 
-    // Subtotales
-    $('#civiles').html((data.subtotales.civiles === undefined ) ? '---' : numberWithCommas(data.subtotales.civiles));
-    $('#hombres').html((data.subtotales.hombres === undefined ) ? '---' : numberWithCommas(data.subtotales.hombres));
-    $('#mujeres').html((data.subtotales.mujeres === undefined ) ? '---' : numberWithCommas(data.subtotales.mujeres));
-    $('#menores').html((data.subtotales.menores === undefined ) ? '---' : numberWithCommas(data.subtotales.menores));
-    $('#afros').html((data.subtotales.afros === undefined ) ? '---' : numberWithCommas(data.subtotales.afros));
-    $('#indigenas').html((data.subtotales.indigenas === undefined ) ? '---' : numberWithCommas(data.subtotales.indigenas));
+    // Subtotales violencia
+    if (data.subtotales.ec !== undefined) {
+        
+        var sub = data.subtotales.ec;
+        
+        $('#civiles').html((sub.civiles === undefined ) ? '---' : numberWithCommas(sub.civiles));
+        $('#hombres').html((sub.hombres === undefined ) ? '---' : numberWithCommas(sub.hombres));
+        $('#mujeres').html((sub.mujeres === undefined ) ? '---' : numberWithCommas(sub.mujeres));
+        $('#menores').html((sub.menores === undefined ) ? '---' : numberWithCommas(sub.menores));
+        $('#afros').html((sub.afros === undefined ) ? '---' : numberWithCommas(sub.afros));
+        $('#indigenas').html((sub.indigenas === undefined ) ? '---' : numberWithCommas(sub.indigenas));
+    }
 
 }
 

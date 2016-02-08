@@ -76,9 +76,9 @@ function filesize_formatted($path)
     <div id="menu_div" class="left">
         <div id="menu" class="">
             <ul>
-                <li id="fen_nino" class="featured">
+                <li id="fen_nino" class="featured dn">
                     <h3 style="font-size: 13px !important;margin:3px !important;">
-                    Fenomeno del niño
+                    Fenómeno del niño
                     </h3>
                     <div class="note">
                         Sequías, incendios forestales e inundaciones desde Marzo 2015
@@ -272,8 +272,8 @@ function filesize_formatted($path)
                     <div id="tabs">
                         <div id="minmax_total" class="minimize"></div>
                         <ul>
-                            <li><a href="#tendencia">Tendencia</a></li>
-                            <li><a href="#resumen">Resumen</a></li>
+                            <li><a href="#tendencia">Resumen</a></li>
+                            <li><a href="#resumen">Categorias</a></li>
                             <li><a href="#departamentos">Departamentos</a></li>
                         </ul>
                         <div id="tendencia">

@@ -31,10 +31,17 @@ var centroColombia = ol.proj.transform(
 [-70.963384, 3.370786], 'EPSG:4326', 'EPSG:3857');
 
 if (window.location.hostname == 'monitor.local') {
+    /*
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violencia';
 
     var domain = '.local';
+    */
+    // Probar local consultado eventos online
+    var subdomain_dn = 'desastres';
+    var subdomain_ec = 'violenciaarmada';
+    var domain = '.salahumanitaria.co';
+
 }
 else {
     var subdomain_dn = 'desastres';

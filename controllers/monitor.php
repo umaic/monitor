@@ -1057,10 +1057,29 @@ class MonitorController {
                 JOIN %sincident i ON f.incident_id = i.id
                 JOIN %sincident_category ic ON ic.incident_id = i.id
                 JOIN %scategory c ON ic.category_id = c.id
+                JOIN %slocation AS l ON l.id = i.location_id";
+
+            $_cond_tmp = " WHERE $cond_csv";
+           
+            // Datos extras de afectacion sigpad
+            $_sqliex = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, ff.field_name
+                FROM ".$_db."form_response f
+                JOIN %sform_field ff ON ff.id = f.form_field_id
+                JOIN %sincident i ON f.incident_id = i.id
+                JOIN %sincident_category ic ON ic.incident_id = i.id
+                JOIN %scategory c ON ic.category_id = c.id
                 JOIN %slocation AS l ON l.id = i.location_id
-                WHERE $cond_csv AND form_field_id = 4";
+                ".$_cond_tmp." GROUP BY form_field_id ";
+
+            $_sqliex = sprintf($_sqliex,$_db,$_db,$_db,$_db,$_db,$cond_cats_dn);
             
-            $_sql = $_sqlr ." GROUP BY category_id
+            $_rsex = $this->db->open($_sqliex);
+            $subtotales = array();
+            while($_rowex = $this->db->FO($_rsex)) {
+                $subtotales['dn'][$_rowex->field_name] = $_rowex->sum*1;
+            }
+
+            $_sql = $_sqlr.$_cond_tmp." AND form_field_id = 4 GROUP BY category_id
                               ORDER BY sum DESC";
 
             $_sql_chart_dn = $_sqlr ." GROUP BY %s ORDER BY year,mes,dia";
@@ -1199,10 +1218,10 @@ class MonitorController {
                     $data_pie_ethnic[] = array($ethnic_groups[$_row->victim_ethnic_group_id],$_num);
 
                     if ($_row->victim_ethnic_group_id == 1) {
-                        $subtotales['indigenas'] = $_num;
+                        $subtotales['ec']['indigenas'] = $_num;
                     }
                     else if ($_row->victim_ethnic_group_id == 2) {
-                        $subtotales['afros'] = $_num;
+                        $subtotales['ec']['afros'] = $_num;
                     }
                 }
             }
@@ -1227,10 +1246,10 @@ class MonitorController {
                     $data_pie_gender[] = array($genders[$_row->victim_gender_id],$_num);
                     
                     if ($_row->victim_gender_id == 1) {
-                        $subtotales['mujeres'] = $_num;
+                        $subtotales['ec']['mujeres'] = $_num;
                     }
                     else if ($_row->victim_gender_id == 2) {
-                        $subtotales['hombres'] = $_num;
+                        $subtotales['ec']['hombres'] = $_num;
                     }
                 }
             }
@@ -1255,7 +1274,7 @@ class MonitorController {
                     $data_pie_age[] = array($ages[$_row->victim_age_id],$_num);
                     
                     if ($_row->victim_age_id == 3) {
-                        $subtotales['menores'] = $_num;
+                        $subtotales['ec']['menores'] = $_num;
                     }
                 }
             }
@@ -1279,7 +1298,7 @@ class MonitorController {
                     $data_pie_condition[] = array($conditions[$_row->victim_condition_id],$_num);
                     
                     if ($_row->victim_condition_id == 2) {
-                        $subtotales['civiles'] = $_num;
+                        $subtotales['ec']['civiles'] = $_num;
                     }
                 }
             }
