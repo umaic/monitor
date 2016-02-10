@@ -299,9 +299,6 @@ function addFeatures(inst) {
     
     var uparams = [['s', start], ['e', end], ['z', zoom], ['gl', group_level]];
     
-    // Primero se consultan los featured y acceso,
-    // para que jenks se haga del cluster de último
-    
     // Destacados, ft=fetured
     if (inst == 'ecdn' || inst == 'ft') {
         
@@ -329,17 +326,16 @@ function addFeatures(inst) {
         // States filter
         _uft_dn = addURLParameter(_uft_dn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
         
-        ajaxFeatures(_uft_dn, l_ft);
+        ajaxFeatures(_uft_dn, l_ft, false);
         
         var _uft_ec = addURLParameter(url_ft_ec, uparams_ft);
         
         _uft_ec = addURLParameter(_uft_ec, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
         
-        ajaxFeatures(_uft_ec, l_ft);
+        ajaxFeatures(_uft_ec, l_ft, false);
 
     }
 
-    
     // Acceso
     if (inst == 'acceso') {
         
@@ -369,7 +365,8 @@ function addFeatures(inst) {
         
         // States filter
         _uft_ec = addURLParameter(url_ft_ec, uparams_acceso);
-        ajaxFeatures(_uft_ec, l_ec);
+
+        ajaxFeatures(_uft_ec, l_ec, false);
 
     }
     
@@ -403,7 +400,7 @@ function addFeatures(inst) {
             // Tipo mapa
             _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
             
-            ajaxFeatures(_udn, l_dn);
+            ajaxFeatures(_udn, l_dn, true);
         }
     }
     
@@ -438,7 +435,7 @@ function addFeatures(inst) {
             // Tipo mapa
             _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
             
-            ajaxFeatures(_uec, l_ec);
+            ajaxFeatures(_uec, l_ec, true);
         }
 
     }
@@ -457,7 +454,7 @@ function addFeatures(inst) {
     */
 }
 
-function ajaxFeatures(u, l) {
+function ajaxFeatures(u, l, doJenks) {
 
     $.ajax({
         url: u,
@@ -470,29 +467,31 @@ function ajaxFeatures(u, l) {
                                                                       featureProjection: 'EPSG:3857'});
 
                 // Calcula el numero máximo de features en un cluster
-                var fts = json.features;
-                var arr = [];
-                for(j in fts) {
-                    c = fts[j].properties.count;
+                if (doJenks) {
+                    var fts = json.features;
+                    var arr = [];
+                    for(j in fts) {
+                        c = fts[j].properties.count;
 
-                    if (c > maximo) {
-                        maximo = c;
-                    } 
+                        if (c > maximo) {
+                            maximo = c;
+                        } 
 
-                    arr[j] = c;
-                }
-
-                // calcula jenks
-                var len = arr.length
-                if (len > 1) {
-                    if (len <= jenks_cl) {
-                        jenks_cl = len + 1;
+                        arr[j] = c;
                     }
 
-                    serie = new geostats(arr);
+                    // calcula jenks
+                    var len = arr.length
+                    if (len > 1) {
+                        if (len <= jenks_cl) {
+                            jenks_cl = len + 1;
+                        }
 
-                    cl = (len < jenks_cl) ? len -1 : jenks_cl;
-                    jenks = serie.getClassJenks(cl);
+                        serie = new geostats(arr);
+
+                        cl = (len < jenks_cl) ? len -1 : jenks_cl;
+                        jenks = serie.getClassJenks(cl);
+                    }
                 }
 
                 l.getSource().addFeatures(_f);
