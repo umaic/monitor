@@ -101,8 +101,13 @@ $(function(){
         totalesxDepto();
 
         setTimeout(function(){ 
+            
             // Titulo y fechas
-            $('#tgt').html('Fenómeno del niño');
+            var tgta = 'Fenómeno del niño - Afectados';
+            var tgte = 'Fenómeno del niño - Eventos';
+
+            $('#tgt').html(tgta);
+
             $('#chart_total').find('.ec').hide();
             
             $t = $('#chart_total');
@@ -132,19 +137,22 @@ $(function(){
 
             // Si selecciona Eventos cambia titulos
             $('div.mapa_tipo').click(function() {
-                if ($(this).data('tipo') == 'eventos') {
-                    $div_titulo_dn.html('total eventos fenómeno del niño');
-                    $bt.hide();
-                }
-                else {
-                    $div_titulo_dn.html(titulo_f_n_af);
-                    $bt.show();
-                    
-                }
 
                 setTimeout(function(){ 
                     $('#chart_1, #charts_pie').hide();
-                }, 300);
+
+                    if ($(this).data('tipo') == 'eventos') {
+                        $div_titulo_dn.html('total eventos fenómeno del niño');
+                        $bt.hide();
+                        $('#tgt').html(tgte);
+                    }
+                    else {
+                        $div_titulo_dn.html(titulo_f_n_af);
+                        $bt.show();
+                        $('#tgt').html(tgta);
+                    }
+
+                }, 1000);
 
             });
             
@@ -154,7 +162,7 @@ $(function(){
                 
                 setTimeout(function(){ 
                     $('#chart_1, #charts_pie').hide();
-                }, 300);
+                }, 1000);
             });
 
         }, 1000);
