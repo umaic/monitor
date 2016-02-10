@@ -1057,9 +1057,8 @@ class MonitorController {
                 JOIN %sincident i ON f.incident_id = i.id
                 JOIN %sincident_category ic ON ic.incident_id = i.id
                 JOIN %scategory c ON ic.category_id = c.id
-                JOIN %slocation AS l ON l.id = i.location_id";
-
-            $_cond_tmp = " WHERE $cond_csv";
+                JOIN %slocation AS l ON l.id = i.location_id
+                WHERE $cond_csv";
            
             // Datos extras de afectacion sigpad
             $_sqliex = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS sum, ff.field_name
