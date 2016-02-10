@@ -1079,7 +1079,7 @@ class MonitorController {
                 $subtotales['dn'][$_rowex->field_name] = $_rowex->sum*1;
             }
 
-            $_sqlr .= $cond_tmp;
+            $_sqlr .= $_cond_tmp;
 
             $_sql = $_sqlr." AND form_field_id = 4 GROUP BY category_id
                               ORDER BY sum DESC";
