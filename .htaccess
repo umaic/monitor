@@ -35,3 +35,5 @@
 	order allow,deny
 	deny from all
 </Files>
+
+ErrorDocument 404 http://monitor.salahumanitaria.co

@@ -18,6 +18,29 @@ var id_start_date = 'ini_date';
 var id_end_date = 'fin_date';
 var subtotales;
 
+// Temporal para fenomeno del niño
+// Datos de afectación desagregado sigpad, almacenado en subtotales cuando se hace totalesxd
+function setSubtotales() {
+    
+    var sub = subtotales.dn;
+    $bt = $('#chart_subtotal');
+
+    var html = '';
+    for (s in sub) {
+        var n = sub[s];
+
+        if (n > 0) {
+            html += '<div style="background-color: #f2f2f2;margin:1px;padding: 3px">' +
+                    '<div style="float:left">' + s + '</div>' + 
+                    '<div id="hectareas" class="right">'+numberWithCommas(sub[s]) + '</div>' +
+                    '<div class="clear"></div>' + 
+                    '</div>';
+        }
+    }
+
+    $bt.html(html);
+}
+
 $(function(){
 
     _today = new Date();
@@ -62,7 +85,8 @@ $(function(){
         
         // Desmarca todas las categorias de desastres
         $('#fcat_dn').find('.tn_fcat').click();
-        
+       
+        // Incendios, inundaciones, sequias
         $.each([1,3,8], function(index, value) {
             
             var $o = $('#cat_dn_' + value);
@@ -84,33 +108,55 @@ $(function(){
             $t = $('#chart_total');
 
             $t.css('width', '100%');
+
+            var $div_titulo_dn = $('#chart_total').find('.dn').find('.total_t');
+            var titulo_f_n_af = 'total personas afectadas fenómeno del niño';
             
-            $('#chart_total').find('.dn').find('.total_t').html('total fenómeno del niño');
+            $div_titulo_dn.html(titulo_f_n_af);
             
             $bt = $('#chart_subtotal');
             $bt.removeClass('left').removeClass('ec');
             
-            // Datos de afectación desagregado sigpad, almacenado en subtotales cuando se hace totalesxd
-            var sub = subtotales.dn;
+            setSubtotales();
+
+
+            // Oculta pies
+            //$('#chart_1').hide();
             
-            var html = '';
-            for (s in sub) {
-                var n = sub[s];
-
-                if (n > 0) {
-                    html += '<div style="background-color: #f2f2f2;margin:1px;padding: 3px">' +
-                            '<div style="float:left">' + s + '</div>' + 
-                            '<div id="hectareas" class="right">'+numberWithCommas(sub[s]) + '</div>' +
-                            '<div class="clear"></div>' + 
-                            '</div>';
-                }
-            }
-
-            $bt.html(html);
-
-            $('#chart_1').hide();
+            // Oculta pies
+            setTimeout(function(){ 
+                $('#chart_1, #charts_pie').hide();
+            }, 500);
                     
             ocultarViolenciaDesastres('ec');
+
+            // Si selecciona Eventos cambia titulos
+            $('div.mapa_tipo').click(function() {
+                if ($(this).data('tipo') == 'eventos') {
+                    $div_titulo_dn.html('total eventos fenómeno del niño');
+                    $bt.hide();
+                }
+                else {
+                    $div_titulo_dn.html(titulo_f_n_af);
+                    $bt.show();
+                    
+                }
+
+                setTimeout(function(){ 
+                    $('#chart_1, #charts_pie').hide();
+                }, 300);
+
+            });
+            
+            // Actualiza subotales sigpad del depto seleccionado
+            $('#depto_dropdown').on('click','li', function() {
+                setTimeout(setSubtotales, 500);
+                
+                setTimeout(function(){ 
+                    $('#chart_1, #charts_pie').hide();
+                }, 300);
+            });
+
         }, 100);
 
     });
@@ -132,8 +178,11 @@ $(function(){
         //setMapWidth();
     });
 
-    $(document).ajaxStart(function(){ $('#loading').show(); });
-    $(document).ajaxStop(function(){ $('#loading').hide(); });
+    $(document).ajaxStart(function(){ 
+        HoldOn.open({theme:"sk-dot"})
+    }).ajaxStop(function(){ 
+        HoldOn.close();
+    });
     
     // Intro text
     $('#lmh').click(function() {
@@ -1274,10 +1323,7 @@ charts = function(data_charts) {
     var title_style = { fontSize: '14px', margin: 0 }
 
     // No info
-    if (data_charts[0].data.length == 0 && 
-         data_charts[1].data.length == 0 && 
-         data_charts[2].data.length == 0
-        )
+    if (data_charts[0].data.length == 0 )
     {
         $('#chart_1').html('<h2>No hay información</h2>');
 

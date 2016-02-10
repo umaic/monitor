@@ -299,68 +299,8 @@ function addFeatures(inst) {
     
     var uparams = [['s', start], ['e', end], ['z', zoom], ['gl', group_level]];
     
-    if (inst == 'ecdn' || inst == 'dn') {
-        var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
-        var l_dn_source = new ol.source.Vector({});
-        
-        if (!layer_dn_exists) {
-            l_dn = new ol.layer.Vector({
-                title: 'Desastres Naturales',
-                style: styleFunction,
-                source: l_dn_source
-                });
-
-            map.addLayer(l_dn);
-
-            layer_dn_exists = true;
-        }
-        else {
-            l_dn.getSource().clear();
-            showHideLayers('dn');
-        }
-        
-        var _udn = addURLParameter(url_dn, uparams_dn);
-        
-        // States filter
-        _udn = addURLParameter(_udn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-        
-        // Tipo mapa
-        _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
-        
-        ajaxFeatures(_udn, l_dn);
-    }
-    
-    if (inst == 'ecdn' || inst == 'ec') {
-    
-        var uparams_ec = uparams.concat([['c', $('#currentCatE').val()]]);
-        var l_ec_source = new ol.source.Vector();
-        
-        if (!layer_ec_exists) {
-            l_ec = new ol.layer.Vector({
-                title: 'Violencia',
-                source: l_ec_source,
-                style: styleFunction
-                });
-
-            map.addLayer(l_ec);
-
-            layer_ec_exists = true;
-        }
-        else {
-            l_ec.getSource().clear();
-            showHideLayers('ec');
-        }
-
-        var _uec = addURLParameter(url_ec, uparams_ec);
-        
-        // States filter
-        _uec = addURLParameter(_uec, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-        
-        // Tipo mapa
-        _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
-        
-        ajaxFeatures(_uec, l_ec);
-    }
+    // Primero se consultan los featured y acceso,
+    // para que jenks se haga del cluster de último
     
     // Destacados, ft=fetured
     if (inst == 'ecdn' || inst == 'ft') {
@@ -432,6 +372,77 @@ function addFeatures(inst) {
         ajaxFeatures(_uft_ec, l_ec);
 
     }
+    
+    if (inst == 'ecdn' || inst == 'dn') {
+        var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
+        var l_dn_source = new ol.source.Vector({});
+        
+        if (!layer_dn_exists) {
+            l_dn = new ol.layer.Vector({
+                title: 'Desastres Naturales',
+                style: styleFunction,
+                source: l_dn_source
+                });
+
+            map.addLayer(l_dn);
+
+            layer_dn_exists = true;
+        }
+        else {
+            l_dn.getSource().clear();
+            showHideLayers('dn');
+        }
+        
+        if (l_dn.getVisible()) {
+        
+            var _udn = addURLParameter(url_dn, uparams_dn);
+            
+            // States filter
+            _udn = addURLParameter(_udn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+            
+            // Tipo mapa
+            _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
+            
+            ajaxFeatures(_udn, l_dn);
+        }
+    }
+    
+    
+    if (inst == 'ecdn' || inst == 'ec') {
+    
+        var uparams_ec = uparams.concat([['c', $('#currentCatE').val()]]);
+        var l_ec_source = new ol.source.Vector();
+        
+        if (!layer_ec_exists) {
+            l_ec = new ol.layer.Vector({
+                title: 'Violencia',
+                source: l_ec_source,
+                style: styleFunction
+                });
+
+            map.addLayer(l_ec);
+
+            layer_ec_exists = true;
+        }
+        else {
+            l_ec.getSource().clear();
+            showHideLayers('ec');
+        }
+
+        if (l_ec.getVisible()) {
+            var _uec = addURLParameter(url_ec, uparams_ec);
+            
+            // States filter
+            _uec = addURLParameter(_uec, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
+            
+            // Tipo mapa
+            _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
+            
+            ajaxFeatures(_uec, l_ec);
+        }
+
+    }
+    
 
     /*
     selectCtrl = new OpenLayers.Control.SelectFeature([l_ec, l_dn, l_ft],
@@ -483,8 +494,9 @@ function ajaxFeatures(u, l) {
                     cl = (len < jenks_cl) ? len -1 : jenks_cl;
                     jenks = serie.getClassJenks(cl);
                 }
-                
+
                 l.getSource().addFeatures(_f);
+                
                 $('#loading').hide();
 	
                 // Show/Hide icono de destacados
@@ -801,22 +813,21 @@ function styleFunction(feature, resolution) {
         colorStroke = '#' + feature.getProperties().color;
     }
         
-        var r = markerRadius;
-
-        for (var i=1;i<jenks.length;i++) {
-            if (size <= jenks[i]) {
-                r = (i==1) ? 7 : markerRadius * i;
-                break;
-            }
+    var r = markerRadius;
+    for (var i=1;i<jenks.length;i++) {
+        if (size <= jenks[i]) {
+            r = (i==1) ? 7 : markerRadius * i;
+            break;
         }
+    }
 
-        var textFill = new ol.style.Fill({
-            color: '#fff'
-        });
-        var textStroke = new ol.style.Stroke({
-            color: 'rgba(0, 0, 0, 0.6)',
-            width: 2
-        });
+    var textFill = new ol.style.Fill({
+        color: '#fff'
+    });
+    var textStroke = new ol.style.Stroke({
+        color: 'rgba(0, 0, 0, 0.6)',
+        width: 2
+    });
 
     style = [new ol.style.Style({
       image: new ol.style.Circle({
@@ -877,16 +888,26 @@ function showHideLayers(c) {
         $tabs.show();
         $slide_cluster.show();
         
+        /*
+        var _l;
+
         switch(c) {
             case 'ec':
-                l_ec.setVisible(true);
+                _l = l_ec;
             break;
             case 'dn':
-                l_dn.setVisible(true);
+                _l = l_dn;
             break;
             case 'ft':
-                l_ft.setVisible(true);
+                _l = l_ft;
             break;
         } 
+        */
+
+        var _l = eval('l_' + c);
+
+        if (_l.getVisible()) {
+            l_ft.setVisible(true);
+        }
     }
 }

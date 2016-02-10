@@ -19,6 +19,7 @@ if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/popover.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/geostats.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/nouislider.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/HoldOn.min.css" />
 <?php
 }
 else { ?>
@@ -76,14 +77,14 @@ function filesize_formatted($path)
     <div id="menu_div" class="left">
         <div id="menu" class="">
             <ul>
-                <li id="fen_nino" class="featured dn">
-                    <h3 style="font-size: 13px !important;margin:3px !important;">
+                <li id="fen_nino" class="featured dn" style="background:url(media/img/fenomeno_nino_bg.jpg);">
+                    <h3 style="font-size: 16px !important;margin:3px !important;">
                     Fenómeno del niño
                     </h3>
                     <div class="note">
                         Sequías, incendios forestales e inundaciones desde Marzo 2015
                         <br /><br />
-                        <u>Ver Eventos</u>
+                        <h3 style="font-size:15px ;margin:0"><i class="fa fa-map-marker"></i> <u>Ver Eventos</u></h3>
                     </div>
 
                 </li>
@@ -106,7 +107,7 @@ function filesize_formatted($path)
                     <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
                     -->
                 </li>
-                <li>OPCIONES</li>
+                <li><i class="fa fa-filter fa-2x"></i> OPCIONES</li>
                 <li class="sub" data-div="ini_fin">
                     <i class="fa fa-2x fa-calendar fa-pull-left"></i>Filtrar por fecha
                 </li>
@@ -862,6 +863,7 @@ function filesize_formatted($path)
         <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/focus-element-overlay.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/nouislider.min.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/HoldOn.min.js"></script>
 
     <?php
     }

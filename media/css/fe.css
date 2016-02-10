@@ -65,23 +65,6 @@ label {
     color: #2b1100;
     font-size: 13px;
 }
-#brand ul {
-    list-style: none;
-    display: inline-block;
-    margin: 5px 30px 0 0;
-}
-#brand ul li {
-    display: inline;
-}
-#brand ul li:before {
-    content: "\00BB"
-}
-#brand ul li a {
-    font-size: 16px !important;
-    color: #ffffff;
-    padding: 0 5px;
-    font-weight: normal !important;
-}
 #header a {
     color: #0066ff;
     font-size: 14px;

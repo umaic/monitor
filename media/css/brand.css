@@ -5,15 +5,28 @@
   src: url(OpenSans.woff) format('woff');
 }
 #brand {
-    color: #ffffff;
+    color: #333333;
     font-family: 'Open Sans';
     font-size: 18px;
-    padding: 10px 10px;
     text-align: left;
     font-weight: bold;
     background-color: #cccccc;
+    padding: 3px;
 }
-
-a.brand, a.brand {
-    text-decoration: none !important;
+#brand ul {
+    list-style: none;
+    display: inline-block;
+    margin: 5px 30px 0 0;
+}
+#brand ul li {
+    display: inline;
+}
+#brand ul li:before {
+    content: "\00BB"
+}
+#brand ul li a {
+    font-size: 14px !important;
+    padding: 0 5px;
+    font-weight: normal !important;
+    color: #333333;
 }
