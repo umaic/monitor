@@ -66,7 +66,7 @@ $(function(){
     */
 
     var _ini = _iniObj.getTime(); // milisecs
-    var _fin = new Date(_year,_month,_day,11,59).getTime();
+    var _fin = new Date(_year,_month,_day,23).getTime();
 
     // Para ushahidi va en segundos
     $('#' + id_start_date).val(_ini/1000);
@@ -1816,8 +1816,8 @@ function addLayerVariacion(dataJson) {
 
 function filterByPeriod(id,im,iy,fd,fm,fy) {
 
-    _ini = new Date(iy,im,id);
-    _fin = new Date(fy,fm,fd);
+    _ini = new Date(iy,im,id,0);
+    _fin = new Date(fy,fm,fd,23);
 
     $('#' + id_start_date).val(_ini/1000); // Segundos para ushahidi
     $('#' + id_end_date).val(_fin/1000); // Segundos para ushahidi
