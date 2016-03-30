@@ -1,5 +1,5 @@
-<?php 
-/** 
+<?php
+/**
  * Monitor(tm) : Rapid Development Framework (http://monitor.colombiassh.org)
  * Copyright 2012, OCHA Colombia (http://colombiassh.org)
  *
@@ -20,6 +20,11 @@ $cli = (isset($argv)) ? true : false;
 
 if ($cli === false) {
     session_start();
+
+    if (strpos($_SERVER['SERVER_NAME'], 'umaic') === false &&
+        strpos($_SERVER['SERVER_NAME'], 'local') === false) {
+        header('Location: http://monitor.umaic.org');
+    }
 }
 
 // PHP >= 5.3
@@ -58,10 +63,10 @@ else {
 if (!empty($mod)) {
     switch($mod) {
         case 'totalxd':
-            
+
             if (!empty($_GET['ini']) && is_numeric($_GET['ini'])) {
                 $ini = $_GET['ini'];
-            } 
+            }
             if (!empty($_GET['fin']) && is_numeric($_GET['fin'])) {
                 $fin = $_GET['fin'];
             }
@@ -71,18 +76,18 @@ if (!empty($mod)) {
             //$afectacion = (empty($_GET['afectacion'])) ? 0 : $_GET['afectacion'];
 
             $totalxd = $mc->totalxd($ini, $fin, $cats, $states);
-            
+
             header('Content-type: text/json');
-            header('Content-type: application/json'); 
+            header('Content-type: application/json');
 
             echo $totalxd;
         break;
-        
+
         case 'getIncidentesPortal':
-            
+
             if (!empty($_GET['ini']) && is_numeric($_GET['ini'])) {
                 $ini = $_GET['ini'];
-            } 
+            }
             if (!empty($_GET['fin']) && is_numeric($_GET['fin'])) {
                 $fin = $_GET['fin'];
             }
@@ -90,33 +95,33 @@ if (!empty($mod)) {
             $cats = (empty($_GET['c'])) ? array() : $_GET['c'];
             $states = (empty($_GET['states'])) ? array() : $_GET['states'];
             $incidentes = $mc->getIncidentesPortal($ini, $fin, $cats, $states, $_GET['limiti']);
-            
+
             header('Content-type: text/json');
             header('Content-type: application/json');
             echo $_GET['callback'] . '('.json_encode($incidentes).');';
         break;
-        
+
         case 'getResumenPortalHome':
-            
+
             if (!empty($_GET['ini']) && is_numeric($_GET['ini'])) {
                 $ini = $_GET['ini'];
-            } 
+            }
             if (!empty($_GET['fin']) && is_numeric($_GET['fin'])) {
                 $fin = $_GET['fin'];
             }
 
             $incidentes = $mc->getResumenPortalHome($ini, $fin);
-            
+
             header('Content-type: text/json');
             header('Content-type: application/json');
             echo $_GET['callback'] . '('.json_encode($incidentes).');';
 
         break;
-    
+
         case 'export':
             $mc->export($_GET['t'],$_GET['csv'],$_GET['nom']);
         break;
-        
+
         case 'download_incidents':
             $mc->downloadIncidents($_GET['f']);
         break;
@@ -128,23 +133,23 @@ if (!empty($mod)) {
         case 'genCachePdfDiario':
             $mc->genCachePdfDiario();
         break;
-        
+
         case 'genCacheReportesDiario':
             $mc->genCacheReportesDiario();
         break;
-        
+
         case 'genCacheTotalesDiario':
             $mc->genCacheTotalesDiario();
         break;
-        
+
         case 'totalPeriodo':
             $mc->totalPeriodo($_GET['vd'],$_GET['p'],$_GET['v']);
         break;
-        
+
         case 'checkCacheJson':
             $mc->checkCacheJson();
         break;
-        
+
         case 'variacion':
             $p1 = $_GET['p1'];
             $p2 = $_GET['p2'];
@@ -154,23 +159,23 @@ if (!empty($mod)) {
             $states = (empty($_GET['states'])) ? array() : $_GET['states'];
 
             header('Content-type: text/json');
-            header('Content-type: application/json'); 
+            header('Content-type: application/json');
 
             echo $mc->variacion($p1,$p2,$ecdn,$cats,$states);
         break;
 
         case 'geojson':
-            
+
             header('Content-type: text/json');
             header('Content-type: application/json');
-            
+
             $qs = $_GET;
             unset($qs['mod']);
             unset($qs['cluster']);
             unset($qs['server']);
 
             $server = $_GET['server'];
-            
+
             echo $mc->genJson($server.'/json/'.$_GET['cluster'].'/?', $qs);
 
         break;
@@ -194,14 +199,14 @@ else {
                                     ),
                        'dn' => array(0)
                       );
-    
+
     // Se usaba este para mostrar el total por años
     //$totalxy = $mc->total($cats_hide);
     $yyyy = date('Y');
     for ($a=$yyyy;$a>=$config['yyyy_ini'];$a--) {
         $totalxy[] = $a;
     }
-    
+
     $_t = $mc->totalecdn();
     $tec = $_t['ec'];
     $tdn = $_t['dn'];
@@ -219,7 +224,7 @@ else {
             $centroid = '';
             if (!empty($state)){
                 $state_info = $mc->getStateCentroid($state);
-                
+
                 $state_id = $state_info[0];
                 $centroid = $state_info[1];
             }
@@ -233,7 +238,7 @@ else {
     else {
         echo '._. No layout ._.';
     }
-    
+
 }
 
 ?>
