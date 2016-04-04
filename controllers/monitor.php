@@ -603,8 +603,8 @@ class MonitorController {
                     $_rss = $this->db->open($_sql_s);
                     $_row_s = $this->db->FO($_rss);
 
-                    $desc = $this->cleanText($_row_s->descr);
-                    $ref = $this->cleanText($_row_s->ref);
+                    $desc = (isset($_row_s->descr)) ? $this->cleanText($_row_s->descr) : '';
+                    $ref = (isset($_row_s->ref)) ? $this->cleanText($_row_s->ref) : '';
 
                     $source = (empty($_row_s->source)) ? '' : $_row_s->source;
 
