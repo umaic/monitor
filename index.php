@@ -92,13 +92,26 @@ if (!empty($mod)) {
                 $fin = $_GET['fin'];
             }
 
-            $cats = (empty($_GET['c'])) ? array() : $_GET['c'];
-            $states = (empty($_GET['states'])) ? array() : $_GET['states'];
-            $incidentes = $mc->getIncidentesPortal($ini, $fin, $cats, $states, $_GET['limiti']);
+            $cats = (empty($_GET['c'])) ? '' : $_GET['c'];
+            $states = (empty($_GET['states'])) ? '' : $_GET['states'];
+            $limiti = (empty($_GET['limiti'])) ? 0 : $_GET['limiti'];
 
+            $incidentes = $mc->getIncidentesPortal($ini, $fin, $cats, $states, $limiti);
             header('Content-type: text/json');
             header('Content-type: application/json');
-            echo $_GET['callback'] . '('.json_encode($incidentes).');';
+
+            $cb = false;
+            if (isset($_GET['callback'])) {
+                echo $_GET['callback'].'(';
+                $cb = true;
+            }
+
+            echo json_encode($incidentes);
+
+            if ($cb) {
+                echo ');';
+            }
+
         break;
 
         case 'getResumenPortalHome':
