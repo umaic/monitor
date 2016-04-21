@@ -22,7 +22,8 @@ if ($cli === false) {
     session_start();
 
     if (strpos($_SERVER['SERVER_NAME'], 'umaic') === false &&
-        strpos($_SERVER['SERVER_NAME'], 'local') === false) {
+        strpos($_SERVER['SERVER_NAME'], 'local') === false &&
+        strpos($_SERVER['SERVER_NAME'], 'portal2')) {
         header('Location: http://monitor.umaic.org');
     }
 }
