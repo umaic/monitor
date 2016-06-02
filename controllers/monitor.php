@@ -3,7 +3,7 @@
  * Main controller
  *
  * @package     Monitor
- * @link 		http://monitor.colombiashh.org/api
+ * @autor   Ruben Rojas C.
  */
 class MonitorController {
 
@@ -96,7 +96,7 @@ class MonitorController {
      */
     public function getConditions($ini, $fin, $cats, $states) {
 
-        date_default_timezone_set('UTC');  // Igual a emergencia compleja
+        date_default_timezone_set('UTC');  // Igual a USHAHIDI, violencia armada
 
         $ini = date('Y-m-d H:i:s', intval($ini));  // Se usa intval para que quede igual que ushahidi/application/helper/reports/ :740
         $fin = date('Y-m-d H:i:s', intval($fin));
@@ -540,7 +540,7 @@ class MonitorController {
 
         $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Fecha Fin Evento"'.$limi.'"# días evento"'.$limi.'"Título evento"'.$limi.'"Resumen evento"'.$limi.
                 '"Categorias (Subcategorias)"'.$limi.
-                //'"Acceso"'.$limi.
+                '"Acceso (para desastres)"'.$limi.
                 '"Resoluciones"'.$limi.
                 '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.'"Referecia"'.$limi.
                 '"Departamento"'.$limi.'"Municipio"'.$limi.'"Lugar"'.$limi.
@@ -636,8 +636,8 @@ class MonitorController {
                         INNER JOIN incident AS i ON fr.incident_id = i.id
                     WHERE form_field_id = %s AND incident_id = $iid";
 
-                    /*
-                    $form_field_id_acc = 1; // Preguntas de acceso
+                    
+                    $form_field_id_acc = 27; // Preguntas de acceso en desastres
 
                     $_sql_acc = sprintf($_sql_acc_1612,$form_field_id_acc);
 
@@ -648,7 +648,8 @@ class MonitorController {
                     }
 
                     $acceso = implode(',', $acceso);
-                    */
+
+                    // Resoluciones
 
                     $form_field_id_1612 = 2; // Preguntas de 1612
 
