@@ -718,7 +718,7 @@ class MonitorController {
                 $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->date_end.'"'.$limi.'"'.$_r->dias.'"'.$limi.
                         '"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
                         '"'.$_r->cats.'"'.$limi.
-                        //'"'.$acceso.'"'.$limi.
+                        '"'.$acceso.'"'.$limi.
                         '"'.$resoluciones.'"'.$limi.
                         '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
                         '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
