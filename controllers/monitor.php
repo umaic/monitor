@@ -656,7 +656,6 @@ class MonitorController {
                     // Acceso y 1612
                     $_sql_acc_1612 = "SELECT form_response AS r
                         FROM ".$_dbu."form_response AS fr
-                        INNER JOIN incident AS i ON fr.incident_id = i.id
                     WHERE form_field_id = %s AND incident_id = $iid";
 
                     
@@ -665,12 +664,10 @@ class MonitorController {
                     $_sql_acc = sprintf($_sql_acc_1612,$form_field_id_acc);
 
                     $_rsv = $this->db->open($_sql_acc);
-                    $acceso = array();
-                    while ($_row_a = $this->db->FO($_rsv)) {
-                        $acceso[] = $_row_a->r;
+                    $_row_a = $this->db->FO($_rsv);
+                    if (isset($_row_a->r)) {
+		        $acceso = $_row_a->r;
                     }
-
-                    $acceso = implode(',', $acceso);
 
                     $title = $_r->title;
                     $des = $this->cleanText($_r->des);
