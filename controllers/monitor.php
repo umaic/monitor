@@ -2,10 +2,15 @@
 /**
  * Main controller
  *
- * @package     Monitor
+ * @category Controller
+ * @package Monitor
+ * @author Ruben Rojas
+ * @link http://monitor.colombiashh.org/api
+ * @license https://www.gnu.org/licenses/gpl-3.0.en.html GNU General Public License
  * @autor   Ruben Rojas C.
  */
-class MonitorController {
+class MonitorController
+{
 
     private $db_dn;
     private $db;
@@ -19,7 +24,7 @@ class MonitorController {
         require dirname( __FILE__ ).'/../config.php';
 
         $this->lib_dir = $config['libraries'];
-
+        
         require $this->lib_dir."/factory.php";
 
         $this->config = $config;
@@ -535,6 +540,13 @@ class MonitorController {
             extract($conds);
         }
 
+        $_sql_f = "SELECT id, field_name AS n FROM ".$_db."form_field WHERE form_id = 1 AND field_type = 1";
+        $_rsf = $this->db->open($_sql_f);
+        while ($_row_f = $this->db->FO($_rsf)) {
+            $ids_form_afectacion_dn[] = $_row_f->id;
+            $name_form_afectacion_dn[] = $_row_f->n;
+        }
+
         $limi = '~';
         $nl = "\r\n";
 
@@ -543,12 +555,8 @@ class MonitorController {
                 '"Acceso (para desastres)"'.$limi.
                 '"Resoluciones"'.$limi.
                 '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.'"Referecia"'.$limi.
-                '"Departamento"'.$limi.'"Municipio"'.$limi.'"Lugar"'.$limi.
-                '"# Total Víctimas (Violencia armada) / Personas Afectadas (Desastres)"'.$limi.'"# Víctimas civiles"'.$limi.'"Víctimas militares"'.$limi.
-                '"# Víctimas menores 18 años"'.$limi.'"Víctimas mujeres"'.$limi.
-                '"# Víctimas afro"'.$limi.'"Víctimas indígenas"'.$limi.'"Víctimas otros"'.$limi.
-                '"Incidente o Accidente MAP/MUSE"'.
-                $nl;
+				'"Departamento"'.$limi.'"Municipio"'.$limi.'"Lugar"';
+
 
         $_sql_csv = "SELECT i.id AS id, i.incident_date AS date, i.incident_date_end AS date_end,
                     DATEDIFF(i.incident_date_end, i.incident_date) AS dias, i.incident_title AS title,
@@ -561,174 +569,188 @@ class MonitorController {
                  WHERE $cond_csv
                  GROUP BY i.id
                  ";
-        /*
-        $ushas = array(array('t' => 'Violencia armada', 'db' => '', 'cc' => $cond_cats_ec),
-            array( 't' => 'Desastres', 'db' => $_db, 'cc' => $cond_cats_dn));
-*/
 
         $ushas = array('v' => array('t' => 'Violencia armada', 'db' => '', 'cc' => $cond_cats_ec),
                        'd' => array( 't' => 'Desastres', 'db' => $_db, 'cc' => $cond_cats_dn));
 
-        //foreach($ushas as $u => $usha) {
+        if ($tipo == 'v') {
+            $csv .= $limi.'"# Total Víctimas"'.$limi.'"# Víctimas civiles"'.$limi.'"Víctimas militares"'.$limi.
+                '"# Víctimas menores 18 años"'.$limi.'"Víctimas mujeres"'.$limi.
+                '"# Víctimas afro"'.$limi.'"Víctimas indígenas"'.$limi.'"Víctimas otros"'.$limi.
+                '"Incidente o Accidente MAP/MUSE"';
+        } 
+        else {
+            // Formulario de afectacion desastres
+            foreach ($name_form_afectacion_dn as $name) {
+                // code...
+                $csv .= $limi.'"'.$name.'"';
+            }
+        }
+        
+        $csv .= $nl;
+
         $usha = $ushas[$tipo];
-            $_dbu = $usha['db'];
-            $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu,$_dbu,$usha['cc']);
+        $_dbu = $usha['db'];
+        $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu,$_dbu,$usha['cc']);
 
-            $_rs = $this->db->open($_sql_csv_ecdn);
-            while($_r = $this->db->FO($_rs)) {
+        $_rs = $this->db->open($_sql_csv_ecdn);
+        while($_r = $this->db->FO($_rs)) {
 
-                $des = $source = $desc = $ref = $cats = '';
-                $iid = $_r->id;
+            $des = $source = $desc = $ref = $cats = '';
+            $iid = $_r->id;
 
-                // Inicializa num victimas
-                for ($v=0; $v<7; $v++) {
-                    $num_v[$v] = '';
+            // Inicializa num victimas
+            for ($v=0; $v<7; $v++) {
+                $num_v[$v] = '';
+            }
+
+            $acceso = '';
+            $resoluciones = array();
+            
+            // Respuesta a formularios
+            $_sql_acc_1612 = "SELECT form_response AS r
+                FROM ".$_dbu."form_response AS fr
+            WHERE form_field_id = %s AND incident_id = $iid";
+
+            if ($tipo == 'v') {
+
+                $title = $_r->title;
+                $des = $this->cleanText($_r->des);
+
+                // Fuentes
+                // Todo: Ojo, revisar el tema que no se pueden mostrar bitacoras
+                $_sql_s = "SELECT source_desc AS descr, source_reference AS ref, source
+                FROM source_detail sd
+                INNER JOIN source s ON sd.source_id = s.id
+                WHERE incident_id = $iid LIMIT 1";
+
+                $_rss = $this->db->open($_sql_s);
+                $_row_s = $this->db->FO($_rss);
+
+                $desc = (isset($_row_s->descr)) ? $this->cleanText($_row_s->descr) : '';
+                $ref = (isset($_row_s->ref)) ? $this->cleanText($_row_s->ref) : '';
+
+                $source = (empty($_row_s->source)) ? '' : $_row_s->source;
+
+                // # victimas por condicion,age,gender,ethnic
+                $vcn = array('1' => array(1),
+                             'victim_condition_id' => array(2,4),
+                             'victim_age_id' => array(3),
+                             'victim_gender_id' => array(1),
+                             'victim_ethnic_group_id' => array(2,1,6),
+                         );
+
+                $v = 0;
+                foreach($vcn as $col => $vc) {
+                    foreach($vc as $cid) {
+
+                        $_sql_v = "SELECT SUM(victim_cant) AS num FROM victim WHERE $col = $cid AND incident_id = $iid GROUP BY incident_id";
+                        $_rsv = $this->db->open($_sql_v);
+                        $_row_v = $this->db->FO($_rsv);
+
+                        $num_v[$v] = (!empty($_row_v->num)) ? $_row_v->num : '';
+
+                        $v++;
+                    }
                 }
 
-                $acceso = '';
-                $resoluciones = array();
+                // Resoluciones
+                $form_field_id_1612 = 2; // Preguntas de 1612
 
-                if ($tipo == 'v') {
+                $_sql_1612 = sprintf($_sql_acc_1612,$form_field_id_1612);
 
-                    $title = $_r->title;
-                    $des = $this->cleanText($_r->des);
+                $_rsv = $this->db->open($_sql_1612);
+                while ($_row_a = $this->db->FO($_rsv)) {
 
-                    // Fuentes
-                    // Todo: Ojo, revisar el tema que no se pueden mostrar bitacoras
-                    $_sql_s = "SELECT source_desc AS descr, source_reference AS ref, source
-                    FROM source_detail sd
-                    INNER JOIN source s ON sd.source_id = s.id
-                    WHERE incident_id = $iid LIMIT 1";
+                    $r = $_row_a->r;
 
-                    $_rss = $this->db->open($_sql_s);
-                    $_row_s = $this->db->FO($_rss);
-
-                    $desc = (isset($_row_s->descr)) ? $this->cleanText($_row_s->descr) : '';
-                    $ref = (isset($_row_s->ref)) ? $this->cleanText($_row_s->ref) : '';
-
-                    $source = (empty($_row_s->source)) ? '' : $_row_s->source;
-
-                    // # victimas por condicion,age,gender,ethnic
-                    $vcn = array('1' => array(1),
-                                 'victim_condition_id' => array(2,4),
-                                 'victim_age_id' => array(3),
-                                 'victim_gender_id' => array(1),
-                                 'victim_ethnic_group_id' => array(2,1,6),
-                             );
-
-                    $v = 0;
-                    foreach($vcn as $col => $vc) {
-                        foreach($vc as $cid) {
-
-                            $_sql_v = "SELECT SUM(victim_cant) AS num FROM victim WHERE $col = $cid AND incident_id = $iid GROUP BY incident_id";
-                            $_rsv = $this->db->open($_sql_v);
-                            $_row_v = $this->db->FO($_rsv);
-
-                            $num_v[$v] = (!empty($_row_v->num)) ? $_row_v->num : '';
-
-                            $v++;
-                        }
+                    if (strpos($r,'res_1612') !== false) {
+                        $resoluciones[] = 'NAN';
                     }
 
-                    // Resoluciones
-
-                    $form_field_id_1612 = 2; // Preguntas de 1612
-
-                    $_sql_1612 = sprintf($_sql_acc_1612,$form_field_id_1612);
-
-                    $_rsv = $this->db->open($_sql_1612);
-                    while ($_row_a = $this->db->FO($_rsv)) {
-
-                        $r = $_row_a->r;
-
-                        if (strpos($r,'res_1612') !== false) {
-                            $resoluciones[] = 'NAN';
-                        }
-
-                        if (strpos($r,'res_1820')) {
-                            $resoluciones[] = 'VSBG';
-                        }
+                    if (strpos($r,'res_1820')) {
+                        $resoluciones[] = 'VSBG';
                     }
-
                 }
-                else {
                     
-                    // Acceso y 1612
-                    $_sql_acc_1612 = "SELECT form_response AS r
-                        FROM ".$_dbu."form_response AS fr
-                    WHERE form_field_id = %s AND incident_id = $iid";
 
-                    
-                    $form_field_id_acc = 27; // Preguntas de acceso en desastres
+            }
+            else {
+                $title = $_r->title;
+                $des = $this->cleanText($_r->des);
 
-                    $_sql_acc = sprintf($_sql_acc_1612,$form_field_id_acc);
+                $_sql_s = "SELECT media_link AS descr
+                FROM ".$_dbu."media m
+                WHERE media_type = 4 AND incident_id = $iid";
 
-                    $_rsv = $this->db->open($_sql_acc);
-                    $_row_a = $this->db->FO($_rsv);
-                    if (isset($_row_a->r)) {
-		        $acceso = $_row_a->r;
-                    }
+                $_rss = $this->db->open($_sql_s);
+                $_row_s = $this->db->FO($_rss);
 
-                    $title = $_r->title;
-                    $des = $this->cleanText($_r->des);
+                $source = (empty($_row_s->descr)) ? '' : $_row_s->descr;
+                
+                // Acceso desastres
+                $form_field_id_acc = 27; // Preguntas de acceso en desastres
 
-                    $_sql_s = "SELECT media_link AS descr
-                    FROM ".$_dbu."media m
-                    WHERE media_type = 4 AND incident_id = $iid";
+                $_sql_acc = sprintf($_sql_acc_1612,$form_field_id_acc);
 
-                    $_rss = $this->db->open($_sql_s);
-                    $_row_s = $this->db->FO($_rss);
-
-                    $source = (empty($_row_s->descr)) ? '' : $_row_s->descr;
-
-                    // Victimas, personas
-                    $_sql_v = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS num
-                    FROM ".$_dbu."form_response
-                    WHERE form_field_id = 4 AND incident_id = $iid";
-
-                    $_rsv = $this->db->open($_sql_v);
-                    $_row_v = $this->db->FO($_rsv);
-
-                    $num_v[0] = $_row_v->num;
-
+                $_rsv = $this->db->open($_sql_acc);
+                $_row_a = $this->db->FO($_rsv);
+                if (isset($_row_a->r)) {
+                    $acceso = $_row_a->r;
                 }
+            }
 
-                $_sql_c = "SELECT city from city WHERE id = ".$_r->city_id." LIMIT 1";
-                $_rss_c = $this->db->open($_sql_c);
-                $_row_c = $this->db->FO($_rss_c);
+            $_sql_c = "SELECT city from city WHERE id = ".$_r->city_id." LIMIT 1";
+            $_rss_c = $this->db->open($_sql_c);
+            $_row_c = $this->db->FO($_rss_c);
 
-                $city = (empty($_row_c->city)) ? '' : $_row_c->city;
+            $city = (empty($_row_c->city)) ? '' : $_row_c->city;
 
-                $_sql_s = "SELECT state from state WHERE id = ".$_r->state_id." LIMIT 1";
-                $_rss_s = $this->db->open($_sql_s);
-                $_row_s = $this->db->FO($_rss_s);
+            $_sql_s = "SELECT state from state WHERE id = ".$_r->state_id." LIMIT 1";
+            $_rss_s = $this->db->open($_sql_s);
+            $_row_s = $this->db->FO($_rss_s);
 
-                // Incidente o Accidente con Uso de explosivos remanentes de guerra ?
-                $_cat_uerg = "35";
-                $inc_acc = '';
-                if (strpos($_r->parents_id, $_cat_uerg) !== false) {
-                    $inc_acc = ($num_v[0] > 0) ? 'Accidente' : 'Incidente';
-                }
+            // Incidente o Accidente con Uso de explosivos remanentes de guerra ?
+            $_cat_uerg = "35";
+            $inc_acc = '';
+            if (strpos($_r->parents_id, $_cat_uerg) !== false) {
+                $inc_acc = ($num_v[0] > 0) ? 'Accidente' : 'Incidente';
+            }
 
-                $resoluciones = implode(',', $resoluciones);
+            $resoluciones = implode(',', $resoluciones);
 
-                $state = (empty($_row_s->state)) ? '' : $_row_s->state;
-                $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->date_end.'"'.$limi.'"'.$_r->dias.'"'.$limi.
-                        '"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
-                        '"'.$_r->cats.'"'.$limi.
-                        '"'.$acceso.'"'.$limi.
-                        '"'.$resoluciones.'"'.$limi.
-                        '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
-                        '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
+            $state = (empty($_row_s->state)) ? '' : $_row_s->state;
+            $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->date_end.'"'.$limi.'"'.$_r->dias.'"'.$limi.
+                    '"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
+                    '"'.$_r->cats.'"'.$limi.
+                    '"'.$acceso.'"'.$limi.
+                    '"'.$resoluciones.'"'.$limi.
+                    '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
+                    '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
 
+            if ($tipo == 'v') {
                 // Victimas
                 foreach($num_v as $nv) {
                     $csv .= $nv.$limi;
                 }
-
-                $csv .= '"'.$inc_acc.'"'.$nl;
-
             }
+            else {
+                // Afectados
+                foreach ($ids_form_afectacion_dn as $idf) {
+                    $_sql_v = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS num
+                    FROM ".$_dbu."form_response
+                    WHERE form_field_id = $idf AND incident_id = $iid";
+
+                    $_rsv = $this->db->open($_sql_v);
+                    $_row_v = $this->db->FO($_rsv);
+
+                    $csv .= $_row_v->num.$limi;
+                }
+            }
+
+            $csv .= '"'.$inc_acc.'"'.$nl;
+
+        }
         //}
 
         //echo $csv;
