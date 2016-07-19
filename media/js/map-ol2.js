@@ -158,12 +158,9 @@ function mapRender() {
     });
 
     var ly = new OpenLayers.Layer.XYZ(
-            "OpenStreetMap", 
+            "Base Layer", 
             [
-                "http://otile1.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png",
-                "http://otile2.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png",
-                "http://otile3.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png",
-                "http://otile4.mqcdn.com/tiles/1.0.0/map/${z}/${x}/${y}.png"
+                'https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/${z}/${x}/${y}?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
             ],
             {
                 attribution: "Ver mas detalles en &nbsp;<img src='http://monitor.salahumanitaria.co/favicon.ico'> <a href='http://monitor.salahumanitaria.co' target='_blank'>monitor.salahumanitaria.co</a>",
