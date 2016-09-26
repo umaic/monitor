@@ -163,7 +163,7 @@ function mapRender() {
                 'https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/${z}/${x}/${y}?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
             ],
             {
-                attribution: "Ver mas detalles en &nbsp;<img src='http://monitor.salahumanitaria.co/favicon.ico'> <a href='http://monitor.salahumanitaria.co' target='_blank'>monitor.salahumanitaria.co</a>",
+                attribution: "Ver mas detalles en &nbsp;<img src='https://monitor.salahumanitaria.co/favicon.ico'> <a href='http://monitor.umaic.org' target='_blank'>monitor.umaic.org</a>",
                 transitionEffect: "resize",
                 zoomOffset: _zoomOffset,
                 sphericalMercator: true,
