@@ -21,7 +21,7 @@ var subtotales;
 // Temporal para fenomeno del niño
 // Datos de afectación desagregado sigpad, almacenado en subtotales cuando se hace totalesxd
 function setSubtotales() {
-    
+
     var sub = subtotales.dn;
     $bt = $('#chart_subtotal');
 
@@ -31,9 +31,9 @@ function setSubtotales() {
 
         if (n > 0) {
             html += '<div style="background-color: #f2f2f2;margin:1px;padding: 3px">' +
-                    '<div style="float:left">' + s + '</div>' + 
+                    '<div style="float:left">' + s + '</div>' +
                     '<div id="hectareas" class="right">'+numberWithCommas(sub[s]) + '</div>' +
-                    '<div class="clear"></div>' + 
+                    '<div class="clear"></div>' +
                     '</div>';
         }
     }
@@ -47,7 +47,7 @@ $(function(){
     _year = _today.getFullYear();
     _month = _today.getMonth();
     _day = _today.getDate();
-    
+
     // Este bloque cuando el periodo inicial era una semana
     var _ms = 2;  // Meses hacia atras
     var _ds = 7; // Dias iniciales hacia atras
@@ -77,18 +77,18 @@ $(function(){
 
     setYear('ini',_iniY);
     setYear('fin',_year);
-    
+
     // ******** Fenomeno del niño
-    $('#fen_nino').click(function(){ 
-    
+    $('#fen_nino').click(function(){
+
         filterByPeriod(1,2,2015,_day,_month,_year);
-        
+
         // Desmarca todas las categorias de desastres
         $('#fcat_dn').find('.tn_fcat').click();
-       
+
         // Incendios, inundaciones, sequias
         $.each([1,3,8], function(index, value) {
-            
+
             var $o = $('#cat_dn_' + value);
 
             $o.iCheck('check');
@@ -96,12 +96,12 @@ $(function(){
         });
 
         setCatsHidden();
-        
+
         addFeatures('dn');
         totalesxDepto();
 
-        setTimeout(function(){ 
-            
+        setTimeout(function(){
+
             // Titulo y fechas
             var tgta = 'Fenómeno del niño - Afectados';
             var tgte = 'Fenómeno del niño - Eventos';
@@ -109,36 +109,36 @@ $(function(){
             $('#tgt').html(tgta);
 
             $('#chart_total').find('.ec').hide();
-            
+
             $t = $('#chart_total');
 
             $t.css('width', '100%');
 
             var $div_titulo_dn = $('#chart_total').find('.dn').find('.total_t');
             var titulo_f_n_af = 'total personas afectadas fenómeno del niño';
-            
+
             $div_titulo_dn.html(titulo_f_n_af);
-            
+
             $bt = $('#chart_subtotal');
             $bt.removeClass('left').removeClass('ec');
-            
+
             setSubtotales();
 
 
             // Oculta pies
             //$('#chart_1').hide();
-            
+
             // Oculta pies
-            setTimeout(function(){ 
+            setTimeout(function(){
                 $('#chart_1, #charts_pie').hide();
             }, 500);
-                    
+
             ocultarViolenciaDesastres('ec');
 
             // Si selecciona Eventos cambia titulos
             $('div.mapa_tipo').click(function() {
 
-                setTimeout(function(){ 
+                setTimeout(function(){
                     $('#chart_1, #charts_pie').hide();
 
                     if ($(this).data('tipo') == 'eventos') {
@@ -155,12 +155,12 @@ $(function(){
                 }, 1000);
 
             });
-            
+
             // Actualiza subotales sigpad del depto seleccionado
             $('#depto_dropdown').on('click','li', function() {
                 setTimeout(setSubtotales, 500);
-                
-                setTimeout(function(){ 
+
+                setTimeout(function(){
                     $('#chart_1, #charts_pie').hide();
                 }, 1000);
             });
@@ -169,29 +169,29 @@ $(function(){
 
     });
     // ******** Fenomeno del niño
-    
+
     if (typeof portal !== "undefined") {
         is_portal = true;
     }
-    
+
     if (typeof layout === "undefined") {
         layout = 'monitor';
     }
-    
+
     set100Height();
     //setMapWidth();
 
-    $(window).resize(function(){ 
+    $(window).resize(function(){
         set100Height();
         //setMapWidth();
     });
 
-    $(document).ajaxStart(function(){ 
+    $(document).ajaxStart(function(){
         HoldOn.open({theme:"sk-dot"})
-    }).ajaxStop(function(){ 
+    }).ajaxStop(function(){
         HoldOn.close();
     });
-    
+
     // Intro text
     $('#lmh').click(function() {
         m({
@@ -200,7 +200,7 @@ $(function(){
             w: 850,
             h: 400
         });
-		
+
         // prevent the default action
 		return false;
 	});
@@ -210,14 +210,14 @@ $(function(){
     $menu_li.click(function() {
 
         $('.filtro').fadeOut(100);
-        
+
         // Top del filtro
         var $div = $('#' + $(this).data('div'));
         var topx = 30*$div.data('index') + 'px';
 
         $div.css('top', topx);
         $div.fadeIn(100);
-        
+
         $menu_li.removeClass('menu_activo');
         $(this).addClass('menu_activo');
     });
@@ -228,9 +228,9 @@ $(function(){
         $(this).siblings('div.filtro').slideDown();
     });
     */
-    
+
     if (layout == 'monitor') {
-        
+
         // [ INICIO Promocionar variacion ]
         // Resalta funcionalidad
         /*
@@ -240,12 +240,12 @@ $(function(){
             hideOnESC: true,
             findOnResize: true
         };
-        
+
         setTimeout(function(){$('li[data-div="variacion"]').click(); Focusable.setFocus($('div#variacion'), options) }, 1000);
-        
+
         setTimeout(function(){ Focusable.hide(); $('div#variacion').hide(); }, 7000);
         */
-        
+
         // [FIN Promocionar variacion]
 
         $('input').iCheck({
@@ -253,13 +253,13 @@ $(function(){
             radioClass: 'iradio_square-orange'
         });
 
-    
+
         $('.btn_fcat').click(function() {
 
             setCatsHidden();
 
             var inst = $(this).data('inst');
-            
+
             // Si es filtrar mapa desde acceso, cambia el texto de ocultar
             // eventos en desastres
             acceso = false;
@@ -268,10 +268,10 @@ $(function(){
 
                 acceso = true;
             }
-            
+
             addFeatures(inst);
             totalesxDepto();
-            
+
             $(this).closest('.filtro').hide();
 
         });
@@ -282,48 +282,48 @@ $(function(){
             var cs = $(this).data('s');
 
             ocultarViolenciaDesastres(cs);
-            
-            
+
+
             $(this).closest('.filtro').hide();
-            
+
         });
 
         //  Categorias : Todas/ninguna
         var td_ec = false;
-        $('.tn_fcat').click(function() { 
+        $('.tn_fcat').click(function() {
             $(this).closest('.filtro').find('input:checkbox').each(function() {
-                
+
                 if (td_ec === false) {
                     $(this).iCheck('uncheck');
                 }
                 else {
                     $(this).iCheck('check');
                 }
-                
+
                 $(this).attr('checked', td_ec);
             });
-            
+
             td_ec = !td_ec;
-            
+
             return false;
         });
 
         // Categorias : Click en categoria papa
-        $('input.cp:checkbox').on('ifClicked', function(){ 
+        $('input.cp:checkbox').on('ifClicked', function(){
 
             var chkp = $(this).attr('checked');
-            
+
             if (chkp) {
                 $(this).iCheck('uncheck');
             }
             else {
                 $(this).iCheck('check');
             }
-            
+
             $(this).attr('checked', !$(this).attr('checked'));
-           
-            $(this).closest('ul.cats').find('input.ch:checkbox').each(function(){ 
-                
+
+            $(this).closest('ul.cats').find('input.ch:checkbox').each(function(){
+
                 if (chkp) {
                     $(this).iCheck('uncheck');
                 }
@@ -332,35 +332,35 @@ $(function(){
                 }
             });
         });
-        
+
         // Minimize - Maximize total
         $('#minmax_total').toggle(
-            function() { 
-                //$('.ui-tabs-panel, #mapas_tipos').hide(); 
-                $('.ui-tabs-panel').hide(); 
-                $(this).removeClass('minimize'); 
-                $(this).addClass('maximize'); 
-            }, 
-            function() { 
-                //$('.ui-tabs-panel, #mapas_tipos').show(); 
-                $('.ui-tabs-panel').show(); 
-                $(this).addClass('minimize'); 
-                $(this).removeClass('maximize'); 
+            function() {
+                //$('.ui-tabs-panel, #mapas_tipos').hide();
+                $('.ui-tabs-panel').hide();
+                $(this).removeClass('minimize');
+                $(this).addClass('maximize');
+            },
+            function() {
+                //$('.ui-tabs-panel, #mapas_tipos').show();
+                $('.ui-tabs-panel').show();
+                $(this).addClass('minimize');
+                $(this).removeClass('maximize');
             }
         );
 
         // Deptos: Todos/ninguno
         var td_st = false;
-        $('#totalxd_all_chk').click(function() { 
+        $('#totalxd_all_chk').click(function() {
             $('#table_totalxd').find(':checkbox:not(:first)').each(function() {
                 $(this).attr('checked', td_st);
             });
-            
+
             td_st = !td_st;
         });
 
         // Filtrar deptos
-        $('#filter_states').click(function(){ 
+        $('#filter_states').click(function(){
             addFeaturesFirstTime();
             totalesxDepto();
         });
@@ -378,57 +378,57 @@ $(function(){
         });
 
         // Total por años inicio
-        $('.menu_totales').click(function(){ 
+        $('.menu_totales').click(function(){
             if (totales_ini) {
                 totalPeriodo('y', _year);
                 totales_ini = false;
             }
         });
-        
+
         // Total por años select
-        $('#total_periodo_yyyy').change(function(){ 
+        $('#total_periodo_yyyy').change(function(){
             totalPeriodo('y', $(this).val());
         });
 
         // Cerrar filtro
-        $('a.close').click(function() { 
+        $('a.close').click(function() {
             $(this).closest('.filtro').hide();
             $('li[data-div="' + $(this).attr('data-div') + '"]').removeClass('menu_activo');
         });
-        
+
         // Cerrar opciones fecha
-        $('.filtro_fecha').find('div.close').click(function() { 
+        $('.filtro_fecha').find('div.close').click(function() {
             $(this).closest('.filtro_fecha').hide();
         });
 
         $('input[name=rap]').on('ifClicked', function(event){
             applyPeriod($(this).val());
         });
-        
+
         // Total por años
-        $('li.menu_totales').click(function() { 
+        $('li.menu_totales').click(function() {
             if (totales_inicio) {
                 totalPeriodo(_year);
                 totales_inicio = false;
-            } 
+            }
         });
-        
+
         // Variacion
         $('#btn_variacion').click(function() {
-            
+
             /*
             if ($('#variacion_p1_ini_text').val() == '' || $('#variacion_p1_fin_text').val() == ''
-                || $('#variacion_p2_ini_text').val() == '' || $('#variacion_p2_fin_text').val() == ''   
+                || $('#variacion_p2_ini_text').val() == '' || $('#variacion_p2_fin_text').val() == ''
                     ) {
 
                 alert('Todas las fechas son obligatorias');
 
                 return false;
-            } 
+            }
             */
 
             variacion();
-            
+
             $(this).closest('.filtro').hide();
 
         });
@@ -449,19 +449,19 @@ $(function(){
             },
         });
 
-        slider.noUiSlider.on('change', function(values, handle){ 
+        slider.noUiSlider.on('change', function(values, handle){
 
             $('#group_level').val(Math.round(values[handle]) - (slider_max/2));
-            
+
             // Refresh Map
             addFeatures();
         });
     }
-    
+
     // Tipo de mapa
     $('.mapa_tipo:not(.active)').click(function() {
         var that = this;
-        
+
         $.ajax({
             url: 'session_var/mapa_tipo/' + $(that).data('tipo'),
             success: function() {
@@ -472,7 +472,7 @@ $(function(){
             }
         });
     });
-    
+
     // Group - Ungroup
     $('#group_fts').click(function() {
 
@@ -481,17 +481,17 @@ $(function(){
 
         _cluster = !_cluster;
 
-        var dgt = (_cluster) ? 'Desagrupado' : 'Agrupado'; 
+        var dgt = (_cluster) ? 'Desagrupado' : 'Agrupado';
 
         $(this).find('span').html(dgt);
 
         addFeaturesFirstTime();
         totalesxDepto();
-        
+
         // Activa resumen
         $('#tabs').tabs("select", 1);
     });
-    
+
     $('#layers').click(function() {
         $('#layers_div').toggle();
     });
@@ -514,11 +514,11 @@ $(function(){
 
         addWMSLayer($t.val(),$t.val(),v);
     });
-    
+
     $('#depto').click(function() {
         $('#depto_dropdown').toggle();
     });
-    
+
     $('#depto_dropdown').on('click','li', function() {
 
         $li = $(this);
@@ -530,33 +530,33 @@ $(function(){
         if ($li.data('value') == 0) {
             $chks.prop('checked', true);
             resetMap(); // map.js
-        } 
+        }
         else {
             $chks.each(function(){
                 chk = ($(this).val() == $li.data('value')) ? true : false;
                 $(this).prop('checked', chk);
             });
-            
+
             selDepto($li.data('centroid'));   // in map.js
         }
-       
+
         var html = ($li.html() != 'Todos') ? $li.html() : 'Colombia';
 
         $('#depto_t').html(html);
 
         addFeatures();
-        
+
         totalesxDepto();
 
     });
-    
+
     $('#collapse').click(function() {
         $('.op').toggle();
         $(this).toggleClass('expand');
     });
 
     if (layout != 'monitor') {
-        // Dropdown de periodos 
+        // Dropdown de periodos
         $('#stime').change(function() {
             applyPeriod($(this).val());
             addFeatures();
@@ -565,27 +565,27 @@ $(function(){
     }
 
     // Click categorias en resumen
-    $('.resumen_row', '#resumen_ec').live('click', function(){ 
+    $('.resumen_row', '#resumen_ec').live('click', function(){
 
         $('#fcat_ec').find('input:checkbox').attr('checked', false);
         $('#fcat_ec').find('input:checkbox[value='+$(this).attr('id')+']').attr('checked', true);
-        
+
         setCatsHidden();
         //addFeatures($(this).attr("class").split(' ')[0]);
         addFeatures('ec');
         totalesxDepto();
     });
-    
+
     if (layout != 'portal_home') {
-        
+
         // Colocar categorias en inputs hidden para envio a json/cluster
         setCatsHidden();
-    
+
         //Tabs
         if ($('#tabs').length > 0) {
             $('#tabs').tabs();
         }
-    
+
         // Fecha inicio - Fecha fin
         $('.fecha').click(function (){
             var div = $(this).data('div');
@@ -593,21 +593,21 @@ $(function(){
             $('div.filtro_fecha:not(#' + div + ')').hide();
             $('#' + div).slideToggle();
         });
-    
+
         $('div.filtro_fecha').each(function() {
-        
+
             var that = this;
 
-            $(this).find('li').click(function() { 
-                
+            $(this).find('li').click(function() {
+
                 $(this).closest('div').find('li').removeClass('selected');
                 $(this).addClass('selected');
-                
+
                 var q = $(this).data('q');
                 var $div = $('#' + q + '_div');
-                
+
                 if ($div.find('li.selected').length == 3) {
-                
+
                     var $div_ini = $(this).closest('fieldset').find('div.filtro_fecha[data-if="ini"]');
                     var $div_fin = $(this).closest('fieldset').find('div.filtro_fecha[data-if="fin"]');
 
@@ -618,7 +618,7 @@ $(function(){
 
                     var _fin = new
                     Date($div_fin.find('ul.yyyy > li.selected').data('val'),$div_fin.find('ul.mes > li.selected').data('val')-1,$div_fin.find('ul.dia > li.selected').data('val'),23,59).getTime();
-                    
+
                     if (_ini > _fin) {
                         alert('Desde debe ser menor que Hasta');
                         $input.val('');
@@ -628,7 +628,7 @@ $(function(){
                     else {
                         $input.val($div.find('ul.dia > li.selected').text() + ' de ' +
                         $div.find('ul.mes > li.selected').text() + ' ' + $div.find('ul.yyyy > li.selected').text());
-                        
+
                         $div_ini.find('input:hidden').val(_ini / 1000);
                         $div_fin.find('input:hidden').val(_fin / 1000);
                         //$('#stime').val(0);
@@ -636,14 +636,14 @@ $(function(){
                 }
             });
         });
-    
+
         $('div.filtro_fecha').find('.close').click(function() {  $('div.filtro_fecha').slideUp(); });
-    
+
         $('#lff').click(function() {
-            
+
             var _ini = getStartEnd('ini');
             var _fin = getStartEnd('fin');
-            
+
             if (_ini > _fin) {
                 alert('La fecha Desde debe ser menor que la fecha Hasta');
             }
@@ -653,17 +653,17 @@ $(function(){
             }
 
             return false;
-        
+
         });
     }
-    
+
     // Check settings.monitor_cache_json para ver si borra
     // archivos
     checkCacheJson();
     totalesxDepto();
 
     mapRender();
-    
+
     // Click en el departamento en la lista derecha
     var $table = $('#table_totalxd');
 
@@ -675,7 +675,7 @@ $(function(){
             $(this).closest('tr').addClass('unselected');
         }
     });
-                
+
     // Row events
     //$table.find('tr:not(:first) td.n, tr:not(:last) td.n').live('click', function() {
     //});
@@ -687,25 +687,25 @@ $(function(){
         success: function(html){
 
             $ul = $('#layers_ul');
-        
+
             $ul.append(html);
-                
+
             // Ordena por nombre
-            $ul.append($ul.find('li').sort(function(a, b) { 
+            $ul.append($ul.find('li').sort(function(a, b) {
 
                 aa = $(a).find('h3').text();
                 bb = $(b).find('h3').text();
 
                 return aa == bb ? 0 : aa < bb ? -1 : 1
              }));
-            
+
             $ul.find('input').iCheck({
                 checkboxClass: 'icheckbox_square-orange',
                 radioClass: 'iradio_square-orange'
             });
         }
     });
-            
+
     // Busca layers en el listado de geonode
     $('#layers_search').keyup(function(e) {
         clearTimeout($.data(this, 'timer'));
@@ -721,12 +721,12 @@ $(function(){
 function search(force) {
     var $i = $("#layers_search");
     var existingString = $i.val();
-    
+
     if (!force && existingString.length < 3) return;
 
     var $l = $('#layers_ul li');
 
-    $l.each(function(){ 
+    $l.each(function(){
 
         var re = new RegExp(existingString, 'i');
 
@@ -754,35 +754,35 @@ function ocultarViolenciaDesastres(cs) {
 
     }
     else {
-        
+
         ly = l_dn;
-        
+
         $r_hide = $('#resumen_dn');
         $r_show = $('#resumen_ec');
 
         //$eventos_desastres = $('#report_list_map_desastres');
-        
-        
+
+
     }
 
     var $btn = $('div[data-s="' + cs + '"]');
-    
+
     if (ly.getVisible()) {
-        $btn.html('Mostrar eventos'); 
+        $btn.html('Mostrar eventos');
         ly.setVisible(false);
         v_chart_serie = false;
 
         $r_hide.hide();
         $r_show.removeClass('left half');
         //$eventos_desastres.hide();
-    
+
         ocultar = cs;
     }
     else {
-        $btn.html('Ocultar eventos'); 
+        $btn.html('Ocultar eventos');
         ly.setVisible(true);
         v_chart_serie = true;
-        
+
         $r_hide.show();
         $r_show.addClass('left half');
         //$eventos_desastres.show();
@@ -792,26 +792,26 @@ function ocultarViolenciaDesastres(cs) {
 
     // Capa destacados
     l_ft.setVisible(!l_ft.getVisible());
-    
+
     // Gráfica de linea de tiempos
     if ($('#chart_1').highcharts() !== undefined) {
-        $('#chart_1').highcharts().get(cs).setVisible(v_chart_serie,true); 
+        $('#chart_1').highcharts().get(cs).setVisible(v_chart_serie,true);
     }
 
     if (cs == 'ec') {
         $('#charts_pie').toggle();
-    } 
+    }
 
     // En tabla por departamentos
     $('#table_totalxd').find('.' + cs).hide();
-    
+
 
 }
 function applyPeriod(val) {
     if (val != 0) {
         var _ini = getStartEnd('ini');
         var _fin = getStartEnd('fin');
-        
+
         var _iiObj = new Date(_year,_month,_day,0,0);
         var _ii = _iiObj.getTime();
 
@@ -859,7 +859,7 @@ function applyPeriod(val) {
         //$('#dslider').dateRangeSlider('values', _ini,_fin);
         $('#' + id_start_date).val(_ini/1000); // Segundos para ushahidi
         $('#' + id_end_date).val(_fin/1000); // Segundos para ushahidi
-        
+
         var _iniY = _ini.getFullYear();
         var _finY = _fin.getFullYear();
 
@@ -877,12 +877,12 @@ function applyPeriod(val) {
     }
 }
 
-m = function(o){	
-	
+m = function(o){
+
     if($('#dialog').size()){
 		$('#dialog').dialog('destroy');
 	}
-    else { 
+    else {
 		$('body').append('<div id="dialog"></div>')
     }
 
@@ -896,10 +896,10 @@ m = function(o){
     }
     else if(o.u){
 		$('#dialog').load(o.u, function(r, s, x){
-			 if (s == "error" &&  x.status == 403) window.location.href  = '/';		 
+			 if (s == "error" &&  x.status == 403) window.location.href  = '/';
 		});
 	}
-     
+
     sm(o);
 }
 
@@ -926,7 +926,7 @@ listReportsEvents = function() {
 }
 
 totalesxDepto = function(more) {
-    
+
     var _ini = getStartEnd('ini');
     var _fin = getStartEnd('fin');
 
@@ -936,7 +936,7 @@ totalesxDepto = function(more) {
     var num_total;
 
     _states = getStatesChecked();
-    
+
     // Portal EHP
     //if (is_portal) {
     if (layout == 'portal_home') {
@@ -946,13 +946,13 @@ totalesxDepto = function(more) {
             dataType: 'jsonp',
             success: function(json){
                 for (j in json) {
-                    
+
                     $('#' + j).html(json[j]['t']);
                     $('#' + j + '_div').data('index', json[j]['v']);
                 }
 
                 var $r = $('#resumen'); // your parent ul element
-                
+
                 $r.append($('div.r').sort(function(a, b) { return $(b).data('index') - $(a).data('index'); }));
 
                 for (j in json) {
@@ -966,10 +966,10 @@ totalesxDepto = function(more) {
         });
     }
     else if (layout == 'portal') {
-        
+
         if (typeof more === 'undefined') {
             $('.tab_data').html('');
-        } 
+        }
 
         var limiti;
         if (resetLimit) {
@@ -981,11 +981,11 @@ totalesxDepto = function(more) {
         }
 
         var term = ['ec', 'dn'];
-        
+
         if (limiti == 0) {
             $('.tab_data').html('<div>&nbsp;&nbsp;<img src="' + base + '/media/img/ajax-loader-mini.gif" />&nbsp;Cargando datos...</div>');
         }
-        
+
         $.ajax({
             url: base + '/getIncidentesPortal/' + _ini + '/' + _fin + '/' + _cats + '/' + limiti + '/' + _states ,
             dataType: 'jsonp',
@@ -1019,55 +1019,55 @@ totalesxDepto = function(more) {
                                     '<a href="http://sidih.salahumanitaria.co/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
                                     'Perfil '+ _js.ldn +'</a></span></div> ' +
                                 '</<div></div>';
-                                
+
                                 _html += '<div class="clear hide"><div class="left"><b>Categorias</b></div> ' +
                                          '<div class="opt right linko">' +
                                          '<a href="http://www.salahumanitaria.co/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n</a></div>';
                                 for (c in _js.c) {
                                     _html += '<div class="clear cat">&raquo;&nbsp;'+ c;
-                                    
+
                                     if (_js.c[c].length > 0) {
                                         _html += ': ';
                                     }
 
                                     for (d in _js.c[c]) {
-                                        
+
                                         if (d > 0) {
                                             _html += ', ';
-                                        } 
-                                        
+                                        }
+
                                         _html += _js.c[c][d];
                                     }
                                     _html += '</div>';
                                 }
                                 _html += '</div>';
-                            
+
                             _html += '<div class="clear"></div> ';
-                            
+
                             if (show['desc']) {
                                 _html += '<div class="desc hide"><b>Descripci&oacute;n</b>: '+ _js.desc +'</div> ';
-                            } 
+                            }
 
                             if (show['fuente']) {
                                 if (_js.f != '') {
                                     _html += '<div class="f hide">' +
-                                    '<div class="ft">Fuente de noticia</div>'; 
+                                    '<div class="ft">Fuente de noticia</div>';
                                     for(var k=0, l=_js.f.length; k< l; k += 1) {
                                         _html += '<div class="fc">';
-                                        
+
                                         // Source type :: source name
                                         if (_js.f[k][0] != '' && _js.f[k][1] != '') {
                                             _html += '<div class="fct">'+_js.f[k][0]+' :: '+_js.f[k][1]+'</div>';
                                         }
-                                        
+
                                         // Source desc
                                         if (_js.f[k][3] != '') {
                                             _html += '<div class="fcc"><b>Descripci\u00f3n tomada de la fuente</b>: "' + _js.f[k][3] + '"</div>';
                                         }
-                                        
+
                                         // Source refer
                                         if (_js.f[k][2].indexOf('http') != -1) {
-                                            _html += '<div class="fcc"><a href="'+_js.f[k][2]+'" target="_blank">'+_js.f[k][2]+'</a></div>' + 
+                                            _html += '<div class="fcc"><a href="'+_js.f[k][2]+'" target="_blank">'+_js.f[k][2]+'</a></div>' +
                                                  '</div> ';
                                         }
                                     }
@@ -1076,18 +1076,18 @@ totalesxDepto = function(more) {
                             }
 
                             _html += '</div></div>';
-                            
+
                         }
-                            
+
                         // Cargar mas
                         if ((limiti + num_carga) < num_total) {
                             _html += '<div id="cargar_mas"><div class="btn cargar_mas">Cargar mas eventos</div></div>';
-                        } 
+                        }
                     }
                     else {
                         _html = '<div class="no">No hay eventos registrados</div>';
                     }
-                    
+
                     $div = $('#incidentes');
                     if (limiti == 0) {
                         $div.html(_html);
@@ -1097,7 +1097,7 @@ totalesxDepto = function(more) {
                         $div.append(_html);
                     }
                 //}
-                
+
 
                 // Cargar mas evento
                 $('.cargar_mas').click(function() {
@@ -1107,29 +1107,29 @@ totalesxDepto = function(more) {
                 });
 
                 //listReportsEvents();
-                
+
                 // Zoom state
                 if (_states != 0){
                     selDepto($('#state').attr('centroid'));   // in map.js
                 }
-                
+
                 $('#loading').hide();
-                
+
                 resumenAfectacion(json);
 
                 charts(json.charts);
-                
+
                 $('#loading_data').hide();
-            
+
             }
         });
-    
+
     }
     else {
-        
+
         // Afectacion
         titulo = (getMapaAfectacion() == 1) ? 'afectados' : 'eventos';
-            
+
         // Acceso
         if (acceso) {
             titulo = 'restricción <br /> al acceso';
@@ -1140,17 +1140,17 @@ totalesxDepto = function(more) {
 
         $('#titulo_general').find('#tgt').html('Mapa de ' + titulo);
         $('#titulo_general').find('#tgc').html(t_ini + ' - ' + t_fin);
-        
+
         $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
-        
+
         $.ajax({
             url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states,
             dataType: 'json',
             success: function(data) {
-                
+
                 $('#table_totalxd tbody tr').remove();
                 //$('#table_totalxd').trigger('update');
-                
+
                 // Totales
                 var _t = data.t;
                 var checked;
@@ -1158,7 +1158,7 @@ totalesxDepto = function(more) {
 
                 var $table = $('#table_totalxd tbody');
                 var $depto_dropdown = $('#depto_dropdown');
-                
+
                 var html = $table.html();
                 var dd_options = '<li data-value=0>Todos</li>';
 
@@ -1170,12 +1170,12 @@ totalesxDepto = function(more) {
 
                     if (no_e && (_i.ec > 0 || _i.dn > 0)) {
                         no_e = false;
-                    } 
+                    }
                     html += '<tr class="f ' + _i.css + ' ' + _i.hide + '"><td class="hide"><input type="checkbox" name="deptos[]" value="' + _i.state_id + '" '+checked+' /></td><td class="n left">'+_i.d+'</td><td class="ec">'+_i.ec+'</td><td class="dn">'+_i.dn+'</td><td class="hide centroid">'+_i.c+'</td></tr>';
 
                     dd_options += '<li class="' + _i.hide + '" data-value="' + _i.state_id + '" data-centroid="' +_i.c + '"> ' +_i.d + '</li>';
                 }
-                
+
                 // Aviso de no eventos
                 //if ($table.find('.f:not(.hide)').length == 0) {
                 if (no_e) {
@@ -1187,14 +1187,14 @@ totalesxDepto = function(more) {
 
                 // Ordena tabla
                 //forceSortTable();
-                
+
                 resumenAfectacion(data);
-                
+
                 charts(data.charts);
 
                 // Almacena subotales en variable
                 subtotales = data.subtotales;
-                
+
                 $('#loading_data').hide();
             }
         });
@@ -1203,11 +1203,11 @@ totalesxDepto = function(more) {
 }
 
 resumenAfectacion = function(data) {
-    
+
     // Afectacion
     var titulo = (getMapaAfectacion() == 1) ? 'personas afectadas' : 'eventos';
     var total_ec = 0;
-        
+
     $('#resumen_ec, #resumen_dn').find('.resumen_row:not(:first)').remove();
 
     $resumen_ec = $('#resumen_ec');
@@ -1216,27 +1216,27 @@ resumenAfectacion = function(data) {
         $div = $('.resumen_row:first').clone();
         $div.removeClass('hide');
         $div.addClass('ect');
-        
+
         rsm = data.rsms_ec[d];
-        
+
         $div.attr('id', rsm.cat_id);
         $div.find('.num').html(numberWithCommas(rsm.n));
         $div.find('.cat').html(rsm.t);
         $div.find('.cat_color').css('background-color', '#' + rsm.c);;
 
         //total_ec += rsm.n*1;
-        
+
         if (rsm.n > 0) {
             $resumen_ec.append($div);
-        } 
+        }
     }
-        
+
     // El total se toma de la lista de departamentos, porque este total
     // sumado no corresponde, dado que un evento puede tener varias categorias
     total_ec = numberWithCommas(data.t.ec);
-    
+
     $('#chart_total_v').html(total_ec);
-    
+
     if (data.t.ec > 0) {
         $('#resumen_total_ec_num').html(total_ec);
         $resumen_ec.show();
@@ -1244,32 +1244,32 @@ resumenAfectacion = function(data) {
     else {
         $resumen_ec.hide();
     }
-    
+
     $resumen_dn = $('#resumen_dn');
     var total_dn = 0;
     for (var d in data.rsms_dn) {
         $div = $('.resumen_row:first').clone();
         $div.removeClass('hide');
         $div.addClass('dnt');
-        
+
         rsm = data.rsms_dn[d];
-        
+
         $div.find('.num').html(numberWithCommas(rsm.n));
         $div.find('.cat').html(rsm.t);
-        
+
         //total_dn += rsm.n*1;
 
         if (rsm.n > 0) {
             $resumen_dn.append($div);
         }
     }
-    
+
     // El total se toma de la lista de departamentos, porque este total
     // sumado no corresponde, dado que un evento puede tener varias categorias
     total_dn = numberWithCommas(data.t.dn);
-    
+
     $('#chart_total_d').html(total_dn);
-    
+
     if (data.t.dn > 0) {
         $('#resumen_total_dn_num').html(total_dn);
         $resumen_dn.show();
@@ -1302,9 +1302,9 @@ resumenAfectacion = function(data) {
 
     // Subtotales violencia
     if (data.subtotales.ec !== undefined) {
-        
+
         var sub = data.subtotales.ec;
-        
+
         $('#civiles').html((sub.civiles === undefined ) ? '---' : numberWithCommas(sub.civiles));
         $('#hombres').html((sub.hombres === undefined ) ? '---' : numberWithCommas(sub.hombres));
         $('#mujeres').html((sub.mujeres === undefined ) ? '---' : numberWithCommas(sub.mujeres));
@@ -1316,7 +1316,7 @@ resumenAfectacion = function(data) {
 }
 
 charts = function(data_charts) {
-    
+
     Highcharts.setOptions({
         chart: {
             style: {
@@ -1327,7 +1327,7 @@ charts = function(data_charts) {
         yAxis: { min: 0}
 
     });
-    
+
     var title_style = { fontSize: '14px', margin: 0 }
 
     // No info
@@ -1375,11 +1375,11 @@ charts = function(data_charts) {
         yAxis: s.yAxis,
         series: s.data
     });
-    
+
     if (data_charts.length > 2) {
-        
+
         $('#charts_pie').show();
-        
+
         var marginPie = [30,30,10,30];
         var pie_h = 180;
         var pie_w = 350;
@@ -1419,7 +1419,7 @@ charts = function(data_charts) {
             },
             series: [{ data: s.data }]
         });
-        
+
         var s = data_charts[2];
         $('#chart_3').highcharts({
             chart: {
@@ -1431,7 +1431,7 @@ charts = function(data_charts) {
                 }
             },
             plotOptions: {
-                    pie: pie_plot_options 
+                    pie: pie_plot_options
                 },
             title: {
                 text: s.title,
@@ -1439,7 +1439,7 @@ charts = function(data_charts) {
             },
             series: [{ data: s.data }]
         });
-        
+
         // columna g. poblacional
         /*
         var s = data_charts[2];
@@ -1453,7 +1453,7 @@ charts = function(data_charts) {
                 }
             },
             plotOptions: {
-                    column: column_plot_options 
+                    column: column_plot_options
                 },
             title: {
                 text: s.title,
@@ -1470,28 +1470,28 @@ charts = function(data_charts) {
 
 forceSortTable = function() {
     var sorting = [[1,1]]
-    
+
     $('#table_totalxd').trigger('update');
     $('#table_totalxd').trigger("sorton", [sorting]);
 }
 
 setCatsHidden = function() {
-    
+
     var _ids = [];
-    
+
     $('#fcat_ec').find('input.ch:checked').each(function() {
         _ids.push($(this).val());
     });
 
     $('#currentCatE').val(_ids);
-    
+
     _ids = [];
     $('#fcat_dn').find('input.ch:checked').each(function() {
         _ids.push($(this).val());
     });
 
     $('#currentCatD').val(_ids);
-    
+
 }
 
 daysToMiliseconds = function(d) {
@@ -1507,14 +1507,14 @@ getStartEnd = function(c) {
     return v[c];
 }
 
-getYear = function(c) { 
+getYear = function(c) {
     //return $('#totalxd_y').text();
     return $('#yyyy_' + c).val();
 }
 
-setYear = function(c,y) { 
+setYear = function(c,y) {
     $('#yyyy_' + c).val(y);
-    
+
     var se = getStartEnd();
 
     var ini_t = new Date(getStartEnd('ini')*1000);
@@ -1524,8 +1524,8 @@ setYear = function(c,y) {
 
 }
 
-markIniFin = function(id,im,iy,fd,fm,fy) { 
-    
+markIniFin = function(id,im,iy,fd,fm,fy) {
+
     var c = 'selected';
 
     im = im + 1;
@@ -1539,25 +1539,25 @@ markIniFin = function(id,im,iy,fd,fm,fy) {
     $div_ini.find('ul.dia > li[data-val='+id+']').addClass(c);
     $div_ini.find('ul.mes > li[data-val='+im+']').addClass(c);
     $div_ini.find('ul.yyyy > li[data-val='+iy+']').addClass(c);
-    
+
     $div_fin.find('ul.dia > li[data-val='+fd+']').addClass(c);
     $div_fin.find('ul.mes > li[data-val='+fm+']').addClass(c);
     $div_fin.find('ul.yyyy > li[data-val='+fy+']').addClass(c);
-    
+
     $('#ini_text').val( id + ' de ' + _mes[im] + ' ' + iy);
     $('#fin_text').val( fd + ' de ' + _mes[fm] + ' ' + fy);
-    
+
 }
 
-getStatesChecked = function(){ 
+getStatesChecked = function(){
 
     var _sts = [];
     var $t = $('#table_totalxd');
 
     if ($t.find(':not(:checked)').length > 0) {
-        
+
         $t.find(':checked').each(function() {
-            
+
             if ($(this).val() != 0) {
                 _sts.push($(this).val());
             }
@@ -1567,19 +1567,19 @@ getStatesChecked = function(){
     return _sts.join(',');
 }
 
-getMapaAfectacion = function(){ 
-    
+getMapaAfectacion = function(){
+
     return ($('.mapa_tipo.menu_activo').data('tipo') == 'eventos') ? 0 : 1;
 
 }
 
-getAccesoCats = function(){  
-    
+getAccesoCats = function(){
+
     var acceso = [];
 
     // Filtro acceso
-    $('#fcat_list_acceso').find(':checked').each(function(){ 
-        acceso.push($(this).val()); 
+    $('#fcat_list_acceso').find(':checked').each(function(){
+        acceso.push($(this).val());
     });
 
     return acceso.join(',');
@@ -1588,7 +1588,7 @@ getAccesoCats = function(){
 showGroupUngroup = function(s) {
 
     $btn = $('#group_fts');
-    
+
     if (s == 'show') {
         $btn.show();
     }
@@ -1606,14 +1606,14 @@ String.prototype.capitalize = function() {
     return this.charAt(0).toUpperCase() + this.slice(1);
 }
 
-set100Height = function(){ 
-    
+set100Height = function(){
+
     var h = $(document).height() - $('#brand').height() - 20;
 
     $('.map_monitor').css('height', h - 5 - $('#header').height());
     $('#menu').css('height', h);
 }
-setMapWidth = function(){ 
+setMapWidth = function(){
     //$('#map').css('width', $(document).width() - $('#menu').css('width'));
     $('.map_monitor').css('width', $(document).width());
 }
@@ -1622,28 +1622,28 @@ setMapWidth = function(){
  *
  * var vd violencia o desastres
  * var periodo y=Año, s=Semestre, t=Trimestre
- * var valor 
+ * var valor
 */
 totalPeriodo = function(periodo, valor) {
     $.ajax({
         url: 'totalPeriodo/violencia/' + periodo + '/' + valor,
-        success: function(html){ 
+        success: function(html){
 
             $o = $('#totales_data_violencia');
-            
-            $o.find('tr:not(:first)').remove(); 
-            $o.append(html); 
+
+            $o.find('tr:not(:first)').remove();
+            $o.append(html);
         }
     });
-    
+
     $.ajax({
         url: 'totalPeriodo/desastres/' + periodo + '/' + valor,
-        success: function(html){ 
-            
+        success: function(html){
+
             $o = $('#totales_data_desastres');
-            
-            $o.find('tr:not(:first)').remove(); 
-            $o.append(html); 
+
+            $o.find('tr:not(:first)').remove();
+            $o.append(html);
         }
     });
 
@@ -1651,7 +1651,7 @@ totalPeriodo = function(periodo, valor) {
     var path = 'z/monitor-totales';
 
     $('#total_descarga_v').attr('href', path + '-' + valor + '-violencia.xls');
-    
+
     $('#total_descarga_d').attr('href', path + '-' + valor + '-desastres.xls');
 }
 
@@ -1667,10 +1667,10 @@ variacion = function() {
 
     var p1_ini = $('#variacion_p1_ini_date').val();
     var p1_fin = $('#variacion_p1_fin_date').val();
-    
+
     var p2_ini = $('#variacion_p2_ini_date').val();
     var p2_fin = $('#variacion_p2_fin_date').val();
-    
+
     var ecdn = $('input[name="variacion_v_d"]:checked').val();
 
     if (ecdn == 'v') {
@@ -1686,24 +1686,24 @@ variacion = function() {
     $.ajax({
             url: 'variacion/' + p1_ini + '|' + p1_fin + '/' + p2_ini + '|' + p2_fin + '/' + ecdn + '/' + _cats + '/' + _states,
             success: function(data) {
-                
+
                 $('#loading').hide();
 
                 addLayerVariacion(data.values);
-                
+
                 var $vd = $('#variacion_data');
                 var ecdn = ($('input[name="variacion_v_d"]:checked').val() == 'v') ? 'violencia armada' : 'vesastres';
-                
+
                 var html = '<h2 class="ac">Variación ' + ecdn + '</h2> ' +
-                           '<div class="variacion_periodo"><b>Periodo 1</b><br /> ' + 
-                            $('#variacion_p1_ini_text').val() + 
+                           '<div class="variacion_periodo"><b>Periodo 1</b><br /> ' +
+                            $('#variacion_p1_ini_text').val() +
                             ' al <br /> ' + $('#variacion_p1_fin_text').val() +
                             '</div>' +
-                            '<div class="variacion_periodo"><b>Periodo 2</b><br /> ' + 
-                             $('#variacion_p2_ini_text').val() + 
+                            '<div class="variacion_periodo"><b>Periodo 2</b><br /> ' +
+                             $('#variacion_p2_ini_text').val() +
                              ' al <br /> ' + $('#variacion_p2_fin_text').val() +
                              '</div>' +
-                             '<div class="clear"></div>' + 
+                             '<div class="clear"></div>' +
                              '<h2 class="ac"><br />Datos municipales</h2><div class="ac">La variación se calcula sobre el # de eventos<br />&nbsp;</div>'
                             ;
 
@@ -1712,7 +1712,7 @@ variacion = function() {
                 $vd.html(html);
 
                 // Titulo variacion
-                
+
                 // Datatables
                 $vd.find('table').DataTable({
                  "order": [[ 2, 'desc']]   ,
@@ -1730,11 +1730,11 @@ variacion = function() {
                     },
                 ]
                 });
-                
+
                 var $filter = $('div.dataTables_filter');
 
                 $filter.append('<i class="fa fa-download"></i> <a href="z/monitor-variacion.xls">Descargar a excel</a>');
-                 
+
             }
         });
 }
@@ -1750,7 +1750,7 @@ function addLayerVariacion(dataJson) {
 
      $('#variacion_p1_ini_date').val(1430542740);
      $('#variacion_p1_fin_date').val(1433134740);
-     
+
      $('#variacion_p2_ini_date').val(1433221140);
      $('#variacion_p2_fin_date').val(1435813140);
 
@@ -1768,15 +1768,15 @@ function addLayerVariacion(dataJson) {
     var color_x  = new Array('#36B446', '#F0E62C', '#E59322', '#EF3326', '#700909');
 
     serie7.setColors(color_x);
-                
+
     var class_x = ranges;
-    
+
     serie7.setPrecision(2);
     serie7.legendSeparator = ' ⇔ ';
-    
+
     var content = serie7.getHtmlLegend(null, 'Variación %');
     $('#variacion_legend').html(content + '<p>Mapa: puede consultar la información de un municipio haciendo click sobre él</p>');
-    
+
     if (!layer_variacion_exists) {
 
         l_variacion = new ol.layer.Vector({
@@ -1800,9 +1800,9 @@ function addLayerVariacion(dataJson) {
                 return [new ol.style.Style(styleObj)]
               }
         });
-        
+
         map.addLayer(l_variacion);
-        
+
         layer_variacion_exists = true;
     }
     else {
@@ -1810,7 +1810,7 @@ function addLayerVariacion(dataJson) {
     }
 
     showHideLayers('variacion');
-    
+
 
 }
 
@@ -1821,6 +1821,6 @@ function filterByPeriod(id,im,iy,fd,fm,fy) {
 
     $('#' + id_start_date).val(_ini/1000); // Segundos para ushahidi
     $('#' + id_end_date).val(_fin/1000); // Segundos para ushahidi
-    
+
     markIniFin(id,im,iy,fd,fm,fy);
 }
