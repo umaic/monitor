@@ -40,13 +40,13 @@ if (window.location.hostname == 'monitor.local') {
     // Probar local consultado eventos online
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violenciaarmada';
-    var domain = '.salahumanitaria.co';
+    var domain = '.umaic.org';
 
 }
 else {
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violenciaarmada';
-    var domain = '.salahumanitaria.co';
+    var domain = '.umaic.org';
 }
 
 var url_ec = '&server=' + subdomain_ec + domain;
@@ -86,7 +86,7 @@ function getLayerByName(n) {
 
     var lys = [];
 
-    map.getLayers().forEach(function(layer, i){ 
+    map.getLayers().forEach(function(layer, i){
         if (layer.get('title') == n) {
             lys = [layer];
         }
@@ -96,11 +96,11 @@ function getLayerByName(n) {
 }
 
 function addWMSLayer(n,l,v) {
-    
+
     var u = 'http://geonode.salahumanitaria.co/geoserver/wms';
 
     var lys = getLayerByName(n);
-    
+
     if (lys.length > 0) {
         var ly = lys[0];
 
@@ -114,14 +114,14 @@ function addWMSLayer(n,l,v) {
                     serverType: 'geoserver',
                 });
 
-        
+
         ly = new ol.layer.Tile({
                 title: n,
                 source: source,
         });
 
         /*
-        ly = new OpenLayers.Layer.WMS(n, 
+        ly = new OpenLayers.Layer.WMS(n,
                                   u,
                                   {
                                   layers: l,
@@ -146,28 +146,28 @@ function addWMSLayer(n,l,v) {
         });
 
         map.addLayer(ly);
-        
+
     }
 }
 
 function selDepto(centroide) {
     var _c = centroide.split(',');
     var v = map.getView();
-    
+
     v.setCenter([_c[0]*1, _c[1]*1]);
     v.setZoom(3);
 
 }
-    
+
 function resetMap() {
     var v = map.getView();
-    
+
     v.setCenter(centroColombia);
     v.setZoom(0);
 }
 
 function mapRender() {
-   
+
     var view = new ol.View({
         center: centroColombia,
         zoom: 1,
@@ -195,7 +195,7 @@ function mapRender() {
         view: view
     });
 
-    
+
     var styleVariacion = [new ol.style.Style({
         fill: new ol.style.Fill({
             color: 'rgba(255, 255, 255, 0.6)'
@@ -205,7 +205,7 @@ function mapRender() {
             width: 1
         })
     })];
-    
+
     var element = document.getElementById('popup');
 
     var popup = new ol.Overlay({
@@ -214,37 +214,37 @@ function mapRender() {
       stopEvent: false
     });
     map.addOverlay(popup);
-    
+
     // Eventos
     map.getView().on('change:resolution', mapMove);
 
     map.on('click', function(evt) {
-        
+
         var feature = map.forEachFeatureAtPixel(evt.pixel,
                 function(feature, layer) {
                     return feature;
                 });
 
         $(element).popover('destroy');
-        
+
         if (feature !== undefined && feature.get('variacion') !== undefined) {
-            
+
             var geometry = feature.getGeometry();
             var coord = geometry.getFirstCoordinate();
-            
+
             popup.setPosition(coord);
-            
+
             $(element).popover({
                 'placement': 'top',
                 'html': true,
                 'title': feature.get('MUNNAME'),
-                'content': '<div><b>Variación:</b> ' + feature.get('variacion') + 
-                    '% <br /><b>Periodo 1:</b> ' + feature.get('p1') + 
+                'content': '<div><b>Variación:</b> ' + feature.get('variacion') +
+                    '% <br /><b>Periodo 1:</b> ' + feature.get('p1') +
                     '<br /><b>Periodo 2:</b> ' + feature.get('p2') + '</div>'
             });
-            
+
             $(element).popover('show');
-        } 
+        }
         else {
             onFeatureSelect(feature.getProperties());
         }
@@ -265,7 +265,7 @@ function mapRender() {
     });
 
     // /Eventos
-    
+
     addFeaturesFirstTime();
 
 }
@@ -282,7 +282,7 @@ function addFeatures(inst) {
     if (inst == undefined) {
         inst = 'ecdn';
     }
-    
+
     if (!_cluster) {
         url_ec = url_ec.replace('cluster','index');
         url_dn = url_dn.replace('cluster','index');
@@ -291,17 +291,17 @@ function addFeatures(inst) {
         url_ec = url_ec.replace('index','cluster');
         url_dn = url_dn.replace('index','cluster');
     }
-   
+
     var start = $("#ini_date").val();
     var end = $("#fin_date").val();
     var zoom = map.getView().getZoom() + _zoomOffset;
     var group_level = $('#group_level').val();
-    
+
     var uparams = [['s', start], ['e', end], ['z', zoom], ['gl', group_level]];
-    
+
     // Destacados, ft=fetured
     if (inst == 'ecdn' || inst == 'ft') {
-        
+
         var uparams_ft = uparams.concat([['v', 1]]);
         var l_ft_source = new ol.source.Vector();
 
@@ -320,25 +320,25 @@ function addFeatures(inst) {
             l_ft.getSource().clear();
             showHideLayers('ft');
         }
-        
+
         var _uft_dn = addURLParameter(url_ft_dn, uparams_ft);
-        
+
         // States filter
         _uft_dn = addURLParameter(_uft_dn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-        
+
         ajaxFeatures(_uft_dn, l_ft, false);
-        
+
         var _uft_ec = addURLParameter(url_ft_ec, uparams_ft);
-        
+
         _uft_ec = addURLParameter(_uft_ec, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-        
+
         ajaxFeatures(_uft_ec, l_ft, false);
 
     }
 
     // Acceso
     if (inst == 'acceso') {
-        
+
         var uparams_acceso = uparams.concat([['acceso', 1]]);
         uparams_acceso = uparams_acceso.concat([['acceso_cats', getAccesoCats()]]);
 
@@ -347,12 +347,12 @@ function addFeatures(inst) {
             l_ec.removeFeatures(l_ec.features);
         }
         else {
-            l_ec = new OpenLayers.Layer.Vector('Emergencia Compleja', 
+            l_ec = new OpenLayers.Layer.Vector('Emergencia Compleja',
                 { styleMap: Styles });
 
             map.addLayer(l_ec);
         }
-            
+
         // Oculta capa desastres y featured
         if (map.getLayersByName('Desastres Naturales').length > 0) {
             l_dn = map.getLayersByName('Desastres Naturales')[0];
@@ -362,18 +362,18 @@ function addFeatures(inst) {
             l_ft = map.getLayersByName('Destacados')[0];
             l_ft.setVisibility(false);
         }
-        
+
         // States filter
         _uft_ec = addURLParameter(url_ft_ec, uparams_acceso);
 
         ajaxFeatures(_uft_ec, l_ec, false);
 
     }
-    
+
     if (inst == 'ecdn' || inst == 'dn') {
         var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
         var l_dn_source = new ol.source.Vector({});
-        
+
         if (!layer_dn_exists) {
             l_dn = new ol.layer.Vector({
                 title: 'Desastres Naturales',
@@ -389,27 +389,27 @@ function addFeatures(inst) {
             l_dn.getSource().clear();
             showHideLayers('dn');
         }
-        
+
         if (l_dn.getVisible()) {
-        
+
             var _udn = addURLParameter(url_dn, uparams_dn);
-            
+
             // States filter
             _udn = addURLParameter(_udn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-            
+
             // Tipo mapa
             _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
-            
+
             ajaxFeatures(_udn, l_dn, true);
         }
     }
-    
-    
+
+
     if (inst == 'ecdn' || inst == 'ec') {
-    
+
         var uparams_ec = uparams.concat([['c', $('#currentCatE').val()]]);
         var l_ec_source = new ol.source.Vector();
-        
+
         if (!layer_ec_exists) {
             l_ec = new ol.layer.Vector({
                 title: 'Violencia',
@@ -428,22 +428,22 @@ function addFeatures(inst) {
 
         if (l_ec.getVisible()) {
             var _uec = addURLParameter(url_ec, uparams_ec);
-            
+
             // States filter
             _uec = addURLParameter(_uec, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-            
+
             // Tipo mapa
             _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
-            
+
             ajaxFeatures(_uec, l_ec, true);
         }
 
     }
-    
+
 
     /*
     selectCtrl = new OpenLayers.Control.SelectFeature([l_ec, l_dn, l_ft],
-        { 
+        {
             clickout: true,
             onSelect: function(feature) { onFeatureSelect(feature.attributes)  }
         }
@@ -462,7 +462,7 @@ function ajaxFeatures(u, l, doJenks) {
         success: function(json){
 
             if (json.features.length > 0) {
-                    
+
                 var _f = (new ol.format.GeoJSON()).readFeatures(json,{ dataProjection: 'EPSG:4326',
                                                                       featureProjection: 'EPSG:3857'});
 
@@ -475,7 +475,7 @@ function ajaxFeatures(u, l, doJenks) {
 
                         if (c > maximo) {
                             maximo = c;
-                        } 
+                        }
 
                         arr[j] = c;
                     }
@@ -495,9 +495,9 @@ function ajaxFeatures(u, l, doJenks) {
                 }
 
                 l.getSource().addFeatures(_f);
-                
+
                 $('#loading').hide();
-	
+
                 // Show/Hide icono de destacados
                 showHideFeaturedIcon(); // funcion en este archivo
             }
@@ -513,20 +513,20 @@ function onFeatureSelect(attrs) {
 
     var _html = '';
     var max_e = 20; // Numero de eventos en la lista, el mismo en /eocmpleja/plugins/monitor/controllers/monitor.php, linea=41
-    
+
     // Link when is cluster: /reports/index/
     if (attrs.link.indexOf('index') > 0) {
-        
+
         var _url = attrs.link.replace('reports', 'monitor').replace('index', 'reports_list_map');
         var _cats;
-        
+
         if (_url.indexOf(subdomain_ec) > 0) {
             _cats = $('#currentCatE').val()
-        } 
+        }
         else {
             _cats = $('#currentCatD').val();
         }
-        
+
         _url += '&c=' + _cats;
     }
     // Link when is single feature: /reports/view/incident_id
@@ -539,13 +539,13 @@ function onFeatureSelect(attrs) {
         dataType: 'jsonp',
         beforeSend: function(){ $('#loading').show() },
         success: function(json){
-            
+
             $('#loading').hide();
 
             for(var i=0, j=json.length; i < j; i+=1) {
-                
+
                 _js = json[i];
-                
+
                 // Click en el titulo: funcion fe.js:673
                 _html += '<div class="report_list_map from_map"> ' +
                     '<div class="t"><a href="#" onclick="return false;" title="' + _js.id + '">'+ _js.t +'</a></div> ' +
@@ -556,7 +556,7 @@ function onFeatureSelect(attrs) {
                             'Consulte el perfil de '+ _js.ldn +'</a></span>' +
                         '</div> ' +
                     '</div>';
-                    
+
                     _html += '<div class="clear"></div><div class="left"><b>Categorias</b></div> ' +
                              '<div class="opt right linko">' +
                                 '<a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>' +
@@ -564,88 +564,88 @@ function onFeatureSelect(attrs) {
 
                     for (c in _js.c) {
                         _html += '<div class="clear detail"> &raquo;' + c;
-                        
+
                         if (_js.c[c].length > 0) {
                             _html += ': ';
                         }
 
                         for (d in _js.c[c]) {
-                            
+
                             if (d > 0) {
                                 _html += ', ';
-                            } 
-                            
+                            }
+
                             _html += _js.c[c][d];
                         }
                         _html += '</div>';
                     }
-                    
+
                     //_html += '</div>';
                     _html += '<div class="clear"></div> ';
-        
+
                 // Victimas
                 if (_js.q == 'violencia') {
-                 
+
                     if (_js.v.length > 0) {
                         _html += '<div><b>Víctimas</b></div> ';
-                        
+
                         for (v in _js.v) {
-                            
+
                             _v = _js.v[v];
-                            
+
                             _html += '<div class="victim"><div class="right">' + _v['category'] + '</div><table><tr>';
-                            
+
                             _html += '<td valign="top">';
-                            
+
                             _html += '<div><b>Cantidad</b>: ' + _v['cant'] + '</div> ';
 
-                            
+
                             if (_v['gender'] != '') {
                                 _html += '<div> <b>Género:</b> ' + _v['gender'] + '</div> ';
                             }
-                            
+
                             if (_v['status'] != '') {
                                 _html += '<div> <b>Estado:</b> ' + _v['status'] + '</div> ';
                             }
-                            
+
                             _html += '</td>';
                             _html += '<td valign="top">';
-                            
+
                             if (_v['age'] != '') {
                                 _html += '<div> <b>Edad:</b> ' + _v['age'];
-                            
+
                                 if (_v['age_group'] != '') {
                                     _html += ' / ' + _v['age_group'];
                                 }
-                            
+
                                 _html += '</div> ';
-                                
+
                             }
-                            
-                            
+
+
                             if (_v['condition'] != '') {
                                 _html += '<div><b>Condición:</b> ' + _v['condition'];
-                            
+
                                 if (_v['sub_condition'] != '') {
                                     _html += ' / ' + _v['sub_condition'];
                                 }
                                 _html += '</div> ';
-                                
+
                             }
-                            
+
                             if (_v['ethnic_group'] != '') {
                                 _html += '<div> <b>Grupo poblacional:</b> ' + _v['ethnic_group'];
-                            
+
                                 if (_v['sub_ethnic_group'] != '') {
                                     _html += ' / ' + _v['sub_ethnic_group'];
                                 }
-                            
+
                                 _html += '</div> ';
-                                
+
                             }
-                            
+
                             _html += '</td>';
-                            
+
                             _html += '</table></div> ';
                         }
                     }
@@ -655,7 +655,7 @@ function onFeatureSelect(attrs) {
                     if (_js.v.length > 0) {
                         _html += '<div class="victim"><div><b>Afectación</b></div> ';
                         _html += '<div><table><tr>';
-                        
+
                         var p = 0;
                         for (var k in _js.v[0]) {
 
@@ -671,7 +671,7 @@ function onFeatureSelect(attrs) {
                                     }
 
                                     _html += '<div><b>' + k + '</b>: ' + _v[k] + '</div>';
-                                    
+
                                     if (tdc) {
                                         _html += '</td>';
                                     }
@@ -680,67 +680,67 @@ function onFeatureSelect(attrs) {
                                 }
                             }
                         }
-                        
+
                         _html += '</tr></table></div></div>';
                     }
                 }
 
                 _html += '<div class="clear"></div> ';
-                
+
                 if (show['desc'] || _js.f.length == 0) {
                     _html += '<div class="desc"><b>Descripci&oacute;n</b>: '+ _js.desc +'</div> ';
-                } 
+                }
 
                 if (show['fuente']) {
                     if (_js.f != '') {
                         _html += '<div class="f">' +
-                        '<div class=""><b>Fuente de noticia</b></div>'; 
+                        '<div class=""><b>Fuente de noticia</b></div>';
                         for(var k=0, l=_js.f.length; k< l; k += 1) {
                             _html += '<div class="fc">';
-                            
+
                             // Source type :: source name
                             if ((_js.f[k][0] != '' && _js.f[k][1] != '') || _js.f[k][2] != '') {
 
                                 if ((_js.f[k][0] != '' && _js.f[k][1] != '')) {
                                     _html += '<div class="detail">&raquo; '+_js.f[k][1]+' ( '+_js.f[k][0]+' )';
                                 }
-                            
-                            
+
+
                                 // Source refer
                                 if (_js.f[k][2].indexOf('http') != -1) {
                                     //_js.f[k][2] = url
                                     _html += '&nbsp;<img src="media/img/pdf.gif" />&nbsp;<a href="ss/?x=232fdsfwwppo&q=' + _js.q[0] + _js.id + '" target="_blank">Ver noticia original</a>';
-                                         
+
                                 }
 
                                 // Source desc
                                 if (_js.f[k][3] != undefined && _js.f[k][3] != '') {
                                     _html += ' | <a href="#" class="d" onclick="return false;">Leer descripci\u00f3n de la fuente</a>';
                                 }
-                                
+
                                 _html += '</div>';
-                                
+
                                 if (_js.f[k][3] != undefined && _js.f[k][3] != '') {
                                     _html += '<div class="hide detail">' + _js.f[k][3] + '"';
 
                                     _html += '<br /><br />Tomado de: <a href="' + _js.f[k][2] + '" target="_blank">' + _js.f[k][2] + '</a></div>';
                                 }
-                                
+
                             }
-                            
+
                         }
                         _html += '</div>';
                     }
                 }
-            
+
                 _html += '</div></div>';
 
             }
-                
+
             if (json.length > max_e) {
                 _html += '<div id="mase"><div class="btn"><a href="'+attrs.link+'" target="_blank">Ir al listado completo de eventos</a></div></div>';
             }
-            
+
 
             // Portal EHP
             if (is_portal) {
@@ -811,7 +811,7 @@ function styleFunction(feature, resolution) {
         colorFill = '#FFFFFF';
         colorStroke = '#' + feature.getProperties().color;
     }
-        
+
     var r = markerRadius;
     for (var i=1;i<jenks.length;i++) {
         if (size <= jenks[i]) {
@@ -858,17 +858,17 @@ function styleFtFunction(feature, resolution) {
 }
 
 function showHideLayers(c) {
-    
+
     var $vd = $('#variacion_data');
     var $vdl = $('#variacion_legend');
     var $tabs = $('#tabs');
     var $slide_cluster = $('#slide_cluster');
-    
+
     if (c == 'variacion') {
         l_ec.setVisible(false);
         l_dn.setVisible(false);
         l_ft.setVisible(false);
-        
+
         l_variacion.setVisible(true);
 
         $vd.show();
@@ -877,16 +877,16 @@ function showHideLayers(c) {
         $slide_cluster.hide();
     }
     else {
-        
+
         if (l_variacion !== undefined) {
             l_variacion.setVisible(false);
         }
-        
+
         $vd.hide();
         $vdl.hide();
         $tabs.show();
         $slide_cluster.show();
-        
+
         /*
         var _l;
 
@@ -900,7 +900,7 @@ function showHideLayers(c) {
             case 'ft':
                 _l = l_ft;
             break;
-        } 
+        }
         */
 
         var _l = eval('l_' + c);

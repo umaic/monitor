@@ -17,6 +17,7 @@ var totales_ini = true;
 var id_start_date = 'ini_date';
 var id_end_date = 'fin_date';
 var subtotales;
+var sidi_url = 'http://sidi.umaic.org/sissh';
 
 // Temporal para fenomeno del niño
 // Datos de afectación desagregado sigpad, almacenado en subtotales cuando se hace totalesxd
@@ -372,7 +373,7 @@ $(function(){
                     url: 'download_incidents/' + $('input[name="descargar_v_d"]:checked').val(),
                     success: function() {
                         $('#loading').hide();
-                        location.href = base + '/export/xls/incidentes/Monitor-Incidentes';            
+                        location.href = base + '/export/xls/incidentes/Monitor-Incidentes';
                     }
                 });
         });
@@ -1016,7 +1017,7 @@ totalesxDepto = function(more) {
                                 '<div class="hide">' +
                                     '<div class="date detail">'+ _js.d +'</div> ' +
                                     '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
-                                    '<a href="http://sidih.salahumanitaria.co/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
+                                    '<a href="'+sidi_url+'/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
                                     'Perfil '+ _js.ldn +'</a></span></div> ' +
                                 '</<div></div>';
 
