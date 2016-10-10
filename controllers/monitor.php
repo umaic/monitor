@@ -24,7 +24,7 @@ class MonitorController
         require dirname( __FILE__ ).'/../config.php';
 
         $this->lib_dir = $config['libraries'];
-        
+
         require $this->lib_dir."/factory.php";
 
         $this->config = $config;
@@ -555,7 +555,7 @@ class MonitorController
                 '"Acceso (para desastres)"'.$limi.
                 '"Resoluciones"'.$limi.
                 '"Fuente"'.$limi.'"Descripcion de la fuente"'.$limi.'"Referecia"'.$limi.
-				'"Departamento"'.$limi.'"Municipio"'.$limi.'"Lugar"';
+				'"Divipola"'.$limi.'"Departamento"'.$limi.'"Divipola"'.$limi.'"Municipio"'.$limi.'"Lugar"';
 
 
         $_sql_csv = "SELECT i.id AS id, i.incident_date AS date, i.incident_date_end AS date_end,
@@ -578,7 +578,7 @@ class MonitorController
                 '"# Víctimas menores 18 años"'.$limi.'"Víctimas mujeres"'.$limi.
                 '"# Víctimas afro"'.$limi.'"Víctimas indígenas"'.$limi.'"Víctimas otros"'.$limi.
                 '"Incidente o Accidente MAP/MUSE"';
-        } 
+        }
         else {
             // Formulario de afectacion desastres
             foreach ($name_form_afectacion_dn as $name) {
@@ -586,7 +586,7 @@ class MonitorController
                 $csv .= $limi.'"'.$name.'"';
             }
         }
-        
+
         $csv .= $nl;
 
         $usha = $ushas[$tipo];
@@ -606,7 +606,7 @@ class MonitorController
 
             $acceso = '';
             $resoluciones = array();
-            
+
             // Respuesta a formularios
             $_sql_acc_1612 = "SELECT form_response AS r
                 FROM ".$_dbu."form_response AS fr
@@ -672,7 +672,7 @@ class MonitorController
                         $resoluciones[] = 'VSBG';
                     }
                 }
-                    
+
 
             }
             else {
@@ -687,7 +687,7 @@ class MonitorController
                 $_row_s = $this->db->FO($_rss);
 
                 $source = (empty($_row_s->descr)) ? '' : $_row_s->descr;
-                
+
                 // Acceso desastres
                 $form_field_id_acc = 27; // Preguntas de acceso en desastres
 
@@ -700,15 +700,19 @@ class MonitorController
                 }
             }
 
-            $_sql_c = "SELECT city from city WHERE id = ".$_r->city_id." LIMIT 1";
+            $_sql_c = "SELECT city,divipola from city WHERE id = ".$_r->city_id." LIMIT 1";
             $_rss_c = $this->db->open($_sql_c);
             $_row_c = $this->db->FO($_rss_c);
 
             $city = (empty($_row_c->city)) ? '' : $_row_c->city;
+            $city_divipola = (empty($_row_c->divipola)) ? '' : $_row_c->divipola;
 
-            $_sql_s = "SELECT state from state WHERE id = ".$_r->state_id." LIMIT 1";
+            $_sql_s = "SELECT state,divipola from state WHERE id = ".$_r->state_id." LIMIT 1";
             $_rss_s = $this->db->open($_sql_s);
             $_row_s = $this->db->FO($_rss_s);
+
+            $state = (empty($_row_s->state)) ? '' : $_row_s->state;
+            $state_divipola = (empty($_row_s->divipola)) ? '' : $_row_s->divipola;
 
             // Incidente o Accidente con Uso de explosivos remanentes de guerra ?
             $_cat_uerg = "35";
@@ -719,14 +723,13 @@ class MonitorController
 
             $resoluciones = implode(',', $resoluciones);
 
-            $state = (empty($_row_s->state)) ? '' : $_row_s->state;
             $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->date_end.'"'.$limi.'"'.$_r->dias.'"'.$limi.
                     '"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
                     '"'.$_r->cats.'"'.$limi.
                     '"'.$acceso.'"'.$limi.
                     '"'.$resoluciones.'"'.$limi.
                     '"'.$source.'"'.$limi.'"'.$desc.'"'.$limi.'"'.$ref.'"'.$limi.
-                    '"'.$state.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
+                    '"'.$state_divipola.'"'.$limi.'"'.$state.'"'.$limi.'"'.$city_divipola.'"'.$limi.'"'.$city.'"'.$limi.'"'.$_r->loc.'"'.$limi;
 
             if ($tipo == 'v') {
                 // Victimas
