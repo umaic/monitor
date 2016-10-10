@@ -1,16 +1,14 @@
 <?php
 if ($_SERVER['SERVER_NAME'] == 'localhost') {
     define ('BASE_PORTAL', '/monitor/');  // Comienza con slash, se usa al incluir los assets
-} 
+}
 else {
     define ('BASE_PORTAL', '/');  // Comienza con slash, se usa al incluir los assets
 }
 ?>
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal_home.css">
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.css" />
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/perfect-scrollbar.min.css" />
+<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/m_portal_home.css" />
 
-<?php 
+<?php
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 ?>
     <div id="content" class="clear">
@@ -35,7 +33,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                                 <option value="<?php echo $_a ?>">Todo <?php echo $_a ?></option>
                             <?php
                             }
-                            ?> 
+                            ?>
                             </optgroup>
                         </select>
                         &nbsp;
@@ -56,14 +54,14 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 <div id="des_div" class="r">
                     <h4 class="left">Desplazamientos</h4><h3 id="des" class="right"></h3>
                     <div class="clear nota">
-                        <b><u>No. de personas</u></b> desplazadas en eventos masivos 
+                        <b><u>No. de personas</u></b> desplazadas en eventos masivos
                         (50 o más personas, o 10 o más familias desplazadas en un mismo evento). Información</div>
                 </div>
                 <div id="con_div" class="r">
                     <h4 class="left">Confinados</h4><h3 id="con" class="right"></h3>
                     <div class="clear nota">
-                        <b><u>No. personas</u></b> de confinadas, se refiere a personas afectadas por limitaciones a 
-                        la movilidad que sufren al mismo tiempo restricciones para acceder a por lo menos 
+                        <b><u>No. personas</u></b> de confinadas, se refiere a personas afectadas por limitaciones a
+                        la movilidad que sufren al mismo tiempo restricciones para acceder a por lo menos
                         tres bienes y/o servicios básicos durante un período mínimo de una semana</div>
                 </div>
                 <div id="acc_div" class="r">
@@ -88,25 +86,20 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         </div>
         <div class="clear"></div>
     </div>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe-ol2.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map-ol2.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/geostats.min.js"></script>
+    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/m_portal_home.js"></script>
     <script type="text/javascript">
         var portal = 1;
         var layout = 'portal_home';
 
-        $(function(){ 
+        $(function(){
             var h = $('div.r').css('height');
 
-            $('div.r').toggle(function(){ 
+            $('div.r').toggle(function(){
                 $(this).css('height', 'auto');
             },
             function(){ $(this).css('height', h) });
         });
     </script>
-    
+
 </body>
 </html>
