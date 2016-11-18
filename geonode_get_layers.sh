@@ -6,7 +6,7 @@ json=$1
 				
 file="geonode_layers.xml"
 
-curl "http://geonode.salahumanitaria.co/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3" -o $file
+curl "http://geonode.umaic.org/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3" -o $file
 
 i=0
 r=""
@@ -16,7 +16,7 @@ while read line ; do
 	#line=${l//$'\n'/}
 	
 	if [ $i -gt 0 ]; then
-		if [[ $line == \<Name* ]] || [[ $line == \<Title* ]] || [[ $line == \<Abstract* ]]; then
+		if [[ $line == \<Name* ]] || [[ $line == \<Title* ]] || [[ $line == \<Abstract* ]]; then 
 			if [ $i -eq 1 ]; then
 				name=$(awk -F "[><]" '/Name/{print $3}' <<< $line)
 

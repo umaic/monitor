@@ -285,10 +285,12 @@ class MonitorController
         $acceso = ($_SESSION['acceso'] == 1) ? true : false;
         $violencia = ($ecdn == 'v') ? true : false;
         $usar_temporal = true;
+        $values = array();
 
         $n = md5($periodo_1.'-'.$periodo_2.'-'.$ecdn.'-'.$cats.'-'.$states);
 
-        $path2file = $this->config['cache_json']['path'].'/'.$n;
+        $path_static = $this->config['cache_json']['path'].'/';
+        $path2file = $path_static.$n;
 
         $r = array();
         $t = array('ec' => 0, 'dn' => 0);
@@ -446,7 +448,7 @@ class MonitorController
 
         $topojson['objects']['mpios_geonode']['geometries'] = $geometries;
 
-        file_put_contents('static/variacion-topo.json',json_encode($topojson));
+        file_put_contents($path_static.'/variacion-topo.json',json_encode($topojson));
 
         // Excel file
         $nom = 'monitor-variacion';
@@ -1719,7 +1721,7 @@ class MonitorController
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //Set curl to return the data instead of printing it to the browser.
-            curl_setopt($ch, CURLOPT_URL, 'http://'.$url);
+            curl_setopt($ch, CURLOPT_URL, $url);
 
             //echo 'http://'.$url;
 

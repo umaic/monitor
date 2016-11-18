@@ -1,7 +1,7 @@
 # Turn on URL rewriting only when mod rewrite is turn on
 
 <IfModule mod_rewrite.c>
-	RewriteEngine On
+        RewriteEngine On
 
 	# Installation directory
 	RewriteBase /
@@ -15,19 +15,19 @@
 
 	# Rewrite all other URLs to index.php/URL
     
-    RewriteRule ^(getIncidentesPortal)/([0-9.]+)/([0-9.]+)/([a-z0-9=,|]+)/([0-9,]+)/([0-9,]*)$ index.php?mod=$1&ini=$2&fin=$3&c=$4&states=$6&limiti=$5 [L,QSA]
-    RewriteRule ^([0-9a-z]+)/([0-9.]+)/([0-9.]+)/([a-z0-9=,|]+)/([0-9,]*)$ index.php?mod=$1&ini=$2&fin=$3&c=$4&states=$5 [L]
-    RewriteRule ^variacion/([0-9-|]+)/([0-9-|]+)/(v|d)/([a-z0-9=,|]+)/([0-9,]*)$ index.php?mod=variacion&p1=$1&p2=$2&ecdn=$3&c=$4&states=$5 [L]
-    RewriteRule ^([A-Za-z]+)/([0-9.]+)/([0-9.]+)$ index.php?mod=$1&ini=$2&fin=$3 [L,QSA]
-    RewriteRule ^([0-9a-z]+)/([0-9]+)$ index.php?mod=$1&f=$2 [L]
-    RewriteRule ^([0-9a-zA-Z]+)$ index.php?mod=$1 [L]
-    RewriteRule ^([0-9a-z_]+)/([0-9a-zA-Z]+)$ index.php?mod=$1&f=$2 [L]
-    RewriteRule ^(totalPeriodo)/([a-z]+)/([yst]+)/([0-9]+)$ index.php?mod=$1&vd=$2&p=$3&v=$4 [L]
-    RewriteRule ^export/(xls|pdf)/([a-z]+)/([a-zA-Z-]+) index.php?mod=export&t=$1&csv=$2&nomod=$3 [L]
-    RewriteRule ^session_var/(mapa_tipo|acceso)/(afectacion|eventos|1|0) index.php?mod=session_var&var=$1&valor=$2 [L]
-    RewriteRule ^(checkCacheJson)$ index.php?mod=$1 [L]
-    RewriteRule ^json/(cluster|index)/$ index.php?mod=geojson&cluster=$1 [L,QSA]
-    #RewriteRule .* index.php?mod=$0 [PT,L]
+    RewriteRule ^(getIncidentesPortal)/([0-9.]+)/([0-9.]+)/([a-z0-9=,|]+)/([0-9,]+)/([0-9,]*)$ /index.php?mod=$1&ini=$2&fin=$3&c=$4&states=$6&limiti=$5 [L,QSA]
+    RewriteRule ^([0-9a-z]+)/([0-9.]+)/([0-9.]+)/([a-z0-9=,|]+)/([0-9,]*)$ /index.php?mod=$1&ini=$2&fin=$3&c=$4&states=$5 [L]
+    RewriteRule ^variacion/([0-9-|]+)/([0-9-|]+)/(v|d)/([a-z0-9=,|]+)/([0-9,]*)$ /index.php?mod=variacion&p1=$1&p2=$2&ecdn=$3&c=$4&states=$5 [L]
+    RewriteRule ^([A-Za-z]+)/([0-9.]+)/([0-9.]+)$ /index.php?mod=$1&ini=$2&fin=$3 [L,QSA]
+    RewriteRule ^([0-9a-z]+)/([0-9]+)$ /index.php?mod=$1&f=$2 [L]
+    RewriteRule ^([0-9a-zA-Z]+)$ /index.php?mod=$1 [L]
+    RewriteRule ^([0-9a-z_]+)/([0-9a-zA-Z]+)$ /index.php?mod=$1&f=$2 [L]
+    RewriteRule ^(totalPeriodo)/([a-z]+)/([yst]+)/([0-9]+)$ /index.php?mod=$1&vd=$2&p=$3&v=$4 [L]
+    RewriteRule ^export/(xls|pdf)/([a-z]+)/([a-zA-Z-]+) /index.php?mod=export&t=$1&csv=$2&nom=$3 [L]
+    RewriteRule ^session_var/(mapa_tipo|acceso)/(afectacion|eventos|1|0) /index.php?mod=session_var&var=$1&valor=$2 [L]
+    RewriteRule ^(checkCacheJson)$ /index.php?mod=$1 [L]
+    RewriteRule ^json/(cluster|index)/$ /index.php?mod=geojson&cluster=$1 [L,QSA]
+    #RewriteRule .* index.php?m=$0 [PT,L]
 </IfModule>
 
 # Protect the htaccess from being viewed
@@ -35,5 +35,10 @@
 	order allow,deny
 	deny from all
 </Files>
+# Don't show directory listings for URLs which map to a directory.
+Options -Indexes
 
-ErrorDocument 404 http://monitor.salahumanitaria.co
+#Follow symlinks
+Options +FollowSymlinks
+
+ErrorDocument 404 http://monitor.umaic.org
