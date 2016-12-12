@@ -97,7 +97,7 @@ function getLayerByName(n) {
 
 function addWMSLayer(n,l,v) {
 
-    var u = 'http://geonode.salahumanitaria.co/geoserver/wms';
+    var u = 'http://geonode.umaic.org/geoserver/wms';
 
     var lys = getLayerByName(n);
 

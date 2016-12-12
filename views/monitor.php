@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="shortcut icon" href="http://monitor.salahumanitaria.co/favicon.ico" />
+<link rel="shortcut icon" href="http://monitor.umaic.org/favicon.ico" />
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
@@ -30,7 +30,7 @@ else { ?>
 </head>
 
 <?php
-$sala = 'salahumanitaria.co';
+$sala = 'umaic.org';
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 $url_violencia = "http://violenciaarmada.".$sala."/reports/submit";
 $url_desastres = "http://desastres.".$sala."/reports/submit";
@@ -66,10 +66,10 @@ function filesize_formatted($path)
         <div class="right">
             <ul>
                 <li><a id="lmh" href="#">¿Qué es <b>Monitor</b>?</a></li>
-                <li><a href="http://www.salahumanitaria.co" target="_blank">http://SalaHumanitaria.co</a></li>
-                <li><a href="http://sidih.salahumanitaria.co" target="_blank">Sidih</a></li>
-                <li><a href="http://geonode.salahumanitaria.co" target="_blank">Geonode</a></li>
-                <li><a href="http://www.colombiassh.org/gtmi/wiki/" target="_blank">Wiki</a></li>
+                <li><a href="http://umaic.org" target="_blank">http://umaic.org</a></li>
+                <li><a href="http://sidi.umaic.org" target="_blank">Sidi</a></li>
+                <li><a href="http://geonode.umaic.org" target="_blank">Geonode</a></li>
+                <li><a href="https://wiki.umaic.org" target="_blank">Wiki</a></li>
             </ul>
         </div>
         <div class="clear"></div>
@@ -189,7 +189,7 @@ function filesize_formatted($path)
                 <div id="qlmh" class="hide">
                     <div id="qmm" class="left">
                         <h2>&iquest;Qu&eacute; es y para qu&eacute; sirve <b>Monitor</b>?</h2>
-                        <b>MONITOR</b> es una herramienta administrada por OCHA que est&aacute; a disposici&oacute;n de la comunidad humanitaria en Colombia y del p&uacute;blico en general con el objetivo de recopilar, categorizar y georreferenciar eventos de violencia armada y de desastres naturales. 
+                        <b>MONITOR</b> es una herramienta administrada por UMAIC que est&aacute; a disposici&oacute;n de la comunidad humanitaria en Colombia y del p&uacute;blico en general con el objetivo de recopilar, categorizar y georreferenciar eventos de violencia armada y de desastres naturales.
                         <br /><br />
                         <b>MONITOR</b> se alimenta de m&uacute;ltiples fuentes como medios de comunicaci&oacute;n locales y nacionales, &nbsp;instituciones del Estado, organizaciones de la sociedad civil e informaci&oacute;n recopilada en terreno por socios humanitarios nacionales e internacionales, entre otros. No se trata de un instrumento de verificaci&oacute;n de cada uno de los eventos reportados y no pretende reflejar la totalidad de la afectaci&oacute;n humanitaria.&nbsp;
                     </div>
@@ -198,7 +198,7 @@ function filesize_formatted($path)
                         <iframe width="400" height="225" src="//www.youtube.com/embed/MI1XWaq58os" frameborder="0" allowfullscreen></iframe>
                     </div>
                     <div class="left">
-                        <br><br>S&oacute;lo para categor&iacute;as espec&iacute;ficas de <b>MONITOR</b> como el desplazamiento masivo o el confinamiento, OCHA puede hacer seguimiento en profundidad en zonas con presencia de los Equipos Humanitarios Locales (conformados por agencias de Naciones Unidas y ONG internacionales) y otros socios en terreno. El Monitor se alimenta y revisa en tiempo real por varios alimentadores en Bogot&aacute; y las regiones, por tanto es posible que la informaci&oacute;n pueda variar, dependiendo del momento de consulta. 
+                        <br><br>S&oacute;lo para categor&iacute;as espec&iacute;ficas de <b>MONITOR</b> como el desplazamiento masivo o el confinamiento, UMAIC puede hacer seguimiento en profundidad en zonas con presencia de los Equipos Locales de Coordinación (conformados por agencias de Naciones Unidas y ONG internacionales) y otros socios en terreno. El Monitor se alimenta y revisa en tiempo real por varios alimentadores en Bogot&aacute; y las regiones, por tanto es posible que la informaci&oacute;n pueda variar, dependiendo del momento de consulta.
                         La informaci&oacute;n de <b>MONITOR</b> no refleja o compromete la posici&oacute;n del Equipo Humanitario de Pa&iacute;s o de Naciones Unidas.
                         <br>
                     </div>
@@ -235,7 +235,7 @@ function filesize_formatted($path)
                 <?php 
                 if ($geonode) { ?>
                     <p>
-                        Capas disponibles en el sistema <a href="http://geonode.salahumanitaria.co" target="_blank">GEONODE</a>
+                        Capas disponibles en el sistema <a href="http://geonode.umaic.org" target="_blank">GEONODE</a>
                         de Sala Humanitaria</a>
                     </p>
                     <div class="left">
@@ -400,7 +400,7 @@ function filesize_formatted($path)
                      <h2 class="dosis">Categorias Violencia Armada</h2>
                      <br />
                     <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
+                        <a href="https://wiki.umaic.org/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
                     </div>
                     <div class="inline">
                     |&nbsp;<a class="tn_fcat" href="#">Seleccionar todas/ninguna</a>
@@ -461,7 +461,7 @@ function filesize_formatted($path)
                      <h2 class="dosis">Categorias Desastres</h2>
                      <br />
                     <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
+                        <a href="https://wiki.umaic.org/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
                     </div>
                     <div class="inline">
                     |&nbsp;<a class="tn_fcat" href="#">Seleccionar todas/ninguna</a>
@@ -624,7 +624,7 @@ function filesize_formatted($path)
                      <h2 class="dosis">Posible restriccion al acceso humanitario</h2>
                      <br />
                     <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Restricción_al_acceso_humanitario" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
+                        <a href="https://wiki.umaic.org/wiki/Restricción_al_acceso_humanitario" target="_blank">&nbsp;Definici&oacute;n de categorias</a>
                     </div>
                     <div class="inline">
                     |&nbsp;<a class="tn_fcat" href="#">Seleccionar todas/ninguna</a>

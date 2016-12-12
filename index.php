@@ -11,9 +11,9 @@
  * @category  Script
  * @package   Monitor
  * @author    Ruben Rojas <rojasr@un.org>
- * @copyright 2012 OCHA Colombia (http://salahumanitaria.co)
+ * @copyright 2016 UMAIC Colombia (http://umaic.org)
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
- * @link      http://monitor.salahumanitaria.co Monitor
+ * @link      http://monitor.umaic.org Monitor
 */
 
 $cli = (isset($argv)) ? true : false;

@@ -32,7 +32,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                     humanitaria en el pa&iacute;s de manera georeferenciada. <br /><br />
                     Permite la visualizaci&oacute;n de multiples fuentes de informaci&oacute;n 
                     tanto de desastres naturales como de emergencia compleja.  
-                    OCHA Colombia provee esta plataforma como un servicio com&uacute;n humanitario 
+                    UMAIC Colombia provee esta plataforma como un servicio com&uacute;n humanitario
                     para el Equipo Humanitario del Pa&iacute;s (EHP) y los miembros de los respetivos Clusters
                 </div>
             </div>
@@ -43,7 +43,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         <div class="opf">Restricci&oacute;n al acceso humanitario</div>
         <div class="filtro">
             <div class="right">
-                <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Restricci%C3%B3n_al_acceso_humanitario" target="_blank">? Wiki Acceso Humanitario</a>
+                <a href="https://wiki.umaic.org/wiki/Restricci%C3%B3n_al_acceso_humanitario" target="_blank">? Wiki Acceso Humanitario</a>
             </div>
             <div class="i f clear">Mostrar eventos que posiblemente
             restringen el acceso humanitario</div>
@@ -61,7 +61,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
     -->
         <div id="tec" class="tecdn">
-            <a href="http://www.colombiassh.org/emergenciacompleja/reports/submit" target="_blank">
+            <a href="http://desastres.umaic.org/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
@@ -74,7 +74,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                      <h2>Categorias Violencia Armada</h2>
                      <br />
                     <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                        <a href="https://wiki.umaic.org/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
                     </div>
                     <div class="inline">
                     <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
@@ -140,7 +140,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                      <h2>Categorias Desastres Naturales</h2>
                      <br />
                     <div class="inline linko">
-                        <a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                        <a href="https://wiki.umaic.org/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
                     </div>
                     <div class="inline">
                     <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
