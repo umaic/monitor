@@ -81,7 +81,7 @@ show['fuente'] = true;
 
 function addWMSLayer(n,l,v) {
     
-    var u = 'http://geonode.umaic.org/geoserver/wms';
+    var u = 'https://geonode.umaic.org/geoserver/wms';
         
     if (map.getLayersByName(n).length > 0) {
         var ly = map.getLayersByName(n)[0];

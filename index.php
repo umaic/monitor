@@ -30,7 +30,7 @@ if ($cli === false) {
 
 // PHP >= 5.3
 //date_default_timezone_set('America/Bogota');
-
+///   define ('BASE', '/'); /// para online
 define ('BASE', '/');  // Comienza con slash, se usa al incluir los assets
 
 require 'config.php';
@@ -62,6 +62,7 @@ else {
 
 // Clean URL
 if (!empty($mod)) {
+	
     switch($mod) {
         case 'totalxd':
 
@@ -200,6 +201,7 @@ if (!empty($mod)) {
     }
 }
 else {
+
     $layout = (empty($_GET['layout'])) ? 'monitor' : $_GET['layout'];
     $fl = dirname( __FILE__ ).'/views/'.$layout.'.php';
 
@@ -227,6 +229,7 @@ else {
 
     if ($layout != 'portal_home') {
         // Categorias para filtros
+		
         $cats_db = $mc->getCats();
         $cats_f = $cats_db['tree'];
         $cats_u = (empty($_GET['c'])) ? $cats_db['h'] : explode(',', $_GET['c']);

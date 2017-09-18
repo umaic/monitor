@@ -486,7 +486,7 @@ $(function(){
 
         $(this).find('span').html(dgt);
 
-        addFeaturesFirstTime();
+       addFeaturesFirstTime();
         totalesxDepto();
 
         // Activa resumen
@@ -938,6 +938,8 @@ totalesxDepto = function(more) {
 
     _states = getStatesChecked();
 
+
+	
     // Portal EHP
     //if (is_portal) {
     if (layout == 'portal_home') {
@@ -1144,6 +1146,8 @@ totalesxDepto = function(more) {
 
         $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');
 
+			console.log(base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states);
+		
         $.ajax({
             url: base + '/totalxd/' + _ini + '/' + _fin + '/' + _cats + '/' + _states,
             dataType: 'json',

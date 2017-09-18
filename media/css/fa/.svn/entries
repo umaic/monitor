@@ -1,0 +1,34 @@
+9
+
+dir
+378
+svn+ssh://desarrollo@192.168.1.23/srv/svn/monitor/media/css/fa
+svn+ssh://desarrollo@192.168.1.23/srv/svn/monitor
+
+
+
+2015-11-30T21:38:09.635093Z
+332
+desarrollo
+
+
+svn:special svn:externals svn:needs-lock
+
+
+
+
+
+
+
+
+
+
+
+8a95f22b-98cb-4a63-ae2c-003d82c68fa7
+
+css
+dir
+
+fonts
+dir
+

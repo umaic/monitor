@@ -129,6 +129,7 @@ class MonitorController
             $cond_csv .= ' AND state_id IN ('.$states.')';
         }
 
+		
 
         return array($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
     }
@@ -197,12 +198,15 @@ class MonitorController
                 $_sqlidn = sprintf($_sql,$_db,$_db,$_db,$cond_cats_dn);
             }
 
-            //echo $_sqliec;
-            //echo $_sqlidn;
+           // echo $_sqliec;
+           // echo $_sqlidn;
+		
 
             $_ss = " AND state_id = '%s' LIMIT 1";
             $_sqliec .= $_ss;
             $_sqlidn .= $_ss;
+			
+			  
 
             $cond_states = false;
             if (!empty($states)) {
@@ -247,7 +251,7 @@ class MonitorController
 
                 $hide = (empty($_nec) && empty($_ndn)) ? 'hide' : '';
 
-                $r[] = array('d' => $_row->state,
+                $r[] = array('d'.$_sqlec => $_row->state,
                              'ec' => $_nec,
                              'dn' => $_ndn,
                              'c' => $_row->centroid,
@@ -498,7 +502,8 @@ class MonitorController
             $cond = ($db != '') ? ' AND id NOT IN (104)' : '';
 
             $_sql = "SELECT id, category_title AS t FROM ".$db."category WHERE parent_id = 0 AND category_visible = 1 $cond ORDER BY category_title";
-            $_rs = $this->db->Open($_sql);
+           
+			$_rs = $this->db->Open($_sql);
             while ($_row = $this->db->FO($_rs)) {
                 $tree[$inst[$d]][$_row->t] = array();
                 $_sqlh = "SELECT id, category_title AS t FROM ".$db."category WHERE parent_id = ".$_row->id." AND category_visible = 1 ORDER BY category_title ";
@@ -552,7 +557,7 @@ class MonitorController
         $limi = '~';
         $nl = "\r\n";
 
-        $csv = '"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Fecha Fin Evento"'.$limi.'"# días evento"'.$limi.'"Título evento"'.$limi.'"Resumen evento"'.$limi.
+        $csv = '"Id"'.$limi.'"Tipo"'.$limi.'"Fecha Evento"'.$limi.'"Fecha Fin Evento"'.$limi.'"# días evento"'.$limi.'"Título evento"'.$limi.'"Resumen evento"'.$limi.
                 '"Categorias (Subcategorias)"'.$limi.
                 '"Acceso (para desastres)"'.$limi.
                 '"Resoluciones"'.$limi.
@@ -595,9 +600,13 @@ class MonitorController
         $_dbu = $usha['db'];
         $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu,$_dbu,$usha['cc']);
 
+		//echo $_sql_csv_ecdn."</br>";
+		
         $_rs = $this->db->open($_sql_csv_ecdn);
         while($_r = $this->db->FO($_rs)) {
 
+		//echo "entro</br>";
+		
             $des = $source = $desc = $ref = $cats = '';
             $iid = $_r->id;
 
@@ -725,7 +734,7 @@ class MonitorController
 
             $resoluciones = implode(',', $resoluciones);
 
-            $csv .= '"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->date_end.'"'.$limi.'"'.$_r->dias.'"'.$limi.
+            $csv .= '"'.$iid.'"'.$limi.'"'.$usha['t'].'"'.$limi.'"'.$_r->date.'"'.$limi.'"'.$_r->date_end.'"'.$limi.'"'.$_r->dias.'"'.$limi.
                     '"'.$title.'"'.$limi.'"'.$des.'"'.$limi.
                     '"'.$_r->cats.'"'.$limi.
                     '"'.$acceso.'"'.$limi.
@@ -758,13 +767,23 @@ class MonitorController
         }
         //}
 
-        //echo $csv;
-        $f = Factory::create('file');
-
+       // echo $csv;
+        
+		if(strlen($csv)>0){
+		
+		$f = Factory::create('file');
+         
+		 
+		
         $fp = $f->open($this->config['reporte_csv'], 'w+');
         $f->write($fp, $csv);
         $f->close($fp);
+         
+         
+		 
+		chmod($this->config['reporte_csv'], 0777);
 
+        }
         echo "1";
 
     }
@@ -1516,11 +1535,15 @@ class MonitorController
                     $fin = mktime(0,0,0,12,31,$a);
                     $cats = '';
                     $states = '';
-
+                    
+					//echo $a."</br>";
+					//echo $ini."</br>";
+					//echo $fin."</br>";
+					
                     list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
 
                     $this->downloadIncidents($d[0],compact('cond_csv','cond_cats_dn','cond_cats_ec'));
-                    $this->export('xls','incidentes', $reporte,'static');
+                   $this->export('xls','incidentes', $reporte,'static');
 
                     //echo "Listo = $a - $d \n";
 
@@ -1537,6 +1560,8 @@ class MonitorController
 
         $totales_csv = $this->config['cache_reportes'].'/totales.csv';
 
+		
+		echo $totales_csv."</br>";
 
         $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
         $cond_date = "DATE(incident_datemodify) = $ayer OR DATE(incident_dateadd) = $ayer";
@@ -1584,6 +1609,8 @@ class MonitorController
 
         //echo $_sqlidn;
 
+		//echo "y:".$yyyy."</br>".$this->config['yyyy_ini']."</br>";
+		
         for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
             foreach($dbs as $d => $db) {
 
@@ -1592,8 +1619,13 @@ class MonitorController
                 // Check if there are modificated incidents at the year
                 $sql = "SELECT COUNT(id) AS n FROM ".$db."incident WHERE YEAR(incident_date) = $a AND incident_active = 1 AND ($cond_date)";
 
+			//	echo $sql."</br>";
+				
                 $rs = $this->db->open($sql);
-                $row = $this->db->FO($rs);
+                
+				
+				
+				$row = $this->db->FO($rs);
 
                 $totales_html = $this->config['cache_reportes']."/totales-$a-$d.html";
                 $reporte = $this->config['cache_reportes'].'/'."monitor-totales-$a-$d.xls";
@@ -1655,6 +1687,12 @@ class MonitorController
                     file_put_contents($totales_html, $html);
                     file_put_contents($totales_csv, $csv);
 
+				//	echo "ht:".$totales_html."</br>";
+				//	echo "cs:".$totales_csv."</br>";
+					
+					chmod($totales_html, 0777);
+					chmod($totales_csv, 0777);
+					
                     $this->export('xls','totales', $reporte,'static');
 
                     echo "Listo = $a - $d \n";

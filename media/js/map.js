@@ -97,7 +97,7 @@ function getLayerByName(n) {
 
 function addWMSLayer(n,l,v) {
 
-    var u = 'http://geonode.umaic.org/geoserver/wms';
+    var u = 'https://geonode.umaic.org/geoserver/wms';
 
     var lys = getLayerByName(n);
 
@@ -182,7 +182,7 @@ function mapRender() {
                 title: 'OSM',
                 //source: new ol.source.OSM()
                 source: new ol.source.XYZ({
-                    url: 'http://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
+                    url: 'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
                 })
             })
         ],
@@ -302,7 +302,7 @@ function addFeatures(inst) {
     // Destacados, ft=fetured
     if (inst == 'ecdn' || inst == 'ft') {
 
-        var uparams_ft = uparams.concat([['v', 1]]);
+        var uparams_ft = uparams.concat([['v', 1]]);  ////1
         var l_ft_source = new ol.source.Vector();
 
         if (!layer_ft_exists) {
@@ -325,7 +325,7 @@ function addFeatures(inst) {
 
         // States filter
         _uft_dn = addURLParameter(_uft_dn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-
+      
         ajaxFeatures(_uft_dn, l_ft, false);
 
         var _uft_ec = addURLParameter(url_ft_ec, uparams_ft);
@@ -370,7 +370,7 @@ function addFeatures(inst) {
 
     }
 
-    if (inst == 'ecdn' || inst == 'dn') {
+    if (inst == 'ecdn' || inst == 'dn' ) {
         var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
         var l_dn_source = new ol.source.Vector({});
 
@@ -397,15 +397,15 @@ function addFeatures(inst) {
             // States filter
             _udn = addURLParameter(_udn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
 
-            // Tipo mapa
+            // Tip mapa
             _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
-
+//console.log('4');
             ajaxFeatures(_udn, l_dn, true);
         }
     }
 
 
-    if (inst == 'ecdn' || inst == 'ec') {
+    if (inst == 'ecdn' || inst == 'ec' ) {
 
         var uparams_ec = uparams.concat([['c', $('#currentCatE').val()]]);
         var l_ec_source = new ol.source.Vector();
@@ -434,7 +434,7 @@ function addFeatures(inst) {
 
             // Tipo mapa
             _uec = addURLParameter(_uec, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
-
+            //console.log('5');
             ajaxFeatures(_uec, l_ec, true);
         }
 
@@ -455,7 +455,7 @@ function addFeatures(inst) {
 }
 
 function ajaxFeatures(u, l, doJenks) {
-
+//console.log(u+'f:'+l);
     $.ajax({
         url: u,
         dataType: 'jsonp',
@@ -767,7 +767,8 @@ function onFeatureSelect(attrs) {
 function showHideFeaturedIcon() {
     var $f = $('#featured');
     if (layer_ft_exists){
-        $f.show();
+        //$f.show();
+          $f.hide();
     }
     else {
         $f.hide();
@@ -849,12 +850,56 @@ function styleFunction(feature, resolution) {
 }
 
 function styleFtFunction(feature, resolution) {
-    return [new ol.style.Style({
+	
+  var size = feature.getProperties().count;
+  colorFill = '#'+feature.get('color');//'rgba(252,255,0,1)';
+  colorStroke = '#'+feature.get('color');//'rgba(252,255,0,0.5)';
+  
+     var r = markerRadius;
+    for (var i=1;i<jenks.length;i++) {
+        if (size <= jenks[i]) {
+            r = (i==1) ? 7 : markerRadius * i;
+            break;
+        }
+    }
+	
+	    var textFill = new ol.style.Fill({
+        color: '#fff'
+    });
+    var textStroke = new ol.style.Stroke({
+        color: 'rgba(0, 0, 0, 0.6)',
+        width: 2
+    });
+	
+	    style = [new ol.style.Style({
+      image: new ol.style.Circle({
+        radius: r,
+        fill: new ol.style.Fill({
+          color: colorFill
+        }),
+        stroke: new ol.style.Stroke({
+            color: colorStroke,
+            width: 3
+          }),
+      }),
+      text: new ol.style.Text({
+        text: size.toString(),
+        fill: textFill,
+        stroke: textStroke
+      })
+    })];
+  return style;
+  
+  /*
+	return [new ol.style.Style({
         image: new ol.style.Icon(({
             src: feature.get('icon'),
             size: [24,24]
         }))
     })]
+	
+	
+	*/
 }
 
 function showHideLayers(c) {

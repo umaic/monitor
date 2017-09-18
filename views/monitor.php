@@ -6,7 +6,9 @@
 <title>Monitor Humanitario :: Colombia</title>
 
 <?php
-$dev = false;
+date_default_timezone_set('UTC');
+//echo date('Y-m-d H:i:s', intval('2017-01-02'));
+$dev = true;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css" />
@@ -23,13 +25,14 @@ if ($dev) { ?>
 <?php
 }
 else { ?>
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/m.css" />
+    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/m.css?v={random number/string}" />
 <?php
 }
 ?>
 </head>
 
 <?php
+
 $sala = 'umaic.org';
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 $url_violencia = "http://violenciaarmada.".$sala."/reports/submit";
@@ -255,6 +258,7 @@ function filesize_formatted($path)
                 ?>
             </div>
             <div id="slide_cluster">
+			
                 <div id="slide_cluster_text">
                     Deslice la barra para cambiar el agrupamiento
                 </div>
