@@ -6,12 +6,13 @@ class Mysql {
 	private $user;
 	private $pass;
 	private $db;
+	private $debug = 0;
 	private static $instance;
 
 	private function __construct() {
 
-        $this->user = "monitor";
-        $this->pass = "!7ujmmju7!";
+        $this->user = 'monitor';
+        $this->pass = 'Myp4$M0';
         $this->db = "violencia_armada";
 
         //$this->conn = mysqli_connect($this->host,$this->user,$this->pass,$this->db);
@@ -37,6 +38,9 @@ class Mysql {
 
 	public function open($sql){
         $_rs = $this->conn->prepare($sql);
+		
+		if ($this->debug == 1)
+			file_put_contents ('/tmp/monitor_sql.txt' , "-Open->".$sql."\r\n", FILE_APPEND);  
         $_rs->execute();
         
         return $_rs;
@@ -56,6 +60,9 @@ class Mysql {
 
 	public function Execute($query) {
         $this->conn->exec($query);
+		
+		if ($this->debug == 1)
+			file_put_contents ('/tmp/monitor_sql.txt' , "-Exec->".$query."\r\n", FILE_APPEND);  
 	}
 
 	public function GetGeneratedID() {
