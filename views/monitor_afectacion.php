@@ -61,7 +61,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
     </div>
     -->
         <div id="tec" class="tecdn">
-            <a href="http://desastres.umaic.org/reports/submit" target="_blank">
+            <a href="https://monitor.umaic.org/desastres/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_ec.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
@@ -121,13 +121,13 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                 </div>
             </div>
             <div id="new_event">
-                <a href="http://colombiassh.org/violencia_armada/reports/submit" target="_blank">
+                <a href="https://monitor.umaic.org/violencia_armada/reports/submit" target="_blank">
                     Reportar un evento
                 </a>
             </div>
         </div>
         <div id="tdn" class="tecdn">
-            <a href="http://inundaciones.colombiassh.org/reports/submit" target="_blank">
+            <a href="https://monitor.umaic.org/desastres/reports/submit" target="_blank">
                 <img src="<?php echo BASE ?>media/img/logo_dn.png" border="0" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>

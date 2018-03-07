@@ -14,7 +14,7 @@ else {
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 ?>
         <div id="tec" class="tecdn hide">
-            <a href="http://desastres.umaic.org/" target="_blank">
+            <a href="https://monitor.umaic.org/desastres" target="_blank">
                 <img src="<?php echo BASE_PORTAL ?>media/img/logo_ec.png" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
@@ -74,7 +74,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div id="tdn" class="tecdn hide">
-            <a href="http://inundaciones.colombiassh.org" target="_blank">
+            <a href="https://monitor.umaic.org/desastres" target="_blank">
                 <img src="<?php echo BASE_PORTAL ?>media/img/logo_dn.png" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>

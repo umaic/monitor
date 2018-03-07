@@ -101,7 +101,7 @@ class MonitorController
      */
     public function getConditions($ini, $fin, $cats, $states) {
 
-        date_default_timezone_set('UTC');  // Igual a USHAHIDI, violencia armada
+        date_default_timezone_set('America/Bogota');  // Igual a USHAHIDI, violencia armada
 
         $ini = date('Y-m-d H:i:s', intval($ini));  // Se usa intval para que quede igual que ushahidi/application/helper/reports/ :740
         $fin = date('Y-m-d H:i:s', intval($fin));
@@ -129,7 +129,7 @@ class MonitorController
             $cond_csv .= ' AND state_id IN ('.$states.')';
         }
 
-		
+
 
         return array($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv);
     }
@@ -200,13 +200,13 @@ class MonitorController
 
            // echo $_sqliec;
            // echo $_sqlidn;
-		
+
 
             $_ss = " AND state_id = '%s' LIMIT 1";
             $_sqliec .= $_ss;
             $_sqlidn .= $_ss;
-			
-			  
+
+
 
             $cond_states = false;
             if (!empty($states)) {
@@ -251,7 +251,7 @@ class MonitorController
 
                 $hide = (empty($_nec) && empty($_ndn)) ? 'hide' : '';
 
-                $r[] = array('d'.$_sqlec => $_row->state,
+                $r[] = array('d' => $_row->state,
                              'ec' => $_nec,
                              'dn' => $_ndn,
                              'c' => $_row->centroid,
@@ -778,9 +778,9 @@ class MonitorController
         $fp = $f->open($this->config['reporte_csv'], 'w+');
         $f->write($fp, $csv);
         $f->close($fp);
-         
-         
-		 
+
+
+
 		chmod($this->config['reporte_csv'], 0777);
 
         }
@@ -1485,13 +1485,15 @@ class MonitorController
         $w3hx = 1;
         $vars = compact('w3hx','id','u');
 
-        $h2pdf = "http://192.168.1.23/html2pdf/index.php?w3hx=1&id=$id&u=$url";
+        $h2pdf = "https://monitor.umaic.org/html2pdf/index.php?w3hx=1&id=$id&u=$url";
 
         //echo $h2pdf;
 
         curl_setopt($ch, CURLOPT_HEADER, 0);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); //Set curl to return the data instead of printing it to the browser.
         curl_setopt($ch, CURLOPT_URL, $h2pdf);
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+	    curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  2);
 
         $pdf = curl_exec($ch);
 
@@ -1561,7 +1563,7 @@ class MonitorController
         $totales_csv = $this->config['cache_reportes'].'/totales.csv';
 
 		
-		echo $totales_csv."</br>";
+		//echo $totales_csv."</br>";
 
         $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
         $cond_date = "DATE(incident_datemodify) = $ayer OR DATE(incident_dateadd) = $ayer";
@@ -1622,9 +1624,9 @@ class MonitorController
 			//	echo $sql."</br>";
 				
                 $rs = $this->db->open($sql);
-                
-				
-				
+
+
+
 				$row = $this->db->FO($rs);
 
                 $totales_html = $this->config['cache_reportes']."/totales-$a-$d.html";
@@ -1687,8 +1689,8 @@ class MonitorController
                     file_put_contents($totales_html, $html);
                     file_put_contents($totales_csv, $csv);
 
-				//	echo "ht:".$totales_html."</br>";
-				//	echo "cs:".$totales_csv."</br>";
+					//echo "ht:".$totales_html."</br>";
+					//echo "cs:".$totales_csv."</br>";
 					
 					chmod($totales_html, 0777);
 					chmod($totales_csv, 0777);
@@ -1759,7 +1761,9 @@ class MonitorController
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, true); //Set curl to return the data instead of printing it to the browser.
-            curl_setopt($ch, CURLOPT_URL, $url);
+            curl_setopt($ch, CURLOPT_URL, 'https://' . $url);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST,  2);
 
             //echo 'http://'.$url;
 

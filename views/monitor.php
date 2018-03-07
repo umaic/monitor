@@ -2,11 +2,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<link rel="shortcut icon" href="http://monitor.umaic.org/favicon.ico" />
-<title>Monitor Humanitario :: Colombia</title>
+<link rel="shortcut icon" href="https://monitor.umaic.org/favicon.ico" />
+<title>Monitor Humanitario UMAIC</title>
 
 <?php
-date_default_timezone_set('UTC');
+date_default_timezone_set('America/Bogota');
 //echo date('Y-m-d H:i:s', intval('2017-01-02'));
 $dev = true;
 
@@ -69,9 +69,9 @@ function filesize_formatted($path)
         <div class="right">
             <ul>
                 <li><a id="lmh" href="#">¿Qué es <b>Monitor</b>?</a></li>
-                <li><a href="http://umaic.org" target="_blank">http://umaic.org</a></li>
-                <li><a href="http://sidi.umaic.org" target="_blank">Sidi</a></li>
-                <li><a href="http://geonode.umaic.org" target="_blank">Geonode</a></li>
+                <li><a href="https://umaic.org" target="_blank">http://umaic.org</a></li>
+                <li><a href="https://sidi.umaic.org" target="_blank">Sidi</a></li>
+                <li><a href="https://geonode.umaic.org" target="_blank">Geonode</a></li>
                 <li><a href="https://wiki.umaic.org" target="_blank">Wiki</a></li>
             </ul>
         </div>
@@ -258,7 +258,7 @@ function filesize_formatted($path)
                 ?>
             </div>
             <div id="slide_cluster">
-			
+
                 <div id="slide_cluster_text">
                     Deslice la barra para cambiar el agrupamiento
                 </div>
@@ -864,7 +864,7 @@ function filesize_formatted($path)
         <script type="text/javascript" src="<?php echo BASE ?>media/js/popover.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/ol.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js?v={random number/string}"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/focus-element-overlay.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/nouislider.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/HoldOn.min.js"></script>
@@ -873,7 +873,7 @@ function filesize_formatted($path)
     }
     else {
     ?>
-    <script type="text/javascript" src="<?php echo BASE ?>media/js/m.js"></script>
+    <script type="text/javascript" src="<?php echo BASE ?>media/js/m.js?v={random number/string}"></script>
     <?php
     }
     ?>
