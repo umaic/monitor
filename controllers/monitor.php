@@ -177,7 +177,7 @@ class MonitorController
 
                 $_sqle .= " WHERE $cond_tmp";
 
-                $_sqld = "SELECT SUM(REPLACE(REPLACE(form_response,'.',''),',','')) AS n
+                $_sqld = "SELECT SUM(n) AS n FROM (SELECT REPLACE(REPLACE(form_response,'.',''),',','') AS n
                     FROM %sform_response f
                     JOIN %sincident AS i ON f.incident_id = i.id
                     JOIN %slocation AS l ON l.id = i.location_id
@@ -202,10 +202,10 @@ class MonitorController
            // echo $_sqlidn;
 
 
-            $_ss = " AND state_id = '%s' LIMIT 1";
+            $_ss = " AND state_id = '%s'";
             $_sqliec .= $_ss;
             $_sqlidn .= $_ss;
-
+	        $_sqlidn .= " GROUP BY i.id) sqld";
 
 
             $cond_states = false;
