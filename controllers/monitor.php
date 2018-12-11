@@ -202,10 +202,15 @@ class MonitorController
            // echo $_sqlidn;
 
 
-            $_ss = " AND state_id = '%s'";
-            $_sqliec .= $_ss;
-            $_sqlidn .= $_ss;
-	        $_sqlidn .= " GROUP BY i.id) sqld";
+	        if ($afectacion) {
+		        $_ss = " AND state_id = '%s'";
+	        } else
+	        {
+		        $_ss = " AND state_id = '%s' LIMIT 1";
+	        }
+	        $_sqliec .= $_ss;
+	        $_sqlidn .= $_ss;
+	        if ($afectacion) $_sqlidn .= " GROUP BY i.id) sqld";
 
 
             $cond_states = false;
@@ -227,7 +232,7 @@ class MonitorController
 
                 if (!$acceso) {
                     $_sqldn = sprintf($_sqlidn,$_row->id);
-                    $_rsd = $this->db->open($_sqldn);
+	                $_rsd = $this->db->open($_sqldn);
                     //echo $_sqldn;
                     $_dn = $this->db->FO($_rsd);
                 }
@@ -502,7 +507,7 @@ class MonitorController
             $cond = ($db != '') ? ' AND id NOT IN (104)' : '';
 
             $_sql = "SELECT id, category_title AS t FROM ".$db."category WHERE parent_id = 0 AND category_visible = 1 $cond ORDER BY category_title";
-           
+
 			$_rs = $this->db->Open($_sql);
             while ($_row = $this->db->FO($_rs)) {
                 $tree[$inst[$d]][$_row->t] = array();
@@ -601,12 +606,12 @@ class MonitorController
         $_sql_csv_ecdn = sprintf($_sql_csv,$_dbu,$_dbu,$_dbu,$_dbu,$usha['cc']);
 
 		//echo $_sql_csv_ecdn."</br>";
-		
+
         $_rs = $this->db->open($_sql_csv_ecdn);
         while($_r = $this->db->FO($_rs)) {
 
 		//echo "entro</br>";
-		
+
             $des = $source = $desc = $ref = $cats = '';
             $iid = $_r->id;
 
@@ -768,13 +773,13 @@ class MonitorController
         //}
 
        // echo $csv;
-        
+
 		if(strlen($csv)>0){
-		
+
 		$f = Factory::create('file');
-         
-		 
-		
+
+
+
         $fp = $f->open($this->config['reporte_csv'], 'w+');
         $f->write($fp, $csv);
         $f->close($fp);
@@ -1537,11 +1542,11 @@ class MonitorController
                     $fin = mktime(0,0,0,12,31,$a);
                     $cats = '';
                     $states = '';
-                    
+
 					//echo $a."</br>";
 					//echo $ini."</br>";
 					//echo $fin."</br>";
-					
+
                     list($ini,$fin,$cond_cats_ec,$cond_cats_dn,$cond_tmp,$cond_csv) = $this->getConditions($ini, $fin, $cats, $states);
 
                     $this->downloadIncidents($d[0],compact('cond_csv','cond_cats_dn','cond_cats_ec'));
@@ -1562,7 +1567,7 @@ class MonitorController
 
         $totales_csv = $this->config['cache_reportes'].'/totales.csv';
 
-		
+
 		//echo $totales_csv."</br>";
 
         $ayer = 'DATE(NOW() - INTERVAL 1 DAY) ';
@@ -1612,7 +1617,7 @@ class MonitorController
         //echo $_sqlidn;
 
 		//echo "y:".$yyyy."</br>".$this->config['yyyy_ini']."</br>";
-		
+
         for ($a=$yyyy;$a>=$this->config['yyyy_ini'];$a--) {
             foreach($dbs as $d => $db) {
 
@@ -1622,7 +1627,7 @@ class MonitorController
                 $sql = "SELECT COUNT(id) AS n FROM ".$db."incident WHERE YEAR(incident_date) = $a AND incident_active = 1 AND ($cond_date)";
 
 			//	echo $sql."</br>";
-				
+
                 $rs = $this->db->open($sql);
 
 
@@ -1691,10 +1696,10 @@ class MonitorController
 
 					//echo "ht:".$totales_html."</br>";
 					//echo "cs:".$totales_csv."</br>";
-					
+
 					chmod($totales_html, 0777);
 					chmod($totales_csv, 0777);
-					
+
                     $this->export('xls','totales', $reporte,'static');
 
                     echo "Listo = $a - $d \n";
