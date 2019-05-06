@@ -44,9 +44,9 @@ if (window.location.hostname == 'monitor.local') {
 
 }
 else {
-    var subdomain_dn = 'desastres';
-    var subdomain_ec = 'violenciaarmada';
-    var domain = '.umaic.org';
+    var subdomain_dn = 'monitor.umaic.org/desastres';
+    var subdomain_ec = 'monitor.umaic.org/violenciaarmada';
+    var domain = '';
 }
 
 var url_ec = '&server=' + subdomain_ec + domain;
@@ -325,7 +325,7 @@ function addFeatures(inst) {
 
         // States filter
         _uft_dn = addURLParameter(_uft_dn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
-      
+
         ajaxFeatures(_uft_dn, l_ft, false);
 
         var _uft_ec = addURLParameter(url_ft_ec, uparams_ft);
@@ -370,7 +370,7 @@ function addFeatures(inst) {
 
     }
 
-    if (inst == 'ecdn' || inst == 'dn' ) {
+    if (inst == 'ecdn' || inst == 'dn') {
         var uparams_dn = uparams.concat([['c', $('#currentCatD').val()]]);
         var l_dn_source = new ol.source.Vector({});
 
@@ -397,7 +397,7 @@ function addFeatures(inst) {
             // States filter
             _udn = addURLParameter(_udn, [['states', getStatesChecked()]]); // getStatesChcked in fe.js
 
-            // Tip mapa
+            // Tipo mapa
             _udn = addURLParameter(_udn, [['afectacion', getMapaAfectacion()]]); // getMapaAfectacion in fe.js
 //console.log('4');
             ajaxFeatures(_udn, l_dn, true);
@@ -405,7 +405,7 @@ function addFeatures(inst) {
     }
 
 
-    if (inst == 'ecdn' || inst == 'ec' ) {
+    if (inst == 'ecdn' || inst == 'ec') {
 
         var uparams_ec = uparams.concat([['c', $('#currentCatE').val()]]);
         var l_ec_source = new ol.source.Vector();
@@ -850,10 +850,10 @@ function styleFunction(feature, resolution) {
 }
 
 function styleFtFunction(feature, resolution) {
-	
-  var size = feature.getProperties().count;
-  colorFill = '#'+feature.get('color');//'rgba(252,255,0,1)';
-  colorStroke = '#'+feature.get('color');//'rgba(252,255,0,0.5)';
+
+ var size = feature.getProperties().count;
+  colorFill = 'rgba(252,255,0,1)';
+  colorStroke = 'rgba(252,255,0,0.5)';
   
      var r = markerRadius;
     for (var i=1;i<jenks.length;i++) {
@@ -889,17 +889,17 @@ function styleFtFunction(feature, resolution) {
       })
     })];
   return style;
-  
-  /*
-	return [new ol.style.Style({
+
+/*
+    return [new ol.style.Style({
         image: new ol.style.Icon(({
             src: feature.get('icon'),
             size: [24,24]
         }))
     })]
-	
-	
-	*/
+
+
+*/
 }
 
 function showHideLayers(c) {

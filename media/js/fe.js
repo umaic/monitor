@@ -17,7 +17,7 @@ var totales_ini = true;
 var id_start_date = 'ini_date';
 var id_end_date = 'fin_date';
 var subtotales;
-var sidi_url = 'http://sidi.umaic.org/sissh';
+var sidi_url = 'https://sidi.umaic.org/sissh';
 
 // Temporal para fenomeno del niño
 // Datos de afectación desagregado sigpad, almacenado en subtotales cuando se hace totalesxd
