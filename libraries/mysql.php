@@ -11,6 +11,7 @@ class Mysql {
 
 	private function __construct() {
 
+        $this->host = '192.168.1.60';
         $this->user = 'monitor';
         $this->pass = 'Myp4$M0';
         $this->db = "violencia_armada";
@@ -18,7 +19,7 @@ class Mysql {
         //$this->conn = mysqli_connect($this->host,$this->user,$this->pass,$this->db);
 
         try {
-            $this->conn = new PDO("mysql:host=localhost;dbname=$this->db", $this->user, $this->pass);
+            $this->conn = new PDO("mysql:host=$this->host;dbname=$this->db", $this->user, $this->pass);
             $this->conn->exec("SET CHARACTER SET utf8");
         } catch (PDOException $e) {
             print "Error!: " . $e->getMessage() . "<br/>";
