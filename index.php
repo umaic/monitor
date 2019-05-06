@@ -11,9 +11,9 @@
  * @category  Script
  * @package   Monitor
  * @author    Ruben Rojas <rojasr@un.org>
- * @copyright 2016 UMAIC Colombia (http://umaic.org)
+ * @copyright 2019 OCHA Colombia (https://salahumanitaria.co)
  * @license   MIT License (http://www.opensource.org/licenses/mit-license.php)
- * @link      http://monitor.umaic.org Monitor
+ * @link      https://monitor.salahumanitaria.co Monitor
 */
 
 $cli = (isset($argv)) ? true : false;
@@ -21,10 +21,10 @@ $cli = (isset($argv)) ? true : false;
 if ($cli === false) {
     session_start();
 
-    if (strpos($_SERVER['SERVER_NAME'], 'umaic') === false &&
+    if (strpos($_SERVER['SERVER_NAME'], 'salahumanitaria') === false &&
         strpos($_SERVER['SERVER_NAME'], 'local') === false &&
         strpos($_SERVER['SERVER_NAME'], 'portal2')) {
-        header('Location: https://monitor.umaic.org');
+        header('Location: https://monitor.salahumanitaria.co');
     }
 }
 

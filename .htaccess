@@ -41,4 +41,4 @@ Options -Indexes
 #Follow symlinks
 Options +FollowSymlinks
 
-ErrorDocument 404 http://monitor.umaic.org
+ErrorDocument 404 http://monitor.salahumanitaria.co

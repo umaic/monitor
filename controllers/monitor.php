@@ -1490,7 +1490,7 @@ class MonitorController
         $w3hx = 1;
         $vars = compact('w3hx','id','u');
 
-        $h2pdf = "https://monitor.umaic.org/html2pdf/index.php?w3hx=1&id=$id&u=$url";
+        $h2pdf = "https://monitor.salahumanitaria.co/html2pdf/index.php?w3hx=1&id=$id&u=$url";
 
         //echo $h2pdf;
 

@@ -4,9 +4,9 @@
 
 json=$1
 				
-file="geonode_layers.xml"
+file="getcapabilities_1.3.0.xml"
 
-curl "http://geonode.umaic.org/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3" -o $file
+curl "https://geonode.salahumanitaria.co/geoserver/wms?request=GetCapabilities&service=WMS&version=1.3" -o $file
 
 i=0
 r=""

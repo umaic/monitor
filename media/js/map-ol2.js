@@ -27,7 +27,7 @@ if (window.location.hostname == 'monitor.local') {
 else {
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violenciaarmada';
-    var domain = '.umaic.org';
+    var domain = '.salahumanitaria.co';
 }
 
 var url_ec = '&server=' + subdomain_ec + domain;
@@ -81,7 +81,7 @@ show['fuente'] = true;
 
 function addWMSLayer(n,l,v) {
     
-    var u = 'https://geonode.umaic.org/geoserver/wms';
+    var u = 'https://geonode.salahumanitaria.co/geoserver/wms';
         
     if (map.getLayersByName(n).length > 0) {
         var ly = map.getLayersByName(n)[0];
@@ -163,7 +163,7 @@ function mapRender() {
                 'https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/${z}/${x}/${y}?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
             ],
             {
-                attribution: "Ver mas detalles en &nbsp;<img src='https://monitor.umaic.org/favicon.ico'> <a href='https://monitor.umaic.org' target='_blank'>monitor.umaic.org</a>",
+                attribution: "Ver mas detalles en &nbsp;<img src='https://monitor.salahumanitaria.co/favicon.ico'> <a href='https://monitor.salahumanitaria.co' target='_blank'>monitor.salahumanitaria.co</a>",
                 transitionEffect: "resize",
                 zoomOffset: _zoomOffset,
                 sphericalMercator: true,
@@ -383,14 +383,14 @@ function onFeatureSelect(attrs) {
                     '<div>' +
                         '<div class="date detail">'+ _js.d +'</div> ' +
                         '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
-                            '<a href="http://sidi.umaic.org/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
+                            '<a href="https://sidi.salahumanitaria.co/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
                             'Consulte el perfil de '+ _js.ldn +'</a></span>' +
                         '</div> ' +
                     '</div>';
                     
                     _html += '<div class="clear"></div><div class="left"><b>Categorias</b></div> ' +
                              '<div class="opt right linko">' +
-                                '<a href="https://wiki.umaic.org/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>' +
+                                '<a href="https://wiki.salahumanitaria.co/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>' +
                              '</div>';
 
                     for (c in _js.c) {

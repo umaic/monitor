@@ -17,7 +17,7 @@ var totales_ini = true;
 var id_start_date = 'ini_date';
 var id_end_date = 'fin_date';
 var subtotales;
-var sidi_url = 'https://sidi.umaic.org/sissh';
+var sidi_url = 'https://sidi.salahumanitaria.co/sissh';
 
 // Temporal para fenomeno del niño
 // Datos de afectación desagregado sigpad, almacenado en subtotales cuando se hace totalesxd
@@ -1025,7 +1025,7 @@ totalesxDepto = function(more) {
 
                                 _html += '<div class="clear hide"><div class="left"><b>Categorias</b></div> ' +
                                          '<div class="opt right linko">' +
-                                         '<a href="https://wiki.umaic.org/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n</a></div>';
+                                         '<a href="https://wiki.salahumanitaria.co/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n</a></div>';
                                 for (c in _js.c) {
                                     _html += '<div class="clear cat">&raquo;&nbsp;'+ c;
 

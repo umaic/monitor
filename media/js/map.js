@@ -40,12 +40,12 @@ if (window.location.hostname == 'monitor.local') {
     // Probar local consultado eventos online
     var subdomain_dn = 'desastres';
     var subdomain_ec = 'violenciaarmada';
-    var domain = '.umaic.org';
+    var domain = '.salahumanitaria.co';
 
 }
 else {
-    var subdomain_dn = 'monitor.umaic.org/desastres';
-    var subdomain_ec = 'monitor.umaic.org/violenciaarmada';
+    var subdomain_dn = 'monitor.salahumanitaria.co/desastres';
+    var subdomain_ec = 'monitor.salahumanitaria.co/violenciaarmada';
     var domain = '';
 }
 
@@ -97,7 +97,7 @@ function getLayerByName(n) {
 
 function addWMSLayer(n,l,v) {
 
-    var u = 'https://geonode.umaic.org/geoserver/wms';
+    var u = 'https://geonode.salahumanitaria.co/geoserver/wms';
 
     var lys = getLayerByName(n);
 

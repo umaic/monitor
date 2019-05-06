@@ -14,7 +14,7 @@ else {
 $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto','Septiembre','Octubre','Noviembre','Diciembre');
 ?>
         <div id="tec" class="tecdn hide">
-            <a href="https://monitor.umaic.org/desastres" target="_blank">
+            <a href="https://monitor.salahumanitaria.co/desastres" target="_blank">
                 <img src="<?php echo BASE_PORTAL ?>media/img/logo_ec.png" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tec) ?></b></div>
@@ -27,7 +27,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                      <h2>Categorias Conflicto Armado</h2>
                      <br />
                     <div class="inline linko">
-                        <a href="https://wiki.umaic.org/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                        <a href="https://wiki.salahumanitaria.co/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
                     </div>
                     <div class="inline">
                     <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
@@ -74,7 +74,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div id="tdn" class="tecdn hide">
-            <a href="https://monitor.umaic.org/desastres" target="_blank">
+            <a href="https://monitor.salahumanitaria.co/desastres" target="_blank">
                 <img src="<?php echo BASE_PORTAL ?>media/img/logo_dn.png" />
             </a>
             <div class="it tot">Total Eventos: <b><?php echo number_format($tdn) ?></b></div>
@@ -87,7 +87,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
                      <h2>Categorias Desastres Naturales</h2>
                      <br />
                     <div class="inline linko">
-                        <a href="https://wiki.umaic.org/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
+                        <a href="https://wiki.salahumanitaria.co/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>
                     </div>
                     <div class="inline">
                     <a class="tn_fcat" href="#">|&nbsp;Seleccionar todas/ninguna</a>
