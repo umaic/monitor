@@ -103,8 +103,8 @@ class MonitorController
 
         date_default_timezone_set('America/Bogota');  // Igual a USHAHIDI, violencia armada
 
-        $ini = date('Y-m-d H:i:s', intval($ini));  // Se usa intval para que quede igual que ushahidi/application/helper/reports/ :740
-        $fin = date('Y-m-d H:i:s', intval($fin));
+        $ini = date('Y-m-d', intval($ini));  // Se usa intval para que quede igual que ushahidi/application/helper/reports/ :740
+        $fin = date('Y-m-d', intval($fin));
 
         $_t = explode('|', $cats);
         $cond_cats_ec = '1=1';
@@ -117,7 +117,7 @@ class MonitorController
             $cond_cats_dn = ' category_id IN ('.$_t[1].')';
         }
         $cond_tmp = "
-                 incident_date >= '$ini' AND incident_date <= '$fin'
+                 date(incident_date) >= '$ini' AND date(incident_date) <= '$fin'
                  AND incident_active = 1 AND %s";
 
         // Para totales
@@ -1490,7 +1490,7 @@ class MonitorController
         $w3hx = 1;
         $vars = compact('w3hx','id','u');
 
-        $h2pdf = "https://monitor.salahumanitaria.co/html2pdf/index.php?w3hx=1&id=$id&u=$url";
+        $h2pdf = "https://monitor.umaic.org/html2pdf/index.php?w3hx=1&id=$id&u=$url";
 
         //echo $h2pdf;
 
@@ -1648,7 +1648,7 @@ class MonitorController
                     $csv = "$a$nl";
                     $csv .= $limi."Afectados".$limi."Eventos".$nl;
 
-                    $cond_if = "incident_date >= '$ini' AND incident_date <= '$fin' AND category_visible = 1";
+                    $cond_if = "date(incident_date) >= '$ini' AND date(incident_date) <= '$fin' AND category_visible = 1";
 
                     foreach(array('af','e') as $afv) {
 
