@@ -67,7 +67,7 @@ $(function(){
     */
 
     var _ini = _iniObj.getTime(); // milisecs
-    var _fin = new Date(_year,_month,_day,23).getTime();
+    var _fin = new Date(_year,_month,_day,23,59,59).getTime();
 
     // Para ushahidi va en segundos
     $('#' + id_start_date).val(_ini/1000);
@@ -615,10 +615,10 @@ $(function(){
                     var $input = $('#' + q + '_text');
 
                     var _ini = new
-                    Date($div_ini.find('ul.yyyy > li.selected').data('val'),$div_ini.find('ul.mes > li.selected').data('val')-1,$div_ini.find('ul.dia > li.selected').data('val'),23,59).getTime();
+                    Date($div_ini.find('ul.yyyy > li.selected').data('val'),$div_ini.find('ul.mes > li.selected').data('val')-1,$div_ini.find('ul.dia > li.selected').data('val'),0,0,0).getTime();
 
                     var _fin = new
-                    Date($div_fin.find('ul.yyyy > li.selected').data('val'),$div_fin.find('ul.mes > li.selected').data('val')-1,$div_fin.find('ul.dia > li.selected').data('val'),23,59).getTime();
+                    Date($div_fin.find('ul.yyyy > li.selected').data('val'),$div_fin.find('ul.mes > li.selected').data('val')-1,$div_fin.find('ul.dia > li.selected').data('val'),23,59,59).getTime();
 
                     if (_ini > _fin) {
                         alert('Desde debe ser menor que Hasta');
@@ -1821,8 +1821,8 @@ function addLayerVariacion(dataJson) {
 
 function filterByPeriod(id,im,iy,fd,fm,fy) {
 
-    _ini = new Date(iy,im,id,0);
-    _fin = new Date(fy,fm,fd,23);
+    _ini = new Date(iy,im,id,0,0,0);
+    _fin = new Date(fy,fm,fd,23,59,59);
 
     $('#' + id_start_date).val(_ini/1000); // Segundos para ushahidi
     $('#' + id_end_date).val(_fin/1000); // Segundos para ushahidi
