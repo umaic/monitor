@@ -1,4 +1,98 @@
-#resumen h3{font-size:14px;margin:0;background-color:#c1272c;color:#fff;padding:2px 6px;font-weight:100;border-radius:3px}#resumen h4{font-size:12px;margin:0 0 5px 0}#resumen .nota{font-size:9px;color:#999;text-align:justify}select{border:1px solid #ccc}.left{float:left}.right{float:right}.clear{clear:both}.inline{display:inline-block}#time{text-align:center;background-color:##f9f9f9;padding:10px 0 0 0}#resumen div.r{background-color:#f1f1f1;border-bottom:1px solid #ccc;padding:5px 10px;height:30px;overflow:hidden;cursor:pointer}#resumen div.r:not(:first){border-top:1px solid #fff}#aaaa,#aaaa select{font-size:11px}#aaaa{margin-bottom:5px}#loading_data{display:none}#brand{font-size:11px;color:#999;text-align:center;width:90%;margin:10px auto}#brand a{color:#06f}/*!
+html, body {
+    font-family: 'Roboto', sans-serif;
+    width: 100%;
+}
+#resumen h3 {
+    font-size: 14px;
+    margin: 0;
+    background-color: #E56A54;
+    color: #fff;
+    padding: 1px 6px;
+    font-weight: 100;
+    border-radius: 3px
+}
+
+#resumen h4 {
+    color: #ffffff;
+    font-size: 12px;
+    margin: 0 0 0 0
+}
+
+#resumen .nota {
+    font-size: 9px;
+    color: #E6E6E6;
+    text-align: justify
+}
+
+select {
+    border: 1px solid #ccc
+}
+
+.left {
+    float: left
+}
+
+.right {
+    float: right
+}
+
+.clear {
+    clear: both
+}
+
+.inline {
+    display: inline-block
+}
+
+#time {
+    text-align: center;
+    background-color: # #f9f9f9;
+    padding: 10px 0 0 0
+}
+
+#resumen div.r {
+    background-color: #418FDE;
+    border-bottom: 1px solid #ffffff;
+    padding: 2px 10px;
+    height: 41px;
+    overflow: hidden;
+    cursor: pointer
+}
+
+#resumen div.r:not(:first) {
+    border-top: 1px solid #fff
+}
+
+#aaaa, #aaaa select {
+    font-size: 11px
+}
+
+#aaaa {
+    margin-bottom: 5px
+}
+
+#loading_data {
+    display: none
+}
+
+#brand {
+    font-size: 11px;
+    color: #999;
+    text-align: center;
+    width: 90%;
+    margin: 10px auto
+}
+
+#brand a {
+    color: #418FDE
+}
+
+.ui-dialog {
+    z-index: 9999 !important;
+}
+/*!
+
+
  * jQuery UI CSS Framework 1.8.22
  *
  * Copyright 2012, AUTHORS.txt (http://jqueryui.com/about)

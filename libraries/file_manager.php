@@ -1,5 +1,5 @@
-<?
-Class FileManager {
+<?php
+class FileManager {
 
 	var $path;
 

@@ -188,7 +188,10 @@ $(function(){
     });
 
     $(document).ajaxStart(function(){
-        HoldOn.open({theme:"sk-dot"})
+        HoldOn.open({
+            theme:"sk-rect",
+            backgroundColor:"#ffffff"
+        })
     }).ajaxStop(function(){
         HoldOn.close();
     });
@@ -1131,7 +1134,7 @@ totalesxDepto = function(more) {
     else {
 
         // Afectacion
-        titulo = (getMapaAfectacion() == 1) ? 'afectados' : 'eventos';
+        titulo = (getMapaAfectacion() == 1) ? 'AFECTADOS' : 'EVENTOS';
 
         // Acceso
         if (acceso) {
@@ -1141,7 +1144,7 @@ totalesxDepto = function(more) {
         var t_ini = $('#ini_text').val();
         var t_fin = $('#fin_text').val();
 
-        $('#titulo_general').find('#tgt').html('Mapa de ' + titulo);
+        $('#titulo_general').find('#tgt').html('MAPA DE ' + titulo);
         $('#titulo_general').find('#tgc').html(t_ini + ' - ' + t_fin);
 
         $('#table_totalxd tbody').html('<tr><td colspan="4"><img src="media/img/ajax-loader-mini.gif" />&nbsp;Actualizando datos...</td></tr>');

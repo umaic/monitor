@@ -1,15 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><title>Monitor Humanitario</title>
+<head><title>OCHA Colombia Monitor Humanitario</title>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <style type="text/css">
     html, body {
+        font-family: 'Roboto', sans-serif;
         width: 100%;
     }
     body {
         font-family: Arial;
         margin: 0;
-	    scrollbar-base-color: #ff0000;!important
+	    scrollbar-base-color: #E56A54;!important
     }
     .map_portal {
         width: 450px;
@@ -40,7 +41,7 @@
         font-size: 11px;
     }
 </style>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <!-- Global site tag (gtag.js) - Google Analytics
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-139902127-1"></script>
     <script>
         window.dataLayer = window.dataLayer || [];
@@ -48,7 +49,7 @@
         gtag('js', new Date());
 
         gtag('config', 'UA-139902127-1');
-    </script>
+    </script>  -->
 </head>
 <body>
     <div id="monitor">

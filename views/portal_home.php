@@ -6,6 +6,7 @@ else {
     define ('BASE_PORTAL', '/');  // Comienza con slash, se usa al incluir los assets
 }
 ?>
+<link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/m_portal_home.css" />
 
 <?php
@@ -43,7 +44,7 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         </div>
         <div id="brand">
-            Visualización de # de afectados en eventos georeferenciados de <span style="color:#008000;">desastres naturales</span> y <span style="color:#ff0000;">violencia armada</span>
+            Visualización de # de afectados en eventos georeferenciados de <span style="color:#7FB92F;">desastres naturales</span> y <span style="color:#E56A54;">violencia armada</span>
         </div>
         <div id="map" class="map_portal_home"></div>
         <div>
@@ -86,6 +87,9 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
         </div>
         <div class="clear"></div>
     </div>
+    <script type="text/javascript" src="https://unpkg.com/jquery@1/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/jquery-migrate@1/dist/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/m_portal_home.js"></script>
     <script type="text/javascript">
         var portal = 1;

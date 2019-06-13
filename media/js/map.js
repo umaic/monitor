@@ -28,7 +28,9 @@ var l_ft;
 var l_variacion;
 
 var centroColombia = ol.proj.transform(
-[-70.963384, 3.370786], 'EPSG:4326', 'EPSG:3857');
+[-70.963384, 4.370786], 'EPSG:4326', 'EPSG:3857');
+var extensionColombia = ol.proj.transformExtent(
+    [-82.836, -5.004, -65.552, 14.29], 'EPSG:4326', 'EPSG:3857');
 
 if (window.location.hostname == 'monitor.local') {
     /*
@@ -172,7 +174,7 @@ function mapRender() {
         center: centroColombia,
         zoom: 1,
         resolutions: resolutions,
-        //extent: [-8599122, -471155, -7441396, 1505171]
+        extent: extensionColombia
 
     });
 
@@ -182,7 +184,9 @@ function mapRender() {
                 title: 'OSM',
                 //source: new ol.source.OSM()
                 source: new ol.source.XYZ({
-                    url: 'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
+                    // url: 'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
+                    // url: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
+                    url: 'https://api.maptiler.com/maps/positron/{z}/{x}/{y}.png?key=NRrAO36GS5hDL58vTiCT'
                 })
             })
         ],
@@ -552,14 +556,14 @@ function onFeatureSelect(attrs) {
                     '<div>' +
                         '<div class="date detail">'+ _js.d +'</div> ' +
                         '<div class="loc detail">'+ _js.ln + ' <span class="pdf opt"> ' +
-                            '<a href="http://sidih.colombiassh.org/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
+                            '<a href="https://legacy.sidi.salahumanitaria.co/sissh/download_pdf.php?c=2&id_depto='+_js.ld+'&id_mun=" target="_blank">' +
                             'Consulte el perfil de '+ _js.ldn +'</a></span>' +
                         '</div> ' +
                     '</div>';
 
                     _html += '<div class="clear"></div><div class="left"><b>Categorias</b></div> ' +
                              '<div class="opt right linko">' +
-                                '<a href="http://www.colombiassh.org/gtmi/wiki/index.php/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>' +
+                                '<a href="https://wiki.salahumanitaria.co/wiki/Sistema_de_categor%C3%ADas_del_m%C3%B3dulo_de_eventos_de_conflicto" target="_blank">Definici&oacute;n de categorias</a>' +
                              '</div>';
 
                     for (c in _js.c) {
@@ -701,8 +705,10 @@ function onFeatureSelect(attrs) {
                             // Source type :: source name
                             if ((_js.f[k][0] != '' && _js.f[k][1] != '') || _js.f[k][2] != '') {
 
+                                _html += '<div class="detail">';
+
                                 if ((_js.f[k][0] != '' && _js.f[k][1] != '')) {
-                                    _html += '<div class="detail">&raquo; '+_js.f[k][1]+' ( '+_js.f[k][0]+' )';
+                                    _html += '&raquo; '+_js.f[k][1]+' ( '+_js.f[k][0]+' )';
                                 }
 
 
@@ -727,7 +733,7 @@ function onFeatureSelect(attrs) {
                                 }
 
                             }
-
+                            _html += '</div>';
                         }
                         _html += '</div>';
                     }
@@ -753,7 +759,7 @@ function onFeatureSelect(attrs) {
                 numr = (attrs.id > max_e) ? max_e : attrs.id;
                 m({
                     //t: 'Monitor - ColombiaSSH :: Listado de eventos [ ' + numr + ' registros ]',
-                    t: 'Monitor - ColombiaSSH :: Listado de eventos',
+                    t: ' OCHA Colombia Monitor - Listado de eventos',
                     html: _html,
                     w: 800,
                     h: 500,
@@ -800,12 +806,12 @@ function styleFunction(feature, resolution) {
 
     if (_cluster) {
         if (String(feature.getProperties().link).indexOf(subdomain_ec) == -1) {
-            colorFill = 'rgba(44,160,44,1)';
-            colorStroke = 'rgba(44,170,54,0.5)';
+            colorFill = '#7FB92F';
+            colorStroke = '#7FB92F';
         }
         else {
-            colorFill = 'rgba(204,0,0,1)';
-            colorStroke = 'rgba(204,10,10,0.5)';
+            colorFill = '#E56A54';
+            colorStroke = '#E56A54';
         }
     }
     else {
@@ -822,10 +828,10 @@ function styleFunction(feature, resolution) {
     }
 
     var textFill = new ol.style.Fill({
-        color: '#fff'
+        color: '#ffffff'
     });
     var textStroke = new ol.style.Stroke({
-        color: 'rgba(0, 0, 0, 0.6)',
+        color: '#ffffff',
         width: 2
     });
 
@@ -837,13 +843,14 @@ function styleFunction(feature, resolution) {
         }),
         stroke: new ol.style.Stroke({
             color: colorStroke,
-            width: 3
+            width: 4,
+            strokeOpacity: 0.5
           }),
       }),
       text: new ol.style.Text({
         text: size.toString(),
         fill: textFill,
-        stroke: textStroke
+        // stroke: textStroke
       })
     })];
   return style;

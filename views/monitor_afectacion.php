@@ -3,7 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="favicon.ico" />
-<title>Monitor Humanitario :: Colombia</title>
+<title>OCHA Colombia Monitor Humanitario</title>
 <link rel="stylesheet" type="text/css" href="http://monitor.colombiassh.org/media/css/brand.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css">
 <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.css" />

@@ -1191,8 +1191,8 @@ class MonitorController
         $data_lines = array();
         $data = array();
         $ejex = array();
-        $color_v = '#d40000';
-        $color_d = '#2CA02C';
+        $color_v = '#E56A54';
+        $color_d = '#7FB92F';
         $_rs = $this->db->open($_sqliecc);
         while($_row = $this->db->FO($_rs)) {
             $date = strtotime($_row->year.'-'.$_row->mes.'-'.$_row->dia) * 1000; // Tiene que ser en milisegundos

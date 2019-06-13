@@ -3,8 +3,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <link rel="shortcut icon" href="https://monitor.salahumanitaria.co/favicon.ico" />
-<title>Monitor Humanitario OCHA</title>
-
+<title>OCHA Colombia Monitor Humanitario</title>
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
 <?php
 date_default_timezone_set('America/Bogota');
 //echo date('Y-m-d H:i:s', intval('2017-01-02'));
@@ -16,7 +16,7 @@ if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fa/css/font-awesome.min.css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery-ui-1.8.22.custom.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/flick/jquery-ui.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery.dataTables.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/popover.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/geostats.css" />
@@ -58,29 +58,29 @@ function filesize_formatted($path)
         <img src="<?php echo BASE ?>media/img/ajax-loader.png" />
     </div>
     <div id="brand">
-        <div id="logo_div" class="left">
+        <div id="ocha_div" class="left">
+            <a href="http://salahumanitaria.co" target="_blank">
+                <div id="ocha" class=""></div>
+            </a>
+        </div>
+        <div id="logo_div" class="right">
             <div id="logo" class=""></div>
         </div>
         <div class="right">
-            <a href="http://salahumanitaria.co" target="_blank">
-                <img src="media/img/logo_OCHA.png" />
-            </a>
-        </div>
-        <div class="right">
-            <ul>
+            <!-- <ul>
                 <li><a id="lmh" href="#">¿Qué es <b>Monitor</b>?</a></li>
                 <li><a href="https://salahumanitaria.co" target="_blank">https://salahumanitaria.co</a></li>
                 <li><a href="https://sidi.salahumanitaria.org" target="_blank">Sidi</a></li>
                 <li><a href="https://geonode.salahumanitaria.co" target="_blank">Geonode</a></li>
                 <li><a href="https://wiki.salahumanitaria.co" target="_blank">Wiki</a></li>
-            </ul>
+            </ul> -->
         </div>
         <div class="clear"></div>
     </div>
     <div id="menu_div" class="left">
         <div id="menu" class="">
             <ul>
-                <li id="fen_nino" class="featured dn" style="background:url(media/img/fenomeno_nino_bg.jpg);">
+                <!-- <li id="fen_nino" class="featured dn" style="background:url(media/img/fenomeno_nino_bg.jpg);">
                     <h3 style="font-size: 16px !important;margin:3px !important;">
                     Fenómeno del niño
                     </h3>
@@ -90,7 +90,7 @@ function filesize_formatted($path)
                         <h3 style="font-size:15px ;margin:0"><i class="fa fa-map-marker"></i> <u>Ver Eventos</u></h3>
                     </div>
 
-                </li>
+                </li> -->
                 <li id="tec">
                     <img src="<?php echo BASE ?>media/img/logo_ec_compact.png" border="0" class="left" />
                     <a href="<?php echo $url_violencia ?>" target="_blank">
@@ -139,9 +139,9 @@ function filesize_formatted($path)
             <div>
                 <br /><br />
                 &nbsp;&nbsp;
-                <img src="media/img/logo_OCHA.png" />
+                <!-- <img src="media/img/logo_OCHA.png" /> -->
                 &nbsp;
-                <img src="media/img/logo_PNUD.jpg" />
+                <!-- <img src="media/img/logo_PNUD.jpg" /> -->
             </div>
         </div>
     </div>
@@ -158,6 +158,9 @@ function filesize_formatted($path)
     <div id="content_div" class="left">
         <div id="header">
             <div id="b" class="">
+                <div id="colombia" class="left">
+                    COLOMBIA
+                </div>
                 <div id="titulo_general" class="left">
                     <div id="tgt" class=""></div>
                     <div id="tgc" class=""></div>
@@ -782,7 +785,7 @@ function filesize_formatted($path)
             <!-- Variación -->
             <div id="variacion" class="filtro fcat" data-index="4">
                 <div class="left">
-                    <h2 class="dosis w">Nueva funcionalidad: Calculo de variación</h2>
+                    <h2 class="dosis w">Cálculo de variación</h2>
                 </div>
                 <div class="right">
                     <a class="close" href="#" data-div="variacion"><img src="<?php echo BASE ?>media/img/close.png" alt="Cerrar" /></a>
@@ -792,7 +795,7 @@ function filesize_formatted($path)
                 </div>
                 <div class="clear"></div>
                 <div class="w">
-                    Esta nueva funcionalidad le permite realizar análisis temporal através de la comparación del <b>NUMERO DE EVENTOS</b>
+                    Esta funcionalidad le permite realizar análisis temporal a través de la comparación del <b>NUMERO DE EVENTOS</b>
                     en 2 periodos de tiempo. Obtendrá una visualización rápida de si existe un aumento o una disminución
                     de valores. Recuerde seleccionar las categorias correspondientes<br />&nbsp;
                 </div>
@@ -853,16 +856,19 @@ function filesize_formatted($path)
 
     <?php
     if ($dev) { ?>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/jquery@3/dist/jquery.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/jquery-migrate@1/dist/jquery-migrate.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/jquery-migrate@3/dist/jquery-migrate.min.js"></script>
+        <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/url_tools.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/highcharts.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/icheck.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/geostats.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/highcharts@7/highcharts.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/icheck@1/icheck.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/geostats@1/lib/geostats.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/datatables@1/media/js/jquery.dataTables.min.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/tooltip.js"></script>
+        <!-- script type="text/javascript" src="https://unpkg.com/bootstrap-tooltip@3/index.js"></script -->
         <script type="text/javascript" src="<?php echo BASE ?>media/js/popover.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/ol.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/openlayers@3/dist/ol.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js?v={random number/string}"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/focus-element-overlay.min.js"></script>
