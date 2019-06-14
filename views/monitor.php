@@ -344,7 +344,7 @@ function filesize_formatted($path)
                                 <div id="resumen_ec" class="hide">
                                     <div id="resumen_total_ec" class="ec resumen_total">
                                         <div id="resumen_total_ec_num" class="num"></div>
-                                        <div class="cat bold">Total de
+                                        <div class="cat bold">Violencia: Total de<br />
                                             <span class="data_title">
                                                 Personas afectadas
                                             </span>
@@ -359,7 +359,7 @@ function filesize_formatted($path)
                                 <div id="resumen_dn" class="hide">
                                     <div id="resumen_total_dn" class="dn resumen_total">
                                         <div id="resumen_total_dn_num" class="num"></div>
-                                        <div class="cat">Total de
+                                        <div class="cat">Desastres: Total de<br />
                                             <span class="data_title">
                                                 Personas afectadas
                                             </span>
