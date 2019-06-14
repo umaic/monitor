@@ -856,6 +856,9 @@ function filesize_formatted($path)
 
     <?php
     if ($dev) { ?>
+        <!--[if lt IE 9]>
+        <script src="https://unpkg.com/respond.js@1.4.2/dest/respond.min.js"></script>
+        <![endif]-->
         <script type="text/javascript" src="https://unpkg.com/jquery@3/dist/jquery.min.js"></script>
         <script type="text/javascript" src="https://unpkg.com/jquery-migrate@1/dist/jquery-migrate.min.js"></script>
         <script type="text/javascript" src="https://unpkg.com/jquery-migrate@3/dist/jquery-migrate.min.js"></script>
