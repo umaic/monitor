@@ -1,8 +1,7 @@
 @font-face {
-  font-family: 'Open Sans';
+  font-family: 'Roboto', sans-serif;
   font-style: normal;
   font-weight: 400;
-  src: url(OpenSans.woff) format('woff');
 }
 #brand {
     color: #333333;

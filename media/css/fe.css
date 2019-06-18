@@ -1222,3 +1222,17 @@ div#mase {
     color: #555555;
     margin: 0 0 10px 0;
 }
+
+
+/* No UI Slider */
+.noUi-connect {
+    background: #ECA154 !important;
+}
+#slide_cluster_text{
+    color: #999999;
+    text-shadow:
+            -1px -1px 0 #ffffff,
+            1px -1px 0 #ffffff,
+            -1px 1px 0 #ffffff,
+            1px 1px 0 #ffffff;
+}

@@ -12,16 +12,16 @@ $dev = true;
 
 if ($dev) { ?>
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/brand.css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/ol.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/openlayers@3/dist/ol.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fe.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/orange.css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/fa/css/font-awesome.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/font-awesome@4/css/font-awesome.min.css" />
     <link type="text/css" rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/flick/jquery-ui.css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/jquery.dataTables.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/datatables/media/css/jquery.dataTables.min.css" />
     <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/popover.css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/geostats.css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/nouislider.css" />
-    <link type="text/css" rel="stylesheet" href="<?php echo BASE ?>media/css/HoldOn.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/geostats@1/lib/geostats.css" />
+    <link type="text/css" rel="stylesheet" href="https://unpkg.com/nouislider/distribute/nouislider.min.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/gh/sdkcarlos/HoldOn.js@master/src/download/HoldOn.min.css" />
 <?php
 }
 else { ?>
@@ -873,10 +873,10 @@ function filesize_formatted($path)
         <script type="text/javascript" src="<?php echo BASE ?>media/js/popover.js"></script>
         <script type="text/javascript" src="https://unpkg.com/openlayers@3/dist/ol.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/fe.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js?v={random number/string}"></script>
+        <script type="text/javascript" src="<?php echo BASE ?>media/js/map.js"></script>
         <script type="text/javascript" src="<?php echo BASE ?>media/js/focus-element-overlay.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/nouislider.min.js"></script>
-        <script type="text/javascript" src="<?php echo BASE ?>media/js/HoldOn.min.js"></script>
+        <script type="text/javascript" src="https://unpkg.com/nouislider/distribute/nouislider.min.js"></script>
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/sdkcarlos/HoldOn.js@master/src/download/HoldOn.min.js"></script>
 
     <?php
     }

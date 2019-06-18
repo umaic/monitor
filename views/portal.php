@@ -7,7 +7,7 @@ else {
 }
 ?>
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/portal.min.css">
-<link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/jquery-ui-1.8.22.custom.css" />
+<link type="text/css" rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/themes/flick/jquery-ui.css" />
 <link type="text/css" rel="stylesheet" href="<?php echo BASE_PORTAL ?>media/css/perfect-scrollbar.min.css" />
 
 <?php 
@@ -225,14 +225,16 @@ $meses = array('Enero','Febrero','Marzo','Abril','Mayo','Junio','Julio','Agosto'
             </div>
         <div class="clear"></div>
     </div>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery.min.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/jquery-ui.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/jquery@3/dist/jquery.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/jquery-migrate@1/dist/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/jquery-migrate@3/dist/jquery-migrate.min.js"></script>
+    <script type="text/javascript" src="https://ajax.aspnetcdn.com/ajax/jquery.ui/1.12.1/jquery-ui.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/openlayers/OpenLayers.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/url_tools.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/fe-ol2.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/map-ol2.min.js"></script>
     <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/highcharts.js"></script>
-    <script type="text/javascript" src="<?php echo BASE_PORTAL ?>media/js/geostats.min.js"></script>
+    <script type="text/javascript" src="https://unpkg.com/geostats@1/lib/geostats.min.js"></script>
     <script type="text/javascript">
         var portal = 1;
         var layout = 'portal';
