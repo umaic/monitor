@@ -20,7 +20,7 @@ class Factory
         
         if ($type != 'mysql') {
         
-            $f = strtolower(preg_replace('/([a-z])([A-Z])/', '$1_$2', $cls[$type]));
+            $f = strtolower(preg_replace('/([a-z])([A-Z])/', '$1$2', $cls[$type]));
 
             if (include_once $lib_dir.'/'.$f.'.php') {
                 
