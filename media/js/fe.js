@@ -348,6 +348,9 @@ $(function(){
             function() {
                 //$('.ui-tabs-panel, #mapas_tipos').show();
                 $('.ui-tabs-panel').show();
+                $('#resumen').hide();
+                $('#departamentos').hide();
+                $('#tabs').tabs({ active: 0 });
                 $(this).addClass('minimize');
                 $(this).removeClass('maximize');
             }
