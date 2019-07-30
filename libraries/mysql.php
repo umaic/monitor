@@ -11,7 +11,7 @@ class Mysql {
 
 	private function __construct() {
 
-        $this->host = '192.168.1.60';
+        $this->host = '192.168.1.62';
         $this->user = 'monitor';
         $this->pass = 'Myp4$M0';
         $this->db = "violencia_armada";
