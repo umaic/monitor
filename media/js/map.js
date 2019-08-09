@@ -186,7 +186,8 @@ function mapRender() {
                 source: new ol.source.XYZ({
                     // url: 'https://api.tiles.mapbox.com/v4/mapbox.streets/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
                     // url: 'https://tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png'
-                    url: 'https://api.maptiler.com/maps/positron/{z}/{x}/{y}.png?key=NRrAO36GS5hDL58vTiCT'
+                    // url: 'https://api.maptiler.com/maps/positron/{z}/{x}/{y}.png?key=NRrAO36GS5hDL58vTiCT'
+                    url: 'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
                 })
             })
         ],

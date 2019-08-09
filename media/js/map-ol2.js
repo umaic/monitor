@@ -161,7 +161,8 @@ function mapRender() {
             "Base Layer", 
             [
                 //'https://api.mapbox.com/styles/v1/mapbox/streets-v8/tiles/${z}/${x}/${y}?access_token=pk.eyJ1IjoicmF0YmlrZXIiLCJhIjoiY2loejFyM3B4MDQwcHRnbTF5MWlmOHJuNCJ9.H5A3WGVx60EdqY0hMzIMKg'
-                'https://api.maptiler.com/maps/positron/{z}/{x}/{y}.png?key=NRrAO36GS5hDL58vTiCT'
+                //'https://api.maptiler.com/maps/positron/{z}/{x}/{y}.png?key=NRrAO36GS5hDL58vTiCT'
+                'https://cartodb-basemaps-{s}.global.ssl.fastly.net/light_all/{z}/{x}/{y}.png'
             ],
             {
                 attribution: "Ver mas detalles en &nbsp;<img src='https://monitor.salahumanitaria.co/favicon.ico'> <a href='https://monitor.salahumanitaria.co' target='_blank'>monitor.salahumanitaria.co</a>",
